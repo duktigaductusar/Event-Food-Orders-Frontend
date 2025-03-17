@@ -1,0 +1,1 @@
+export {TestComponent} from '@app/components/shared/testcomponent/testcomponent.component';

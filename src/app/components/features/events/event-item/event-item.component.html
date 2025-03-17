@@ -1,0 +1,19 @@
+<div class="card h-100 shadow-sm">
+    <div class= "p-2">
+        <h5 class="card-title">{{ card.title }}</h5>        
+    </div>
+    <div class="card-body">
+        <small class="text-muted">{{ card.date | date:'mediumDate' }}</small>
+    </div>
+    <div class="card-footer bg-transparent border-top-0 d-flex justify-content-between align-items-center">
+        
+        <div class="btn-group">
+            <button class="btn btn-sm btn-outline-secondary" (click)="selectMoreInfo()">
+                Anmäl mig/Mer Info
+            </button>
+            <button class="btn btn-sm btn-outline-secondary" (click)="showInvitation()">
+                Avvisa inbjudan
+            </button>
+        </div>
+    </div>
+</div>
