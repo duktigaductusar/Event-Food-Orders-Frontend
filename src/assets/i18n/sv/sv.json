@@ -1,0 +1,17 @@
+{
+    "event-create": {
+        "title": "Event-create page"
+    },
+    "event-details": {
+        "title": "Event-details page"
+    },
+    "event-invite": {
+        "title": "Event-invite page"
+    },
+    "home": {
+        "title": "Index Sida!"
+    },
+    "login": {
+        "title": "Login Sida!"
+    }
+}
