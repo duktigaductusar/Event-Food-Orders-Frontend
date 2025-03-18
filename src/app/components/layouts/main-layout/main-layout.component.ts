@@ -15,8 +15,8 @@ export class MainLayoutComponent extends AppBaseComponent {
 	readonly appRoutes = appRoutes;
 
 	constructor(private offcanvasService: NgbOffcanvas) {
-    super();
-  }
+		super();
+	}
 
 	openSidebar(content: unknown) {
 		this.offcanvasService.open(content, { position: "end" });
