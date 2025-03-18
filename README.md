@@ -10,7 +10,6 @@ npm install -g @angular/cli
 
 Install extension: VS Code Angular Language Service
 
-
 ## Development server
 
 To start a local development server, run:

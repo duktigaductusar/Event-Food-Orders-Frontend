@@ -1,17 +1,19 @@
 .card {
-    transition: transform 0.2s, box-shadow 0.2s;
-    cursor: pointer;
-  }
-  .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
-  }
-  .card-img-container {
-    position: relative;
-    height: 160px;
-    overflow: hidden;
-  }
-  .card-img-top {
-    height: 100%;
-    object-fit: cover;
-  }
+	transition:
+		transform 0.2s,
+		box-shadow 0.2s;
+	cursor: pointer;
+}
+.card:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+.card-img-container {
+	position: relative;
+	height: 160px;
+	overflow: hidden;
+}
+.card-img-top {
+	height: 100%;
+	object-fit: cover;
+}
