@@ -29,9 +29,15 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/styles.css"
+              "src/styles.css",
+              "src/assets/theme/sb-admin-2.css",
+              "src/assets/theme/sb-admin-2.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "src/assets/theme/sb-admin-2.min.js"
+
+            ]
           },
           "configurations": {
             "production": {
