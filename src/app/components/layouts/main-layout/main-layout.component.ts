@@ -16,7 +16,7 @@ export class MainLayoutComponent extends AppBaseComponent {
 
 	constructor(
 		private offcanvasService: NgbOffcanvas,
-		private cdRef: ChangeDetectorRef 
+		private cdRef: ChangeDetectorRef
 	) {
 		super();
 	}
