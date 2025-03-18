@@ -1,0 +1,5 @@
+.hover-gray:hover {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    border-radius: 4px;
+    transition: background-color 0.2s ease-in-out;
+}
