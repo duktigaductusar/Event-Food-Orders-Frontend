@@ -1,0 +1,20 @@
+#!/bin/sh
+
+echo "Running linting before commit..."
+npx eslint "src/**/*.{ts,html}"
+
+# Capture the exit status of ESLint
+ESLINT_STATUS=$?
+
+# Stop the commit if lint errors.
+# if [ $ESLINT_STATUS -ne 0 ]; then
+#   echo "Linting failed! Fix errors before committing."
+#   exit 1
+# fi
+
+echo "Linting completed!"
+
+# echo "Running formatting before commit..."
+# npx prettier --write .
+
+# echo "Formatting completed!"
