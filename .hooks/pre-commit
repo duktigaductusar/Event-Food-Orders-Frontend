@@ -7,14 +7,14 @@ npx eslint "src/**/*.{ts,html}"
 ESLINT_STATUS=$?
 
 # Stop the commit if lint errors.
-# if [ $ESLINT_STATUS -ne 0 ]; then
-#   echo "Linting failed! Fix errors before committing."
-#   exit 1
-# fi
+if [ $ESLINT_STATUS -ne 0 ]; then
+  echo "Linting failed! Fix errors before committing."
+  exit 1
+fi
 
 echo "Linting completed!"
 
 # echo "Running formatting before commit..."
-# npx prettier --write .
+npx prettier --write .
 
 # echo "Formatting completed!"

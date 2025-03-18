@@ -1,3 +1,3 @@
 export const language = {
-    SV: "sv",
-} as const
+	SV: "sv",
+} as const;

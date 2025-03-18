@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { language } from '@app/constants/language';
-import i18next from 'i18next';
-import sv from '@assets/i18n/sv/sv.json'
-import { TranslationKeyPaths } from '@types';
+import { Injectable } from "@angular/core";
+import { language } from "@app/constants/language";
+import i18next from "i18next";
+import sv from "@assets/i18n/sv/sv.json";
+import { TranslationKeyPaths } from "@types";
 
 const defaultNS = "translation";
 
@@ -11,7 +11,7 @@ const resources = {
 } as const;
 
 @Injectable({
-	providedIn: 'root',
+	providedIn: "root",
 })
 export class TranslateService {
 	constructor() {
@@ -19,7 +19,7 @@ export class TranslateService {
 			lng: language.SV,
 			fallbackLng: language.SV,
 			resources,
-			defaultNS
+			defaultNS,
 		});
 	}
 
