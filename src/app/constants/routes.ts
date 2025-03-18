@@ -1,4 +1,4 @@
-export const ROUTES = {
+export const appRoutes = {
 	EVENT_CREATE: "event-create",
 	EVENT_DETAILS: "event-details",
 	EVENT_INVITE: "event-invite",
