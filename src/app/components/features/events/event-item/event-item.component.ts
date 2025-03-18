@@ -22,11 +22,11 @@ export class EventItemComponent {
 		this.actionClick.emit({ action, card: this.card });
 	}
 
-	selectMoreInfo() {
-		throw new Error("");
-	}
+	// selectMoreInfo() {
+	// 	throw new Error("");
+	// }
 
-	showInvitation() {
-		throw new Error("");
-	}
+	// showInvitation() {
+	// 	throw new Error("");
+	// }
 }
