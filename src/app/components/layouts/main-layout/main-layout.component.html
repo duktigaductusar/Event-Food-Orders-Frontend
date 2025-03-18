@@ -33,6 +33,7 @@
 					class="nav-link text-secondary flex-grow-1"
 					[routerLink]="appRoutes.HOME"
 					routerLinkActive="active"
+					(click)="closeSidebar()"
 					>{{ t("navigation.home_link") }}</a
 				>
 			</li>
@@ -42,6 +43,7 @@
 					class="nav-link text-secondary flex-grow-1"
 					[routerLink]="appRoutes.EVENT_CREATE"
 					routerLinkActive="active"
+					(click)="closeSidebar()"
 					>{{ t("navigation.create_event_link") }}</a
 				>
 			</li>

@@ -4,6 +4,7 @@ import { MainLayoutComponent } from "@app/components/layouts";
 
 @Component({
 	selector: "app-event-create-page",
+	standalone: true,
 	imports: [MainLayoutComponent],
 	templateUrl: "./event-create-page.component.html",
 	styleUrl: "./event-create-page.component.css",
