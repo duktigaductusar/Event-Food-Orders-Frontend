@@ -13,12 +13,18 @@ export const routes: Routes = [
 		path: "",
 		children: [
 			{ path: appRoutes.HOME, component: HomePageComponent },
-			{ path: appRoutes.EVENT_CREATE, component: EventCreatePageComponent },
+			{
+				path: appRoutes.EVENT_CREATE,
+				component: EventCreatePageComponent,
+			},
 			{
 				path: appRoutes.EVENT_DETAILS,
 				component: EventDetailsPageComponent,
 			},
-			{ path: appRoutes.EVENT_INVITE, component: EventInvitePageComponent },
+			{
+				path: appRoutes.EVENT_INVITE,
+				component: EventInvitePageComponent,
+			},
 		],
 	},
 	{ path: appRoutes.LOGIN, component: LoginPageComponent },

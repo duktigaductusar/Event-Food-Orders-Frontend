@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 	<div class="container-fluid">
-		<a class="navbar-brand" routerLink="/">Ductus Events</a>
+		<a class="navbar-brand" routerLink="/">{{ t("navigation.title") }}</a>
 
 		<button
 			class="btn border-0"
@@ -16,7 +16,7 @@
 	<div
 		class="offcanvas-header d-flex justify-content-between align-items-center w-100"
 	>
-		<h5 class="offcanvas-title">Menu</h5>
+		<h5 class="offcanvas-title">{{ t("navigation.menu_title") }}</h5>
 		<button
 			class="btn btn-link"
 			(click)="close('Closed via button')"
@@ -33,7 +33,7 @@
 					class="nav-link text-secondary flex-grow-1"
 					[routerLink]="appRoutes.HOME"
 					routerLinkActive="active"
-					>Home</a
+					>{{ t("navigation.home_link") }}</a
 				>
 			</li>
 			<li class="nav-item d-flex align-items-center p-2 w-100 hover-gray">
@@ -42,7 +42,7 @@
 					class="nav-link text-secondary flex-grow-1"
 					[routerLink]="appRoutes.EVENT_CREATE"
 					routerLinkActive="active"
-					>Create</a
+					>{{ t("navigation.create_event_link") }}</a
 				>
 			</li>
 		</ul>
