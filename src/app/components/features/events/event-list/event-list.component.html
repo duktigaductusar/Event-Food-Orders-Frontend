@@ -1,7 +1,7 @@
 <div class="container py-4">
 	<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
 		@for (card of getCurrentPageItems(); track card.id) {
-			<div class="col">
+			<div class="col-lg-3 col-md-4 col-sm-6">
 				<app-event-item
 					[card]="card"
 					(cardClick)="onCardSelected(card)"
