@@ -9,7 +9,19 @@
 		"title": "Event-invite page"
 	},
 	"home": {
-		"title": "Index Sida!"
+		"title": "Index Sida!",
+		"labelEventOwner": "Värd",
+		"labelOnline": "Anmäld Online",
+		"labelOffice": "Anmäld på plats",
+		"labelReject": "Avvisat",
+		"labelPending": "Inväntar svar",
+		"updateBtnLabel": "Redigera",
+		"onlineBtnLabel": "Delta online",
+		"officeBtnLabel": "Delta på plats",
+		"rejectBtnLabel": "Avvisa inbjudan",
+		"regretBtnLabel": "Ångra anmälan",
+		"regretRejectBtnLabel": "Ångra avvisan",
+		"titleNoEvent": "Inga event hittades"
 	},
 	"login": {
 		"title": "Login Sida!"
