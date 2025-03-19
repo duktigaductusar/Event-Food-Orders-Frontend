@@ -10,6 +10,7 @@ import {
 	NgbTimepickerModule,
 } from "@ng-bootstrap/ng-bootstrap";
 import { CommonModule } from "@angular/common";
+import { ResponsiveFormComponent } from "../../../html/responsive-form/responsive-form.component";
 
 @Component({
 	selector: "app-create-event",
@@ -19,6 +20,7 @@ import { CommonModule } from "@angular/common";
 		ReactiveFormsModule,
 		NgbDatepickerModule,
 		NgbTimepickerModule,
+		ResponsiveFormComponent,
 	],
 	templateUrl: "./create-event.component.html",
 	styles: [
