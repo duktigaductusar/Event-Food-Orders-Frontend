@@ -26,6 +26,7 @@ export class EventListComponent extends AppBaseComponent implements OnInit {
 
 	loadEvents(): void {
 		this.eventService.getEvents().subscribe(events => {
+			console.log(events);
 			this.cards = events;
 		});
 	}
