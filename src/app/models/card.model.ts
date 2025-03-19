@@ -21,3 +21,6 @@ export interface IEventDto {
 	// Description: string
 	// EventActive: bool
 }
+
+
+

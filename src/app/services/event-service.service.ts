@@ -1,11 +1,19 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { IEventDto } from "@app/models/card.model";
+import { environment } from "@environments/environment.development";
 import { type Observable, of } from "rxjs";
 
 @Injectable({
 	providedIn: "root",
 })
 export class EventService {
+	private apiUrl = `${environment.apiUrl}/event`;
+	private http:HttpClient;
+
+	constructor(http: HttpClient) {this.http=http};
+
+
 	private cards: IEventDto[] = [
 		{
 			id: 1,
@@ -47,6 +55,7 @@ export class EventService {
 
 	getEvents(): Observable<IEventDto[]> {
 		return of(this.cards);
+		// return this.http.get<IEventDto[]>(`${this.apiUrl}/get/all`)
 	}
 
 	getEventById(id: number): Observable<IEventDto | undefined> {
