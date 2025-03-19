@@ -3,45 +3,7 @@ import { FormsModule } from "@angular/forms";
 import { EventItemComponent } from "../event-item/event-item.component";
 import { IEventDto } from "@app/models";
 import { EventService } from "@app/services";
-
-// @Component({
-// 	selector: "app-event-list",
-// 	standalone: true,
-// 	imports: [CommonModule, FormsModule, EventItemComponent],
-// 	templateUrl: "./event-list.component.html",
-// })
-// export class EventListComponent implements OnInit {
-// 	private cardService = inject(EventService);
-
-// 	cards: IEventDto[] = [];
-// 	//filteredCards: Card[] = []
-// 	searchTerm = "";
-// 	currentPage = 1;
-// 	itemsPerPage = 8;
-// 	totalPages = 0;
-// 	categories: string[] = [];
-// 	selectedCategory = "All";
-
-// 	ngOnInit(): void {
-// 		this.loadCards();
-// 	}
-
-// 	loadCards(): void {
-// 		this.cardService.getCards().subscribe(cards => {
-// 			this.cards = cards;
-// 		});
-// 	}
-
-// 	getCurrentPageItems(): IEventDto[] {
-// 		const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-// 		return this.cards.slice(startIndex, startIndex + this.itemsPerPage);
-// 	}
-
-// 	onCardSelected(card: IEventDto): void {
-// 		console.log("Card selected:", card);
-// 		// Handle card selection (e.g., navigate to detail page)
-// 	}
-// }
+import { AppBaseComponent } from "@app/components/base/app-base.component";
 
 @Component({
 	selector: "app-event-list",
@@ -49,12 +11,14 @@ import { EventService } from "@app/services";
 	imports: [FormsModule, EventItemComponent],
 	templateUrl: "./event-list.component.html",
 })
-export class EventListComponent implements OnInit {
+export class EventListComponent extends AppBaseComponent implements OnInit {
 	cards: IEventDto[] = [];
 	currentPage = 1;
 	itemsPerPage = 8;
 
-	constructor(private eventService: EventService) {}
+	constructor(private eventService: EventService) {
+		super();
+	}
 
 	ngOnInit(): void {
 		this.loadEvents();

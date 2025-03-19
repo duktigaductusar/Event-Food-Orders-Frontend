@@ -1,15 +1,17 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
-import { CommonModule } from "@angular/common";
 import type { IEventDto } from "@app/models";
+import { AppBaseComponent } from "@app/components/base/app-base.component";
+import { DatetimelabelComponent } from "@app/components/shared/datetimelabel/datetimelabel.component";
+import { GenericBtnComponent } from "../../../html/generic-btn/generic-btn.component";
 
 @Component({
 	selector: "app-event-item",
 	standalone: true,
-	imports: [CommonModule],
+	imports: [DatetimelabelComponent, GenericBtnComponent],
 	templateUrl: "event-item.component.html",
 	styleUrl: "event-item.component.css",
 })
-export class EventItemComponent {
+export class EventItemComponent extends AppBaseComponent {
 	@Input() card!: IEventDto;
 	@Output() cardClick = new EventEmitter<void>();
 	@Output() actionClick = new EventEmitter<{
