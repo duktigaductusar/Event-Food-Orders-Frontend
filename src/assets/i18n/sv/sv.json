@@ -25,5 +25,11 @@
 	},
 	"login": {
 		"title": "Login Sida!"
+	},
+	"navigation": {
+		"title": "Ductus Events",
+		"menu_title": "Meny",
+		"home_link": "Hem",
+		"create_event_link": "Skapa Event"
 	}
 }
