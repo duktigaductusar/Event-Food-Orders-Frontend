@@ -47,6 +47,16 @@
 					>{{ t("navigation.create_event_link") }}</a
 				>
 			</li>
+			<li class="nav-item d-flex align-items-center p-2 w-100 hover-gray">
+				<i class="bi bi-plus-square-fill fs-4 text-secondary"></i>
+				<a
+					class="nav-link text-secondary flex-grow-1"
+					[routerLink]="appRoutes.LOGIN"
+					routerLinkActive="active"
+					(click)="closeSidebar()"
+					>{{ t("navigation.login_link") }}</a
+				>
+			</li>
 		</ul>
 	</div>
 </ng-template>

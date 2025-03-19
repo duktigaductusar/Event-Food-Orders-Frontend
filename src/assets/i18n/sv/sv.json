@@ -30,6 +30,7 @@
 		"title": "Ductus Events",
 		"menu_title": "Meny",
 		"home_link": "Hem",
+		"login_link": "Login",
 		"create_event_link": "Skapa Event"
 	}
 }
