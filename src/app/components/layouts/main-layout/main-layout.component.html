@@ -1,0 +1,56 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<div class="container-fluid">
+		<a class="navbar-brand" routerLink="/">{{ t("navigation.title") }}</a>
+
+		<button
+			class="btn border-0"
+			(click)="openSidebar(menuTemplate)"
+			aria-label="Toggle menu"
+		>
+			<i class="bi bi-list fs-3 text-primary"></i>
+		</button>
+	</div>
+</nav>
+
+<ng-template #menuTemplate let-close="dismiss">
+	<div
+		class="offcanvas-header d-flex justify-content-between align-items-center w-100"
+	>
+		<h5 class="offcanvas-title">{{ t("navigation.menu_title") }}</h5>
+		<button
+			class="btn btn-link"
+			(click)="close('Closed via button')"
+			aria-label="Close"
+		>
+			<i class="bi bi-x-lg fs-3 text-primary"></i>
+		</button>
+	</div>
+	<div class="offcanvas-body bg-light">
+		<ul class="nav flex-column w-100">
+			<li class="nav-item d-flex align-items-center p-2 w-100 hover-gray">
+				<i class="bi bi-house-door-fill fs-4 text-secondary"></i>
+				<a
+					class="nav-link text-secondary flex-grow-1"
+					[routerLink]="appRoutes.HOME"
+					routerLinkActive="active"
+					(click)="closeSidebar()"
+					>{{ t("navigation.home_link") }}</a
+				>
+			</li>
+			<li class="nav-item d-flex align-items-center p-2 w-100 hover-gray">
+				<i class="bi bi-plus-square-fill fs-4 text-secondary"></i>
+				<a
+					class="nav-link text-secondary flex-grow-1"
+					[routerLink]="appRoutes.EVENT_CREATE"
+					routerLinkActive="active"
+					(click)="closeSidebar()"
+					>{{ t("navigation.create_event_link") }}</a
+				>
+			</li>
+		</ul>
+	</div>
+</ng-template>
+
+<div class="container mt-4">
+	<ng-content></ng-content>
+</div>

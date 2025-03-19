@@ -4,8 +4,8 @@ import { AuthenticationService } from "@app/services/index";
 
 @Component({
 	selector: "app-login-page",
-	imports: [],
 	templateUrl: "./login-page.component.html",
+	imports: [],
 	styleUrl: "./login-page.component.css",
 })
 export class LoginPageComponent extends AppBaseComponent {

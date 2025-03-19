@@ -6,21 +6,27 @@ import {
 	HomePageComponent,
 	LoginPageComponent,
 } from "@app/components";
-import { ROUTES } from "./constants";
+import { appRoutes } from "./constants";
 
 export const routes: Routes = [
 	{
 		path: "",
 		children: [
-			{ path: ROUTES.HOME, component: HomePageComponent },
-			{ path: ROUTES.EVENT_CREATE, component: EventCreatePageComponent },
+			{ path: appRoutes.HOME, component: HomePageComponent },
 			{
-				path: ROUTES.EVENT_DETAILS,
+				path: appRoutes.EVENT_CREATE,
+				component: EventCreatePageComponent,
+			},
+			{
+				path: appRoutes.EVENT_DETAILS,
 				component: EventDetailsPageComponent,
 			},
-			{ path: ROUTES.EVENT_INVITE, component: EventInvitePageComponent },
+			{
+				path: appRoutes.EVENT_INVITE,
+				component: EventInvitePageComponent,
+			},
 		],
 	},
-	{ path: ROUTES.LOGIN, component: LoginPageComponent },
+	{ path: appRoutes.LOGIN, component: LoginPageComponent },
 	{ path: "**", redirectTo: "" },
 ];

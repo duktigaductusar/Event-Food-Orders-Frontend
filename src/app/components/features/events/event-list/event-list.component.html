@@ -1,19 +1,22 @@
 <div class="container py-4">
 	<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
 		@for (card of getCurrentPageItems(); track card.id) {
-			<div class="col-lg-3 col-md-4 col-sm-6">
+			<div class="col">
 				<app-event-item
 					[card]="card"
 					(cardClick)="onCardSelected(card)"
+					class="h-100"
 				></app-event-item>
 			</div>
 		}
 	</div>
 
 	@if (cards.length === 0) {
-		<div class="text-center py-5">
-			<i class="bi bi-inbox fs-1 text-muted"></i>
-			<p class="mt-3">No cards found matching your criteria</p>
+		<div class="d-flex flex-column align-items-center py-5">
+			<i class="bi bi-calendar-x fs-1 text-muted"></i>
+			<p class="mt-3 text-secondary">
+				{{ t("home.titleNoEvent") }}
+			</p>
 		</div>
 	}
 </div>
