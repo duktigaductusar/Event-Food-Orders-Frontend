@@ -9,10 +9,11 @@ import { type Observable, of } from "rxjs";
 })
 export class EventService {
 	private apiUrl = `${environment.apiUrl}/event`;
-	private http:HttpClient;
+	private http: HttpClient;
 
-	constructor(http: HttpClient) {this.http=http};
-
+	constructor(http: HttpClient) {
+		this.http = http;
+	}
 
 	private cards: IEventDto[] = [
 		{
