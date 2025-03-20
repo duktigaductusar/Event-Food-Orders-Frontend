@@ -9,12 +9,11 @@ import { AuthenticationService } from "@app/services/index";
 	styleUrl: "./login-page.component.css",
 })
 export class LoginPageComponent extends AppBaseComponent {
-
 	constructor(private authService: AuthenticationService) {
 		super();
 	}
 
-	handleOnClick(): void{
+	handleOnClick(): void {
 		this.authService.login();
 	}
 }

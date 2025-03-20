@@ -6,13 +6,10 @@ import { AppComponent } from "./app/app.component";
 import { provideHttpClient } from "@angular/common/http";
 
 const updatedAppConfig = {
-    ...appConfig,
-    providers: [
-        ...(appConfig.providers || []),
-        provideHttpClient()
-    ]
+	...appConfig,
+	providers: [...(appConfig.providers || []), provideHttpClient()],
 };
 
-
-
-bootstrapApplication(AppComponent, updatedAppConfig).catch(err => console.error(err));
+bootstrapApplication(AppComponent, updatedAppConfig).catch(err =>
+	console.error(err)
+);

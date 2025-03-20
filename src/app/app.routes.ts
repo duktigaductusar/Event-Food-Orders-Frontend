@@ -24,7 +24,7 @@ export const routes: Routes = [
 			{
 				path: appRoutes.EVENT_INVITE,
 				component: EventInvitePageComponent,
-			}
+			},
 		],
 	},
 	{ path: appRoutes.LOGIN, component: LoginPageComponent },
