@@ -18,7 +18,7 @@ export const routes: Routes = [
 				component: EventCreatePageComponent,
 			},
 			{
-				path: `${appRoutes.EVENT_DETAILS}/:id` ,
+				path: `${appRoutes.EVENT_DETAILS}/:id`,
 				component: EventDetailsPageComponent,
 			},
 			{

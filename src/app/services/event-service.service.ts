@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable, signal } from "@angular/core";
 import { IEventDto } from "@app/models";
+import { IEventDetailDto } from "@app/models/IEventDetailDto.model";
 import { environment } from "@environments/environment.development";
 import { type Observable, of } from "rxjs";
 
@@ -11,75 +12,92 @@ export class EventService {
 	private apiUrl = `${environment.apiUrl}/event`;
 	private http: HttpClient;
 
-	currentSelectedEventDto = signal <IEventDto | null>(null);
+	selectedEventDto = signal<IEventDto | null>(null);
+	selectedEventDetailDto = signal<IEventDetailDto | null>(null);
 
 	constructor(http: HttpClient) {
 		this.http = http;
 	}
 
-	setCurrentSelectedEvent(item:IEventDto){
-		this.currentSelectedEventDto.set(item)
+	setSelectedEvent(item: IEventDto) {
+		this.selectedEventDto.set(item);
 	}
 
-	private cards: IEventDto[] = [
+	private events: IEventDto[] = [
 		{
-			id: 1,
+			id: "1",
 			title: "Business Meeting",
 			description: "Quarterly review with stakeholders",
 			date: new Date("2024-07-15"),
 			isOwner: false,
-			response: "PENDING",
-			wantsMeal: false,
+			responseType: "PENDING",			
 		},
 		{
-			id: 2,
+			id: "2",
 			title: "Team Lunch",
 			description: "Casual lunch with the development team",
 			date: new Date("2024-07-20"),
 			isOwner: true,
-			response: "ATTENDING_OFFICE",
-			wantsMeal: true,
+			responseType: "ATTENDING_OFFICE",			
 		},
 		{
-			id: 3,
+			id: "3",
 			title: "Product Launch",
 			description: "New product line introduction to the market",
 			date: new Date("2024-08-05"),
 			isOwner: false,
-			response: "NOT_ATTENDING",
-			wantsMeal: false,
+			responseType: "NOT_ATTENDING",
 		},
 		{
-			id: 4,
+			id: "4",
 			title: "Training Workshop",
 			description: "Technical training for new software tools",
 			date: new Date("2024-08-12"),
 			isOwner: false,
-			response: "ATTENDING_ONLINE",
-			wantsMeal: false,
+			responseType: "ATTENDING_ONLINE",
 		},
 	];
 
+	private eventDetail: IEventDetailDto = 
+		{
+			id: "1",
+			title: "Business Meeting",
+			description: "Quarterly review with stakeholders",
+			date: new Date("2024-07-15"),
+			isOwner: false,
+			responseType: "PENDING",
+			deadline: new Date("2025-08-12"),
+			participantID: "3",
+			wantsMeal:true,
+			allergies: ["vego"],
+			preferences: ["testpreferences"]			
+		};
+
 	getEvents(): Observable<IEventDto[]> {
-		return of(this.cards);
+		return of(this.events);
 		// return this.http.get<IEventDto[]>(`${this.apiUrl}/get/all`)
 	}
 
-	getEventById(id: number): Observable<IEventDto | undefined> {
-		return of(this.cards.find(event => event.id === id));
+	getDetailEvent(): Observable<IEventDetailDto> {
+		return of(this.eventDetail);
+		// return this.http.get<IEventDto[]>(`${this.apiUrl}/get/all`)
+	}
+
+	getEventById(id: string): Observable<IEventDto | undefined> {
+		return of(this.events.find(event => event.id === id));
 	}
 
 	updateEventResponse(
-		id: number,
+		id: string,
 		newResponse:
 			| "PENDING"
 			| "ATTENDING_ONLINE"
 			| "ATTENDING_OFFICE"
 			| "NOT_ATTENDING"
 	): void {
-		const event = this.cards.find(event => event.id === id);
+		const event = this.events.find(event => event.id === id);
 		if (event) {
-			event.response = newResponse;
+			event.responseType = newResponse;
 		}
 	}
 }
