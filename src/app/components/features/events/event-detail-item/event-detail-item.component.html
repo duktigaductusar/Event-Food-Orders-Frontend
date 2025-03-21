@@ -1,0 +1,12 @@
+<p>event-detail-item works!</p>
+<h5 class="m-0 fw-bold text-primary">
+	{{ currentSelectedEventDto()?.title }}
+</h5>
+@if (currentSelectedEventDto() !== null) {
+	<app-datetimelabel
+		[datevalue]="currentSelectedEventDto()!.date"
+	></app-datetimelabel>
+}
+<p class="mb-2 text-secondary">
+	{{ currentSelectedEventDto()?.description }}
+</p>

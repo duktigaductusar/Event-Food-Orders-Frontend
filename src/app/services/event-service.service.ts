@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { IEventDto } from "@app/models/card.model";
+import { Injectable, signal } from "@angular/core";
+import { IEventDto } from "@app/models";
 import { environment } from "@environments/environment.development";
 import { type Observable, of } from "rxjs";
 
@@ -11,8 +11,14 @@ export class EventService {
 	private apiUrl = `${environment.apiUrl}/event`;
 	private http: HttpClient;
 
+	currentSelectedEventDto = signal <IEventDto | null>(null);
+
 	constructor(http: HttpClient) {
 		this.http = http;
+	}
+
+	setCurrentSelectedEvent(item:IEventDto){
+		this.currentSelectedEventDto.set(item)
 	}
 
 	private cards: IEventDto[] = [

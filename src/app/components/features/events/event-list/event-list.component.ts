@@ -12,7 +12,7 @@ import { AppBaseComponent } from "@app/components/base/app-base.component";
 	templateUrl: "./event-list.component.html",
 })
 export class EventListComponent extends AppBaseComponent implements OnInit {
-	cards: IEventDto[] = [];
+	eventDtos: IEventDto[] = [];
 	currentPage = 1;
 	itemsPerPage = 8;
 
@@ -27,13 +27,13 @@ export class EventListComponent extends AppBaseComponent implements OnInit {
 	loadEvents(): void {
 		this.eventService.getEvents().subscribe(events => {
 			console.log(events);
-			this.cards = events;
+			this.eventDtos = events;
 		});
 	}
 
 	getCurrentPageItems(): IEventDto[] {
 		const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-		return this.cards.slice(startIndex, startIndex + this.itemsPerPage);
+		return this.eventDtos.slice(startIndex, startIndex + this.itemsPerPage);
 	}
 
 	onCardSelected(card: IEventDto): void {

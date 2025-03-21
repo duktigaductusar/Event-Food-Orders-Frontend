@@ -1,1 +1,1 @@
-export type { IEventDto } from "./card.model";
+export type { IEventDto } from "./IEventDto.model";
