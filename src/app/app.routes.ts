@@ -5,6 +5,7 @@ import {
 	EventInvitePageComponent,
 	HomePageComponent,
 	LoginPageComponent,
+	LogoutPageComponent
 } from "@app/components";
 import { appRoutes } from "./constants";
 
@@ -28,5 +29,6 @@ export const routes: Routes = [
 		],
 	},
 	{ path: appRoutes.LOGIN, component: LoginPageComponent },
-	{ path: "**", redirectTo: "" },
+	{ path: appRoutes.LOGOUT, component: LogoutPageComponent},
+	{ path: "**", redirectTo: "" }
 ];
