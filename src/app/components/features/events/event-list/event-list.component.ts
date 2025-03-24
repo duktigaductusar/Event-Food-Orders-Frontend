@@ -19,7 +19,7 @@ export class EventListComponent extends AppBaseComponent implements OnInit {
 	currentPage = 1;
 	itemsPerPage = 8;
 
-	isPending=signal(false)
+	isPending = signal(false);
 
 	constructor(private eventService: EventService) {
 		super();
@@ -35,13 +35,13 @@ export class EventListComponent extends AppBaseComponent implements OnInit {
 		// 	this.eventDtos = events;
 		// });
 
-		this.isPending.set(true)
+		this.isPending.set(true);
 		this.eventService.getEvents().subscribe({
-			next: events=> {
+			next: events => {
 				this.eventDtos = events;
 			},
-			error: error => console.error('Test error' + error),
-			complete: () => this.isPending.set(false)
+			error: error => console.error("Test error" + error),
+			complete: () => this.isPending.set(false),
 		});
 	}
 

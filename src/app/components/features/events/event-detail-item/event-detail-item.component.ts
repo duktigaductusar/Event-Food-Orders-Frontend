@@ -47,10 +47,10 @@ export class EventDetailItemComponent
 		console.log(this.service?.selectedEventDto());
 	}
 
-	onSubmit=()=> {
+	onSubmit = () => {
 		if (this.eventForm.valid) {
 			console.log("Event Created:", this.eventForm.value);
 			alert("Event successfully created!");
 		}
-	}
+	};
 }
