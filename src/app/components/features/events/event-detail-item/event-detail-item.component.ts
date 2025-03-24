@@ -6,11 +6,21 @@ import { DatetimelabelComponent } from "../../../shared/datetimelabel/datetimela
 import { IEventDto } from "@app/models";
 import { StatusLabelComponent } from "../status-label/status-label.component";
 import { ResponsiveFormComponent } from "../../../html/responsive-form/responsive-form.component";
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
+import {
+	FormBuilder,
+	FormGroup,
+	ReactiveFormsModule,
+	Validators,
+} from "@angular/forms";
 
 @Component({
 	selector: "app-event-detail-item",
-	imports: [DatetimelabelComponent, StatusLabelComponent, ResponsiveFormComponent, ReactiveFormsModule],
+	imports: [
+		DatetimelabelComponent,
+		StatusLabelComponent,
+		ResponsiveFormComponent,
+		ReactiveFormsModule,
+	],
 	templateUrl: "./event-detail-item.component.html",
 	styleUrl: "./event-detail-item.component.css",
 })
@@ -27,19 +37,17 @@ export class EventDetailItemComponent
 		private fb: FormBuilder
 	) {
 		super();
-		this.selectedEventDto = signal(
-			this.service.selectedEventDto()
-		);
+		this.selectedEventDto = signal(this.service.selectedEventDto());
 		this.eventForm = this.fb.group({
 			preference: ["", [Validators.required, Validators.minLength(3)]],
 			allergy: ["", [Validators.required, Validators.minLength(10)]],
-		})
+		});
 	}
 	ngOnInit(): void {
 		console.log(this.service?.selectedEventDto());
 	}
 
-	onSubmit() {
+	onSubmit=()=> {
 		if (this.eventForm.valid) {
 			console.log("Event Created:", this.eventForm.value);
 			alert("Event successfully created!");

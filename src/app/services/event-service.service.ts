@@ -30,7 +30,7 @@ export class EventService {
 			description: "Quarterly review with stakeholders",
 			date: new Date("2024-07-15"),
 			isOwner: false,
-			responseType: "PENDING",			
+			responseType: "PENDING",
 		},
 		{
 			id: "2",
@@ -38,7 +38,7 @@ export class EventService {
 			description: "Casual lunch with the development team",
 			date: new Date("2024-07-20"),
 			isOwner: true,
-			responseType: "ATTENDING_OFFICE",			
+			responseType: "ATTENDING_OFFICE",
 		},
 		{
 			id: "3",
@@ -58,24 +58,23 @@ export class EventService {
 		},
 	];
 
-	private eventDetail: IEventDetailDto = 
-		{
-			id: "1",
-			title: "Business Meeting",
-			description: "Quarterly review with stakeholders",
-			date: new Date("2024-07-15"),
-			isOwner: false,
-			responseType: "PENDING",
-			deadline: new Date("2025-08-12"),
-			participantID: "3",
-			wantsMeal:true,
-			allergies: ["vego"],
-			preferences: ["testpreferences"]			
-		};
+	private eventDetail: IEventDetailDto = {
+		id: "1",
+		title: "Business Meeting",
+		description: "Quarterly review with stakeholders",
+		date: new Date("2024-07-15"),
+		isOwner: false,
+		responseType: "PENDING",
+		deadline: new Date("2025-08-12"),
+		participantID: "3",
+		wantsMeal: true,
+		allergies: ["vego"],
+		preferences: ["testpreferences"],
+	};
 
 	getEvents(): Observable<IEventDto[]> {
 		// return of(this.events);
-		return this.http.get<IEventDto[]>(`${this.apiUrl}/all`)
+		return this.http.get<IEventDto[]>(`${this.apiUrl}/all`);
 	}
 
 	getDetailEvent(): Observable<IEventDetailDto> {

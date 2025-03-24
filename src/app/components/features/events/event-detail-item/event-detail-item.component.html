@@ -1,3 +1,6 @@
+<!-- todo:
+1.Language update
+ -->
 <div class="container py-4">
 	<app-responsive-form
 		[formGroup]="eventForm"
@@ -10,7 +13,6 @@
 			<h5 class="m-0 fw-bold text-primary">
 				{{ selectedEventDto()!.title }}
 			</h5>
-			<!-- 		<app-status-label [eventDto]="selectedEventDto"></app-status-label> -->
 		</div>
 		<div class="card-body bg-white">
 			@if (selectedEventDto() !== null) {
@@ -45,7 +47,7 @@
 				class="btn btn-primary"
 				[disabled]="eventForm.invalid"
 			>
-				<i class="bi bi-check-circle"></i> Skapa Event
+				<i class="bi bi-check-circle"></i> Skicka
 			</button>
 		</div>
 	</app-responsive-form>

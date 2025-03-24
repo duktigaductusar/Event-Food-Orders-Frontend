@@ -7,5 +7,5 @@ export interface IEventDto {
 	date: Date;
 	isActive?: boolean;
 	isOwner: boolean;
-	responseType: ParticipantResponseType;	
+	responseType: ParticipantResponseType;
 }

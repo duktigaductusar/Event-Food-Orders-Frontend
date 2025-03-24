@@ -11,7 +11,11 @@ import { StatusLabelComponent } from "../status-label/status-label.component";
 @Component({
 	selector: "app-event-item",
 	standalone: true,
-	imports: [DatetimelabelComponent, GenericBtnComponent, StatusLabelComponent],
+	imports: [
+		DatetimelabelComponent,
+		GenericBtnComponent,
+		StatusLabelComponent,
+	],
 	templateUrl: "event-item.component.html",
 	styleUrl: "event-item.component.css",
 })

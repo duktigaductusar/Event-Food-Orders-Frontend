@@ -2,10 +2,9 @@ import { Component, HostListener, Input } from "@angular/core";
 import { FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 
-	//todo: 
-	// 1.Clean upp component
-	// 2.Goal is for the form to be reusable throughout the whole application
-
+//todo:
+// 1.Clean upp component
+// 2.Goal is for the form to be reusable throughout the whole application
 
 @Component({
 	selector: "app-responsive-form",
@@ -19,13 +18,13 @@ export class ResponsiveFormComponent {
 	@Input() submitHandler!: () => void;
 	@Input() withParentStyle = "";
 
-	isSmallScreen = false;	
+	isSmallScreen = false;
 
 	computedClass() {
-		if (this.withParentStyle.length !== 0 ) {
-			return this.withParentStyle
-		} else if(this.isSmallScreen) {
-			return ""
+		if (this.withParentStyle.length !== 0) {
+			return this.withParentStyle;
+		} else if (this.isSmallScreen) {
+			return "";
 		}
 		return `card shadow-sm mb-4 py-3 card-header d-flex justify-content-between`;
 	}
