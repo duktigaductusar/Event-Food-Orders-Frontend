@@ -74,8 +74,8 @@ export class EventService {
 		};
 
 	getEvents(): Observable<IEventDto[]> {
-		return of(this.events);
-		// return this.http.get<IEventDto[]>(`${this.apiUrl}/get/all`)
+		// return of(this.events);
+		return this.http.get<IEventDto[]>(`${this.apiUrl}/all`)
 	}
 
 	getDetailEvent(): Observable<IEventDetailDto> {
