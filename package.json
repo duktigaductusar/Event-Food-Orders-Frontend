@@ -2,9 +2,8 @@
 	"name": "dd-frontend",
 	"version": "0.0.0",
 	"scripts": {
-		"hooks:setup": "git config core.hooksPath .hooks",
 		"ng": "ng",
-		"start": "npm run hooks:setup && ng serve",
+		"start": "ng serve",
 		"build": "ng build",
 		"watch": "ng build --watch --configuration development",
 		"test": "ng test",
@@ -12,7 +11,8 @@
 		"lint:check": "npx eslint \"src/**/*.{ts,html}\"",
 		"lint:fix": "npx eslint \"src/**/*.{ts,html}\" --fix",
 		"format:check": "npx prettier --check .",
-		"format:fix": "npx prettier --write ."
+		"format:fix": "npx prettier --write .",
+		"format_lint:fix": "npm run lint:fix && npm run format:fix"
 	},
 	"private": true,
 	"dependencies": {

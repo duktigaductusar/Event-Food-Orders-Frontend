@@ -1,7 +1,7 @@
 <form
 	[formGroup]="formGroup"
 	(ngSubmit)="submitHandler()"
-	[ngClass]="{ 'card p-4 shadow': !isSmallScreen }"
+	[ngClass]="computedClass()"
 >
 	<ng-content></ng-content>
 	<!-- Slot for form inputs -->

@@ -1,4 +1,7 @@
-import { Component, type OnInit } from "@angular/core";
+//todo
+//1.Error handling
+
+import { Component, signal, type OnInit } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { EventItemComponent } from "../event-item/event-item.component";
 import { IEventDto } from "@app/models";
@@ -16,6 +19,8 @@ export class EventListComponent extends AppBaseComponent implements OnInit {
 	currentPage = 1;
 	itemsPerPage = 8;
 
+	isPending = signal(false);
+
 	constructor(private eventService: EventService) {
 		super();
 	}
@@ -25,9 +30,18 @@ export class EventListComponent extends AppBaseComponent implements OnInit {
 	}
 
 	loadEvents(): void {
-		this.eventService.getEvents().subscribe(events => {
-			console.log(events);
-			this.eventDtos = events;
+		// this.eventService.getEvents().subscribe(events => {
+		// 	console.log(events);
+		// 	this.eventDtos = events;
+		// });
+
+		this.isPending.set(true);
+		this.eventService.getEvents().subscribe({
+			next: events => {
+				this.eventDtos = events;
+			},
+			error: error => console.error("Test error" + error),
+			complete: () => this.isPending.set(false),
 		});
 	}
 

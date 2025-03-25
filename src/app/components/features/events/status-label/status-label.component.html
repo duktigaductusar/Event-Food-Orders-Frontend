@@ -1,0 +1,23 @@
+@if (eventDto.isOwner) {
+	<span class="badge bg-secondary">
+		{{ t("home.labelEventOwner") }}
+	</span>
+} @else {
+	@if (eventDto.responseType === "ATTENDING_ONLINE") {
+		<span class="badge bg-success">
+			{{ t("home.labelOnline") }}
+		</span>
+	} @else if (eventDto.responseType === "ATTENDING_OFFICE") {
+		<span class="badge bg-success">
+			{{ t("home.labelOffice") }}
+		</span>
+	} @else if (eventDto.responseType === "NOT_ATTENDING") {
+		<span class="badge bg-danger">
+			{{ t("home.labelReject") }}
+		</span>
+	} @else if (eventDto.responseType === "PENDING") {
+		<span class="badge bg-warning text-dark">
+			{{ t("home.labelPending") }}
+		</span>
+	}
+}
