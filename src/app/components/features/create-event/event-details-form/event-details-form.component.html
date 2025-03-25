@@ -1,70 +1,88 @@
 <div class="container mt-4">
-	<app-responsive-form [formGroup]="form">
-		<app-multistep-form-navigation-header></app-multistep-form-navigation-header>
-		<div class="mb-3">
-			<label for="title" class="form-label">Event Titel</label>
-			<input
-				id="title"
-				type="text"
-				class="form-control"
-				formControlName="title"
-				placeholder="Enter event name"
-				[ngClass]="getControlClass('title')"
-			/>
-			@if (hasError("title", "required")) {
-				<div class="invalid-feedback">Ange event tittel.</div>
-			}
+	<app-responsive-form
+		[formGroup]="form"
+		[withParentStyle]="
+			'bg-white card shadow-sm d-flex justify-content-between mb-4'
+		"
+		[useResponsiveDesign]="true"
+	>
+		<div class="bg-light pt-4 px-2 border-bottom">
+			<ng-content select="[header]"></ng-content>
 		</div>
+		<div class="p-4">
+			<div class="mb-2">
+				<h4 class="text-center text-black">{{ step }}. {{ title }}</h4>
+			</div>
+			<div class="mb-3">
+				<label for="title" class="form-label">Event Titel</label>
+				<input
+					id="title"
+					type="text"
+					class="form-control"
+					formControlName="title"
+					placeholder="Enter event name"
+					[ngClass]="getControlClass('title')"
+				/>
+				@if (hasError("title", "required")) {
+					<div class="invalid-feedback">Ange event tittel.</div>
+				}
+			</div>
 
-		<div class="mb-3">
-			<label for="description" class="form-label">Beskrivining</label>
-			<textarea
-				id="description"
-				class="form-control"
-				formControlName="description"
-				placeholder="Enter event description"
-				[ngClass]="getControlClass('description')"
-			></textarea>
-			@if (hasError("description", "required")) {
-				<div class="invalid-feedback">Ange event Beskrivining.</div>
-			}
-		</div>
+			<div class="mb-3">
+				<label for="description" class="form-label">Beskrivining</label>
+				<textarea
+					id="description"
+					class="form-control"
+					formControlName="description"
+					placeholder="Enter event description"
+					[ngClass]="getControlClass('description')"
+				></textarea>
+				@if (hasError("description", "required")) {
+					<div class="invalid-feedback">Ange event Beskrivining.</div>
+				}
+			</div>
 
-		<div class="row">
-			<div class="col-md-6 mb-3">
-				<label for="date" class="form-label"
-					>Event Datum <i class="bi bi-calendar"></i
-				></label>
-				<div
-					class="datepicker-wrapper"
-					[ngClass]="getControlClass2('date')"
-				>
-					<ngb-datepicker formControlName="date"></ngb-datepicker>
-				</div>
-				@if (hasError("date", "required")) {
-					<div class="invalid-feedback d-block">
-						Ange event datum.
+			<div class="row">
+				<div class="col-md-6 mb-3">
+					<label for="date" class="form-label"
+						>Event Datum <i class="bi bi-calendar"></i
+					></label>
+					<div
+						class="datepicker-wrapper"
+						[ngClass]="getControlClass2('date')"
+					>
+						<ngb-datepicker formControlName="date"></ngb-datepicker>
 					</div>
-				}
-			</div>
-
-			<div class="col-md-6 mb-3">
-				<label for="time" class="form-label"
-					>Starttid <i class="bi bi-clock"></i
-				></label>
-				<div
-					class="timepicker-wrapper"
-					[ngClass]="getControlClass2('time')"
-				>
-					<ngb-timepicker
-						formControlName="time"
-						[spinners]="false"
-					></ngb-timepicker>
+					@if (hasError("date", "required")) {
+						<div class="invalid-feedback d-block">
+							Ange event datum.
+						</div>
+					}
 				</div>
-				@if (hasError("time", "required")) {
-					<div class="invalid-feedback d-block">Ange event tid.</div>
-				}
+
+				<div class="col-md-6 mb-3">
+					<label for="time" class="form-label"
+						>Starttid <i class="bi bi-clock"></i
+					></label>
+					<div
+						class="timepicker-wrapper"
+						[ngClass]="getControlClass2('time')"
+					>
+						<ngb-timepicker
+							formControlName="time"
+							[spinners]="false"
+						></ngb-timepicker>
+					</div>
+					@if (hasError("time", "required")) {
+						<div class="invalid-feedback d-block">
+							Ange event tid.
+						</div>
+					}
+				</div>
 			</div>
+		</div>
+		<div class="bg-light pb-4 border-top">
+			<ng-content select="[footer]"></ng-content>
 		</div>
 	</app-responsive-form>
 </div>

@@ -2,31 +2,96 @@
 	@switch (step) {
 		@case (1) {
 			<app-event-details-form
+				[title]="eventDetailTitle"
+				[step]="step"
 				[form]="eventDetailsFormGroup"
-			></app-event-details-form>
-			<div class="text-center">
-				<button class="btn btn-primary mt-3" (click)="nextStep()">
-					Next
-				</button>
-			</div>
+			>
+				<div header>
+					<app-multistep-form-navigation-header
+						[step]="step"
+						[steps]="getSubFormTitles()"
+					></app-multistep-form-navigation-header>
+				</div>
+				<div footer class="d-flex justify-content-center w-100 gap-4">
+					<app-generic-btn
+						[icon]="'arrow-right'"
+						[iconRight]="true"
+						[borderColor]="'primary'"
+						[label]="'Nästa'"
+						[customClass]="'mt-3'"
+						(action)="nextStep()"
+					>
+					</app-generic-btn>
+				</div>
+			</app-event-details-form>
 		}
 		@case (2) {
-			<app-event-user-form [form]="inviteUsersForm"></app-event-user-form>
-			<button class="btn btn-secondary mt-3" (click)="prevStep()">
-				Back
-			</button>
-			<button class="btn btn-primary mt-3" (click)="nextStep()">
-				Next
-			</button>
+			<app-event-user-form
+				[title]="addUserTitle"
+				[step]="step"
+				[form]="inviteUsersForm"
+			>
+				<div header>
+					<app-multistep-form-navigation-header
+						[steps]="getSubFormTitles()"
+						[step]="step"
+					>
+					</app-multistep-form-navigation-header>
+				</div>
+				<div footer class="d-flex justify-content-center w-100 gap-4">
+					<app-generic-btn
+						[icon]="'arrow-left'"
+						[borderColor]="'secondary'"
+						[label]="'Tillbaka'"
+						[customClass]="'mt-3'"
+						(action)="prevStep()"
+					>
+					</app-generic-btn>
+					<app-generic-btn
+						[icon]="'arrow-right'"
+						[iconRight]="true"
+						[borderColor]="'primary'"
+						[label]="'Nästa'"
+						[customClass]="'mt-3'"
+						(action)="nextStep()"
+					>
+					</app-generic-btn>
+				</div>
+			</app-event-user-form>
 		}
 		@case (3) {
-			<app-verify-event-form [form]="verifyForm"></app-verify-event-form>
-			<button class="btn btn-secondary mt-3" (click)="prevStep()">
-				Back
-			</button>
-			<button class="btn btn-success mt-3" (click)="submit()">
-				Submit
-			</button>
+			<app-verify-event-form
+				[title]="formVerificationTitle"
+				[step]="step"
+				[form]="inviteUsersForm"
+			>
+				<div header>
+					<app-multistep-form-navigation-header
+						[steps]="getSubFormTitles()"
+						[step]="step"
+					>
+					</app-multistep-form-navigation-header>
+				</div>
+				<div footer class="d-flex justify-content-center w-100 gap-4">
+					<app-generic-btn
+						[icon]="'arrow-left'"
+						[borderColor]="'secondary'"
+						[label]="'Tillbaka'"
+						[customClass]="'mt-3'"
+						(action)="prevStep()"
+					>
+					</app-generic-btn>
+					<app-generic-btn
+						[icon]="'check2-circle'"
+						[iconRight]="true"
+						[borderColor]="'primary'"
+						[label]="'Ok'"
+						[customClass]="'mt-3'"
+						(action)="nextStep()"
+					>
+					</app-generic-btn>
+				</div>
+			</app-verify-event-form>
 		}
 	}
 </div>

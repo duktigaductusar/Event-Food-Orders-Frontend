@@ -37,8 +37,9 @@ import { MultiStepFormHeaderComponent } from "../multistep-form-navigation-heade
 	],
 })
 export class EventDetailsFormComponent {
-  
   @Input() form!: FormGroup;
+  @Input() step!: number;
+  @Input() title = "";
 
 	// TODO Move to service or something else more shared.
 	private getControl(controlName: string): AbstractControl {
@@ -69,7 +70,6 @@ export class EventDetailsFormComponent {
 
 	// TODO Move to service or something else more shared.
 	hasError(controlName: string, error: string): boolean {
-
 		const control = this.getControl(controlName);
 		return control.touched && control.hasError(error);
 	}

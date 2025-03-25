@@ -8,6 +8,22 @@ import { Component, Input } from "@angular/core";
 	styleUrl: "./multistep-form-navigation-header.component.css",
 })
 export class MultiStepFormHeaderComponent {
-	readonly steps = ["Event Detaljer", "Ange deltagare", "Verifiera"] as const;
+	@Input() steps!: string[];
 	@Input() step = 1;
+
+
+	getStepClass(currentStep: number, index: number): string {
+		const stepNumber = index + 1;
+	
+		if (currentStep > stepNumber) {
+			return 'text-white bg-primary border-primary';
+		}
+	
+		if (currentStep === stepNumber) {
+			return 'bg-white border border-primary text-primary fw-bold';
+		}
+	
+		return 'bg-secondary text-white';
+	}
+	
 }

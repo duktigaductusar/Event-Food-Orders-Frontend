@@ -11,24 +11,22 @@ export type GenericBtnCompClrType =
 	selector: "app-generic-btn",
 	standalone: true,
 	imports: [CommonModule],
-	template: `
-		<button
-			class="btn btn-sm w-100"
-			[ngClass]="'btn-outline-' + borderColor"
-			(click)="onClick($event)"
-		>
-			<i [class]="'bi bi-' + icon"></i> {{ label }}
-		</button>
-	`,
+	templateUrl: 'generic-btn.component.html',
 })
 export class GenericBtnComponent {
 	@Input() borderColor: GenericBtnCompClrType = "secondary";
 	@Input() label = "Click Me";
 	@Input() icon = "pencil";
+	@Input() iconRight = false;
+	@Input() customClass = '';
 
 	@Output() action = new EventEmitter<Event>();
 
-	onClick(event: Event) {
+	getDerivedClass() {
+		return `btn-outline-${this.borderColor} ${this.customClass}`
+	}
+
+	onClick(event?: Event) {
 		this.action.emit(event);
 	}
 }

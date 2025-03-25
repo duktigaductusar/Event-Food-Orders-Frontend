@@ -1,5 +1,21 @@
-<app-responsive-form [formGroup]="form">
-	<app-multistep-form-navigation-header [step]="2">
-	</app-multistep-form-navigation-header>
-	<p>event-verify-form works!</p>
+<app-responsive-form
+	[formGroup]="form"
+	[withParentStyle]="
+		'bg-white card shadow-sm d-flex justify-content-between mb-4'
+	"
+	[useResponsiveDesign]="true"
+>
+	<div class="bg-light pt-4 px-2 border-bottom">
+		<ng-content select="[header]"></ng-content>
+	</div>
+	<div class="p-4">
+		<div class="flex-column justify-content-center w-100">
+			<div class="mb-2">
+				<h4 class="text-center text-black">{{ step }}. {{ title }}</h4>
+			</div>
+		</div>
+	</div>
+	<div class="bg-light pb-4 border-top">
+		<ng-content select="[footer]"></ng-content>
+	</div>
 </app-responsive-form>

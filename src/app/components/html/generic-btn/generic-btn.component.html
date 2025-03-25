@@ -1,1 +1,12 @@
-<p>genericbtn works!</p>
+<button
+	type="button"
+	class="btn btn-sm w-100"
+	[ngClass]="getDerivedClass()"
+	(click)="onClick($event)"
+>
+	@if (iconRight) {
+		{{ label }} <i [class]="'bi bi-' + icon"></i>
+	} @else {
+		<i [class]="'bi bi-' + icon"></i> {{ label }}
+	}
+</button>

@@ -17,14 +17,15 @@ export class ResponsiveFormComponent {
 	@Input() formGroup!: FormGroup;
 	@Input() submitHandler!: () => void;
 	@Input() withParentStyle = "";
+	@Input() useResponsiveDesign = false;
 
 	isSmallScreen = false;
 
 	computedClass() {
-		if (this.withParentStyle.length !== 0) {
-			return this.withParentStyle;
-		} else if (this.isSmallScreen) {
+		if (this.useResponsiveDesign && this.isSmallScreen) {
 			return "";
+		} else if (this.withParentStyle.length !== 0) {
+			return this.withParentStyle;
 		}
 		return `card shadow-sm mb-4 py-3 card-header d-flex justify-content-between`;
 	}

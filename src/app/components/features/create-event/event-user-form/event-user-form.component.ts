@@ -11,6 +11,8 @@ import { MultiStepFormHeaderComponent } from "../multistep-form-navigation-heade
 })
 export class EventUserFormComponent {
   @Input() form!: FormGroup;
+  @Input() step!: number;
+  @Input() title = "";
 
   // TODO Move to service or something else more shared.
 	private getControl(controlName: string): AbstractControl {

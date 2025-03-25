@@ -11,4 +11,6 @@ import { FormGroup } from '@angular/forms';
 })
 export class VerifyEventFormComponent {
   @Input() form!: FormGroup;
+  @Input() step!: number;
+  @Input() title = "";
 }

@@ -5,19 +5,26 @@ import { eventDetailsForm, ICreateEventForm, inviteUsersForm, verifyForm } from 
 import { NgbDateStruct, NgbTimeStruct } from "@ng-bootstrap/ng-bootstrap";
 import { EventUserFormComponent } from "./event-user-form/event-user-form.component";
 import { VerifyEventFormComponent } from "./verify-event-form/verify-event-form.component";
+import { MultiStepFormHeaderComponent } from "./multistep-form-navigation-header/multistep-form-navigation-header.component";
+import { GenericBtnComponent } from "@app/components/html";
 
 @Component({
 	selector: "app-create-event",
 	standalone: true,
 	imports: [
-    EventDetailsFormComponent,
-    EventUserFormComponent,
-    VerifyEventFormComponent
-],
+		GenericBtnComponent,
+		EventDetailsFormComponent,
+		EventUserFormComponent,
+		VerifyEventFormComponent,
+		MultiStepFormHeaderComponent
+	],
 	templateUrl: "./create-event.component.html",
 })
 export class CreateEventComponent {
-	step = 1;
+	step = 2;
+	eventDetailTitle = "Event Detaljer";
+	addUserTitle = "Ange deltagare";
+	formVerificationTitle = "Verifiera";
 
 	form!: FormGroup<ICreateEventForm>;
 
@@ -52,6 +59,10 @@ export class CreateEventComponent {
 
 	get verifyForm(): FormGroup {
 		return this.form.get(verifyForm) as FormGroup;
+	}
+
+	getSubFormTitles() {
+		return [this.eventDetailTitle, this.addUserTitle, this.formVerificationTitle];
 	}
 
 	nextStep = () => {
