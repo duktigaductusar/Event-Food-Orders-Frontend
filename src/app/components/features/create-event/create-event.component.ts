@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { EventDetailsFormComponent } from "./event-details-form/event-details-form.component";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { eventDetailsForm, ICreateEventForm, inviteUsersForm } from "./interfaces";
+import { eventDetailsForm, ICreateEventForm, inviteUsersForm, verifyForm } from "./interfaces";
 import { NgbDateStruct, NgbTimeStruct } from "@ng-bootstrap/ng-bootstrap";
 import { EventUserFormComponent } from "./event-user-form/event-user-form.component";
 import { VerifyEventFormComponent } from "./verify-event-form/verify-event-form.component";
@@ -36,8 +36,9 @@ export class CreateEventComponent {
 				),
 			}),
 			inviteUsersForm: this.fb.nonNullable.group({
-				users: this.fb.nonNullable.control("", Validators.required),
+				users: this.fb.nonNullable.control(""),
 			}),
+			verifyForm: this.fb.nonNullable.group({}),
 		});
 	}
 
@@ -47,6 +48,10 @@ export class CreateEventComponent {
 
 	get inviteUsersForm(): FormGroup {
 		return this.form.get(inviteUsersForm) as FormGroup;
+	}
+
+	get verifyForm(): FormGroup {
+		return this.form.get(verifyForm) as FormGroup;
 	}
 
 	nextStep = () => {
