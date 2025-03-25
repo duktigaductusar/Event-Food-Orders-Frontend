@@ -4,15 +4,13 @@ import { CommonModule } from "@angular/common";
 import { breakpoints } from "@app/components/style";
 
 //todo:
-// 1.Clean upp component
-// 2.Goal is for the form to be reusable throughout the whole application
-
+// 1.Goal is for the form to be reusable throughout the whole application.
 @Component({
 	selector: "app-responsive-form",
 	standalone: true,
 	imports: [CommonModule, ReactiveFormsModule],
 	templateUrl: "./responsive-form.component.html",
-	styleUrls: ["./responsive-form.component.scss"],
+	styleUrls: ["./responsive-form.component.css"],
 })
 export class ResponsiveFormComponent {
 	@Input() formGroup!: FormGroup;
