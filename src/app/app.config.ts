@@ -14,33 +14,33 @@ import {
 import { PublicClientApplication, InteractionType } from "@azure/msal-browser";
 import { environment } from "@environments/environment.development";
 
-export function MSALInstanceFactory(): PublicClientApplication{
+export function MSALInstanceFactory(): PublicClientApplication {
 	return new PublicClientApplication({
 		auth: {
 			clientId: environment.azureAd.clientId,
 			authority: environment.azureAd.authority,
-			redirectUri: environment.azureAd.redirectUri
+			redirectUri: environment.azureAd.redirectUri,
 		},
 		cache: {
 			//ToDo: Try and find a workaround to not have to use storage, maybe through a backend bounce to turn into a httponly cookie
-			cacheLocation: "sessionStorage", 
-			storeAuthStateInCookie: false
-		}
+			cacheLocation: "sessionStorage",
+			storeAuthStateInCookie: false,
+		},
 	});
-} 
+}
 
 export const msalGuardConfig = {
 	interactionType: InteractionType.Redirect,
 	authRequest: {
-		scopes: ["openid profile email Mail.Send"]
-	}
-}
+		scopes: ["openid profile email Mail.Send"],
+	},
+};
 
 export const msalInterceptorConfig = {
 	interactionType: InteractionType.Redirect,
 	protectedResourceMap: new Map<string, string[]>([
-		["https://graph.microsoft.com/v1/me", ["Mail.Send"]]
-	])
+		["https://graph.microsoft.com/v1/me", ["Mail.Send"]],
+	]),
 };
 
 export const msalInstance = MSALInstanceFactory();
@@ -48,14 +48,14 @@ export const msalInstance = MSALInstanceFactory();
 export const appConfig: ApplicationConfig = {
 	providers: [
 		{ provide: MSAL_INSTANCE, useValue: msalInstance },
-        { provide: MSAL_GUARD_CONFIG, useValue: msalGuardConfig },
-        { provide: MSAL_INTERCEPTOR_CONFIG, useValue: msalInterceptorConfig },
-        MsalService,
-        MsalGuard,
-        MsalBroadcastService,
-        { provide: HTTP_INTERCEPTORS, useClass: MsalInterceptor, multi: true },
+		{ provide: MSAL_GUARD_CONFIG, useValue: msalGuardConfig },
+		{ provide: MSAL_INTERCEPTOR_CONFIG, useValue: msalInterceptorConfig },
+		MsalService,
+		MsalGuard,
+		MsalBroadcastService,
+		{ provide: HTTP_INTERCEPTORS, useClass: MsalInterceptor, multi: true },
 		provideHttpClient(),
 		provideZoneChangeDetection({ eventCoalescing: true }),
-		provideRouter(routes)
+		provideRouter(routes),
 	],
 };

@@ -4,9 +4,10 @@ import { bootstrapApplication } from "@angular/platform-browser";
 import { appConfig, msalInstance } from "./app/app.config";
 import { AppComponent } from "./app/app.component";
 
-msalInstance.initialize()
+msalInstance
+	.initialize()
 	.then(() => msalInstance.handleRedirectPromise())
-	.then((response) => {
+	.then(response => {
 		if (response && response.account) {
 			msalInstance.setActiveAccount(response.account);
 		} else {
@@ -15,7 +16,8 @@ msalInstance.initialize()
 				msalInstance.setActiveAccount(accounts[0]);
 			}
 		}
-		return bootstrapApplication(AppComponent, appConfig)
-	}).catch((error: any) => {
+		return bootstrapApplication(AppComponent, appConfig);
+	})
+	.catch((error: any) => {
 		console.error("MSAL Initialization error: ", error);
 	});
