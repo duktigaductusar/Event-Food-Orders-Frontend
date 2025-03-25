@@ -25,7 +25,7 @@ export const routes: Routes = [
 				canActivate: [MsalGuard],
 			},
 			{
-				path: appRoutes.EVENT_DETAILS,
+				path: `${appRoutes.EVENT_DETAILS}/:id`,
 				component: EventDetailsPageComponent,
 				canActivate: [MsalGuard],
 			},

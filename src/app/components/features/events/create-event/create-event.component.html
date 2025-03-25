@@ -1,9 +1,5 @@
 <div class="container mt-4">
-	<form
-		[formGroup]="eventForm"
-		(ngSubmit)="onSubmit()"
-		class="card p-4 shadow"
-	>
+	<app-responsive-form [formGroup]="eventForm" [submitHandler]="onSubmit">
 		<div class="mb-3">
 			<label for="eventName" class="form-label">Event Titel</label>
 			<input
@@ -95,5 +91,5 @@
 				<i class="bi bi-check-circle"></i> Skapa Event
 			</button>
 		</div>
-	</form>
+	</app-responsive-form>
 </div>

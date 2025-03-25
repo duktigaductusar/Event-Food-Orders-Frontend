@@ -1,44 +1,22 @@
-<div class="card shadow-sm mb-4">
+<!-- todo:
+1.Clean up code, remove comments
+ -->
+<div class="card shadow-sm h-100 d-flex flex-column" (click)="selectedEvent()">
 	<div
 		class="card-header py-3 d-flex justify-content-between align-items-center"
 	>
 		<h5 class="m-0 fw-bold text-primary">
-			{{ card.title }}
+			{{ eventDto.title }}
 		</h5>
-
-		@if (card.isOwner) {
-			<span class="badge bg-secondary">
-				{{ t("home.labelEventOwner") }}
-			</span>
-		} @else {
-			@if (card.response === "ATTENDING_ONLINE") {
-				<span class="badge bg-success">
-					{{ t("home.labelOnline") }}
-				</span>
-			} @else if (card.response === "ATTENDING_OFFICE") {
-				<span class="badge bg-success">
-					{{ t("home.labelOffice") }}
-				</span>
-			} @else if (card.response === "NOT_ATTENDING") {
-				<span class="badge bg-danger">
-					{{ t("home.labelReject") }}
-				</span>
-			} @else if (card.response === "PENDING") {
-				<span class="badge bg-warning text-dark">
-					{{ t("home.labelPending") }}
-				</span>
-			}
-		}
 	</div>
 
 	<div class="card-body">
-		<app-datetimelabel [datevalue]="card.date"></app-datetimelabel>
-
-		<!-- <p class="mb-2 text-secondary">{{ card.description }}</p> -->
+		<app-datetimelabel [datevalue]="eventDto.date"></app-datetimelabel>
+		<app-status-label [eventDto]="eventDto"></app-status-label>
 	</div>
 
 	<div class="card-footer bg-transparent border-top-0">
-		@if (card.isOwner) {
+		@if (eventDto.isOwner) {
 			<!-- <button
 				class="btn btn-sm btn-outline-secondary w-100"
 				(click)="onAction($event, 'edit')"
@@ -53,7 +31,7 @@
 			>
 			</app-generic-btn>
 		} @else {
-			@if (card.response === "PENDING") {
+			@if (eventDto.responseType === "PENDING") {
 				<div class="d-grid gap-2">
 					<button
 						class="btn btn-sm btn-outline-primary"
@@ -78,8 +56,8 @@
 					</button>
 				</div>
 			} @else if (
-				card.response === "ATTENDING_ONLINE" ||
-				card.response === "ATTENDING_OFFICE"
+				eventDto.responseType === "ATTENDING_ONLINE" ||
+				eventDto.responseType === "ATTENDING_OFFICE"
 			) {
 				<button
 					class="btn btn-sm btn-outline-warning w-100"
@@ -88,7 +66,7 @@
 					<i class="bi bi-arrow-counterclockwise"></i>
 					{{ t("home.regretBtnLabel") }}
 				</button>
-			} @else if (card.response === "NOT_ATTENDING") {
+			} @else if (eventDto.responseType === "NOT_ATTENDING") {
 				<button
 					class="btn btn-sm btn-outline-secondary w-100"
 					(click)="onAction($event, 'undo_decline')"
