@@ -3,5 +3,6 @@ export const appRoutes = {
 	EVENT_DETAILS: "event-details",
 	EVENT_INVITE: "event-invite",
 	LOGIN: "login",
+	LOGOUT: "logout",
 	HOME: "",
 } as const;
