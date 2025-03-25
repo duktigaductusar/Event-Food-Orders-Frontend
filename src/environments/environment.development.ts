@@ -1,6 +1,6 @@
 export const environment = {
 	production: false,
-	apiUrl: "http://localhost:5258/api",
+	apiUrl: "http://localhost:8080/api",
 	baseUrl: "http://localhost",
 	azureAd: {
 		clientId: "818188f3-6c98-4bed-8a82-74454065975b",
