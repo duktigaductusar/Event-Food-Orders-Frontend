@@ -1,4 +1,3 @@
-import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 
 @Injectable({
@@ -7,12 +6,8 @@ import { Injectable } from "@angular/core";
 export class AuthenticationService {
 	private apiUrl = "http://localhost:8080/api/Authorization";
 
-	constructor(private http: HttpClient) {
-		console.log("AuthService initialized");
-	}
-
 	login(): void {
-		window.location.href = `${this.apiUrl}/login`;
+		window.location.href = `${this.apiUrl}/protected`;
 	}
 
 	logout(): void {

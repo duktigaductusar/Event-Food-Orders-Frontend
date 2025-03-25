@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
-import { AuthenticationService } from "@app/services";
+import { MsalService} from "@azure/msal-angular"
+import { environment } from "@environments/environment.development"
 
 @Component({
 	selector: "app-logout-page",
@@ -9,8 +10,12 @@ import { AuthenticationService } from "@app/services";
 	styleUrl: "./logout-page.component.css",
 })
 export class LogoutPageComponent extends AppBaseComponent {
-    constructor (private authService: AuthenticationService){
-        super()
-        this.authService.logout();
-    }
+	constructor(
+        private msalService: MsalService,
+    ) {
+		super();
+		this.msalService.logoutRedirect({
+            postLogoutRedirectUri: environment.azureAd.redirectUri
+        });
+	}
 }

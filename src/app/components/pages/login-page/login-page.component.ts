@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
-import { AuthenticationService } from "@app/services/index";
+import { MsalService} from "@azure/msal-angular"
 
 @Component({
 	selector: "app-login-page",
@@ -9,11 +9,15 @@ import { AuthenticationService } from "@app/services/index";
 	styleUrl: "./login-page.component.css",
 })
 export class LoginPageComponent extends AppBaseComponent {
-	constructor(private authService: AuthenticationService) {
+	constructor(
+		private msalService: MsalService
+	) {
 		super();
 	}
 
 	handleOnClick(): void {
-		this.authService.login();
+		this.msalService.loginRedirect({
+			scopes: ["Mail.Send"]
+		});
 	}
 }
