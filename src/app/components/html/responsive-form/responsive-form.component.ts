@@ -1,6 +1,7 @@
 import { Component, HostListener, Input } from "@angular/core";
 import { FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
+import { breakpoints } from "@app/components/style";
 
 //todo:
 // 1.Clean upp component
@@ -40,6 +41,6 @@ export class ResponsiveFormComponent {
 	}
 
 	private checkScreenSize() {
-		this.isSmallScreen = window.innerWidth < 500;
+		this.isSmallScreen = window.innerWidth < breakpoints.sm;
 	}
 }

@@ -6,7 +6,6 @@ import {
 	NgbTimepickerModule,
 } from "@ng-bootstrap/ng-bootstrap";
 import { ResponsiveFormComponent } from "@app/components/html";
-import { MultiStepFormHeaderComponent } from "../multistep-form-navigation-header/multistep-form-navigation-header.component";
 
 @Component({
   selector: 'app-event-details-form',
@@ -15,8 +14,7 @@ import { MultiStepFormHeaderComponent } from "../multistep-form-navigation-heade
     ReactiveFormsModule,
     NgbDatepickerModule,
     NgbTimepickerModule,
-    ResponsiveFormComponent,
-    MultiStepFormHeaderComponent
+    ResponsiveFormComponent
  ],
   templateUrl: './event-details-form.component.html',
   styles: [

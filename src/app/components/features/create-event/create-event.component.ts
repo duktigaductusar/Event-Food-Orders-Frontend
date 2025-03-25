@@ -7,17 +7,24 @@ import { EventUserFormComponent } from "./event-user-form/event-user-form.compon
 import { VerifyEventFormComponent } from "./verify-event-form/verify-event-form.component";
 import { MultiStepFormHeaderComponent } from "./multistep-form-navigation-header/multistep-form-navigation-header.component";
 import { GenericBtnComponent } from "@app/components/html";
+import { breakpoints } from "@app/components/style";
+import { CommonModule } from "@angular/common";
+import { CreateEventFooterContainerComponent } from "./create-event-footer-container/create-event-footer-container.component";
+import { CreateEventHeaderContainerComponent } from "./create-event-header-container/create-event-header-container.component";
 
 @Component({
 	selector: "app-create-event",
 	standalone: true,
 	imports: [
-		GenericBtnComponent,
-		EventDetailsFormComponent,
-		EventUserFormComponent,
-		VerifyEventFormComponent,
-		MultiStepFormHeaderComponent
-	],
+    CommonModule,
+    GenericBtnComponent,
+    EventDetailsFormComponent,
+    EventUserFormComponent,
+    VerifyEventFormComponent,
+    MultiStepFormHeaderComponent,
+    CreateEventFooterContainerComponent,
+    CreateEventHeaderContainerComponent
+],
 	templateUrl: "./create-event.component.html",
 })
 export class CreateEventComponent {
@@ -65,10 +72,12 @@ export class CreateEventComponent {
 		return [this.eventDetailTitle, this.addUserTitle, this.formVerificationTitle];
 	}
 
-	nextStep = () => {
-		console.log("test")
+	getDerivedContainerStyle() {
+		return { 'max-width': `${breakpoints.lg}px` };
+	}
+
+	nextStep() {
 		const group = this.getGroupForStep(this.step);
-		console.log("group.invalid", group.invalid)
 		if (group.invalid) {
 			group.markAllAsTouched();
 			return;

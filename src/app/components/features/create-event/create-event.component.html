@@ -1,97 +1,99 @@
-<div class="container mt-5">
-	@switch (step) {
-		@case (1) {
-			<app-event-details-form
-				[title]="eventDetailTitle"
-				[step]="step"
-				[form]="eventDetailsFormGroup"
-			>
-				<div header>
-					<app-multistep-form-navigation-header
-						[step]="step"
-						[steps]="getSubFormTitles()"
-					></app-multistep-form-navigation-header>
-				</div>
-				<div footer class="d-flex justify-content-center w-100 gap-4">
-					<app-generic-btn
-						[icon]="'arrow-right'"
-						[iconRight]="true"
-						[borderColor]="'primary'"
-						[label]="'Nästa'"
-						[customClass]="'mt-3'"
-						(action)="nextStep()"
-					>
-					</app-generic-btn>
-				</div>
-			</app-event-details-form>
+<div class="mx-auto" [ngStyle]="getDerivedContainerStyle()">
+	<div class="m-sm-4">
+		@switch (step) {
+			@case (1) {
+				<app-event-details-form
+					[title]="eventDetailTitle"
+					[step]="step"
+					[form]="eventDetailsFormGroup"
+				>
+					<app-create-event-header-container header>
+						<app-multistep-form-navigation-header
+							[step]="step"
+							[steps]="getSubFormTitles()"
+						></app-multistep-form-navigation-header>
+					</app-create-event-header-container>
+					<app-create-event-footer-container footer>
+						<app-generic-btn
+							[icon]="'arrow-right'"
+							[iconRight]="true"
+							[borderColor]="'primary'"
+							[label]="'Nästa'"
+							[customClass]="'mt-3'"
+							(action)="nextStep()"
+						>
+						</app-generic-btn>
+					</app-create-event-footer-container>
+				</app-event-details-form>
+			}
+			@case (2) {
+				<app-event-user-form
+					[title]="addUserTitle"
+					[step]="step"
+					[form]="inviteUsersForm"
+				>
+					<app-create-event-header-container header>
+						<app-multistep-form-navigation-header
+							[steps]="getSubFormTitles()"
+							[step]="step"
+						>
+						</app-multistep-form-navigation-header>
+					</app-create-event-header-container>
+					<app-create-event-footer-container footer>
+						<app-generic-btn
+							[icon]="'arrow-left'"
+							[borderColor]="'secondary'"
+							[label]="'Tillbaka'"
+							[customClass]="'mt-3'"
+							(action)="prevStep()"
+						>
+						</app-generic-btn>
+						<app-generic-btn
+							[icon]="'arrow-right'"
+							[iconRight]="true"
+							[borderColor]="'primary'"
+							[label]="'Nästa'"
+							[customClass]="'mt-3'"
+							(action)="nextStep()"
+						>
+						</app-generic-btn>
+					</app-create-event-footer-container>
+				</app-event-user-form>
+			}
+			@case (3) {
+				<app-verify-event-form
+					[title]="formVerificationTitle"
+					[step]="step"
+					[form]="inviteUsersForm"
+				>
+					<app-create-event-header-container header>
+						<app-multistep-form-navigation-header
+							[steps]="getSubFormTitles()"
+							[step]="step"
+						>
+						</app-multistep-form-navigation-header>
+					</app-create-event-header-container>
+					<app-create-event-footer-container footer>
+						<app-generic-btn
+							[icon]="'arrow-left'"
+							[borderColor]="'secondary'"
+							[label]="'Tillbaka'"
+							[customClass]="'mt-3'"
+							(action)="prevStep()"
+						>
+						</app-generic-btn>
+						<app-generic-btn
+							[icon]="'check2-circle'"
+							[iconRight]="true"
+							[borderColor]="'primary'"
+							[label]="'Ok'"
+							[customClass]="'mt-3'"
+							(action)="nextStep()"
+						>
+						</app-generic-btn>
+					</app-create-event-footer-container>
+				</app-verify-event-form>
+			}
 		}
-		@case (2) {
-			<app-event-user-form
-				[title]="addUserTitle"
-				[step]="step"
-				[form]="inviteUsersForm"
-			>
-				<div header>
-					<app-multistep-form-navigation-header
-						[steps]="getSubFormTitles()"
-						[step]="step"
-					>
-					</app-multistep-form-navigation-header>
-				</div>
-				<div footer class="d-flex justify-content-center w-100 gap-4">
-					<app-generic-btn
-						[icon]="'arrow-left'"
-						[borderColor]="'secondary'"
-						[label]="'Tillbaka'"
-						[customClass]="'mt-3'"
-						(action)="prevStep()"
-					>
-					</app-generic-btn>
-					<app-generic-btn
-						[icon]="'arrow-right'"
-						[iconRight]="true"
-						[borderColor]="'primary'"
-						[label]="'Nästa'"
-						[customClass]="'mt-3'"
-						(action)="nextStep()"
-					>
-					</app-generic-btn>
-				</div>
-			</app-event-user-form>
-		}
-		@case (3) {
-			<app-verify-event-form
-				[title]="formVerificationTitle"
-				[step]="step"
-				[form]="inviteUsersForm"
-			>
-				<div header>
-					<app-multistep-form-navigation-header
-						[steps]="getSubFormTitles()"
-						[step]="step"
-					>
-					</app-multistep-form-navigation-header>
-				</div>
-				<div footer class="d-flex justify-content-center w-100 gap-4">
-					<app-generic-btn
-						[icon]="'arrow-left'"
-						[borderColor]="'secondary'"
-						[label]="'Tillbaka'"
-						[customClass]="'mt-3'"
-						(action)="prevStep()"
-					>
-					</app-generic-btn>
-					<app-generic-btn
-						[icon]="'check2-circle'"
-						[iconRight]="true"
-						[borderColor]="'primary'"
-						[label]="'Ok'"
-						[customClass]="'mt-3'"
-						(action)="nextStep()"
-					>
-					</app-generic-btn>
-				</div>
-			</app-verify-event-form>
-		}
-	}
+	</div>
 </div>

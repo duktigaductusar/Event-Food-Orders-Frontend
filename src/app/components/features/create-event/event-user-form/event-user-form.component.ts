@@ -1,11 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { ResponsiveFormComponent } from "../../../html/responsive-form/responsive-form.component";
-import { MultiStepFormHeaderComponent } from "../multistep-form-navigation-header/multistep-form-navigation-header.component";
 
 @Component({
   selector: 'app-event-user-form',
-  imports: [ResponsiveFormComponent, MultiStepFormHeaderComponent],
+  imports: [ResponsiveFormComponent],
   templateUrl: './event-user-form.component.html',
   styleUrl: './event-user-form.component.css'
 })

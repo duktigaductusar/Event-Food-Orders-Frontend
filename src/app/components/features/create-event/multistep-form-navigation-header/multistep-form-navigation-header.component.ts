@@ -12,7 +12,7 @@ export class MultiStepFormHeaderComponent {
 	@Input() step = 1;
 
 
-	getStepClass(currentStep: number, index: number): string {
+	getStepClassCircles(currentStep: number, index: number): string {
 		const stepNumber = index + 1;
 	
 		if (currentStep > stepNumber) {
@@ -24,6 +24,16 @@ export class MultiStepFormHeaderComponent {
 		}
 	
 		return 'bg-secondary text-white';
+	}
+
+	getStepClassLines(currentStep: number, index: number): string {
+		const stepNumber = index + 1;
+	
+		if (currentStep >= stepNumber) {
+			return 'flex-grow-1 bg-primary';
+		}
+	
+		return 'flex-grow-1 bg-secondary';
 	}
 	
 }

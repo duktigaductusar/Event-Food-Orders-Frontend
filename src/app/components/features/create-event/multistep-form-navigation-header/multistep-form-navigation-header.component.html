@@ -1,67 +1,31 @@
 <div
-	class="d-flex align-items-center justify-content-center mb-4 position-relative"
+	class="d-flex flex-column align-items-center justify-content-center mb-5 px-4"
 >
-	@for (stepTitle of steps; track stepTitle) {
-		<div class="w-100">
-			<div class="d-flex flex-column align-items-center">
+	<div
+		class="d-flex align-items-center justify-content-center position-relative w-100 px-4"
+	>
+		@for (stepTitle of steps; track stepTitle; let i = $index) {
+			@if (i > 0) {
 				<div
-					class="rounded-circle d-flex align-items-center justify-content-center"
-					[ngClass]="getStepClass(step, $index)"
+					[ngClass]="getStepClassLines(step, i)"
+					style="height: 2px"
+				></div>
+			}
+			<div class="position-relative text-center">
+				<div
+					class="rounded-circle mx-auto d-flex align-items-center justify-content-center"
+					[ngClass]="getStepClassCircles(step, i)"
 					style="width: 28px; height: 28px; font-size: 1.1rem"
 				>
-					{{ $index + 1 }}
+					{{ i + 1 }}
 				</div>
-				<div class="mt-1 small text-center">
-					{{ stepTitle }}
+				<div
+					class="position-absolute start-50 translate-middle-x text-nowrap"
+					style="top: 36px; font-size: 0.8rem"
+				>
+					{{ steps[i] }}
 				</div>
 			</div>
-		</div>
-	}
-</div>
-
-<!-- <div
-	class="d-flex align-items-center justify-content-center mb-4 position-relative w-100"
-	style="gap: 0"
->
-	@for (stepTitle of steps; track stepTitle; let i = $index) {
-		@if (i > 0) {
-			<div
-				class="flex-grow-1"
-				style="
-					height: 2px;
-					background-color: lightgray;
-					margin-top: -1px;
-				"
-				[ngStyle]="{
-					'background-color': step > i + 1 ? '#0d6efd' : '#6c757d',
-				}"
-			></div>
 		}
-
-		<div
-			class="d-flex flex-column align-items-center text-center"
-			style="width: 28px"
-		>
-			<div
-				class="rounded-circle d-flex align-items-center justify-content-center"
-				[ngClass]="{
-					'bg-primary text-white border-primary': step > i + 1,
-					'bg-white border border-primary text-primary fw-bold':
-						step === i + 1,
-					'bg-secondary text-white': step < i + 1,
-				}"
-				style="
-					width: 28px;
-					height: 28px;
-					font-size: 1.1rem;
-					border-width: 2px;
-				"
-			>
-				{{ i + 1 }}
-			</div>
-			<div class="mt-1 small">
-				{{ stepTitle }}
-			</div>
-		</div>
-	}
-</div> -->
+	</div>
+</div>

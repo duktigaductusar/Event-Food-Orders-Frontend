@@ -13,26 +13,27 @@ import { MsalGuard } from "@azure/msal-angular";
 export const routes: Routes = [
 	{
 		path: "",
+		// canActivate: [MsalGuard],
 		children: [
 			{
 				path: appRoutes.HOME,
 				component: HomePageComponent,
-				canActivate: [MsalGuard],
+				// canActivate: [MsalGuard],
 			},
 			{
 				path: appRoutes.EVENT_CREATE,
 				component: EventCreatePageComponent,
-				canActivate: [MsalGuard],
+				// canActivate: [MsalGuard],
 			},
 			{
 				path: `${appRoutes.EVENT_DETAILS}/:id`,
 				component: EventDetailsPageComponent,
-				canActivate: [MsalGuard],
+				// canActivate: [MsalGuard],
 			},
 			{
 				path: appRoutes.EVENT_INVITE,
 				component: EventInvitePageComponent,
-				canActivate: [MsalGuard],
+				// canActivate: [MsalGuard],
 			},
 		],
 	},
@@ -40,7 +41,7 @@ export const routes: Routes = [
 	{
 		path: appRoutes.LOGOUT,
 		component: LogoutPageComponent,
-		canActivate: [MsalGuard],
+		// canActivate: [MsalGuard],
 	},
 	{ path: "**", redirectTo: "login" },
 ];
