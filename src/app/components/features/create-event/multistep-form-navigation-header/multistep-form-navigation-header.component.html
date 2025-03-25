@@ -1,0 +1,33 @@
+<div
+	class="d-flex align-items-center justify-content-center mb-4 position-relative"
+>
+	@for (stepTitle of steps; track stepTitle) {
+		@if ($index > 0) {
+			<div
+				class="flex-grow-1 border-top"
+				[ngClass]="{
+					'border-primary': step > $index + 1,
+					'border-secondary': step <= $index + 1,
+				}"
+			></div>
+		}
+
+		<div class="d-flex flex-column align-items-center">
+			<div
+				class="rounded-circle d-flex align-items-center justify-content-center"
+				[ngClass]="{
+					'bg-primary text-white border-primary': step > $index + 1,
+					'bg-white border border-primary text-primary fw-bold':
+						step === $index + 1,
+					'bg-secondary text-white': step < $index + 1,
+				}"
+				style="width: 40px; height: 40px; font-size: 1.1rem"
+			>
+				{{ $index + 1 }}
+			</div>
+			<div class="mt-1 small text-center">
+				{{ stepTitle }}
+			</div>
+		</div>
+	}
+</div>

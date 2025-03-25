@@ -1,0 +1,32 @@
+<div class="container mt-5">
+	@switch (step) {
+		@case (1) {
+			<app-event-details-form
+				[form]="eventDetailsFormGroup"
+			></app-event-details-form>
+			<div class="text-center">
+				<button class="btn btn-primary mt-3" (click)="nextStep()">
+					Next
+				</button>
+			</div>
+		}
+		@case (2) {
+			<app-event-user-form [form]="inviteUsersForm"></app-event-user-form>
+			<button class="btn btn-secondary mt-3" (click)="prevStep()">
+				Back
+			</button>
+			<button class="btn btn-primary mt-3" (click)="nextStep()">
+				Next
+			</button>
+		}
+		@case (3) {
+			<app-verify-event-form></app-verify-event-form>
+			<button class="btn btn-secondary mt-3" (click)="prevStep()">
+				Back
+			</button>
+			<button class="btn btn-success mt-3" (click)="submit()">
+				Submit
+			</button>
+		}
+	}
+</div>
