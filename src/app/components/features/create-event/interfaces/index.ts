@@ -14,7 +14,7 @@ export interface IInviteForm {
 	users: FormControl<string>;
 }
 
-export interface IVerifyForm {}
+// export interface IVerifyForm {}
 
 export const eventDetailsForm = "eventDetailsForm";
 
@@ -25,5 +25,5 @@ export const verifyForm = "verifyForm";
 export interface ICreateEventForm {
 	[eventDetailsForm]: FormGroup<IEventDetailsForm>;
 	[inviteUsersForm]: FormGroup<IInviteForm>;
-	[verifyForm]: FormGroup<IVerifyForm>;
+	// [verifyForm]: FormGroup<IVerifyForm>;
 }

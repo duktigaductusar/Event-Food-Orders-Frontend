@@ -6,6 +6,7 @@ import {
 	NgbTimepickerModule,
 } from "@ng-bootstrap/ng-bootstrap";
 import { ResponsiveFormComponent } from "@app/components/html";
+import { IEventDetailsForm } from '../interfaces';
 
 @Component({
   selector: 'app-event-details-form',
@@ -17,25 +18,10 @@ import { ResponsiveFormComponent } from "@app/components/html";
     ResponsiveFormComponent
  ],
   templateUrl: './event-details-form.component.html',
-  styles: [
-		`
-			.container {
-				max-width: 600px;
-			}
-			.card {
-				border-radius: 10px;s
-			}
-			.form-label {
-				font-weight: bold;
-			}
-			.bi {
-				margin-left: 5px;
-			}
-		`,
-	],
+  styleUrl: './event-details-form.component.css'
 })
 export class EventDetailsFormComponent {
-  @Input() form!: FormGroup;
+  @Input() form!: FormGroup<IEventDetailsForm>;
   @Input() step!: number;
   @Input() title = "";
 

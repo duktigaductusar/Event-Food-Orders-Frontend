@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { ResponsiveFormComponent } from "../../../html/responsive-form/responsive-form.component";
+import { IInviteForm } from '../interfaces';
 
 @Component({
   selector: 'app-event-user-form',
@@ -9,7 +10,7 @@ import { ResponsiveFormComponent } from "../../../html/responsive-form/responsiv
   styleUrl: './event-user-form.component.css'
 })
 export class EventUserFormComponent {
-  @Input() form!: FormGroup;
+  @Input() form!: FormGroup<IInviteForm>;
   @Input() step!: number;
   @Input() title = "";
 

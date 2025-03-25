@@ -3,7 +3,7 @@
 		@switch (step) {
 			@case (1) {
 				<app-event-details-form
-					[title]="eventDetailTitle"
+					[title]="formTitles.eventDetailTitle"
 					[step]="step"
 					[form]="eventDetailsFormGroup"
 				>
@@ -28,7 +28,7 @@
 			}
 			@case (2) {
 				<app-event-user-form
-					[title]="addUserTitle"
+					[title]="formTitles.addUserTitle"
 					[step]="step"
 					[form]="inviteUsersForm"
 				>
@@ -62,9 +62,9 @@
 			}
 			@case (3) {
 				<app-verify-event-form
-					[title]="formVerificationTitle"
+					[title]="formTitles.formVerificationTitle"
 					[step]="step"
-					[form]="inviteUsersForm"
+					[form]="form"
 				>
 					<app-create-event-header-container header>
 						<app-multistep-form-navigation-header

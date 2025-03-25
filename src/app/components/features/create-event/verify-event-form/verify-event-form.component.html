@@ -8,11 +8,47 @@
 	<div>
 		<ng-content select="[header]"></ng-content>
 	</div>
-	<div class="p-4">
+	<div class="d-flex flex-column gap-4 p-4">
 		<div class="flex-column justify-content-center w-100">
 			<div class="mb-2">
 				<h4 class="text-center text-black">{{ step }}. {{ title }}</h4>
 			</div>
+		</div>
+		<div>
+			<h5>Steg 1: '{{ formTitles.eventDetailTitle }}'</h5>
+			<ul class="list-group mb-4">
+				<li class="list-group-item">
+					<strong>Titel:</strong>
+					{{ form.value.eventDetailsForm?.title }}
+				</li>
+				<li class="list-group-item">
+					<strong>Beskrivning:</strong>
+					{{ form.value.eventDetailsForm?.description }}
+				</li>
+				<li class="list-group-item">
+					<strong>Datum:</strong>
+					{{ form.value.eventDetailsForm?.date?.year }}
+					{{ form.value.eventDetailsForm?.date?.day }}/{{
+						form.value.eventDetailsForm?.date?.month
+					}}
+				</li>
+				<li class="list-group-item">
+					<strong>Klockan:</strong>
+					{{ form.value.eventDetailsForm?.time?.hour }}:{{
+						form.value.eventDetailsForm?.time?.minute
+					}}
+				</li>
+			</ul>
+		</div>
+
+		<div>
+			<h5>Steg 2: '{{ formTitles.addUserTitle }}'</h5>
+			<ul class="list-group">
+				<li class="list-group-item">
+					<strong>Deltagare:</strong>
+					{{ form.value.inviteUsersForm?.users }}
+				</li>
+			</ul>
 		</div>
 	</div>
 	<div>

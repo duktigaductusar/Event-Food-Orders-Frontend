@@ -11,7 +11,17 @@ import { breakpoints } from "@app/components/style";
 import { CommonModule } from "@angular/common";
 import { CreateEventFooterContainerComponent } from "./create-event-footer-container/create-event-footer-container.component";
 import { CreateEventHeaderContainerComponent } from "./create-event-header-container/create-event-header-container.component";
+import { formTitles } from "./constants";
 
+/**
+ * TODO:
+ * 1) Create Server for reusable methods.
+ * 2) Use hidden input fields to be able to validate date and time. 
+ * 3) Add deadlines
+ * 4) Convert form date and time to javascript date type.
+ * 5) Update submit button to type submit.
+ * 6) Update JSON translation files.
+ */
 @Component({
 	selector: "app-create-event",
 	standalone: true,
@@ -28,12 +38,9 @@ import { CreateEventHeaderContainerComponent } from "./create-event-header-conta
 	templateUrl: "./create-event.component.html",
 })
 export class CreateEventComponent {
-	step = 2;
-	eventDetailTitle = "Event Detaljer";
-	addUserTitle = "Ange deltagare";
-	formVerificationTitle = "Verifiera";
-
+	step = 1;
 	form!: FormGroup<ICreateEventForm>;
+	formTitles = formTitles
 
 	constructor(private fb: FormBuilder) {
 		this.form = this.fb.nonNullable.group({
@@ -51,8 +58,7 @@ export class CreateEventComponent {
 			}),
 			inviteUsersForm: this.fb.nonNullable.group({
 				users: this.fb.nonNullable.control(""),
-			}),
-			verifyForm: this.fb.nonNullable.group({}),
+			})
 		});
 	}
 
@@ -64,12 +70,8 @@ export class CreateEventComponent {
 		return this.form.get(inviteUsersForm) as FormGroup;
 	}
 
-	get verifyForm(): FormGroup {
-		return this.form.get(verifyForm) as FormGroup;
-	}
-
 	getSubFormTitles() {
-		return [this.eventDetailTitle, this.addUserTitle, this.formVerificationTitle];
+		return [formTitles.eventDetailTitle, formTitles.addUserTitle, formTitles.formVerificationTitle];
 	}
 
 	getDerivedContainerStyle() {
