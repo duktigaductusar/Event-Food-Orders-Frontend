@@ -18,22 +18,18 @@ export const routes: Routes = [
 			{
 				path: appRoutes.HOME,
 				component: HomePageComponent,
-				// canActivate: [MsalGuard],
 			},
 			{
 				path: appRoutes.EVENT_CREATE,
 				component: EventCreatePageComponent,
-				// canActivate: [MsalGuard],
 			},
 			{
 				path: `${appRoutes.EVENT_DETAILS}/:id`,
 				component: EventDetailsPageComponent,
-				// canActivate: [MsalGuard],
 			},
 			{
 				path: appRoutes.EVENT_INVITE,
 				component: EventInvitePageComponent,
-				// canActivate: [MsalGuard],
 			},
 		],
 	},
