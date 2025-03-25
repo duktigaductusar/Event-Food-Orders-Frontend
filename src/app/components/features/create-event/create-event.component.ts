@@ -20,9 +20,10 @@ import { formTitles } from "./constants";
  * 		2.1) Should be valid dates, e.g., not old dates.
  * 		2.2) Deadline must be before event date. 
  * 3) Add deadlines input.
- * 4) Convert form date and time to javascript date type when submit.
- * 5) Update submit button to type submit.
- * 6) Update JSON translation files.
+ * 4) Add filed for adding users, e.g, using search with selection.
+ * 5) Convert form date and time to javascript date type when submit.
+ * 6) Update submit button to type submit.
+ * 7) Update JSON translation files.
  */
 @Component({
 	selector: "app-create-event",
