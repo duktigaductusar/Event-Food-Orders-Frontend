@@ -52,9 +52,9 @@
 				>
 					<ngb-datepicker formControlName="date"></ngb-datepicker>
 				</div>
-				@if (hasError("date", "required")) {
+				@if (hasError("date", "invalidDate")) {
 					<div class="invalid-feedback d-block">
-						Ange event datum.
+						Ange ett giltigt datum.
 					</div>
 				}
 			</div>
@@ -72,8 +72,10 @@
 						[spinners]="false"
 					></ngb-timepicker>
 				</div>
-				@if (hasError("time", "required")) {
-					<div class="invalid-feedback d-block">Ange event tid.</div>
+				@if (hasError("time", "invalidTime")) {
+					<div class="invalid-feedback d-block">
+						Ange en giltig tid.
+					</div>
 				}
 			</div>
 		</div>

@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { EventDetailsFormComponent } from "./event-details-form/event-details-form.component";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { eventDetailsForm, ICreateEventForm, inviteUsersForm, verifyForm } from "./interfaces";
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from "@angular/forms";
+import { eventDetailsForm, ICreateEventForm, inviteUsersForm } from "./interfaces";
 import { NgbDateStruct, NgbTimeStruct } from "@ng-bootstrap/ng-bootstrap";
 import { EventUserFormComponent } from "./event-user-form/event-user-form.component";
 import { VerifyEventFormComponent } from "./verify-event-form/verify-event-form.component";
@@ -16,9 +16,11 @@ import { formTitles } from "./constants";
 /**
  * TODO:
  * 1) Create Server for reusable methods.
- * 2) Use hidden input fields to be able to validate date and time. 
- * 3) Add deadlines
- * 4) Convert form date and time to javascript date type.
+ * 2) Update Validation of NGB-DATEPICKER and NGB-TEIMEPICKER values
+ * 		2.1) Should be valid dates, e.g., not old dates.
+ * 		2.2) Deadline must be before event date. 
+ * 3) Add deadlines input.
+ * 4) Convert form date and time to javascript date type when submit.
  * 5) Update submit button to type submit.
  * 6) Update JSON translation files.
  */
@@ -26,15 +28,15 @@ import { formTitles } from "./constants";
 	selector: "app-create-event",
 	standalone: true,
 	imports: [
-    CommonModule,
-    GenericBtnComponent,
-    EventDetailsFormComponent,
-    EventUserFormComponent,
-    VerifyEventFormComponent,
-    MultiStepFormHeaderComponent,
-    CreateEventFooterContainerComponent,
-    CreateEventHeaderContainerComponent
-],
+		CommonModule,
+		GenericBtnComponent,
+		EventDetailsFormComponent,
+		EventUserFormComponent,
+		VerifyEventFormComponent,
+		MultiStepFormHeaderComponent,
+		CreateEventFooterContainerComponent,
+		CreateEventHeaderContainerComponent
+	],
 	templateUrl: "./create-event.component.html",
 })
 export class CreateEventComponent {
@@ -49,11 +51,11 @@ export class CreateEventComponent {
 				description: this.fb.nonNullable.control("", Validators.required),
 				date: this.fb.nonNullable.control(
 					{} as NgbDateStruct,
-					Validators.required
+					[Validators.required, this.dateValidator.bind(this)]
 				),
 				time: this.fb.nonNullable.control(
 					{} as NgbTimeStruct,
-					Validators.required
+					[Validators.required, this.timeValidator.bind(this)]
 				),
 			}),
 			inviteUsersForm: this.fb.nonNullable.group({
@@ -69,6 +71,24 @@ export class CreateEventComponent {
 	get inviteUsersForm(): FormGroup {
 		return this.form.get(inviteUsersForm) as FormGroup;
 	}
+
+
+	dateValidator(control: AbstractControl): ValidationErrors | null {
+		const value = control.value;
+		if (!value || !value.year || !value.month || !value.day) {
+			return { invalidDate: true };
+		}
+		return null;
+	}
+
+	timeValidator(control: AbstractControl): ValidationErrors | null {
+		const value = control.value;
+		if (!value || value.hour == null || value.minute == null) {
+			return { invalidTime: true };
+		}
+		return null;
+	}
+
 
 	getSubFormTitles() {
 		return [formTitles.eventDetailTitle, formTitles.addUserTitle, formTitles.formVerificationTitle];
@@ -99,6 +119,7 @@ export class CreateEventComponent {
 
 	submit = () => {
 		if (this.form.valid) {
+			console.log("Submitting...");
 			console.log(this.form.value);
 		} else {
 			this.form.markAllAsTouched();

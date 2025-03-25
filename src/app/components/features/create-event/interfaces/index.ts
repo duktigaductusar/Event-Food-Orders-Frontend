@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { FormControl, FormGroup } from "@angular/forms";
 import { NgbDateStruct, NgbTimeStruct } from "@ng-bootstrap/ng-bootstrap";
 
@@ -14,8 +13,6 @@ export interface IInviteForm {
 	users: FormControl<string>;
 }
 
-// export interface IVerifyForm {}
-
 export const eventDetailsForm = "eventDetailsForm";
 
 export const inviteUsersForm = "inviteUsersForm";
@@ -25,5 +22,4 @@ export const verifyForm = "verifyForm";
 export interface ICreateEventForm {
 	[eventDetailsForm]: FormGroup<IEventDetailsForm>;
 	[inviteUsersForm]: FormGroup<IInviteForm>;
-	// [verifyForm]: FormGroup<IVerifyForm>;
 }
