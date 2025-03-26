@@ -1,0 +1,86 @@
+<app-responsive-form
+	[formGroup]="form"
+	[withParentStyle]="
+		'bg-white card shadow-sm d-flex justify-content-between mb-4'
+	"
+	[useResponsiveDesign]="true"
+>
+	<div>
+		<ng-content select="[header]"></ng-content>
+	</div>
+	<div class="p-4">
+		<div class="mb-2">
+			<h4 class="text-center text-black">{{ step }}. {{ title }}</h4>
+		</div>
+		<div class="mb-3">
+			<label for="title" class="form-label">Namn</label>
+			<input
+				id="title"
+				type="text"
+				class="form-control"
+				formControlName="title"
+				placeholder="Ange event namn..."
+				[ngClass]="getControlClass('title')"
+			/>
+			@if (hasError("title", "required")) {
+				<div class="invalid-feedback">Ange event tittel.</div>
+			}
+		</div>
+
+		<div class="mb-3">
+			<label for="description" class="form-label">Beskrivining</label>
+			<textarea
+				id="description"
+				class="form-control"
+				formControlName="description"
+				placeholder="Ange event beskrivning..."
+				[ngClass]="getControlClass('description')"
+			></textarea>
+			@if (hasError("description", "required")) {
+				<div class="invalid-feedback">Ange event Beskrivining.</div>
+			}
+		</div>
+
+		<div class="row">
+			<div class="col-md-6 mb-3">
+				<label for="date" class="form-label"
+					>Event Datum <i class="bi bi-calendar"></i
+				></label>
+				<div
+					class="datepicker-wrapper"
+					[ngClass]="getControlClass('date', false)"
+				>
+					<ngb-datepicker formControlName="date"></ngb-datepicker>
+				</div>
+				@if (hasError("date", "invalidDate")) {
+					<div class="invalid-feedback d-block">
+						Ange ett giltigt datum.
+					</div>
+				}
+			</div>
+
+			<div class="col-md-6 mb-3">
+				<label for="time" class="form-label"
+					>Starttid <i class="bi bi-clock"></i
+				></label>
+				<div
+					class="timepicker-wrapper"
+					[ngClass]="getControlClass('time', false)"
+				>
+					<ngb-timepicker
+						formControlName="time"
+						[spinners]="false"
+					></ngb-timepicker>
+				</div>
+				@if (hasError("time", "invalidTime")) {
+					<div class="invalid-feedback d-block">
+						Ange en giltig tid.
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+	<div>
+		<ng-content select="[footer]"></ng-content>
+	</div>
+</app-responsive-form>
