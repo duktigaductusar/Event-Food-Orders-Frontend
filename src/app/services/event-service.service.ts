@@ -12,7 +12,7 @@ export class EventService {
 	private apiUrl = `${environment.apiUrl}/event`;
 	private http: HttpClient;
 
-	selectedEventDto = signal<IEventDto | null>(null);	
+	selectedEventDto = signal<IEventDto | null>(null);
 
 	constructor(http: HttpClient) {
 		this.http = http;
@@ -48,5 +48,5 @@ export class EventService {
 
 	// getEventById(id: string): Observable<IEventDto | undefined> {
 	// 	return of(this.events.find(event => event.id === id));
-	// }	
+	// }
 }

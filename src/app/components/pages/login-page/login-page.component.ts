@@ -15,7 +15,7 @@ export class LoginPageComponent extends AppBaseComponent {
 
 	handleOnClick(): void {
 		this.msalService.loginRedirect({
-			redirectUri:"http://localhost:4200/auth-callback",
+			redirectUri: "http://localhost:4200/auth-callback",
 			scopes: ["Mail.Send"],
 		});
 	}
