@@ -1,0 +1,102 @@
+<div class="mx-auto" [ngStyle]="getDerivedContainerStyle()">
+	<div class="m-sm-4">
+		@switch (step) {
+			@case (1) {
+				<app-event-details-form
+					[title]="formTitles.eventDetailTitle"
+					[step]="step"
+					[form]="eventDetailsFormGroup"
+				>
+					<app-create-event-header-container header>
+						<app-multistep-form-navigation-header
+							[step]="step"
+							[steps]="getSubFormTitles()"
+						></app-multistep-form-navigation-header>
+					</app-create-event-header-container>
+					<app-create-event-footer-container footer>
+						<app-generic-btn
+							[icon]="'arrow-right'"
+							[iconRight]="true"
+							[borderColor]="'primary'"
+							[label]="'Nästa'"
+							[customClass]="'mt-3'"
+							[disabled]="eventDetailsFormGroup.invalid"
+							(action)="nextStep()"
+						>
+						</app-generic-btn>
+					</app-create-event-footer-container>
+				</app-event-details-form>
+			}
+			@case (2) {
+				<app-event-user-form
+					[title]="formTitles.addUserTitle"
+					[step]="step"
+					[selectedEmails]="form.value.inviteUsersForm?.emails ?? []"
+					[form]="inviteUsersForm"
+				>
+					<app-create-event-header-container header>
+						<app-multistep-form-navigation-header
+							[steps]="getSubFormTitles()"
+							[step]="step"
+						>
+						</app-multistep-form-navigation-header>
+					</app-create-event-header-container>
+					<app-create-event-footer-container footer>
+						<app-generic-btn
+							[icon]="'arrow-left'"
+							[borderColor]="'secondary'"
+							[label]="'Tillbaka'"
+							[customClass]="'mt-3'"
+							(action)="prevStep()"
+						>
+						</app-generic-btn>
+						<app-generic-btn
+							[icon]="'arrow-right'"
+							[iconRight]="true"
+							[borderColor]="'primary'"
+							[label]="'Nästa'"
+							[customClass]="'mt-3'"
+							[disabled]="inviteUsersForm.invalid"
+							(action)="nextStep()"
+						>
+						</app-generic-btn>
+					</app-create-event-footer-container>
+				</app-event-user-form>
+			}
+			@case (3) {
+				<app-verify-event-form
+					[title]="formTitles.formVerificationTitle"
+					[step]="step"
+					[form]="form"
+				>
+					<app-create-event-header-container header>
+						<app-multistep-form-navigation-header
+							[steps]="getSubFormTitles()"
+							[step]="step"
+						>
+						</app-multistep-form-navigation-header>
+					</app-create-event-header-container>
+					<app-create-event-footer-container footer>
+						<app-generic-btn
+							[icon]="'arrow-left'"
+							[borderColor]="'secondary'"
+							[label]="'Tillbaka'"
+							[customClass]="'mt-3'"
+							(action)="prevStep()"
+						>
+						</app-generic-btn>
+						<app-generic-btn
+							[icon]="'check2-circle'"
+							[iconRight]="true"
+							[borderColor]="'primary'"
+							[label]="'Ok'"
+							[customClass]="'mt-3'"
+							(action)="submit()"
+						>
+						</app-generic-btn>
+					</app-create-event-footer-container>
+				</app-verify-event-form>
+			}
+		}
+	</div>
+</div>

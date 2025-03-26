@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
+import { CreateEventComponent } from "@app/components/features";
 import { MainLayoutComponent } from "@app/components/layouts";
-import { CreateEventComponent } from "../../features/events/create-event/create-event.component";
 
 @Component({
 	selector: "app-event-create-page",

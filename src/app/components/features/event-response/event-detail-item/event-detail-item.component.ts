@@ -32,7 +32,7 @@ export class EventDetailItemComponent
 	eventForm: FormGroup;
 	selectedEventDto: Signal<IEventDto | null>;
 
-	eventDetailDto: IEventDetailDto | null=(null);
+	eventDetailDto: IEventDetailDto | null = null;
 
 	isPending = signal(false);
 
@@ -53,15 +53,15 @@ export class EventDetailItemComponent
 		this.loadEventDetailDto();
 	}
 
-	createTextFromArray(items:string[]) {
-		return 
+	createTextFromArray(items: string[]) {
+		return;
 	}
 
 	loadEventDetailDto(): void {
 		this.isPending.set(true);
 		this.eventService.getDetailEvent().subscribe({
 			next: item => {
-				this.eventDetailDto=item;
+				this.eventDetailDto = item;
 				console.log(item);
 			},
 			error: error => console.error("Test error" + error),
