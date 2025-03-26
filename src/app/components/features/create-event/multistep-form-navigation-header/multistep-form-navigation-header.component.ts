@@ -11,29 +11,27 @@ export class MultiStepFormHeaderComponent {
 	@Input() steps!: string[];
 	@Input() step = 1;
 
-
 	getStepClassCircles(currentStep: number, index: number): string {
 		const stepNumber = index + 1;
-	
+
 		if (currentStep > stepNumber) {
-			return 'text-white bg-primary border-primary';
+			return "text-white bg-primary border-primary";
 		}
-	
+
 		if (currentStep === stepNumber) {
-			return 'bg-white border border-primary text-primary fw-bold';
+			return "bg-white border border-primary text-primary fw-bold";
 		}
-	
-		return 'bg-secondary text-white';
+
+		return "bg-secondary text-white";
 	}
 
 	getStepClassLines(currentStep: number, index: number): string {
 		const stepNumber = index + 1;
-	
+
 		if (currentStep >= stepNumber) {
-			return 'flex-grow-1 bg-primary';
+			return "flex-grow-1 bg-primary";
 		}
-	
-		return 'flex-grow-1 bg-secondary';
+
+		return "flex-grow-1 bg-secondary";
 	}
-	
 }

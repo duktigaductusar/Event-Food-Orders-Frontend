@@ -6,11 +6,11 @@ export interface IEventDetailsForm {
 	description: FormControl<string>;
 	date: FormControl<NgbDateStruct>;
 	time: FormControl<NgbTimeStruct>;
-    // deadline: FormControl<NgbTimeStruct>;
+	// deadline: FormControl<NgbTimeStruct>;
 }
 
 export interface IInviteForm {
-	users: FormControl<string>;
+	emails: FormControl<string[]>;
 }
 
 export const eventDetailsForm = "eventDetailsForm";

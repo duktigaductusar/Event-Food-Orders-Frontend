@@ -13,13 +13,13 @@
 			<h4 class="text-center text-black">{{ step }}. {{ title }}</h4>
 		</div>
 		<div class="mb-3">
-			<label for="title" class="form-label">Event Titel</label>
+			<label for="title" class="form-label">Namn</label>
 			<input
 				id="title"
 				type="text"
 				class="form-control"
 				formControlName="title"
-				placeholder="Enter event name"
+				placeholder="Ange event namn..."
 				[ngClass]="getControlClass('title')"
 			/>
 			@if (hasError("title", "required")) {
@@ -33,7 +33,7 @@
 				id="description"
 				class="form-control"
 				formControlName="description"
-				placeholder="Enter event description"
+				placeholder="Ange event beskrivning..."
 				[ngClass]="getControlClass('description')"
 			></textarea>
 			@if (hasError("description", "required")) {
@@ -48,7 +48,7 @@
 				></label>
 				<div
 					class="datepicker-wrapper"
-					[ngClass]="getControlClass2('date')"
+					[ngClass]="getControlClass('date', false)"
 				>
 					<ngb-datepicker formControlName="date"></ngb-datepicker>
 				</div>
@@ -65,7 +65,7 @@
 				></label>
 				<div
 					class="timepicker-wrapper"
-					[ngClass]="getControlClass2('time')"
+					[ngClass]="getControlClass('time', false)"
 				>
 					<ngb-timepicker
 						formControlName="time"

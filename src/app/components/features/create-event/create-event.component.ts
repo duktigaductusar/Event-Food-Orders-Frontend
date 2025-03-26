@@ -1,7 +1,17 @@
 import { Component } from "@angular/core";
 import { EventDetailsFormComponent } from "./event-details-form/event-details-form.component";
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from "@angular/forms";
-import { eventDetailsForm, ICreateEventForm, inviteUsersForm } from "./interfaces";
+import {
+	AbstractControl,
+	FormBuilder,
+	FormGroup,
+	ValidationErrors,
+	Validators,
+} from "@angular/forms";
+import {
+	eventDetailsForm,
+	ICreateEventForm,
+	inviteUsersForm,
+} from "./interfaces";
 import { NgbDateStruct, NgbTimeStruct } from "@ng-bootstrap/ng-bootstrap";
 import { EventUserFormComponent } from "./event-user-form/event-user-form.component";
 import { VerifyEventFormComponent } from "./verify-event-form/verify-event-form.component";
@@ -15,15 +25,19 @@ import { formTitles } from "./constants";
 
 /**
  * TODO:
- * 1) Create Server for reusable methods.
- * 2) Update Validation of NGB-DATEPICKER and NGB-TEIMEPICKER values
+ * 1) Create Server
+ * 		1.1) can be used for reusable methods.
+ * 		1.2) For shared state
+ * 		1.3) For local/session storage state if needed
+ * 2) Update Custom Validation of NGB-DATEPICKER and NGB-TEIMEPICKER values
  * 		2.1) Should be valid dates, e.g., not old dates.
- * 		2.2) Deadline must be before event date. 
+ * 		2.2) Deadline must be before event date.
  * 3) Add deadlines input.
- * 4) Add filed for adding users, e.g, using search with selection.
+ * 4) Update field for adding users, e.g, show all.
  * 5) Convert form date and time to javascript date type when submit.
  * 6) Update submit button to type submit.
  * 7) Update JSON translation files.
+ * 8) Connect submit with backend.
  */
 @Component({
 	selector: "app-create-event",
@@ -36,32 +50,35 @@ import { formTitles } from "./constants";
 		VerifyEventFormComponent,
 		MultiStepFormHeaderComponent,
 		CreateEventFooterContainerComponent,
-		CreateEventHeaderContainerComponent
+		CreateEventHeaderContainerComponent,
 	],
 	templateUrl: "./create-event.component.html",
 })
 export class CreateEventComponent {
 	step = 1;
 	form!: FormGroup<ICreateEventForm>;
-	formTitles = formTitles
+	formTitles = formTitles;
 
 	constructor(private fb: FormBuilder) {
 		this.form = this.fb.nonNullable.group({
 			eventDetailsForm: this.fb.nonNullable.group({
 				title: this.fb.nonNullable.control("", Validators.required),
-				description: this.fb.nonNullable.control("", Validators.required),
-				date: this.fb.nonNullable.control(
-					{} as NgbDateStruct,
-					[Validators.required, this.dateValidator.bind(this)]
+				description: this.fb.nonNullable.control(
+					"",
+					Validators.required
 				),
-				time: this.fb.nonNullable.control(
-					{} as NgbTimeStruct,
-					[Validators.required, this.timeValidator.bind(this)]
-				),
+				date: this.fb.nonNullable.control({} as NgbDateStruct, [
+					Validators.required,
+					this.dateValidator.bind(this),
+				]),
+				time: this.fb.nonNullable.control({} as NgbTimeStruct, [
+					Validators.required,
+					this.timeValidator.bind(this),
+				]),
 			}),
 			inviteUsersForm: this.fb.nonNullable.group({
-				users: this.fb.nonNullable.control(""),
-			})
+				emails: this.fb.nonNullable.control([] as string[]),
+			}),
 		});
 	}
 
@@ -72,7 +89,6 @@ export class CreateEventComponent {
 	get inviteUsersForm(): FormGroup {
 		return this.form.get(inviteUsersForm) as FormGroup;
 	}
-
 
 	dateValidator(control: AbstractControl): ValidationErrors | null {
 		const value = control.value;
@@ -90,13 +106,16 @@ export class CreateEventComponent {
 		return null;
 	}
 
-
 	getSubFormTitles() {
-		return [formTitles.eventDetailTitle, formTitles.addUserTitle, formTitles.formVerificationTitle];
+		return [
+			formTitles.eventDetailTitle,
+			formTitles.addUserTitle,
+			formTitles.formVerificationTitle,
+		];
 	}
 
 	getDerivedContainerStyle() {
-		return { 'max-width': `${breakpoints.lg}px` };
+		return { "max-width": `${breakpoints.lg}px` };
 	}
 
 	nextStep() {
@@ -106,7 +125,7 @@ export class CreateEventComponent {
 			return;
 		}
 		this.step++;
-	};
+	}
 
 	prevStep() {
 		this.step--;

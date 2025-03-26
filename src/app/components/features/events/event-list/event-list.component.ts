@@ -74,22 +74,13 @@ export class EventListComponent extends AppBaseComponent implements OnInit {
 
 		switch (event.action) {
 			case "attend_online":
-				this.updateEventResponse(
-					event.card.id,
-					"ATTENDING_ONLINE"
-				);
+				this.updateEventResponse(event.card.id, "ATTENDING_ONLINE");
 				break;
 			case "attend_office":
-				this.updateEventResponse(
-					event.card.id,
-					"ATTENDING_OFFICE"
-				);
+				this.updateEventResponse(event.card.id, "ATTENDING_OFFICE");
 				break;
 			case "decline":
-				this.updateEventResponse(
-					event.card.id,
-					"NOT_ATTENDING"
-				);
+				this.updateEventResponse(event.card.id, "NOT_ATTENDING");
 				break;
 			case "cancel_attendance":
 			case "undo_decline":

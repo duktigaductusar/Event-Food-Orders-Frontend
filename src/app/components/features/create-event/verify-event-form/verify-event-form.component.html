@@ -44,10 +44,12 @@
 		<div>
 			<h5>Steg 2: '{{ formTitles.addUserTitle }}'</h5>
 			<ul class="list-group">
-				<li class="list-group-item">
-					<strong>Deltagare:</strong>
-					{{ form.value.inviteUsersForm?.users }}
-				</li>
+				@for (
+					email of form.value.inviteUsersForm?.emails;
+					track email
+				) {
+					<li class="list-group-item">{{ email }}</li>
+				}
 			</ul>
 		</div>
 	</div>

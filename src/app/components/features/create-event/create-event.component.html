@@ -20,6 +20,7 @@
 							[borderColor]="'primary'"
 							[label]="'Nästa'"
 							[customClass]="'mt-3'"
+							[disabled]="eventDetailsFormGroup.invalid"
 							(action)="nextStep()"
 						>
 						</app-generic-btn>
@@ -30,6 +31,7 @@
 				<app-event-user-form
 					[title]="formTitles.addUserTitle"
 					[step]="step"
+					[selectedEmails]="form.value.inviteUsersForm?.emails ?? []"
 					[form]="inviteUsersForm"
 				>
 					<app-create-event-header-container header>
@@ -54,6 +56,7 @@
 							[borderColor]="'primary'"
 							[label]="'Nästa'"
 							[customClass]="'mt-3'"
+							[disabled]="inviteUsersForm.invalid"
 							(action)="nextStep()"
 						>
 						</app-generic-btn>

@@ -13,6 +13,63 @@
 			<div class="mb-2">
 				<h4 class="text-center text-black">{{ step }}. {{ title }}</h4>
 			</div>
+			<div class="container my-3">
+				<h3>Sök användare</h3>
+				<div class="position-relative mb-3">
+					<input
+						class="form-control pe-5"
+						type="text"
+						placeholder="Namn, mail..."
+						[(ngModel)]="searchTerm"
+					/>
+
+					@if (searchTerm.length > 0) {
+						<i
+							class="bi bi-x-circle-fill position-absolute top-50 end-0 translate-middle-y me-3 text-muted"
+							style="cursor: pointer"
+							(click)="searchTerm = ''"
+							title="Rensa sökning"
+						></i>
+					}
+				</div>
+
+				@if (filteredEmails.length > 0) {
+					<ul class="list-group">
+						@for (email of filteredEmails; track email) {
+							<li
+								class="list-group-item d-flex justify-content-between align-items-center"
+								(click)="toggleSelect(email)"
+								[class.active]="isSelected(email)"
+								style="cursor: pointer"
+							>
+								<i class="bi bi-person-add"></i>
+								{{ email }}
+							</li>
+						}
+					</ul>
+				} @else if (
+					searchTerm.length > 0 && filteredEmails.length === 0
+				) {
+					<div class="alert alert-warning">
+						Inga användare hittades
+					</div>
+				}
+
+				@if (selectedEmails.length > 0) {
+					<div class="mt-4">
+						<h5>Valda användare</h5>
+						<ul class="list-group">
+							@for (email of selectedEmails; track email) {
+								<li
+									class="list-group-item d-flex justify-content-between align-items-center"
+								>
+									<i class="bi bi-person"></i> {{ email }}
+								</li>
+							}
+						</ul>
+					</div>
+				}
+			</div>
 		</div>
 	</div>
 	<div>

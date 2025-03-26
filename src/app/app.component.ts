@@ -1,5 +1,12 @@
 import { Component } from "@angular/core";
-import { Router, NavigationEnd, RouterOutlet, NavigationStart, NavigationCancel, NavigationError } from "@angular/router";
+import {
+	Router,
+	NavigationEnd,
+	RouterOutlet,
+	NavigationStart,
+	NavigationCancel,
+	NavigationError,
+} from "@angular/router";
 
 @Component({
 	selector: "app-root",
@@ -27,6 +34,5 @@ export class AppComponent {
 				console.error("NavigationError:", event.error);
 			}
 		});
-		
 	}
 }

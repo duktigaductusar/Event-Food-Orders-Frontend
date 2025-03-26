@@ -1,6 +1,7 @@
 <button
 	type="button"
 	class="btn btn-sm w-100"
+	[disabled]="isDisabled()"
 	[ngClass]="getDerivedClass()"
 	(click)="onClick($event)"
 >

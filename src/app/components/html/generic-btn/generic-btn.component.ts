@@ -11,19 +11,24 @@ export type GenericBtnCompClrType =
 	selector: "app-generic-btn",
 	standalone: true,
 	imports: [CommonModule],
-	templateUrl: 'generic-btn.component.html',
+	templateUrl: "generic-btn.component.html",
 })
 export class GenericBtnComponent {
 	@Input() borderColor: GenericBtnCompClrType = "secondary";
 	@Input() label = "Click Me";
 	@Input() icon = "pencil";
 	@Input() iconRight = false;
-	@Input() customClass = '';
+	@Input() customClass = "";
+	@Input() disabled = false;
 
 	@Output() action = new EventEmitter<Event>();
 
 	getDerivedClass() {
-		return `btn-outline-${this.borderColor} ${this.customClass}`
+		return `btn-outline-${this.borderColor} ${this.customClass}`;
+	}
+
+	isDisabled() {
+		return this.disabled;
 	}
 
 	onClick(event?: Event) {
