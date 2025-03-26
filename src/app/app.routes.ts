@@ -13,7 +13,7 @@ import { MsalGuard } from "@azure/msal-angular";
 export const routes: Routes = [
 	{
 		path: "",
-		// canActivate: [MsalGuard],
+		canActivate: [MsalGuard],
 		children: [
 			{
 				path: appRoutes.HOME,
