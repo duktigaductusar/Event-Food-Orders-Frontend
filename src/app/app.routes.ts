@@ -37,7 +37,7 @@ export const routes: Routes = [
 	{
 		path: appRoutes.LOGOUT,
 		component: LogoutPageComponent,
-		// canActivate: [MsalGuard],
+		canActivate: [MsalGuard],
 	},
 	{ path: "**", redirectTo: "login" },
 ];
