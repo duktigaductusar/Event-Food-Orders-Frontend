@@ -22,6 +22,7 @@ import { CommonModule } from "@angular/common";
 import { CreateEventFooterContainerComponent } from "./create-event-footer-container/create-event-footer-container.component";
 import { CreateEventHeaderContainerComponent } from "./create-event-header-container/create-event-header-container.component";
 import { formTitles } from "./constants";
+import { IEventForCreationDto } from "@app/models/IEventForCreationDto";
 
 /**
  * TODO:
@@ -138,11 +139,43 @@ export class CreateEventComponent {
 	}
 
 	submit = () => {
-		if (this.form.valid) {
+		if (this.form.valid &&
+			this.form.value[eventDetailsForm]?.title != null &&
+			this.form.value[eventDetailsForm]?.title != null &&
+			this.form.value[eventDetailsForm]?.date != null &&
+			this.form.value[eventDetailsForm]?.time != null
+		) {
 			console.log("Submitting...");
-			console.log(this.form.value);
+			console.log("Form values:", this.form.value);
+			const dateTime = this.toDateTime(
+				this.form.value[eventDetailsForm]?.date,
+				this.form.value[eventDetailsForm]?.time
+			)
+
+			const dto : IEventForCreationDto = {
+				title: this.form.value[eventDetailsForm]?.title,
+				description: this.form.value[eventDetailsForm]?.title,
+				date: dateTime,
+				deadline: dateTime
+			}
+
+			console.log("Event create DTO:", dto);
 		} else {
 			this.form.markAllAsTouched();
 		}
+	};
+
+	toDateTime = (
+		date: NgbDateStruct,
+		time: NgbTimeStruct
+	) => {
+		return new Date(
+			date.year,
+			date.month - 1,
+			date.day,
+			time.hour,
+			time.minute,
+			time.second
+		);
 	};
 }

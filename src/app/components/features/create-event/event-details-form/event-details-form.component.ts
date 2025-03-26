@@ -57,18 +57,4 @@ export class EventDetailsFormComponent {
 		const control = this.getControl(controlName);
 		return control.touched && control.hasError(error);
 	}
-
-	toDateTime = (
-		date: { day: number; month: number; year: number },
-		time: { hour: number; minute: number; second: number }
-	) => {
-		return new Date(
-			date.year,
-			date.month - 1,
-			date.day,
-			time.hour,
-			time.minute,
-			time.second
-		);
-	};
 }
