@@ -4,7 +4,7 @@ import { AppBaseComponent } from "@app/components/base/app-base.component";
 import { EventService } from "@app/services";
 import { DatetimelabelComponent } from "../../../shared/datetimelabel/datetimelabel.component";
 import { IEventDto } from "@app/models";
-import { StatusLabelComponent } from "../../events/status-label/status-label.component";
+import { StatusLabelComponent } from "../../../shared/status-label/status-label.component";
 import { ResponsiveFormComponent } from "../../../html/responsive-form/responsive-form.component";
 import {
 	FormBuilder,

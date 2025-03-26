@@ -6,7 +6,7 @@ import { GenericBtnComponent } from "../../../html/generic-btn/generic-btn.compo
 import { Router } from "@angular/router";
 import { appRoutes } from "@app/constants";
 import { EventService } from "@app/services";
-import { StatusLabelComponent } from "../status-label/status-label.component";
+import { StatusLabelComponent } from "../../../shared";
 
 @Component({
 	selector: "app-event-item",
