@@ -16,7 +16,6 @@ export class LoginPageComponent extends AppBaseComponent {
 		private router: Router
 	) {
 		super();
-		console.log(environment.azureAd.loginRedirectUri);
 
 		if (this.msalService.instance.getActiveAccount() != null) {
 			this.router.navigate(["/"]);

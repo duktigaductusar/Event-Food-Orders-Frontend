@@ -20,6 +20,7 @@ export function MSALInstanceFactory(): PublicClientApplication {
 			clientId: environment.azureAd.clientId,
 			authority: environment.azureAd.authority,
 			redirectUri: environment.azureAd.loginRedirectUri,
+			navigateToLoginRequestUrl: false
 		},
 		cache: {
 			cacheLocation: "sessionStorage", //I don't like it but fine.
