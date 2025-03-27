@@ -13,7 +13,6 @@ import { environment } from "@environments/environment.development";
 export class LoginPageComponent extends AppBaseComponent {
 	constructor(private msalService: MsalService, private router: Router) {
 		super();
-		console.log(environment.azureAd.loginRedirectUri);
 
 		if(this.msalService.instance.getActiveAccount() != null){
 			this.router.navigate(["/"]);
