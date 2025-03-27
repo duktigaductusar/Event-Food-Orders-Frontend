@@ -1,7 +1,10 @@
 import { AbstractControl, FormGroup, ValidationErrors } from "@angular/forms";
 import { NgbDateStruct, NgbTimeStruct } from "@ng-bootstrap/ng-bootstrap";
 import { Observable, takeUntil } from "rxjs";
-import { eventDetailsValidationGroupKeys, eventDetailsValidationKeys } from "./constants";
+import {
+	eventDetailsValidationGroupKeys,
+	eventDetailsValidationKeys,
+} from "./constants";
 
 export function dateValidator(
 	control: AbstractControl
@@ -31,8 +34,8 @@ export function endTimeValidator(
 	const endTime = group.get("endTime")?.value;
 
 	if (!date || !time) {
-		return null
-	};
+		return null;
+	}
 
 	const event = new Date(
 		date.year,
@@ -86,8 +89,8 @@ export function deadlineBeforeEventValidator(
 	const deadlineTime = group.get("timeDeadline")?.value;
 
 	if (!date || !time || !deadlineDate || !deadlineTime) {
-		return null
-	};
+		return null;
+	}
 
 	const event = new Date(
 		date.year,

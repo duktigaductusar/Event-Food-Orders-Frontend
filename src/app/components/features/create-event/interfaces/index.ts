@@ -1,16 +1,15 @@
 import { FormControl, FormGroup } from "@angular/forms";
 import { NgbDateStruct, NgbTimeStruct } from "@ng-bootstrap/ng-bootstrap";
-import * as formKeys from "../constants"
-
+import * as formConstants from "../constants";
 
 export interface IEventDetailsForm {
-	[formKeys.title]: FormControl<string>;
-	[formKeys.description]: FormControl<string>;
-	[formKeys.date]: FormControl<NgbDateStruct>;
-	[formKeys.time]: FormControl<NgbTimeStruct>;
-	[formKeys.endTime]: FormControl<NgbTimeStruct>;
-	[formKeys.dateDeadline]: FormControl<NgbDateStruct>;
-	[formKeys.timeDeadline]: FormControl<NgbTimeStruct>;
+	[formConstants.title]: FormControl<string>;
+	[formConstants.description]: FormControl<string>;
+	[formConstants.date]: FormControl<NgbDateStruct>;
+	[formConstants.time]: FormControl<NgbTimeStruct>;
+	[formConstants.endTime]: FormControl<NgbTimeStruct>;
+	[formConstants.dateDeadline]: FormControl<NgbDateStruct>;
+	[formConstants.timeDeadline]: FormControl<NgbTimeStruct>;
 }
 
 export interface IInviteForm {
@@ -19,17 +18,22 @@ export interface IInviteForm {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const mainFormKeys = {
-	eventDetailsForm: formKeys.eventDetailsForm,
-	inviteUsersForm: formKeys.inviteUsersForm,
+	eventDetailsForm: formConstants.eventDetailsForm,
+	inviteUsersForm: formConstants.inviteUsersForm,
 } as const;
 
 export type FormKeyType = keyof typeof mainFormKeys;
 
-export type EventDetailsValidationKeysType = keyof typeof formKeys.eventDetailsValidationKeys;
+export type EventDetailsValidationKeysType =
+	keyof typeof formConstants.eventDetailsValidationKeys;
 
-export type EventDetailsValidationGroupKeysType = keyof typeof formKeys.eventDetailsValidationGroupKeys;
+export type EventDetailsValidationGroupKeysType =
+	keyof typeof formConstants.eventDetailsValidationGroupKeys;
+
+export type EventDetailsFormControllerNameType =
+	keyof typeof formConstants.eventDetailsControllerNames;
 
 export interface ICreateEventForm {
-	[formKeys.eventDetailsForm]: FormGroup<IEventDetailsForm>;
-	[formKeys.inviteUsersForm]: FormGroup<IInviteForm>;
+	[formConstants.eventDetailsForm]: FormGroup<IEventDetailsForm>;
+	[formConstants.inviteUsersForm]: FormGroup<IInviteForm>;
 }

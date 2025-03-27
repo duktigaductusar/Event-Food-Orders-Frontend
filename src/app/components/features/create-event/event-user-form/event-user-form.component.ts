@@ -62,7 +62,6 @@ export class EventUserFormComponent extends AppBaseComponent {
 
 	constructor() {
 		super();
-
 	}
 
 	get filteredEmails(): string[] {
@@ -83,7 +82,7 @@ export class EventUserFormComponent extends AppBaseComponent {
 		this.form.get("emails")?.setValue([...this.selectedEmails]);
 		this.form.get("emails")?.markAsTouched();
 	}
-	
+
 	isSelected(email: string): boolean {
 		return this.selectedEmails.includes(email);
 	}

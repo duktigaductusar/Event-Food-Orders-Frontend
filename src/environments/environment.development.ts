@@ -7,6 +7,6 @@ export const environment = {
 		authority:
 			"https://login.microsoftonline.com/f84f6fe6-b0e4-4db1-b7d6-b7c280fb507f",
 		loginRedirectUri: "http://localhost:4200/",
-		logoutRedirectUri: "http://localhost:4200/login"
+		logoutRedirectUri: "http://localhost:4200/login",
 	},
 };

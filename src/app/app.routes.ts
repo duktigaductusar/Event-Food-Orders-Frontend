@@ -29,6 +29,10 @@ export const routes: Routes = [
 		],
 	},
 	{ path: appRoutes.LOGIN, component: LoginPageComponent },
-	{ path: appRoutes.LOGOUT,	component: LogoutPageComponent,	canActivate: [MsalGuard]},
+	{
+		path: appRoutes.LOGOUT,
+		component: LogoutPageComponent,
+		canActivate: [MsalGuard],
+	},
 	{ path: "**", redirectTo: "" },
 ];

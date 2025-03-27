@@ -1,11 +1,16 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { EventDetailsFormComponent } from "./event-details-form/event-details-form.component";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {
-	FormBuilder,
-	FormGroup,
-	Validators,
-} from "@angular/forms";
-import { dateValidator, timeValidator, dateDeadlineValidator, timeDeadlineValidator, deadlineBeforeEventValidator, subscribeDateDeadlineToDateChange, subscribeTimeDeadlineToTimeChange, endTimeValidator } from "./create-event.utils";
+	dateValidator,
+	timeValidator,
+	dateDeadlineValidator,
+	timeDeadlineValidator,
+	deadlineBeforeEventValidator,
+	subscribeDateDeadlineToDateChange,
+	subscribeTimeDeadlineToTimeChange,
+	endTimeValidator,
+} from "./create-event.utils";
 import { Subject } from "rxjs";
 
 import { ICreateEventForm } from "./interfaces";
@@ -21,7 +26,6 @@ import { AppBaseComponent } from "@app/components/base/app-base.component";
 import { eventDetailsForm, formTitles, inviteUsersForm } from "./constants";
 import { EventUserFormComponent } from "./event-user-form/event-user-form.component";
 import { VerifyEventFormComponent } from "./verify-event-form/verify-event-form.component";
-
 
 /**
  * TODO:
@@ -55,7 +59,8 @@ import { VerifyEventFormComponent } from "./verify-event-form/verify-event-form.
 })
 export class CreateEventComponent
 	extends AppBaseComponent
-	implements OnDestroy, OnInit {
+	implements OnDestroy, OnInit
+{
 	step = 1;
 	form!: FormGroup<ICreateEventForm>;
 	formTitles = formTitles;
@@ -91,20 +96,17 @@ export class CreateEventComponent
 						Validators.required,
 						timeValidator,
 					]),
-					endTime: this.fb.nonNullable.control({} as NgbTimeStruct, []),
+					endTime: this.fb.nonNullable.control(
+						{} as NgbTimeStruct,
+						[]
+					),
 					dateDeadline: this.fb.nonNullable.control(
 						{} as NgbDateStruct,
-						[
-							Validators.required,
-							dateDeadlineValidator,
-						]
+						[Validators.required, dateDeadlineValidator]
 					),
 					timeDeadline: this.fb.nonNullable.control(
 						{} as NgbTimeStruct,
-						[
-							Validators.required,
-							timeDeadlineValidator,
-						]
+						[Validators.required, timeDeadlineValidator]
 					),
 				},
 				{ validators: [deadlineBeforeEventValidator, endTimeValidator] }
@@ -179,7 +181,9 @@ export class CreateEventComponent
 					this.form.value[eventDetailsForm]?.dateDeadline,
 					this.form.value[eventDetailsForm]?.timeDeadline
 				),
-				participants: this.generateRandomParticpantsIDSFromMails(this.form.value[inviteUsersForm]?.emails ?? [])
+				participants: this.generateRandomParticpantsIDSFromMails(
+					this.form.value[inviteUsersForm]?.emails ?? []
+				),
 			};
 
 			console.log("Event create DTO:", dto);
@@ -190,19 +194,19 @@ export class CreateEventComponent
 
 	generateRandomParticpantsIDSFromMails(mails: string[]) {
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		return mails.map(_ => this.generateGUID())
+		return mails.map(_ => this.generateGUID());
 	}
 
 	generateGUID(): string {
-		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
-		  const r = (Math.random() * 16) | 0;
-		  const v = c === 'x' ? r : (r & 0x3) | 0x8;
-		  return v.toString(16);
+		return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
+			const r = (Math.random() * 16) | 0;
+			const v = c === "x" ? r : (r & 0x3) | 0x8;
+			return v.toString(16);
 		});
 	}
 
 	getEndDate = (date?: NgbDateStruct, time?: NgbTimeStruct) => {
-		if (date == null || time?.hour ==  null || time?.minute ==  null) {
+		if (date == null || time?.hour == null || time?.minute == null) {
 			return null;
 		}
 

@@ -10,9 +10,18 @@ import {
 	NgbTimepickerModule,
 } from "@ng-bootstrap/ng-bootstrap";
 import { ResponsiveFormComponent } from "@app/components/html";
-import { EventDetailsValidationGroupKeysType, EventDetailsValidationKeysType, IEventDetailsForm } from "../interfaces";
+import {
+	EventDetailsFormControllerNameType,
+	EventDetailsValidationGroupKeysType,
+	EventDetailsValidationKeysType,
+	IEventDetailsForm,
+} from "../interfaces";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
-import { eventDetailsValidationGroupKeys, eventDetailsValidationKeys } from "../constants";
+import {
+	eventDetailsControllerNames,
+	eventDetailsValidationGroupKeys,
+	eventDetailsValidationKeys,
+} from "../constants";
 
 @Component({
 	selector: "app-event-details-form",
@@ -27,17 +36,23 @@ import { eventDetailsValidationGroupKeys, eventDetailsValidationKeys } from "../
 	styleUrl: "./event-details-form.component.css",
 })
 export class EventDetailsFormComponent extends AppBaseComponent {
-	readonly formValidationKeys = eventDetailsValidationKeys
-	readonly formValidationGroupKeys = eventDetailsValidationGroupKeys
+	readonly formValidationKeys = eventDetailsValidationKeys;
+	readonly formValidationGroupKeys = eventDetailsValidationGroupKeys;
+	readonly eventDetailsControllerNames = eventDetailsControllerNames;
 	@Input() form!: FormGroup<IEventDetailsForm>;
 	@Input() step!: number;
 	@Input() title = "";
 
-	private getControl(controlName: string): AbstractControl {
+	private getControl(
+		controlName: EventDetailsFormControllerNameType
+	): AbstractControl {
 		return this.form.get(controlName)!;
 	}
 
-	getControlClass(controlName: string, withFormControl = true): string[] {
+	getControlClass(
+		controlName: EventDetailsFormControllerNameType,
+		withFormControl = true
+	): string[] {
 		const control = this.getControl(controlName);
 		if (withFormControl) {
 			return [
@@ -48,12 +63,15 @@ export class EventDetailsFormComponent extends AppBaseComponent {
 		return [control.invalid && control.touched ? "is-invalid" : ""];
 	}
 
-	shouldShowError(controlName: string): boolean {
+	shouldShowError(controlName: EventDetailsFormControllerNameType): boolean {
 		const control = this.getControl(controlName);
 		return control.invalid && control.touched;
 	}
 
-	hasError(controlName: string, error: EventDetailsValidationKeysType): boolean {
+	hasError(
+		controlName: EventDetailsFormControllerNameType,
+		error: EventDetailsValidationKeysType
+	): boolean {
 		const control = this.getControl(controlName);
 		return control.touched && control.hasError(error);
 	}
