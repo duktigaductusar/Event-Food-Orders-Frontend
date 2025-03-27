@@ -48,6 +48,23 @@
 						form.value.eventDetailsForm?.time?.minute
 					}}
 				</li>
+				<li class="list-group-item">
+					<strong>{{
+						t("event-create.verifyForm.itemDateDeadline")
+					}}</strong>
+					{{ form.value.eventDetailsForm?.dateDeadline?.day }}/{{
+						form.value.eventDetailsForm?.dateDeadline?.month
+					}}
+					{{ form.value.eventDetailsForm?.dateDeadline?.year }}
+				</li>
+				<li class="list-group-item">
+					<strong>{{
+						t("event-create.verifyForm.itemTimeDeadline")
+					}}</strong>
+					{{ form.value.eventDetailsForm?.timeDeadline?.hour }}:{{
+						form.value.eventDetailsForm?.timeDeadline?.minute
+					}}
+				</li>
 			</ul>
 		</div>
 

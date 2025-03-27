@@ -1,6 +1,6 @@
 import { TranslateService } from "@app/services";
 
-const service = new TranslateService()
+const service = new TranslateService();
 
 export const formTitles = {
 	eventDetailTitle: service.t("event-create.detailsForm.title"),

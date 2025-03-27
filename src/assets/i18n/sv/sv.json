@@ -15,7 +15,7 @@
 			"descriptionWarningMessage": "Ange event beskrivining.",
 			"dateWarningMessage": "Ange ett giltigt datum.",
 			"timeWarningMessage": "Ange en giltig tid.",
-		    "dateDeadlineWarningMessage": "Ange ett giltigt datum för deadline.",
+			"dateDeadlineWarningMessage": "Ange ett giltigt datum för deadline.",
 			"timeDeadlineWarningMessage": "Ange en giltig tid för deadline."
 		},
 		"userForm": {
@@ -32,7 +32,9 @@
 			"itemTitle": "Tittel:",
 			"itemDescription": "Beskrivning:",
 			"itemDate": "Datum:",
-			"itemTime": "Klockan:"
+			"itemTime": "Tid:",
+			"itemDateDeadline": "Dealine datum:",
+			"itemTimeDeadline": "Dealine tid:"
 		}
 	},
 	"event-details": {

@@ -58,5 +58,4 @@ export class EventDetailsFormComponent extends AppBaseComponent {
 	hasGroupError(errorKey: string): boolean {
 		return this.form?.touched && this.form?.errors?.[errorKey];
 	}
-	
 }

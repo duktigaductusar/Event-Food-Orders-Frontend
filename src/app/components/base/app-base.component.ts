@@ -10,7 +10,6 @@ export class AppBaseComponent {
 		return this.translationService.t(key);
 	}
 
-	
 	t2(key: TranslationKeyPaths, obj: TOptions): string {
 		return i18next.t(key, obj);
 	}

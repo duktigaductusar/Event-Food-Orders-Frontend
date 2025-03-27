@@ -35,6 +35,7 @@ import { Subject, takeUntil } from "rxjs";
  * 2) Update field for adding users, e.g, add show all.
  * 3) Update field for adding end time for event.
  * 4) Connect submit with backend.
+ * 		4.1 Match DTO, e.g participant, end time, etc.
  */
 @Component({
 	selector: "app-create-event",
@@ -53,7 +54,8 @@ import { Subject, takeUntil } from "rxjs";
 })
 export class CreateEventComponent
 	extends AppBaseComponent
-	implements OnDestroy, OnInit {
+	implements OnDestroy, OnInit
+{
 	step = 1;
 	form!: FormGroup<ICreateEventForm>;
 	formTitles = formTitles;
@@ -71,30 +73,38 @@ export class CreateEventComponent
 
 	buildForm() {
 		this.form = this.fb.nonNullable.group({
-			eventDetailsForm: this.fb.nonNullable.group({
-				title: this.fb.nonNullable.control("", Validators.required),
-				description: this.fb.nonNullable.control(
-					"",
-					Validators.required
-				),
-				date: this.fb.nonNullable.control({} as NgbDateStruct, [
-					Validators.required,
-					this.dateValidator.bind(this),
-				]),
-				time: this.fb.nonNullable.control({} as NgbTimeStruct, [
-					Validators.required,
-					this.timeValidator.bind(this),
-				]),
-				dateDeadline: this.fb.nonNullable.control({} as NgbDateStruct, [
-					Validators.required,
-					this.dateDeadlineValidator.bind(this)
-				]),
-				timeDeadline: this.fb.nonNullable.control({} as NgbTimeStruct, [
-					Validators.required,
-					this.timeDeadlineValidator.bind(this)
-				]),
-
-			}, { validators: this.deadlineBeforeEventValidator.bind(this) }),
+			eventDetailsForm: this.fb.nonNullable.group(
+				{
+					title: this.fb.nonNullable.control("", Validators.required),
+					description: this.fb.nonNullable.control(
+						"",
+						Validators.required
+					),
+					date: this.fb.nonNullable.control({} as NgbDateStruct, [
+						Validators.required,
+						this.dateValidator.bind(this),
+					]),
+					time: this.fb.nonNullable.control({} as NgbTimeStruct, [
+						Validators.required,
+						this.timeValidator.bind(this),
+					]),
+					dateDeadline: this.fb.nonNullable.control(
+						{} as NgbDateStruct,
+						[
+							Validators.required,
+							this.dateDeadlineValidator.bind(this),
+						]
+					),
+					timeDeadline: this.fb.nonNullable.control(
+						{} as NgbTimeStruct,
+						[
+							Validators.required,
+							this.timeDeadlineValidator.bind(this),
+						]
+					),
+				},
+				{ validators: this.deadlineBeforeEventValidator.bind(this) }
+			),
 			inviteUsersForm: this.fb.nonNullable.group({
 				emails: this.fb.nonNullable.control([] as string[]),
 			}),
@@ -102,47 +112,64 @@ export class CreateEventComponent
 	}
 
 	subscribeDateDeadlineToDateChange() {
-		const eventDetailsGroup = this.form.get('eventDetailsForm') as FormGroup;
+		const eventDetailsGroup = this.form.get(
+			"eventDetailsForm"
+		) as FormGroup;
 
-		eventDetailsGroup.get('date')?.valueChanges
-		.pipe(takeUntil(this.destroy))
-		.subscribe((selectedDate: NgbDateStruct) => {
-			if (!selectedDate?.year || !selectedDate?.month || !selectedDate?.day) return;
+		eventDetailsGroup
+			.get("date")
+			?.valueChanges.pipe(takeUntil(this.destroy))
+			.subscribe((selectedDate: NgbDateStruct) => {
+				if (
+					!selectedDate?.year ||
+					!selectedDate?.month ||
+					!selectedDate?.day
+				)
+					return;
 
-			const deadline = new Date(selectedDate.year, selectedDate.month - 1, selectedDate.day);
-			deadline.setDate(deadline.getDate() - 1);
+				const deadline = new Date(
+					selectedDate.year,
+					selectedDate.month - 1,
+					selectedDate.day
+				);
+				deadline.setDate(deadline.getDate() - 1);
 
-			const dateDeadline: NgbDateStruct = {
-				year: deadline.getFullYear(),
-				month: deadline.getMonth() + 1,
-				day: deadline.getDate()
-			};
+				const dateDeadline: NgbDateStruct = {
+					year: deadline.getFullYear(),
+					month: deadline.getMonth() + 1,
+					day: deadline.getDate(),
+				};
 
-			eventDetailsGroup.patchValue(
-				{ dateDeadline },
-				{ emitEvent: false } // avoid recursion
-			);
-		});
+				eventDetailsGroup.patchValue(
+					{ dateDeadline },
+					{ emitEvent: false } // avoid recursion
+				);
+			});
 	}
 
 	subscribeTimeDeadlineToTimeChange() {
-		const eventDetailsGroup = this.form.get('eventDetailsForm') as FormGroup;
+		const eventDetailsGroup = this.form.get(
+			"eventDetailsForm"
+		) as FormGroup;
 
-		eventDetailsGroup.get('time')?.valueChanges
-		.pipe(takeUntil(this.destroy))
-		.subscribe((selectedTime: NgbTimeStruct) => {
-			if (selectedTime?.hour == null || selectedTime?.minute == null) return;
+		eventDetailsGroup
+			.get("time")
+			?.valueChanges.pipe(takeUntil(this.destroy))
+			.subscribe((selectedTime: NgbTimeStruct) => {
+				if (selectedTime?.hour == null || selectedTime?.minute == null)
+					return;
 
-			const timeDeadline: NgbTimeStruct = {
-				hour: selectedTime.hour,
-				minute: selectedTime.minute,
-				second: selectedTime.second ?? 0
-			};
+				const timeDeadline: NgbTimeStruct = {
+					hour: selectedTime.hour,
+					minute: selectedTime.minute,
+					second: selectedTime.second ?? 0,
+				};
 
-			eventDetailsGroup.patchValue(
-				{ timeDeadline },
-				{ emitEvent: false });  // avoid recursion
-		})
+				eventDetailsGroup.patchValue(
+					{ timeDeadline },
+					{ emitEvent: false }
+				); // avoid recursion
+			});
 	}
 
 	get eventDetailsFormGroup(): FormGroup {
@@ -204,16 +231,30 @@ export class CreateEventComponent
 		return null;
 	}
 
-	deadlineBeforeEventValidator(group: AbstractControl): ValidationErrors | null {
-		const date = group.get('date')?.value;
-		const time = group.get('time')?.value;
-		const deadlineDate = group.get('dateDeadline')?.value;
-		const deadlineTime = group.get('timeDeadline')?.value;
+	deadlineBeforeEventValidator(
+		group: AbstractControl
+	): ValidationErrors | null {
+		const date = group.get("date")?.value;
+		const time = group.get("time")?.value;
+		const deadlineDate = group.get("dateDeadline")?.value;
+		const deadlineTime = group.get("timeDeadline")?.value;
 
 		if (!date || !time || !deadlineDate || !deadlineTime) return null;
 
-		const event = new Date(date.year, date.month - 1, date.day, time.hour, time.minute);
-		const deadline = new Date(deadlineDate.year, deadlineDate.month - 1, deadlineDate.day, deadlineTime.hour, deadlineTime.minute);
+		const event = new Date(
+			date.year,
+			date.month - 1,
+			date.day,
+			time.hour,
+			time.minute
+		);
+		const deadline = new Date(
+			deadlineDate.year,
+			deadlineDate.month - 1,
+			deadlineDate.day,
+			deadlineTime.hour,
+			deadlineTime.minute
+		);
 
 		if (deadline >= event) {
 			return { deadlineAfterEvent: true };
@@ -235,7 +276,8 @@ export class CreateEventComponent
 	}
 
 	submit = () => {
-		if (this.form.valid &&
+		if (
+			this.form.valid &&
 			this.form.value[eventDetailsForm]?.title != null &&
 			this.form.value[eventDetailsForm]?.description != null &&
 			this.form.value[eventDetailsForm]?.date != null &&
@@ -253,8 +295,8 @@ export class CreateEventComponent
 				deadline: this.toDateTime(
 					this.form.value[eventDetailsForm]?.dateDeadline,
 					this.form.value[eventDetailsForm]?.timeDeadline
-				)
-			}
+				),
+			};
 
 			console.log("Event create DTO:", dto);
 		} else {
@@ -262,10 +304,7 @@ export class CreateEventComponent
 		}
 	};
 
-	toDateTime = (
-		date: NgbDateStruct,
-		time: NgbTimeStruct
-	) => {
+	toDateTime = (date: NgbDateStruct, time: NgbTimeStruct) => {
 		return new Date(
 			date.year,
 			date.month - 1,

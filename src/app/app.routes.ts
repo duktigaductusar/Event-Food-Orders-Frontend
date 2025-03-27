@@ -25,7 +25,7 @@ export const routes: Routes = [
 			{
 				path: `${appRoutes.EVENT_DETAILS}/:id`,
 				component: EventDetailsPageComponent,
-			}
+			},
 		],
 	},
 	{ path: appRoutes.LOGIN, component: LoginPageComponent },
