@@ -13,7 +13,7 @@ export class LogoutPageComponent extends AppBaseComponent {
 	constructor(private msalService: MsalService) {
 		super();
 		this.msalService.logoutRedirect({
-			postLogoutRedirectUri: environment.azureAd.redirectUri,
+			postLogoutRedirectUri: environment.azureAd.logoutRedirectUri,
 		});
 	}
 }

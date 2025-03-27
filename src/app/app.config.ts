@@ -19,11 +19,10 @@ export function MSALInstanceFactory(): PublicClientApplication {
 		auth: {
 			clientId: environment.azureAd.clientId,
 			authority: environment.azureAd.authority,
-			redirectUri: environment.azureAd.redirectUri,
+			redirectUri: environment.azureAd.loginRedirectUri,
 		},
 		cache: {
-			//ToDo: Try and find a workaround to not have to use storage, maybe through a backend bounce to turn into a httponly cookie
-			cacheLocation: "sessionStorage",
+			cacheLocation: "sessionStorage", //I don't like it but fine.
 			storeAuthStateInCookie: false,
 		},
 	});
