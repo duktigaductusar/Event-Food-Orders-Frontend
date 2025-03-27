@@ -24,7 +24,7 @@
 				placeholder="Ange event namn..."
 				[ngClass]="getControlClass('title')"
 			/>
-			@if (hasError("title", "required")) {
+			@if (hasError("title", formValidationKeys.required)) {
 				<div class="invalid-feedback">
 					{{ t("event-create.detailsForm.nameWarningMessage") }}
 				</div>
@@ -42,7 +42,7 @@
 				placeholder="Ange event beskrivning..."
 				[ngClass]="getControlClass('description')"
 			></textarea>
-			@if (hasError("description", "required")) {
+			@if (hasError("description", formValidationKeys.required)) {
 				<div class="invalid-feedback">
 					{{
 						t("event-create.detailsForm.descriptionWarningMessage")
@@ -63,7 +63,7 @@
 				>
 					<ngb-datepicker formControlName="date"></ngb-datepicker>
 				</div>
-				@if (hasError("date", "invalidDate")) {
+				@if (hasError("date", formValidationKeys.invalidDate)) {
 					<div class="invalid-feedback d-block">
 						{{
 							t(
@@ -88,7 +88,7 @@
 						[spinners]="false"
 					></ngb-timepicker>
 				</div>
-				@if (hasError("time", "invalidTime")) {
+				@if (hasError("time", formValidationKeys.invalidTime)) {
 					<div class="invalid-feedback d-block">
 						{{ t("event-create.detailsForm.timeWarningMessage") }}
 					</div>
@@ -109,7 +109,9 @@
 						[spinners]="false"
 					></ngb-timepicker>
 				</div>
-				@if (hasGroupError("eventEndBeforeStart")) {
+				@if (
+					hasGroupError(formValidationGroupKeys.eventEndBeforeStart)
+				) {
 					<div class="invalid-feedback d-block">
 						{{
 							t("event-create.detailsForm.endTimeWarningMessage")
@@ -134,8 +136,11 @@
 					></ngb-datepicker>
 				</div>
 				@if (
-					hasError("dateDeadline", "invalidDateDeadline") ||
-					hasGroupError("deadlineAfterEvent")
+					hasError(
+						"dateDeadline",
+						formValidationKeys.invalidDateDeadline
+					) ||
+					hasGroupError(formValidationGroupKeys.deadlineAfterEvent)
 				) {
 					<div class="invalid-feedback d-block">
 						{{
@@ -162,8 +167,10 @@
 					></ngb-timepicker>
 				</div>
 				@if (
-					hasError("timeDeadline", "invalidTimeDeadline") ||
-					hasGroupError("deadlineAfterEvent")
+					hasError(
+						"timeDeadline",
+						formValidationKeys.invalidTimeDeadline
+					) || hasGroupError("deadlineAfterEvent")
 				) {
 					<div class="invalid-feedback d-block">
 						{{

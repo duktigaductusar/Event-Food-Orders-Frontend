@@ -1,13 +1,14 @@
 import { AbstractControl, FormGroup, ValidationErrors } from "@angular/forms";
 import { NgbDateStruct, NgbTimeStruct } from "@ng-bootstrap/ng-bootstrap";
 import { Observable, takeUntil } from "rxjs";
+import { eventDetailsValidationGroupKeys, eventDetailsValidationKeys } from "./constants";
 
 export function dateValidator(
 	control: AbstractControl
 ): ValidationErrors | null {
 	const value = control.value;
 	if (!value || !value.year || !value.month || !value.day) {
-		return { invalidDate: true };
+		return { [eventDetailsValidationKeys.invalidDate]: true };
 	}
 	return null;
 }
@@ -17,7 +18,7 @@ export function timeValidator(
 ): ValidationErrors | null {
 	const value = control.value;
 	if (!value || value.hour == null || value.minute == null) {
-		return { invalidTime: true };
+		return { [eventDetailsValidationKeys.invalidTime]: true };
 	}
 	return null;
 }
@@ -50,7 +51,7 @@ export function endTimeValidator(
 	);
 
 	if (eventEnd < event) {
-		return { eventEndBeforeStart: true };
+		return { [eventDetailsValidationGroupKeys.eventEndBeforeStart]: true };
 	}
 
 	return null;
@@ -61,7 +62,7 @@ export function dateDeadlineValidator(
 ): ValidationErrors | null {
 	const value = control.value;
 	if (!value || !value.year || !value.month || !value.day) {
-		return { invalidDateDeadline: true };
+		return { [eventDetailsValidationKeys.invalidDateDeadline]: true };
 	}
 	return null;
 }
@@ -71,7 +72,7 @@ export function timeDeadlineValidator(
 ): ValidationErrors | null {
 	const value = control.value;
 	if (!value || value.hour == null || value.minute == null) {
-		return { invalidTimeDeadline: true };
+		return { [eventDetailsValidationKeys.invalidTimeDeadline]: true };
 	}
 	return null;
 }
@@ -104,7 +105,7 @@ export function deadlineBeforeEventValidator(
 	);
 
 	if (deadline >= event) {
-		return { deadlineAfterEvent: true };
+		return { [eventDetailsValidationGroupKeys.deadlineAfterEvent]: true };
 	}
 
 	return null;

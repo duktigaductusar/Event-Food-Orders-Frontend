@@ -10,8 +10,9 @@ import {
 	NgbTimepickerModule,
 } from "@ng-bootstrap/ng-bootstrap";
 import { ResponsiveFormComponent } from "@app/components/html";
-import { IEventDetailsForm } from "../interfaces";
+import { EventDetailsValidationGroupKeysType, EventDetailsValidationKeysType, IEventDetailsForm } from "../interfaces";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
+import { eventDetailsValidationGroupKeys, eventDetailsValidationKeys } from "../constants";
 
 @Component({
 	selector: "app-event-details-form",
@@ -26,6 +27,8 @@ import { AppBaseComponent } from "@app/components/base/app-base.component";
 	styleUrl: "./event-details-form.component.css",
 })
 export class EventDetailsFormComponent extends AppBaseComponent {
+	readonly formValidationKeys = eventDetailsValidationKeys
+	readonly formValidationGroupKeys = eventDetailsValidationGroupKeys
 	@Input() form!: FormGroup<IEventDetailsForm>;
 	@Input() step!: number;
 	@Input() title = "";
@@ -50,12 +53,12 @@ export class EventDetailsFormComponent extends AppBaseComponent {
 		return control.invalid && control.touched;
 	}
 
-	hasError(controlName: string, error: string): boolean {
+	hasError(controlName: string, error: EventDetailsValidationKeysType): boolean {
 		const control = this.getControl(controlName);
 		return control.touched && control.hasError(error);
 	}
 
-	hasGroupError(errorKey: string): boolean {
+	hasGroupError(errorKey: EventDetailsValidationGroupKeysType): boolean {
 		return this.form?.touched && this.form?.errors?.[errorKey];
 	}
 }

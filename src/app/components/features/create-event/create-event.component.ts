@@ -8,11 +8,7 @@ import {
 import { dateValidator, timeValidator, dateDeadlineValidator, timeDeadlineValidator, deadlineBeforeEventValidator, subscribeDateDeadlineToDateChange, subscribeTimeDeadlineToTimeChange, endTimeValidator } from "./create-event.utils";
 import { Subject } from "rxjs";
 
-import {
-	eventDetailsForm,
-	ICreateEventForm,
-	inviteUsersForm,
-} from "./interfaces";
+import { ICreateEventForm } from "./interfaces";
 import { NgbDateStruct, NgbTimeStruct } from "@ng-bootstrap/ng-bootstrap";
 import { MultiStepFormHeaderComponent } from "./multistep-form-navigation-header/multistep-form-navigation-header.component";
 import { GenericBtnComponent } from "@app/components/html";
@@ -22,7 +18,7 @@ import { CreateEventFooterContainerComponent } from "./create-event-footer-conta
 import { CreateEventHeaderContainerComponent } from "./create-event-header-container/create-event-header-container.component";
 import { IEventForCreationDto } from "@app/models/IEventForCreationDto";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
-import { formTitles } from "./constants";
+import { eventDetailsForm, formTitles, inviteUsersForm } from "./constants";
 import { EventUserFormComponent } from "./event-user-form/event-user-form.component";
 import { VerifyEventFormComponent } from "./verify-event-form/verify-event-form.component";
 
@@ -193,6 +189,7 @@ export class CreateEventComponent
 	};
 
 	generateRandomParticpantsIDSFromMails(mails: string[]) {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		return mails.map(_ => this.generateGUID())
 	}
 
