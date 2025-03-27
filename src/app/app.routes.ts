@@ -6,7 +6,6 @@ import {
 	HomePageComponent,
 	LoginPageComponent,
 	LogoutPageComponent,
-	AuthCallbackComponent,
 } from "@app/components";
 import { appRoutes } from "./constants";
 import { MsalGuard } from "@azure/msal-angular";
@@ -14,35 +13,27 @@ import { MsalGuard } from "@azure/msal-angular";
 export const routes: Routes = [
 	{
 		path: "",
+		canActivate: [MsalGuard],
 		children: [
 			{
 				path: appRoutes.HOME,
 				component: HomePageComponent,
-				canActivate: [MsalGuard],
 			},
 			{
 				path: appRoutes.EVENT_CREATE,
 				component: EventCreatePageComponent,
-				canActivate: [MsalGuard],
 			},
 			{
 				path: `${appRoutes.EVENT_DETAILS}/:id`,
 				component: EventDetailsPageComponent,
-				canActivate: [MsalGuard],
 			},
 			{
 				path: appRoutes.EVENT_INVITE,
 				component: EventInvitePageComponent,
-				canActivate: [MsalGuard],
 			},
 		],
 	},
 	{ path: appRoutes.LOGIN, component: LoginPageComponent },
-	{
-		path: appRoutes.LOGOUT,
-		component: LogoutPageComponent,
-		canActivate: [MsalGuard],
-	},
-	{ path: appRoutes.CALLBACK, component: AuthCallbackComponent },
-	{ path: "**", redirectTo: "/login" },
+	{ path: appRoutes.LOGOUT,	component: LogoutPageComponent,	canActivate: [MsalGuard]},
+	{ path: "**", redirectTo: "" },
 ];
