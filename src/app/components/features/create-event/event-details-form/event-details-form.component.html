@@ -95,6 +95,63 @@
 				}
 			</div>
 		</div>
+
+		<div class="row">
+			<div class="col-md-6 mb-3">
+				<label for="date-deadline" class="form-label"
+					>{{ t("event-create.detailsForm.dateLabelDeadline") }}
+					<i class="bi bi-calendar"></i
+				></label>
+				<div
+					class="datepicker-wrapper"
+					[ngClass]="getControlClass('dateDeadline', false)"
+				>
+					<ngb-datepicker
+						formControlName="dateDeadline"
+					></ngb-datepicker>
+				</div>
+				@if (
+					hasError("dateDeadline", "invalidDateDeadline") ||
+					hasGroupError("deadlineAfterEvent")
+				) {
+					<div class="invalid-feedback d-block">
+						{{
+							t(
+								"event-create.detailsForm.dateDeadlineWarningMessage"
+							)
+						}}
+					</div>
+				}
+			</div>
+
+			<div class="col-md-6 mb-3">
+				<label for="time-deadline" class="form-label"
+					>{{ t("event-create.detailsForm.timeLabelDeadline") }}
+					<i class="bi bi-clock"></i
+				></label>
+				<div
+					class="timepicker-wrapper"
+					[ngClass]="getControlClass('timeDeadline', false)"
+				>
+					<ngb-timepicker
+						formControlName="timeDeadline"
+						[spinners]="false"
+					></ngb-timepicker>
+				</div>
+				@if (
+					hasError("timeDeadline", "invalidTimeDeadline") ||
+					hasGroupError("deadlineAfterEvent")
+				) {
+					<div class="invalid-feedback d-block">
+						{{
+							t(
+								"event-create.detailsForm.timeDeadlineWarningMessage"
+							)
+						}}
+					</div>
+				}
+			</div>
+		</div>
 	</div>
 	<div>
 		<ng-content select="[footer]"></ng-content>

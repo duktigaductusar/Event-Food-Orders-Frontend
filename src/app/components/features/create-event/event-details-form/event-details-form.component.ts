@@ -30,12 +30,10 @@ export class EventDetailsFormComponent extends AppBaseComponent {
 	@Input() step!: number;
 	@Input() title = "";
 
-	// TODO Move to service or something else more shared.
 	private getControl(controlName: string): AbstractControl {
 		return this.form.get(controlName)!;
 	}
 
-	// TODO Move to service or something else more shared.
 	getControlClass(controlName: string, withFormControl = true): string[] {
 		const control = this.getControl(controlName);
 		if (withFormControl) {
@@ -47,15 +45,18 @@ export class EventDetailsFormComponent extends AppBaseComponent {
 		return [control.invalid && control.touched ? "is-invalid" : ""];
 	}
 
-	// TODO Move to service or something else more shared.
 	shouldShowError(controlName: string): boolean {
 		const control = this.getControl(controlName);
 		return control.invalid && control.touched;
 	}
 
-	// TODO Move to service or something else more shared.
 	hasError(controlName: string, error: string): boolean {
 		const control = this.getControl(controlName);
 		return control.touched && control.hasError(error);
 	}
+
+	hasGroupError(errorKey: string): boolean {
+		return this.form?.touched && this.form?.errors?.[errorKey];
+	}
+	
 }
