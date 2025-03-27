@@ -6,6 +6,7 @@ import {
 	HomePageComponent,
 	LoginPageComponent,
 	LogoutPageComponent,
+	ApiTestComponent
 } from "@app/components";
 import { appRoutes } from "./constants";
 import { MsalGuard } from "@azure/msal-angular";
@@ -34,6 +35,7 @@ export const routes: Routes = [
 		],
 	},
 	{ path: appRoutes.LOGIN, component: LoginPageComponent },
+	{ path: appRoutes.TEST, component: ApiTestComponent},
 	{ path: appRoutes.LOGOUT,	component: LogoutPageComponent,	canActivate: [MsalGuard]},
 	{ path: "**", redirectTo: "" },
 ];
