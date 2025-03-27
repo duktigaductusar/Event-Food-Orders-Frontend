@@ -94,6 +94,29 @@
 					</div>
 				}
 			</div>
+
+			<div class="col-md-6 mb-3">
+				<label for="end-time" class="form-label"
+					>{{ t("event-create.detailsForm.endTimeLabel") }}
+					<i class="bi bi-clock"></i
+				></label>
+				<div
+					class="timepicker-wrapper"
+					[ngClass]="getControlClass('endTime', false)"
+				>
+					<ngb-timepicker
+						formControlName="endTime"
+						[spinners]="false"
+					></ngb-timepicker>
+				</div>
+				@if (hasGroupError("eventEndBeforeStart")) {
+					<div class="invalid-feedback d-block">
+						{{
+							t("event-create.detailsForm.endTimeWarningMessage")
+						}}
+					</div>
+				}
+			</div>
 		</div>
 
 		<div class="row">

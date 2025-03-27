@@ -48,6 +48,23 @@
 						form.value.eventDetailsForm?.time?.minute
 					}}
 				</li>
+				@if (form.value.eventDetailsForm?.endTime?.hour !== undefined) {
+					<li class="list-group-item">
+						<strong>{{
+							t("event-create.verifyForm.itemEndTime")
+						}}</strong>
+						{{ form.value.eventDetailsForm?.endTime?.hour }}:{{
+							form.value.eventDetailsForm?.endTime?.minute
+						}}
+					</li>
+				} @else {
+					<li class="list-group-item">
+						<strong>{{
+							t("event-create.verifyForm.itemEndTime")
+						}}</strong>
+						{{ t("event-create.verifyForm.itemNoEndTime") }}
+					</li>
+				}
 				<li class="list-group-item">
 					<strong>{{
 						t("event-create.verifyForm.itemDateDeadline")

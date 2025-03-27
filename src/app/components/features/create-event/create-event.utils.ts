@@ -22,6 +22,40 @@ export function timeValidator(
 	return null;
 }
 
+export function endTimeValidator(
+	group: AbstractControl
+): ValidationErrors | null {
+	const date = group.get("date")?.value;
+	const time = group.get("time")?.value;
+	const endTime = group.get("endTime")?.value;
+
+	if (!date || !time) {
+		return null
+	};
+
+	const event = new Date(
+		date.year,
+		date.month - 1,
+		date.day,
+		time.hour,
+		time.minute
+	);
+
+	const eventEnd = new Date(
+		date.year,
+		date.month - 1,
+		date.day,
+		endTime.hour,
+		endTime.minute
+	);
+
+	if (eventEnd < event) {
+		return { eventEndBeforeStart: true };
+	}
+
+	return null;
+}
+
 export function dateDeadlineValidator(
 	control: AbstractControl
 ): ValidationErrors | null {
@@ -50,7 +84,9 @@ export function deadlineBeforeEventValidator(
 	const deadlineDate = group.get("dateDeadline")?.value;
 	const deadlineTime = group.get("timeDeadline")?.value;
 
-	if (!date || !time || !deadlineDate || !deadlineTime) return null;
+	if (!date || !time || !deadlineDate || !deadlineTime) {
+		return null
+	};
 
 	const event = new Date(
 		date.year,
@@ -74,7 +110,7 @@ export function deadlineBeforeEventValidator(
 	return null;
 }
 
-export function bindDateDeadlinePatch(
+export function subscribeDateDeadlineToDateChange(
 	eventDetailsGroup: FormGroup,
 	destroy: Observable<void>
 ): void {
@@ -86,8 +122,9 @@ export function bindDateDeadlinePatch(
 				!selectedDate?.year ||
 				!selectedDate?.month ||
 				!selectedDate?.day
-			)
+			) {
 				return;
+			}
 
 			const deadline = new Date(
 				selectedDate.year,
@@ -128,7 +165,7 @@ export function subscribeTimeDeadlineToTimeChange(
 
 			eventDetailsGroup.patchValue(
 				{ timeDeadline },
-				{ emitEvent: false }
-			); // avoid recursion
+				{ emitEvent: false } // avoid recursion
+			);
 		});
 }

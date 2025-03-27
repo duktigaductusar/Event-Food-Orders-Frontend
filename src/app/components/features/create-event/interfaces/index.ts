@@ -6,6 +6,7 @@ export interface IEventDetailsForm {
 	description: FormControl<string>;
 	date: FormControl<NgbDateStruct>;
 	time: FormControl<NgbTimeStruct>;
+	endTime: FormControl<NgbTimeStruct>;
 	dateDeadline: FormControl<NgbDateStruct>;
 	timeDeadline: FormControl<NgbTimeStruct>;
 }

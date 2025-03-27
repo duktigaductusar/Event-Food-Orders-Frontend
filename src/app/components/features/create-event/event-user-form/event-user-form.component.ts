@@ -15,7 +15,6 @@ export class EventUserFormComponent extends AppBaseComponent {
 	@Input() step!: number;
 	@Input() title = "";
 	@Input() selectedEmails: string[] = [];
-
 	searchTerm = "";
 
 	emails: string[] = [
@@ -61,6 +60,11 @@ export class EventUserFormComponent extends AppBaseComponent {
 		"agnes.lundgren@ductus.se",
 	];
 
+	constructor() {
+		super();
+
+	}
+
 	get filteredEmails(): string[] {
 		if (this.searchTerm.length < 1) return [];
 		return this.emails.filter(email =>
@@ -79,7 +83,7 @@ export class EventUserFormComponent extends AppBaseComponent {
 		this.form.get("emails")?.setValue([...this.selectedEmails]);
 		this.form.get("emails")?.markAsTouched();
 	}
-
+	
 	isSelected(email: string): boolean {
 		return this.selectedEmails.includes(email);
 	}

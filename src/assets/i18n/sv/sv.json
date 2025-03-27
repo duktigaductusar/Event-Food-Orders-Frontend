@@ -9,12 +9,14 @@
 			"descriptionLabel": "Beskrivning",
 			"dateLabel": "Event Datum",
 			"timeLabel": "Starttid",
+			"endTimeLabel": "Sluttid",
 			"dateLabelDeadline": "Datum deadline",
 			"timeLabelDeadline": "Tid deadline",
 			"nameWarningMessage": "Ange event namn.",
 			"descriptionWarningMessage": "Ange event beskrivining.",
 			"dateWarningMessage": "Ange ett giltigt datum.",
 			"timeWarningMessage": "Ange en giltig tid.",
+			"endTimeWarningMessage": "Sluttid kan ej vara före starttid.",
 			"dateDeadlineWarningMessage": "Ange ett giltigt datum för deadline.",
 			"timeDeadlineWarningMessage": "Ange en giltig tid för deadline."
 		},
@@ -32,9 +34,11 @@
 			"itemTitle": "Tittel:",
 			"itemDescription": "Beskrivning:",
 			"itemDate": "Datum:",
-			"itemTime": "Tid:",
-			"itemDateDeadline": "Dealine datum:",
-			"itemTimeDeadline": "Dealine tid:"
+			"itemTime": "Starttid:",
+			"itemEndTime": "Sluttid:",
+			"itemNoEndTime": "Ingen sluttid satt",
+			"itemDateDeadline": "Deadline datum:",
+			"itemTimeDeadline": "Deadline tid:"
 		}
 	},
 	"event-details": {
