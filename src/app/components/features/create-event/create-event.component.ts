@@ -23,6 +23,7 @@ import { CreateEventFooterContainerComponent } from "./create-event-footer-conta
 import { CreateEventHeaderContainerComponent } from "./create-event-header-container/create-event-header-container.component";
 import { formTitles } from "./constants";
 import { IEventForCreationDto } from "@app/models/IEventForCreationDto";
+import { AppBaseComponent } from "@app/components/base/app-base.component";
 
 /**
  * TODO:
@@ -55,12 +56,13 @@ import { IEventForCreationDto } from "@app/models/IEventForCreationDto";
 	],
 	templateUrl: "./create-event.component.html",
 })
-export class CreateEventComponent {
+export class CreateEventComponent extends AppBaseComponent {
 	step = 1;
 	form!: FormGroup<ICreateEventForm>;
 	formTitles = formTitles;
 
 	constructor(private fb: FormBuilder) {
+		super();
 		this.form = this.fb.nonNullable.group({
 			eventDetailsForm: this.fb.nonNullable.group({
 				title: this.fb.nonNullable.control("", Validators.required),
@@ -152,7 +154,7 @@ export class CreateEventComponent {
 				this.form.value[eventDetailsForm]?.time
 			)
 
-			const dto : IEventForCreationDto = {
+			const dto: IEventForCreationDto = {
 				title: this.form.value[eventDetailsForm]?.title,
 				description: this.form.value[eventDetailsForm]?.title,
 				date: dateTime,

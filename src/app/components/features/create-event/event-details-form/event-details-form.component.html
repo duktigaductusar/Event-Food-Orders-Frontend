@@ -13,7 +13,9 @@
 			<h4 class="text-center text-black">{{ step }}. {{ title }}</h4>
 		</div>
 		<div class="mb-3">
-			<label for="title" class="form-label">Namn</label>
+			<label for="title" class="form-label">{{
+				t("event-create.detailsForm.nameLabel")
+			}}</label>
 			<input
 				id="title"
 				type="text"
@@ -23,12 +25,16 @@
 				[ngClass]="getControlClass('title')"
 			/>
 			@if (hasError("title", "required")) {
-				<div class="invalid-feedback">Ange event tittel.</div>
+				<div class="invalid-feedback">
+					{{ t("event-create.detailsForm.nameWarningMessage") }}
+				</div>
 			}
 		</div>
 
 		<div class="mb-3">
-			<label for="description" class="form-label">Beskrivining</label>
+			<label for="description" class="form-label">{{
+				t("event-create.detailsForm.descriptionLabel")
+			}}</label>
 			<textarea
 				id="description"
 				class="form-control"
@@ -37,14 +43,19 @@
 				[ngClass]="getControlClass('description')"
 			></textarea>
 			@if (hasError("description", "required")) {
-				<div class="invalid-feedback">Ange event Beskrivining.</div>
+				<div class="invalid-feedback">
+					{{
+						t("event-create.detailsForm.descriptionWarningMessage")
+					}}
+				</div>
 			}
 		</div>
 
 		<div class="row">
 			<div class="col-md-6 mb-3">
 				<label for="date" class="form-label"
-					>Event Datum <i class="bi bi-calendar"></i
+					>{{ t("event-create.detailsForm.dateLabel") }}
+					<i class="bi bi-calendar"></i
 				></label>
 				<div
 					class="datepicker-wrapper"
@@ -54,14 +65,19 @@
 				</div>
 				@if (hasError("date", "invalidDate")) {
 					<div class="invalid-feedback d-block">
-						Ange ett giltigt datum.
+						{{
+							t(
+								"event-create.detailsForm.descriptionWarningMessage"
+							)
+						}}
 					</div>
 				}
 			</div>
 
 			<div class="col-md-6 mb-3">
 				<label for="time" class="form-label"
-					>Starttid <i class="bi bi-clock"></i
+					>{{ t("event-create.detailsForm.timeLabel") }}
+					<i class="bi bi-clock"></i
 				></label>
 				<div
 					class="timepicker-wrapper"
@@ -74,7 +90,7 @@
 				</div>
 				@if (hasError("time", "invalidTime")) {
 					<div class="invalid-feedback d-block">
-						Ange en giltig tid.
+						{{ t("event-create.detailsForm.timeWarningMessage") }}
 					</div>
 				}
 			</div>

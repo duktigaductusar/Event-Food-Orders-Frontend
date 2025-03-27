@@ -18,9 +18,8 @@
 							[icon]="'arrow-right'"
 							[iconRight]="true"
 							[borderColor]="'primary'"
-							[label]="'Nästa'"
+							[label]="t('event-create.btnNext')"
 							[customClass]="'mt-3'"
-							[disabled]="eventDetailsFormGroup.invalid"
 							(action)="nextStep()"
 						>
 						</app-generic-btn>
@@ -45,7 +44,7 @@
 						<app-generic-btn
 							[icon]="'arrow-left'"
 							[borderColor]="'secondary'"
-							[label]="'Tillbaka'"
+							[label]="t('event-create.btnPrev')"
 							[customClass]="'mt-3'"
 							(action)="prevStep()"
 						>
@@ -54,7 +53,7 @@
 							[icon]="'arrow-right'"
 							[iconRight]="true"
 							[borderColor]="'primary'"
-							[label]="'Nästa'"
+							[label]="t('event-create.btnNext')"
 							[customClass]="'mt-3'"
 							[disabled]="inviteUsersForm.invalid"
 							(action)="nextStep()"
@@ -80,7 +79,7 @@
 						<app-generic-btn
 							[icon]="'arrow-left'"
 							[borderColor]="'secondary'"
-							[label]="'Tillbaka'"
+							[label]="t('event-create.btnPrev')"
 							[customClass]="'mt-3'"
 							(action)="prevStep()"
 						>
@@ -89,7 +88,7 @@
 							[icon]="'check2-circle'"
 							[iconRight]="true"
 							[borderColor]="'primary'"
-							[label]="'Ok'"
+							[label]="t('event-create.btnOk')"
 							[customClass]="'mt-3'"
 							(action)="submit()"
 						>

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { language } from "@app/constants/language";
-import i18next from "i18next";
+import i18next, { type TOptions } from "i18next";
 import sv from "@assets/i18n/sv/sv.json";
 import { TranslationKeyPaths } from "@types";
 
@@ -25,5 +25,9 @@ export class TranslateService {
 
 	t(key: TranslationKeyPaths): string {
 		return i18next.t(key);
+	}
+
+	t2(key: TranslationKeyPaths, obj: TOptions): string {
+		return i18next.t(key, obj);
 	}
 }
