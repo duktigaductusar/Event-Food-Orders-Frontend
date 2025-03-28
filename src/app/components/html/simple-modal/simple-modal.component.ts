@@ -14,7 +14,12 @@ export class NgbdModalBasic {
 	closeResult: WritableSignal<string> = signal('');
 
 	open(content: TemplateRef<any>) {
-		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+		this.modalService.open(content, {
+			ariaLabelledBy: 'modal-basic-title',
+			container: 'body',
+			backdrop: true,
+			centered: true,
+		}).result.then(
 			(result) => {
 				this.closeResult.set(`Closed with: ${result}`);
 			},
@@ -23,6 +28,7 @@ export class NgbdModalBasic {
 			},
 		);
 	}
+
 
 	private getDismissReason(reason: any): string {
 		switch (reason) {
