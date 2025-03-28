@@ -2,9 +2,14 @@ import { AbstractControl, FormGroup, ValidationErrors } from "@angular/forms";
 import { NgbDateStruct, NgbTimeStruct } from "@ng-bootstrap/ng-bootstrap";
 import { Observable, takeUntil } from "rxjs";
 import {
+	date,
+	eventDetailsControllerNames,
 	eventDetailsValidationGroupKeys,
 	eventDetailsValidationKeys,
+	time,
 } from "./constants";
+// TODO
+import { environment } from "@environments/environment.development";
 
 export function dateValidator(
 	control: AbstractControl
@@ -29,11 +34,11 @@ export function timeValidator(
 export function endTimeValidator(
 	group: AbstractControl
 ): ValidationErrors | null {
-	const date = group.get("date")?.value;
-	const time = group.get("time")?.value;
-	const endTime = group.get("endTime")?.value;
+	const date = group.get(eventDetailsControllerNames.date)?.value;
+	const time = group.get(eventDetailsControllerNames.time)?.value;
+	const endTime = group.get(eventDetailsControllerNames.endTime)?.value;
 
-	if (!date || !time) {
+	if (!date || !time || !endTime) {
 		return null;
 	}
 
@@ -83,10 +88,10 @@ export function timeDeadlineValidator(
 export function deadlineBeforeEventValidator(
 	group: AbstractControl
 ): ValidationErrors | null {
-	const date = group.get("date")?.value;
-	const time = group.get("time")?.value;
-	const deadlineDate = group.get("dateDeadline")?.value;
-	const deadlineTime = group.get("timeDeadline")?.value;
+	const date = group.get(eventDetailsControllerNames.date)?.value;
+	const time = group.get(eventDetailsControllerNames.time)?.value;
+	const deadlineDate = group.get(eventDetailsControllerNames.dateDeadline)?.value;
+	const deadlineTime = group.get(eventDetailsControllerNames.timeDeadline)?.value;
 
 	if (!date || !time || !deadlineDate || !deadlineTime) {
 		return null;
@@ -119,7 +124,7 @@ export function subscribeDateDeadlineToDateChange(
 	destroy: Observable<void>
 ): void {
 	eventDetailsGroup
-		.get("date")
+		.get(date)
 		?.valueChanges.pipe(takeUntil(destroy))
 		.subscribe((selectedDate: NgbDateStruct) => {
 			if (
@@ -135,7 +140,9 @@ export function subscribeDateDeadlineToDateChange(
 				selectedDate.month - 1,
 				selectedDate.day
 			);
-			deadline.setDate(deadline.getDate() - 1);
+
+			// Set 1 as an environment variable default_deadlline.
+			deadline.setDate(deadline.getDate() - environment.defaultDeadline);
 
 			const dateDeadline: NgbDateStruct = {
 				year: deadline.getFullYear(),
@@ -155,7 +162,7 @@ export function subscribeTimeDeadlineToTimeChange(
 	destroy: Observable<void>
 ) {
 	eventDetailsGroup
-		.get("time")
+		.get(time)
 		?.valueChanges.pipe(takeUntil(destroy))
 		.subscribe((selectedTime: NgbTimeStruct) => {
 			if (selectedTime?.hour == null || selectedTime?.minute == null)

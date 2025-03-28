@@ -1,5 +1,6 @@
 export const environment = {
 	production: false,
+	defaultDeadline: 1,
 	apiUrl: "http://localhost:8080/api",
 	baseUrl: "http://localhost:",
 	azureAd: {
