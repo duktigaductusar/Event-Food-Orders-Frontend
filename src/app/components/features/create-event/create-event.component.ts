@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, signal } from "@angular/core";
 import { EventDetailsFormComponent } from "./event-details-form/event-details-form.component";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {
@@ -16,7 +16,7 @@ import { Subject } from "rxjs";
 import { ICreateEventForm } from "./interfaces";
 import { NgbDateStruct, NgbTimeStruct } from "@ng-bootstrap/ng-bootstrap";
 import { MultiStepFormHeaderComponent } from "./multistep-form-navigation-header/multistep-form-navigation-header.component";
-import { GenericBtnComponent } from "@app/components/html";
+import { GenericBtnComponent, NgbdModalBasic } from "@app/components/html";
 import { breakpoints } from "@app/components/style";
 import { CommonModule } from "@angular/common";
 import { CreateEventFooterContainerComponent } from "./create-event-footer-container/create-event-footer-container.component";
@@ -27,21 +27,13 @@ import { eventDetailsForm, formTitles, inviteUsersForm } from "./constants";
 import { EventUserFormComponent } from "./event-user-form/event-user-form.component";
 import { VerifyEventFormComponent } from "./verify-event-form/verify-event-form.component";
 import { IUserDto } from "@app/models";
+import { EventService } from "@app/services";
 
 /**
  * TODO:
  * 1) Create Server
- * 		1.1) can be used for reusable methods.
- * 		1.2) For shared state
- * 		1.3) For local/session storage state if needed
- * 2) Update field for adding users, e.g, add show all.
- * 3) Update field for adding end time for event.
- * 4) Connect submit with backend.
- * 		4.1 Match DTO, e.g participant, end time, etc.
- * 5) Create constans or something other scalable mehanism for
- * 		5.1) Angular formControllerName attributes
- * 		5.2) Angular validation keys.
- * 6) Replace mock participant mails and ids with data from backend.
+ * 		1.1) For shared state
+ * 		1.2) For local/session storage state if needed
  */
 @Component({
 	selector: "app-create-event",
@@ -55,6 +47,7 @@ import { IUserDto } from "@app/models";
 		MultiStepFormHeaderComponent,
 		CreateEventFooterContainerComponent,
 		CreateEventHeaderContainerComponent,
+		NgbdModalBasic
 	],
 	templateUrl: "./create-event.component.html",
 })
@@ -66,8 +59,9 @@ export class CreateEventComponent
 	form!: FormGroup<ICreateEventForm>;
 	formTitles = formTitles;
 	private destroy = new Subject<void>();
+	isPending = signal(false);
 
-	constructor(private fb: FormBuilder) {
+	constructor(private fb: FormBuilder, private service: EventService) {
 		super();
 	}
 
@@ -170,21 +164,31 @@ export class CreateEventComponent
 			const dto: IEventForCreationDto = {
 				title: this.form.value[eventDetailsForm]?.title,
 				description: this.form.value[eventDetailsForm]?.description,
-				date: this.toDateTime(
+				date: this.toDateTimeISOStrig(
 					this.form.value[eventDetailsForm]?.date,
 					this.form.value[eventDetailsForm]?.time
 				),
 				endTime: this.getEndDate(
 					this.form.value[eventDetailsForm]?.date,
 					this.form.value[eventDetailsForm]?.endTime
-				),
-				deadline: this.toDateTime(
+				)?.toISOString() ?? null,
+				deadline: this.toDateTimeISOStrig(
 					this.form.value[eventDetailsForm]?.dateDeadline,
 					this.form.value[eventDetailsForm]?.timeDeadline
 				),
 				userIds: this.form.value[inviteUsersForm]?.users?.map(p => p.userId) ?? [],
 			};
-			console.log("event dto", dto)
+			this.isPending.set(true);
+			this.service.createEvent(dto).subscribe({
+				next: event => {
+					console.log('created event: ', event);
+				},
+				error: error => {
+					console.error("Error fetching users:", error);
+				},
+				complete: () => this.isPending.set(false),
+			});
+
 		} else {
 			this.form.markAllAsTouched();
 		}
@@ -205,7 +209,7 @@ export class CreateEventComponent
 		);
 	};
 
-	toDateTime = (date: NgbDateStruct, time: NgbTimeStruct) => {
+	toDateTimeISOStrig = (date: NgbDateStruct, time: NgbTimeStruct) => {
 		return new Date(
 			date.year,
 			date.month - 1,
@@ -213,7 +217,7 @@ export class CreateEventComponent
 			time.hour,
 			time.minute,
 			time.second
-		);
+		).toISOString();
 	};
 
 	ngOnDestroy() {

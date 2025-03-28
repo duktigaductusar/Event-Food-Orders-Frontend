@@ -1,8 +1,8 @@
 export interface IEventForCreationDto {
 	title: string;
 	description: string;
-	date: Date;
-	endTime: Date | null;
-	deadline: Date;
+	date: string;
+	endTime: string | null;
+	deadline: string;
 	userIds: string[];
 }
