@@ -18,7 +18,6 @@ export class EventUserFormComponent extends AppBaseComponent implements OnInit, 
 	@Input() form!: FormGroup<IInviteForm>;
 	@Input() step!: number;
 	@Input() title = "";
-	@Input() selectedEmails: string[] = [];
 	@Input() selectedUsers: IUserDto[] = [];
 
 	isPending = signal(false);
@@ -103,6 +102,6 @@ export class EventUserFormComponent extends AppBaseComponent implements OnInit, 
 	}
 
 	isSelected(user: IUserDto): boolean {
-		return this.selectedEmails.includes(user.email);
+		return this.selectedUsers.includes(user);
 	}
 }
