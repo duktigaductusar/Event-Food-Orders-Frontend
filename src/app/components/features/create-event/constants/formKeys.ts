@@ -12,6 +12,8 @@ export const dateDeadline = "dateDeadline";
 
 export const timeDeadline = "timeDeadline";
 
+export const users = "users";
+
 export const eventDetailsForm = "eventDetailsForm";
 
 export const inviteUsersForm = "inviteUsersForm";

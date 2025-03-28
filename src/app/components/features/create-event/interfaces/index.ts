@@ -1,6 +1,7 @@
 import { FormControl, FormGroup } from "@angular/forms";
 import { NgbDateStruct, NgbTimeStruct } from "@ng-bootstrap/ng-bootstrap";
 import * as formConstants from "../constants";
+import { IUserDto } from "@app/models";
 
 export interface IEventDetailsForm {
 	[formConstants.title]: FormControl<string>;
@@ -13,7 +14,7 @@ export interface IEventDetailsForm {
 }
 
 export interface IInviteForm {
-	emails: FormControl<string[]>;
+	[formConstants.users]: FormControl<IUserDto[]>;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -4,5 +4,5 @@ export interface IEventForCreationDto {
 	date: Date;
 	endTime: Date | null;
 	deadline: Date;
-	participants: string[];
+	userIds: string[];
 }

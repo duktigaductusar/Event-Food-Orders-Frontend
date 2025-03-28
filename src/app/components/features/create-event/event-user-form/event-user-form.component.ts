@@ -1,8 +1,12 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, OnDestroy, OnInit, signal } from "@angular/core";
 import { FormGroup, FormsModule } from "@angular/forms";
 import { ResponsiveFormComponent } from "../../../html/responsive-form/responsive-form.component";
 import { IInviteForm } from "../interfaces";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
+import { UserService } from "@app/services";
+import { IUserDto } from "@app/models";
+import { Subject, debounceTime, distinctUntilChanged, takeUntil } from "rxjs";
+import { users as usersFormFieldName } from "../constants";
 
 @Component({
 	selector: "app-event-user-form",
@@ -10,80 +14,95 @@ import { AppBaseComponent } from "@app/components/base/app-base.component";
 	templateUrl: "./event-user-form.component.html",
 	styleUrl: "./event-user-form.component.css",
 })
-export class EventUserFormComponent extends AppBaseComponent {
+export class EventUserFormComponent extends AppBaseComponent implements OnInit, OnDestroy {
 	@Input() form!: FormGroup<IInviteForm>;
 	@Input() step!: number;
 	@Input() title = "";
 	@Input() selectedEmails: string[] = [];
-	searchTerm = "";
+	@Input() selectedUsers: IUserDto[] = [];
 
-	emails: string[] = [
-		"anna.svensson@ductus.se",
-		"erik.nilsson@ductus.se",
-		"johan.larsson@ductus.se",
-		"karl.johansson@ductus.se",
-		"lisa.andersson@ductus.se",
-		"marcus.pettersson@ductus.se",
-		"eva.olsson@ductus.se",
-		"daniel.karlsson@ductus.se",
-		"sofie.nyström@ductus.se",
-		"mats.sjöberg@ductus.se",
-		"carina.ahlberg@ductus.se",
-		"fredrik.lindqvist@ductus.se",
-		"emma.holmgren@ductus.se",
-		"jonas.sundberg@ductus.se",
-		"nina.eriksson@ductus.se",
-		"henrik.björk@ductus.se",
-		"camilla.lind@ductus.se",
-		"patrik.dahl@ductus.se",
-		"maria.forsberg@ductus.se",
-		"andreas.nordin@ductus.se",
-		"ida.jacobsson@ductus.se",
-		"peter.berglund@ductus.se",
-		"sofia.larsson@ductus.se",
-		"tobias.hansson@ductus.se",
-		"sara.eklund@ductus.se",
-		"martin.holm@ductus.se",
-		"jenny.bergström@ductus.se",
-		"alexander.lindgren@ductus.se",
-		"malin.jonsson@ductus.se",
-		"linus.karlberg@ductus.se",
-		"rebecca.sundin@ductus.se",
-		"mikael.andersson@ductus.se",
-		"frida.lindahl@ductus.se",
-		"josefine.wiklund@ductus.se",
-		"sebastian.nilsson@ductus.se",
-		"elin.sandberg@ductus.se",
-		"joakim.berg@ductus.se",
-		"therese.holmberg@ductus.se",
-		"niklas.sjödin@ductus.se",
-		"agnes.lundgren@ductus.se",
-	];
+	isPending = signal(false);
+	query = "";
+	users: IUserDto[] = [];
 
-	constructor() {
+	private querySubject = new Subject<string>();
+	private destroy$ = new Subject<void>();
+
+	constructor(private service: UserService) {
 		super();
 	}
 
-	get filteredEmails(): string[] {
-		if (this.searchTerm.length < 1) return [];
-		return this.emails.filter(email =>
-			email.toLowerCase().includes(this.searchTerm.toLowerCase())
+	ngOnInit() {
+		this.setupSearchListener();
+	}
+
+	ngOnDestroy() {
+		this.destroy$.next();
+		this.destroy$.complete();
+	}
+
+	private setupSearchListener() {
+		this.querySubject.pipe(
+			debounceTime(300),
+			distinctUntilChanged(),
+			takeUntil(this.destroy$)
+		).subscribe(q => {
+			this.getUsers(q);
+		});
+	}
+
+	onSearchInputChange(query: string) {
+		this.query = query;
+		this.querySubject.next(query);
+	}
+
+	getUsers(query: string) {
+		if (query.length < 1) {
+			this.users = [];
+			return;
+		}
+
+		this.isPending.set(true);
+		this.service.getUsers(query).subscribe({
+			next: users => {
+				this.users = users;
+			},
+			error: error => {
+				console.error("Error fetching users:", error);
+				this.users = [];
+			},
+			complete: () => this.isPending.set(false),
+		});
+	}
+
+	get filteredUsers(): IUserDto[] {
+		// Filter locally if needed (or just return this.users if server handles filtering)
+		return this.users.filter(user =>
+			user.email.toLowerCase().includes(this.query.toLowerCase()) ||
+			user.username.toLowerCase().includes(this.query.toLowerCase())
 		);
 	}
 
-	toggleSelect(email: string) {
-		const index = this.selectedEmails.indexOf(email);
-		if (index > -1) {
-			this.selectedEmails.splice(index, 1);
+	toggleSelect(user: IUserDto) {
+		const indexUser = this.selectedUsers.indexOf(user);
+
+		console.log("user", user)
+
+		if (indexUser > -1) {
+			this.selectedUsers.splice(indexUser, 1);
 		} else {
-			this.selectedEmails.push(email);
+			this.selectedUsers.push(user);
 		}
 
-		this.form.get("emails")?.setValue([...this.selectedEmails]);
-		this.form.get("emails")?.markAsTouched();
+		console.log("this.selectedUsers", this.selectedUsers)
+
+		this.form.get(usersFormFieldName)?.setValue([...this.selectedUsers]);
+		this.form.get(usersFormFieldName)?.markAsTouched();
+
+		console.log("this.form.get(usersFormFieldName)", this.form.get(usersFormFieldName))
 	}
 
-	isSelected(email: string): boolean {
-		return this.selectedEmails.includes(email);
+	isSelected(user: IUserDto): boolean {
+		return this.selectedEmails.includes(user.email);
 	}
 }

@@ -26,6 +26,7 @@ import { AppBaseComponent } from "@app/components/base/app-base.component";
 import { eventDetailsForm, formTitles, inviteUsersForm } from "./constants";
 import { EventUserFormComponent } from "./event-user-form/event-user-form.component";
 import { VerifyEventFormComponent } from "./verify-event-form/verify-event-form.component";
+import { IUserDto } from "@app/models";
 
 /**
  * TODO:
@@ -112,7 +113,7 @@ export class CreateEventComponent
 				{ validators: [deadlineBeforeEventValidator, endTimeValidator] }
 			),
 			inviteUsersForm: this.fb.nonNullable.group({
-				emails: this.fb.nonNullable.control([] as string[]),
+				users: this.fb.nonNullable.control([] as IUserDto[]),
 			}),
 		});
 	}
@@ -181,29 +182,13 @@ export class CreateEventComponent
 					this.form.value[eventDetailsForm]?.dateDeadline,
 					this.form.value[eventDetailsForm]?.timeDeadline
 				),
-				participants: this.generateRandomParticpantsIDSFromMails(
-					this.form.value[inviteUsersForm]?.emails ?? []
-				),
+				userIds: this.form.value[inviteUsersForm]?.users?.map(p => p.userId) ?? [],
 			};
-
-			console.log("Event create DTO:", dto);
+			console.log("event dto", dto)
 		} else {
 			this.form.markAllAsTouched();
 		}
 	};
-
-	generateRandomParticpantsIDSFromMails(mails: string[]) {
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		return mails.map(_ => this.generateGUID());
-	}
-
-	generateGUID(): string {
-		return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
-			const r = (Math.random() * 16) | 0;
-			const v = c === "x" ? r : (r & 0x3) | 0x8;
-			return v.toString(16);
-		});
-	}
 
 	getEndDate = (date?: NgbDateStruct, time?: NgbTimeStruct) => {
 		if (date == null || time?.hour == null || time?.minute == null) {
