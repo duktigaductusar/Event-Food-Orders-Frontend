@@ -33,6 +33,7 @@ export class EventUserFormComponent extends AppBaseComponent implements OnInit, 
 
 	ngOnInit() {
 		this.setupSearchListener();
+		console.log('this.selectedUsers', this.selectedUsers)
 	}
 
 	ngOnDestroy() {
@@ -77,28 +78,22 @@ export class EventUserFormComponent extends AppBaseComponent implements OnInit, 
 	get filteredUsers(): IUserDto[] {
 		// Filter locally if needed (or just return this.users if server handles filtering)
 		return this.users.filter(user =>
-			user.email.toLowerCase().includes(this.query.toLowerCase()) ||
-			user.username.toLowerCase().includes(this.query.toLowerCase())
+			!this.selectedUsers.map(u => u.userId).includes(user.userId) && (
+				user.email.toLowerCase().includes(this.query.toLowerCase()) ||
+				user.username.toLowerCase().includes(this.query.toLowerCase()))
 		);
 	}
 
 	toggleSelect(user: IUserDto) {
 		const indexUser = this.selectedUsers.indexOf(user);
-
-		console.log("user", user)
-
 		if (indexUser > -1) {
 			this.selectedUsers.splice(indexUser, 1);
 		} else {
 			this.selectedUsers.push(user);
 		}
 
-		console.log("this.selectedUsers", this.selectedUsers)
-
 		this.form.get(usersFormFieldName)?.setValue([...this.selectedUsers]);
 		this.form.get(usersFormFieldName)?.markAsTouched();
-
-		console.log("this.form.get(usersFormFieldName)", this.form.get(usersFormFieldName))
 	}
 
 	isSelected(user: IUserDto): boolean {
