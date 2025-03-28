@@ -8,8 +8,7 @@ import {
 	eventDetailsValidationKeys,
 	time,
 } from "./constants";
-// TODO
-import { environment } from "@environments/environment.development";
+import { environment } from "@environments";
 
 export function dateValidator(
 	control: AbstractControl

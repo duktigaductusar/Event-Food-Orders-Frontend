@@ -2,8 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable, signal } from "@angular/core";
 import { IEventDto } from "@app/models";
 import { IEventDetailDto } from "@app/models/IEventDetailDto.model";
-// TODO
-import { environment } from "@environments/environment.development";
+import { environment } from "@environments";
 import { type Observable, of } from "rxjs";
 
 @Injectable({
