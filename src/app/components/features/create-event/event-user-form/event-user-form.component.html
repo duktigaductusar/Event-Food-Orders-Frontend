@@ -14,12 +14,17 @@
 				<h4 class="text-center text-black">{{ step }}. {{ title }}</h4>
 			</div>
 			<div class="container my-3">
-				<h3>Sök användare</h3>
+				<label for="search" class="form-label">{{
+					t("event-create.userForm.searchUserLabel")
+				}}</label>
 				<div class="position-relative mb-3">
 					<input
+						id="search"
 						class="form-control pe-5"
 						type="text"
-						placeholder="Namn, mail..."
+						[placeholder]="
+							t('event-create.userForm.searchUserPlaceholder')
+						"
 						[(ngModel)]="searchTerm"
 					/>
 
@@ -51,13 +56,13 @@
 					searchTerm.length > 0 && filteredEmails.length === 0
 				) {
 					<div class="alert alert-warning">
-						Inga användare hittades
+						{{ t("event-create.userForm.noUsersFoundInfo") }}
 					</div>
 				}
 
 				@if (selectedEmails.length > 0) {
 					<div class="mt-4">
-						<h5>Valda användare</h5>
+						<h5>{{ t("event-create.userForm.selectedUsers") }}</h5>
 						<ul class="list-group">
 							@for (email of selectedEmails; track email) {
 								<li

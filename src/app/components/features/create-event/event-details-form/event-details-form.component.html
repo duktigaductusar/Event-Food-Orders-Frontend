@@ -13,68 +13,219 @@
 			<h4 class="text-center text-black">{{ step }}. {{ title }}</h4>
 		</div>
 		<div class="mb-3">
-			<label for="title" class="form-label">Namn</label>
+			<label for="title" class="form-label">{{
+				t("event-create.detailsForm.nameLabel")
+			}}</label>
 			<input
 				id="title"
 				type="text"
 				class="form-control"
-				formControlName="title"
 				placeholder="Ange event namn..."
-				[ngClass]="getControlClass('title')"
+				[formControlName]="eventDetailsControllerNames.title"
+				[ngClass]="getControlClass(eventDetailsControllerNames.title)"
 			/>
-			@if (hasError("title", "required")) {
-				<div class="invalid-feedback">Ange event tittel.</div>
+			@if (
+				hasError(
+					eventDetailsControllerNames.title,
+					formValidationKeys.required
+				)
+			) {
+				<div class="invalid-feedback">
+					{{ t("event-create.detailsForm.nameWarningMessage") }}
+				</div>
 			}
 		</div>
 
 		<div class="mb-3">
-			<label for="description" class="form-label">Beskrivining</label>
+			<label for="description" class="form-label">{{
+				t("event-create.detailsForm.descriptionLabel")
+			}}</label>
 			<textarea
 				id="description"
 				class="form-control"
-				formControlName="description"
 				placeholder="Ange event beskrivning..."
-				[ngClass]="getControlClass('description')"
+				[formControlName]="eventDetailsControllerNames.description"
+				[ngClass]="
+					getControlClass(eventDetailsControllerNames.description)
+				"
 			></textarea>
-			@if (hasError("description", "required")) {
-				<div class="invalid-feedback">Ange event Beskrivining.</div>
+			@if (
+				hasError(
+					eventDetailsControllerNames.description,
+					formValidationKeys.required
+				)
+			) {
+				<div class="invalid-feedback">
+					{{
+						t("event-create.detailsForm.descriptionWarningMessage")
+					}}
+				</div>
 			}
 		</div>
 
 		<div class="row">
 			<div class="col-md-6 mb-3">
 				<label for="date" class="form-label"
-					>Event Datum <i class="bi bi-calendar"></i
+					>{{ t("event-create.detailsForm.dateLabel") }}
+					<i class="bi bi-calendar"></i
 				></label>
 				<div
 					class="datepicker-wrapper"
-					[ngClass]="getControlClass('date', false)"
+					[ngClass]="
+						getControlClass(eventDetailsControllerNames.date, false)
+					"
 				>
-					<ngb-datepicker formControlName="date"></ngb-datepicker>
+					<ngb-datepicker
+						[formControlName]="eventDetailsControllerNames.date"
+					></ngb-datepicker>
 				</div>
-				@if (hasError("date", "invalidDate")) {
+				@if (
+					hasError(
+						eventDetailsControllerNames.date,
+						formValidationKeys.invalidDate
+					)
+				) {
 					<div class="invalid-feedback d-block">
-						Ange ett giltigt datum.
+						{{
+							t(
+								"event-create.detailsForm.descriptionWarningMessage"
+							)
+						}}
 					</div>
 				}
 			</div>
 
 			<div class="col-md-6 mb-3">
 				<label for="time" class="form-label"
-					>Starttid <i class="bi bi-clock"></i
+					>{{ t("event-create.detailsForm.timeLabel") }}
+					<i class="bi bi-clock"></i
 				></label>
 				<div
 					class="timepicker-wrapper"
-					[ngClass]="getControlClass('time', false)"
+					[ngClass]="
+						getControlClass(eventDetailsControllerNames.time, false)
+					"
 				>
 					<ngb-timepicker
-						formControlName="time"
+						[formControlName]="eventDetailsControllerNames.time"
 						[spinners]="false"
 					></ngb-timepicker>
 				</div>
-				@if (hasError("time", "invalidTime")) {
+				@if (
+					hasError(
+						eventDetailsControllerNames.time,
+						formValidationKeys.invalidTime
+					)
+				) {
 					<div class="invalid-feedback d-block">
-						Ange en giltig tid.
+						{{ t("event-create.detailsForm.timeWarningMessage") }}
+					</div>
+				}
+			</div>
+
+			<div class="col-md-6 mb-3">
+				<label for="end-time" class="form-label"
+					>{{ t("event-create.detailsForm.endTimeLabel") }}
+					<i class="bi bi-clock"></i
+				></label>
+				<div
+					class="timepicker-wrapper"
+					[ngClass]="
+						getControlClass(
+							eventDetailsControllerNames.endTime,
+							false
+						)
+					"
+				>
+					<ngb-timepicker
+						[formControlName]="eventDetailsControllerNames.endTime"
+						[spinners]="false"
+					></ngb-timepicker>
+				</div>
+				@if (
+					hasGroupError(formValidationGroupKeys.eventEndBeforeStart)
+				) {
+					<div class="invalid-feedback d-block">
+						{{
+							t("event-create.detailsForm.endTimeWarningMessage")
+						}}
+					</div>
+				}
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-6 mb-3">
+				<label for="date-deadline" class="form-label"
+					>{{ t("event-create.detailsForm.dateLabelDeadline") }}
+					<i class="bi bi-calendar"></i
+				></label>
+				<div
+					class="datepicker-wrapper"
+					[ngClass]="
+						getControlClass(
+							eventDetailsControllerNames.dateDeadline,
+							false
+						)
+					"
+				>
+					<ngb-datepicker
+						[formControlName]="
+							eventDetailsControllerNames.dateDeadline
+						"
+					></ngb-datepicker>
+				</div>
+				@if (
+					hasError(
+						eventDetailsControllerNames.dateDeadline,
+						formValidationKeys.invalidDateDeadline
+					) ||
+					hasGroupError(formValidationGroupKeys.deadlineAfterEvent)
+				) {
+					<div class="invalid-feedback d-block">
+						{{
+							t(
+								"event-create.detailsForm.dateDeadlineWarningMessage"
+							)
+						}}
+					</div>
+				}
+			</div>
+
+			<div class="col-md-6 mb-3">
+				<label for="time-deadline" class="form-label"
+					>{{ t("event-create.detailsForm.timeLabelDeadline") }}
+					<i class="bi bi-clock"></i
+				></label>
+				<div
+					class="timepicker-wrapper"
+					[ngClass]="
+						getControlClass(
+							eventDetailsControllerNames.timeDeadline,
+							false
+						)
+					"
+				>
+					<ngb-timepicker
+						[formControlName]="
+							eventDetailsControllerNames.timeDeadline
+						"
+						[spinners]="false"
+					></ngb-timepicker>
+				</div>
+				@if (
+					hasError(
+						eventDetailsControllerNames.timeDeadline,
+						formValidationKeys.invalidTimeDeadline
+					) ||
+					hasGroupError(formValidationGroupKeys.deadlineAfterEvent)
+				) {
+					<div class="invalid-feedback d-block">
+						{{
+							t(
+								"event-create.detailsForm.timeDeadlineWarningMessage"
+							)
+						}}
 					</div>
 				}
 			</div>

@@ -1,28 +1,31 @@
-import { Component } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { EventDetailsFormComponent } from "./event-details-form/event-details-form.component";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {
-	AbstractControl,
-	FormBuilder,
-	FormGroup,
-	ValidationErrors,
-	Validators,
-} from "@angular/forms";
-import {
-	eventDetailsForm,
-	ICreateEventForm,
-	inviteUsersForm,
-} from "./interfaces";
+	dateValidator,
+	timeValidator,
+	dateDeadlineValidator,
+	timeDeadlineValidator,
+	deadlineBeforeEventValidator,
+	subscribeDateDeadlineToDateChange,
+	subscribeTimeDeadlineToTimeChange,
+	endTimeValidator,
+} from "./create-event.utils";
+import { Subject } from "rxjs";
+
+import { ICreateEventForm } from "./interfaces";
 import { NgbDateStruct, NgbTimeStruct } from "@ng-bootstrap/ng-bootstrap";
-import { EventUserFormComponent } from "./event-user-form/event-user-form.component";
-import { VerifyEventFormComponent } from "./verify-event-form/verify-event-form.component";
 import { MultiStepFormHeaderComponent } from "./multistep-form-navigation-header/multistep-form-navigation-header.component";
 import { GenericBtnComponent } from "@app/components/html";
 import { breakpoints } from "@app/components/style";
 import { CommonModule } from "@angular/common";
 import { CreateEventFooterContainerComponent } from "./create-event-footer-container/create-event-footer-container.component";
 import { CreateEventHeaderContainerComponent } from "./create-event-header-container/create-event-header-container.component";
-import { formTitles } from "./constants";
 import { IEventForCreationDto } from "@app/models/IEventForCreationDto";
+import { AppBaseComponent } from "@app/components/base/app-base.component";
+import { eventDetailsForm, formTitles, inviteUsersForm } from "./constants";
+import { EventUserFormComponent } from "./event-user-form/event-user-form.component";
+import { VerifyEventFormComponent } from "./verify-event-form/verify-event-form.component";
 
 /**
  * TODO:
@@ -30,15 +33,14 @@ import { IEventForCreationDto } from "@app/models/IEventForCreationDto";
  * 		1.1) can be used for reusable methods.
  * 		1.2) For shared state
  * 		1.3) For local/session storage state if needed
- * 2) Update Custom Validation of NGB-DATEPICKER and NGB-TEIMEPICKER values
- * 		2.1) Should be valid dates, e.g., not old dates.
- * 		2.2) Deadline must be before event date.
- * 3) Add deadlines input.
- * 4) Update field for adding users, e.g, show all.
- * 5) Convert form date and time to javascript date type when submit.
- * 6) Update submit button to type submit.
- * 7) Update JSON translation files.
- * 8) Connect submit with backend.
+ * 2) Update field for adding users, e.g, add show all.
+ * 3) Update field for adding end time for event.
+ * 4) Connect submit with backend.
+ * 		4.1 Match DTO, e.g participant, end time, etc.
+ * 5) Create constans or something other scalable mehanism for
+ * 		5.1) Angular formControllerName attributes
+ * 		5.2) Angular validation keys.
+ * 6) Replace mock participant mails and ids with data from backend.
  */
 @Component({
 	selector: "app-create-event",
@@ -55,28 +57,60 @@ import { IEventForCreationDto } from "@app/models/IEventForCreationDto";
 	],
 	templateUrl: "./create-event.component.html",
 })
-export class CreateEventComponent {
+export class CreateEventComponent
+	extends AppBaseComponent
+	implements OnDestroy, OnInit
+{
 	step = 1;
 	form!: FormGroup<ICreateEventForm>;
 	formTitles = formTitles;
+	private destroy = new Subject<void>();
 
 	constructor(private fb: FormBuilder) {
+		super();
+	}
+
+	ngOnInit(): void {
+		this.buildForm();
+		const eventDetailsGroup = this.form.get(
+			"eventDetailsForm"
+		) as FormGroup;
+		subscribeDateDeadlineToDateChange(eventDetailsGroup, this.destroy);
+		subscribeTimeDeadlineToTimeChange(eventDetailsGroup, this.destroy);
+	}
+
+	buildForm() {
 		this.form = this.fb.nonNullable.group({
-			eventDetailsForm: this.fb.nonNullable.group({
-				title: this.fb.nonNullable.control("", Validators.required),
-				description: this.fb.nonNullable.control(
-					"",
-					Validators.required
-				),
-				date: this.fb.nonNullable.control({} as NgbDateStruct, [
-					Validators.required,
-					this.dateValidator.bind(this),
-				]),
-				time: this.fb.nonNullable.control({} as NgbTimeStruct, [
-					Validators.required,
-					this.timeValidator.bind(this),
-				]),
-			}),
+			eventDetailsForm: this.fb.nonNullable.group(
+				{
+					title: this.fb.nonNullable.control("", Validators.required),
+					description: this.fb.nonNullable.control(
+						"",
+						Validators.required
+					),
+					date: this.fb.nonNullable.control({} as NgbDateStruct, [
+						Validators.required,
+						dateValidator,
+					]),
+					time: this.fb.nonNullable.control({} as NgbTimeStruct, [
+						Validators.required,
+						timeValidator,
+					]),
+					endTime: this.fb.nonNullable.control(
+						{} as NgbTimeStruct,
+						[]
+					),
+					dateDeadline: this.fb.nonNullable.control(
+						{} as NgbDateStruct,
+						[Validators.required, dateDeadlineValidator]
+					),
+					timeDeadline: this.fb.nonNullable.control(
+						{} as NgbTimeStruct,
+						[Validators.required, timeDeadlineValidator]
+					),
+				},
+				{ validators: [deadlineBeforeEventValidator, endTimeValidator] }
+			),
 			inviteUsersForm: this.fb.nonNullable.group({
 				emails: this.fb.nonNullable.control([] as string[]),
 			}),
@@ -89,34 +123,6 @@ export class CreateEventComponent {
 
 	get inviteUsersForm(): FormGroup {
 		return this.form.get(inviteUsersForm) as FormGroup;
-	}
-
-	dateValidator(control: AbstractControl): ValidationErrors | null {
-		const value = control.value;
-		if (!value || !value.year || !value.month || !value.day) {
-			return { invalidDate: true };
-		}
-		return null;
-	}
-
-	timeValidator(control: AbstractControl): ValidationErrors | null {
-		const value = control.value;
-		if (!value || value.hour == null || value.minute == null) {
-			return { invalidTime: true };
-		}
-		return null;
-	}
-
-	getSubFormTitles() {
-		return [
-			formTitles.eventDetailTitle,
-			formTitles.addUserTitle,
-			formTitles.formVerificationTitle,
-		];
-	}
-
-	getDerivedContainerStyle() {
-		return { "max-width": `${breakpoints.lg}px` };
 	}
 
 	nextStep() {
@@ -138,26 +144,47 @@ export class CreateEventComponent {
 		) as FormGroup;
 	}
 
-	submit = () => {
-		if (this.form.valid &&
-			this.form.value[eventDetailsForm]?.title != null &&
-			this.form.value[eventDetailsForm]?.title != null &&
-			this.form.value[eventDetailsForm]?.date != null &&
-			this.form.value[eventDetailsForm]?.time != null
-		) {
-			console.log("Submitting...");
-			console.log("Form values:", this.form.value);
-			const dateTime = this.toDateTime(
-				this.form.value[eventDetailsForm]?.date,
-				this.form.value[eventDetailsForm]?.time
-			)
+	getSubFormTitles() {
+		return [
+			formTitles.eventDetailTitle,
+			formTitles.addUserTitle,
+			formTitles.formVerificationTitle,
+		];
+	}
 
-			const dto : IEventForCreationDto = {
+	getDerivedContainerStyle() {
+		return { "max-width": `${breakpoints.lg}px` };
+	}
+
+	submit = () => {
+		if (
+			this.form.valid &&
+			this.form.value[eventDetailsForm]?.title != null &&
+			this.form.value[eventDetailsForm]?.description != null &&
+			this.form.value[eventDetailsForm]?.date != null &&
+			this.form.value[eventDetailsForm]?.time != null &&
+			this.form.value[eventDetailsForm]?.dateDeadline != null &&
+			this.form.value[eventDetailsForm]?.timeDeadline != null
+		) {
+			const dto: IEventForCreationDto = {
 				title: this.form.value[eventDetailsForm]?.title,
-				description: this.form.value[eventDetailsForm]?.title,
-				date: dateTime,
-				deadline: dateTime
-			}
+				description: this.form.value[eventDetailsForm]?.description,
+				date: this.toDateTime(
+					this.form.value[eventDetailsForm]?.date,
+					this.form.value[eventDetailsForm]?.time
+				),
+				endTime: this.getEndDate(
+					this.form.value[eventDetailsForm]?.date,
+					this.form.value[eventDetailsForm]?.endTime
+				),
+				deadline: this.toDateTime(
+					this.form.value[eventDetailsForm]?.dateDeadline,
+					this.form.value[eventDetailsForm]?.timeDeadline
+				),
+				participants: this.generateRandomParticpantsIDSFromMails(
+					this.form.value[inviteUsersForm]?.emails ?? []
+				),
+			};
 
 			console.log("Event create DTO:", dto);
 		} else {
@@ -165,10 +192,24 @@ export class CreateEventComponent {
 		}
 	};
 
-	toDateTime = (
-		date: NgbDateStruct,
-		time: NgbTimeStruct
-	) => {
+	generateRandomParticpantsIDSFromMails(mails: string[]) {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		return mails.map(_ => this.generateGUID());
+	}
+
+	generateGUID(): string {
+		return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
+			const r = (Math.random() * 16) | 0;
+			const v = c === "x" ? r : (r & 0x3) | 0x8;
+			return v.toString(16);
+		});
+	}
+
+	getEndDate = (date?: NgbDateStruct, time?: NgbTimeStruct) => {
+		if (date == null || time?.hour == null || time?.minute == null) {
+			return null;
+		}
+
 		return new Date(
 			date.year,
 			date.month - 1,
@@ -178,4 +219,20 @@ export class CreateEventComponent {
 			time.second
 		);
 	};
+
+	toDateTime = (date: NgbDateStruct, time: NgbTimeStruct) => {
+		return new Date(
+			date.year,
+			date.month - 1,
+			date.day,
+			time.hour,
+			time.minute,
+			time.second
+		);
+	};
+
+	ngOnDestroy() {
+		this.destroy.next();
+		this.destroy.complete();
+	}
 }

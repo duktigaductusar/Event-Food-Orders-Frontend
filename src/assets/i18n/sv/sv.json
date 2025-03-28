@@ -1,6 +1,45 @@
 {
 	"event-create": {
-		"title": "Event-create page"
+		"btnNext": "Nästa",
+		"btnPrev": "Tillbaka",
+		"btnOk": "Ok",
+		"detailsForm": {
+			"title": "Event detaljer",
+			"nameLabel": "Namnn",
+			"descriptionLabel": "Beskrivning",
+			"dateLabel": "Event Datum",
+			"timeLabel": "Starttid",
+			"endTimeLabel": "Sluttid",
+			"dateLabelDeadline": "Datum deadline",
+			"timeLabelDeadline": "Tid deadline",
+			"nameWarningMessage": "Ange event namn.",
+			"descriptionWarningMessage": "Ange event beskrivining.",
+			"dateWarningMessage": "Ange ett giltigt datum.",
+			"timeWarningMessage": "Ange en giltig tid.",
+			"endTimeWarningMessage": "Sluttid kan ej vara före starttid.",
+			"dateDeadlineWarningMessage": "Ange ett giltigt datum för deadline.",
+			"timeDeadlineWarningMessage": "Ange en giltig tid för deadline."
+		},
+		"userForm": {
+			"title": "Ductus deltagare",
+			"searchUserLabel": "Sök användare",
+			"searchUserPlaceholder": "Namn, mail...",
+			"noUsersFoundInfo": "Inga användare hittades",
+			"selectedUsers": "Valda användare"
+		},
+		"verifyForm": {
+			"title": "Verifiera",
+			"stepOneTitle": "Steg 1: {{title}}",
+			"stepTwoTitle": "Steg 2: {{title}}",
+			"itemTitle": "Tittel:",
+			"itemDescription": "Beskrivning:",
+			"itemDate": "Datum:",
+			"itemTime": "Starttid:",
+			"itemEndTime": "Sluttid:",
+			"itemNoEndTime": "Ingen sluttid satt",
+			"itemDateDeadline": "Deadline datum:",
+			"itemTimeDeadline": "Deadline tid:"
+		}
 	},
 	"event-details": {
 		"title": "Event-details page"

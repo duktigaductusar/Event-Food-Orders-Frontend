@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { FormGroup, FormsModule } from "@angular/forms";
 import { ResponsiveFormComponent } from "../../../html/responsive-form/responsive-form.component";
 import { IInviteForm } from "../interfaces";
+import { AppBaseComponent } from "@app/components/base/app-base.component";
 
 @Component({
 	selector: "app-event-user-form",
@@ -9,12 +10,11 @@ import { IInviteForm } from "../interfaces";
 	templateUrl: "./event-user-form.component.html",
 	styleUrl: "./event-user-form.component.css",
 })
-export class EventUserFormComponent {
+export class EventUserFormComponent extends AppBaseComponent {
 	@Input() form!: FormGroup<IInviteForm>;
 	@Input() step!: number;
 	@Input() title = "";
 	@Input() selectedEmails: string[] = [];
-
 	searchTerm = "";
 
 	emails: string[] = [
@@ -59,6 +59,10 @@ export class EventUserFormComponent {
 		"niklas.sjödin@ductus.se",
 		"agnes.lundgren@ductus.se",
 	];
+
+	constructor() {
+		super();
+	}
 
 	get filteredEmails(): string[] {
 		if (this.searchTerm.length < 1) return [];

@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable, signal } from "@angular/core";
 import { IEventDto } from "@app/models";
 import { IEventDetailDto } from "@app/models/IEventDetailDto.model";
+// TODO
 import { environment } from "@environments/environment.development";
 import { type Observable, of } from "rxjs";
 
@@ -37,13 +38,11 @@ export class EventService {
 	};
 
 	getEvents(): Observable<IEventDto[]> {
-		// return of(this.events);
 		return this.http.get<IEventDto[]>(`${this.apiUrl}/all`);
 	}
 
 	getDetailEvent(): Observable<IEventDetailDto> {
 		return of(this.eventDetail);
-		// return this.http.get<IEventDto[]>(`${this.apiUrl}/get/all`)
 	}
 
 	// getEventById(id: string): Observable<IEventDto | undefined> {

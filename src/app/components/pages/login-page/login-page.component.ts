@@ -11,17 +11,20 @@ import { environment } from "@environments/environment.development";
 	styleUrl: "./login-page.component.css",
 })
 export class LoginPageComponent extends AppBaseComponent {
-	constructor(private msalService: MsalService, private router: Router) {
+	constructor(
+		private msalService: MsalService,
+		private router: Router
+	) {
 		super();
 
-		if(this.msalService.instance.getActiveAccount() != null){
+		if (this.msalService.instance.getActiveAccount() != null) {
 			this.router.navigate(["/"]);
 		}
 	}
 
 	handleOnClick(): void {
 		this.msalService.loginRedirect({
-			scopes: ["Mail.Send"]
+			scopes: ["Mail.Send"],
 		});
 	}
 }
