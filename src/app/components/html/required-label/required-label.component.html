@@ -1,4 +1,5 @@
-<label for="title" class="form-label">
-	{{ label }}
-	<span class="text-danger">*</span>
+<label [for]="for()" class="form-label">
+	{{ label() }}
+	<ng-content></ng-content>
+	<span [ngClass]="getDerivedClass()">*</span>
 </label>

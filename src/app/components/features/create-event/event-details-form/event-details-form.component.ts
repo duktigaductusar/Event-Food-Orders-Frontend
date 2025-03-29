@@ -9,7 +9,7 @@ import {
 	NgbDatepickerModule,
 	NgbTimepickerModule,
 } from "@ng-bootstrap/ng-bootstrap";
-import { ResponsiveFormComponent } from "@app/components/html";
+import { RequiredLabelComponent, ResponsiveFormComponent } from "@app/components/html";
 import {
 	EventDetailsFormControllerNameType,
 	EventDetailsValidationGroupKeysType,
@@ -31,6 +31,7 @@ import {
 		NgbDatepickerModule,
 		NgbTimepickerModule,
 		ResponsiveFormComponent,
+		RequiredLabelComponent
 	],
 	templateUrl: "./event-details-form.component.html",
 	styleUrl: "./event-details-form.component.css",
