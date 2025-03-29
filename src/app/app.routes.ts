@@ -13,7 +13,7 @@ import { MsalGuard } from "@azure/msal-angular";
 export const routes: Routes = [
 	{
 		path: "",
-		canActivate: [MsalGuard],
+		// canActivate: [MsalGuard],
 		children: [
 			{
 				path: appRoutes.HOME,
@@ -31,6 +31,9 @@ export const routes: Routes = [
 	},
 	{ path: appRoutes.LOGIN, component: LoginPageComponent },
 	{ path: appRoutes.TEST, component: ApiTestComponent},
-	{ path: appRoutes.LOGOUT,	component: LogoutPageComponent,	canActivate: [MsalGuard]},
+	{ path: appRoutes.LOGOUT,
+		component: LogoutPageComponent,
+		//canActivate: [MsalGuard]
+	},
 	{ path: "**", redirectTo: "" },
 ];

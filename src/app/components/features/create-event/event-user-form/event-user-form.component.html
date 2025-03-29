@@ -1,5 +1,5 @@
 <app-responsive-form
-	[formGroup]="form"
+	[formGroup]="form()"
 	[withParentStyle]="
 		'bg-white card shadow-sm d-flex justify-content-between mb-4'
 	"
@@ -11,7 +11,7 @@
 	<div class="p-4">
 		<div class="flex-column justify-content-center w-100">
 			<div class="mb-2">
-				<h4 class="text-center text-black">{{ step }}. {{ title }}</h4>
+				<h4 class="text-center text-black">{{ derivedTitle() }}</h4>
 			</div>
 			<div class="container my-3">
 				<label for="search" class="form-label">
@@ -78,11 +78,11 @@
 					</div>
 				}
 
-				@if (selectedUsers.length > 0) {
+				@if (selectedUsers().length > 0) {
 					<div class="mt-4">
 						<h5>{{ t("event-create.userForm.selectedUsers") }}</h5>
 						<ul class="list-group">
-							@for (user of selectedUsers; track user) {
+							@for (user of selectedUsers(); track user) {
 								<li
 									class="list-group-item d-flex justify-content-between align-items-center"
 								>

@@ -1,43 +1,45 @@
-import { Component, inject, signal, TemplateRef, WritableSignal } from '@angular/core';
+import { Input, Component, inject, signal, WritableSignal } from '@angular/core';
 
-import { ModalDismissReasons, NgbDatepickerModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-	// eslint-disable-next-line @angular-eslint/component-selector
-	selector: 'ngbd-modal-basic',
-	imports: [NgbDatepickerModule],
+	selector: 'app-ngbd-modal-content',
+	standalone: true,
+	template: `
+		<div class="modal-header">
+			<h4 class="modal-title">Hi there!</h4>
+			<button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+		</div>
+		<div class="modal-body">
+			<p>Hello, {{ name }}!</p>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-outline-secondary" (click)="activeModal.close('Close click')">Close</button>
+		</div>
+	`,
+})
+export class NgbdModalContentComponent {
+	activeModal = inject(NgbActiveModal);
+
+	@Input() name = "";
+}
+
+@Component({
+	selector: 'app-simple-component',
+	standalone: true,
 	templateUrl: './simple-modal.component.html',
 })
-// eslint-disable-next-line @angular-eslint/component-class-suffix
-export class NgbdModalBasic {
+export class AppSimpleModalComponent {
 	private modalService = inject(NgbModal);
-	closeResult: WritableSignal<string> = signal('');
 
-	open(content: TemplateRef<any>) {
-		this.modalService.open(content, {
+	open() {
+		const modalRef = this.modalService.open(NgbdModalContentComponent, {
 			ariaLabelledBy: 'modal-basic-title',
 			container: 'body',
 			backdrop: true,
 			centered: true,
-		}).result.then(
-			(result) => {
-				this.closeResult.set(`Closed with: ${result}`);
-			},
-			(reason) => {
-				this.closeResult.set(`Dismissed ${this.getDismissReason(reason)}`);
-			},
-		);
-	}
-
-
-	private getDismissReason(reason: any): string {
-		switch (reason) {
-			case ModalDismissReasons.ESC:
-				return 'by pressing ESC';
-			case ModalDismissReasons.BACKDROP_CLICK:
-				return 'by clicking on a backdrop';
-			default:
-				return `with: ${reason}`;
-		}
+			backdropClass: "app-modal-custom"
+		})
+		modalRef.componentInstance.name = 'Test World';
 	}
 }

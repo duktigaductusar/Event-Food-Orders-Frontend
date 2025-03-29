@@ -15,6 +15,7 @@
 			"nameWarningMessage": "Ange event namn.",
 			"descriptionWarningMessage": "Ange event beskrivining.",
 			"dateWarningMessage": "Ange ett giltigt datum.",
+			"dateFutureDateWarningMessage": "Event måste mint vare en dag framåt.",
 			"timeWarningMessage": "Ange en giltig tid.",
 			"endTimeWarningMessage": "Sluttid kan ej vara före starttid.",
 			"dateDeadlineWarningMessage": "Ange ett giltigt datum för deadline.",

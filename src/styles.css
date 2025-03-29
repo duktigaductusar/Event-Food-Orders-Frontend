@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* TODO!
+    What? Custom modal class to override buggy z-index in modals.
+    Used By? Modals components.
+    1) Create dynamically then constant can be used.
+    2) Is the custom theme making this necessary???
+*/
+.app-modal-custom {
+    z-index: 1000 !important;
+}

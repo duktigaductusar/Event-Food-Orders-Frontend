@@ -1,5 +1,5 @@
 <app-responsive-form
-	[formGroup]="form"
+	[formGroup]="form()"
 	[withParentStyle]="
 		'bg-white card shadow-sm d-flex justify-content-between mb-4'
 	"
@@ -10,12 +10,12 @@
 	</div>
 	<div class="p-4">
 		<div class="mb-2">
-			<h4 class="text-center text-black">{{ step }}. {{ title }}</h4>
+			<h4 class="text-center text-black">{{ derivedTitle() }}</h4>
 		</div>
 		<div class="mb-3">
-			<label for="title" class="form-label">{{
-				t("event-create.detailsForm.nameLabel")
-			}}</label>
+			<label for="title" class="form-label">
+				{{ t("event-create.detailsForm.nameLabel") }}
+			</label>
 			<input
 				id="title"
 				type="text"
@@ -86,9 +86,19 @@
 					)
 				) {
 					<div class="invalid-feedback d-block">
+						{{ t("event-create.detailsForm.dateWarningMessage") }}
+					</div>
+				}
+				@if (
+					hasError(
+						eventDetailsControllerNames.date,
+						formValidationKeys.invalidDateFutureDate
+					)
+				) {
+					<div class="invalid-feedback d-block">
 						{{
 							t(
-								"event-create.detailsForm.descriptionWarningMessage"
+								"event-create.detailsForm.dateFutureDateWarningMessage"
 							)
 						}}
 					</div>
