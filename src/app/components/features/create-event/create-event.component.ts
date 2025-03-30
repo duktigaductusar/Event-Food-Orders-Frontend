@@ -1,11 +1,11 @@
-import { Component, effect, input, OnDestroy, OnInit, signal } from "@angular/core";
+import { Component, effect, inject, input, OnDestroy, OnInit, signal } from "@angular/core";
 import { EventDetailsFormComponent } from "./event-details-form/event-details-form.component";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { Subject } from "rxjs";
 
 import { ICreateEventForm } from "./interfaces";
 import { MultiStepFormHeaderComponent } from "./multistep-form-navigation-header/multistep-form-navigation-header.component";
-import { GenericBtnComponent, AppSimpleModalComponent } from "@app/components/html";
+import { GenericBtnComponent } from "@app/components/html";
 import { breakpoints } from "@app/components/style";
 import { CommonModule } from "@angular/common";
 import { CreateEventFooterContainerComponent } from "./create-event-footer-container/create-event-footer-container.component";
@@ -14,9 +14,11 @@ import { AppBaseComponent } from "@app/components/base/app-base.component";
 import { eventDetailsForm, formTitles, inviteUsersForm, users, verifyForm } from "./constants";
 import { EventUserFormComponent } from "./event-user-form/event-user-form.component";
 import { VerifyEventFormComponent } from "./verify-event-form/verify-event-form.component";
-import { IEventDetailOwnerDto, IUserDto } from "@app/models";
+import { IEventDetailOwnerDto, IEventDto, IUserDto } from "@app/models";
 import { EventService } from "@app/services";
 import { buildCreateEventForm, subscribeDateDeadlineToDateChange, subscribeTimeDeadlineToTimeChange, createEventDtoFromCreateEventForm } from "./create-event.setup";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { CreateEventResultModalComponent } from "./create-event-result-modal/create-event-result-modal.component";
 
 /**
  * TODO:
@@ -36,14 +38,12 @@ import { buildCreateEventForm, subscribeDateDeadlineToDateChange, subscribeTimeD
 		MultiStepFormHeaderComponent,
 		CreateEventFooterContainerComponent,
 		CreateEventHeaderContainerComponent,
-		AppSimpleModalComponent
 	],
 	templateUrl: "./create-event.component.html",
 })
 export class CreateEventComponent
 	extends AppBaseComponent
-	implements OnDestroy, OnInit
-{
+	implements OnDestroy, OnInit {
 	form!: FormGroup<ICreateEventForm>;
 	formTitles = formTitles;
 	private destroy = new Subject<void>();
@@ -56,8 +56,12 @@ export class CreateEventComponent
 	isPending = signal(false);
 	selectedUsers = signal<IUserDto[]>([]);
 	initialEvent = input<IEventDetailOwnerDto>()
+	private modalService = inject(NgbModal);
 
-	constructor(private fb: FormBuilder, private service: EventService) {
+	constructor(
+		private fb: FormBuilder,
+		private eventService: EventService
+	) {
 		super();
 		this.form = buildCreateEventForm(this.fb);
 		this.selectedUsersEffect();
@@ -132,16 +136,38 @@ export class CreateEventComponent
 		}
 
 		this.isPending.set(true);
-		this.service.createEvent(eventDto).subscribe({
+		this.eventService.createEvent(eventDto).subscribe({
 			next: event => {
-				console.log('created event: ', event);
+				this.openSuccessModal(event as IEventDto);
 			},
 			error: error => {
 				console.error("Error fetching users:", error);
+				this.openErrorModal();
 			},
 			complete: () => this.isPending.set(false),
 		});
 	};
+
+	openSuccessModal(event: IEventDto) {
+		const modalRef = this.modalService.open(CreateEventResultModalComponent, {
+			container: 'body',
+			backdrop: true,
+			centered: true,
+			backdropClass: "app-modal-custom"
+		})
+		modalRef.componentInstance.event = event;
+	}
+
+	openErrorModal() {
+		const modalRef = this.modalService.open(CreateEventResultModalComponent, {
+			container: 'body',
+			backdrop: true,
+			centered: true,
+			backdropClass: "app-modal-custom"
+		})
+
+		modalRef.componentInstance.error = "Error";
+	}
 
 	ngOnDestroy() {
 		this.destroy.next();
