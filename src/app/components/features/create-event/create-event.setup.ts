@@ -9,49 +9,94 @@ import {
 } from "./constants";
 import { environment } from "@environments";
 import { ICreateEventForm } from "./interfaces";
-import { IUserDto } from "@app/models";
+import { IEventDetailOwnerDto } from "@app/models";
 import { IEventForCreationDto } from "@app/models/IEventForCreationDto";
 import { dateValidator, timeValidator, dateDeadlineValidator, timeDeadlineValidator, deadlineBeforeEventValidator, endTimeValidator, dateValidatorFutureDate } from "./create-event.validators";
-import { toDateTimeISOStrig, getEndDate } from "./create-event.utils";
+import { toDateTimeISOStrig, getEndDate, dateToNgbDateStruct, dateToNgbTimeStruct } from "./create-event.utils";
 
-export function buildCreatEventForm(fb: FormBuilder) {
-	return fb.nonNullable.group({
-		eventDetailsForm: fb.nonNullable.group(
-			{
-				title: fb.nonNullable.control("", Validators.required),
-				description: fb.nonNullable.control(
-					"",
-					Validators.required
-				),
-				date: fb.nonNullable.control({} as NgbDateStruct, [
-					Validators.required,
-					dateValidator,
-					dateValidatorFutureDate
-				]),
-				time: fb.nonNullable.control({} as NgbTimeStruct, [
-					Validators.required,
-					timeValidator,
-				]),
-				endTime: fb.nonNullable.control(
-					{} as NgbTimeStruct,
-					[]
-				),
-				dateDeadline: fb.nonNullable.control(
-					{} as NgbDateStruct,
-					[Validators.required, dateDeadlineValidator]
-				),
-				timeDeadline: fb.nonNullable.control(
-					{} as NgbTimeStruct,
-					[Validators.required, timeDeadlineValidator]
-				),
-			},
-			{ validators: [deadlineBeforeEventValidator, endTimeValidator] }
-		),
-		inviteUsersForm: fb.nonNullable.group({
-			users: fb.nonNullable.control([] as IUserDto[]),
-		}),
-	});
+export function buildCreateEventForm(
+  fb: FormBuilder,
+  initial?: Partial<IEventDetailOwnerDto>
+) {
+  return fb.nonNullable.group({
+    eventDetailsForm: fb.nonNullable.group({
+      title: fb.nonNullable.control(
+        initial?.title ?? '',
+        Validators.required
+      ),
+      description: fb.nonNullable.control(
+        initial?.description ?? '',
+        Validators.required
+      ),
+      date: fb.nonNullable.control(
+        dateToNgbDateStruct(initial?.date) ?? ({} as NgbDateStruct),
+        [Validators.required, dateValidator, dateValidatorFutureDate]
+      ),
+      time: fb.nonNullable.control(
+        dateToNgbTimeStruct(initial?.date) ?? ({} as NgbTimeStruct),
+        [Validators.required, timeValidator]
+      ),
+      endTime: fb.nonNullable.control(
+        dateToNgbTimeStruct(initial?.endTime) ?? ({} as NgbTimeStruct)
+      ),
+      dateDeadline: fb.nonNullable.control(
+        dateToNgbDateStruct(initial?.deadline) ?? ({} as NgbDateStruct),
+        [Validators.required, dateDeadlineValidator]
+      ),
+      timeDeadline: fb.nonNullable.control(
+        dateToNgbTimeStruct(initial?.deadline) ?? ({} as NgbTimeStruct),
+        [Validators.required, timeDeadlineValidator]
+      ),
+    }, {
+      validators: [deadlineBeforeEventValidator, endTimeValidator]
+    }),
+
+    inviteUsersForm: fb.nonNullable.group({
+      users: fb.nonNullable.control(
+        initial?.users ?? []
+      )
+    })
+  });
 }
+
+// export function buildCreatEventForm(fb: FormBuilder) {
+// 	return fb.nonNullable.group({
+// 		eventDetailsForm: fb.nonNullable.group(
+// 			{
+// 				title: fb.nonNullable.control("", Validators.required),
+// 				description: fb.nonNullable.control(
+// 					"",
+// 					Validators.required
+// 				),
+// 				date: fb.nonNullable.control({} as NgbDateStruct, [
+// 					Validators.required,
+// 					dateValidator,
+// 					dateValidatorFutureDate
+// 				]),
+// 				time: fb.nonNullable.control({} as NgbTimeStruct, [
+// 					Validators.required,
+// 					timeValidator,
+// 				]),
+// 				endTime: fb.nonNullable.control(
+// 					{} as NgbTimeStruct,
+// 					[]
+// 				),
+// 				dateDeadline: fb.nonNullable.control(
+// 					{} as NgbDateStruct,
+// 					[Validators.required, dateDeadlineValidator]
+// 				),
+// 				timeDeadline: fb.nonNullable.control(
+// 					{} as NgbTimeStruct,
+// 					[Validators.required, timeDeadlineValidator]
+// 				),
+// 			},
+// 			{ validators: [deadlineBeforeEventValidator, endTimeValidator] }
+// 		),
+// 		inviteUsersForm: fb.nonNullable.group({
+// 			users: fb.nonNullable.control([] as IUserDto[]),
+// 		}),
+// 	});
+// }
 
 export function createEventDtoFromCreateEventForm(form: FormGroup<ICreateEventForm>) {
 	if (

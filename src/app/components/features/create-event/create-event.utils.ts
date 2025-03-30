@@ -15,6 +15,39 @@ export function getEndDate(date?: NgbDateStruct, time?: NgbTimeStruct) {
 	);
 };
 
+export function dateToNgbDateStruct(date: Date | string | undefined | null): NgbDateStruct {
+	if (date == null) {
+		return {} as NgbDateStruct
+	}
+	
+	const d = typeof date === 'string' ? new Date(date) : date;
+
+	return {
+		year: d.getFullYear(),
+		month: d.getMonth() + 1,
+		day: d.getDate(),
+	};
+}
+
+
+export function dateToNgbTimeStruct(date: Date | string | undefined | null): NgbTimeStruct {
+	if (date == null) {
+		return {} as NgbTimeStruct
+	}
+	
+	const d = typeof date === 'string' ? new Date(date) : date;
+	
+	return {
+		hour: d.getHours(),
+		minute: d.getMinutes(),
+		second: d.getSeconds(),
+	};
+}
+
+export function fromDateTimeISOString(isoString: string): Date {
+	return new Date(isoString);
+}
+
 export function toDateTimeISOStrig(date: NgbDateStruct, time: NgbTimeStruct) {
 	return new Date(
 		date.year,

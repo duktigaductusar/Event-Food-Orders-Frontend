@@ -1,4 +1,4 @@
-import { Component, effect, OnDestroy, OnInit, signal } from "@angular/core";
+import { Component, effect, input, OnDestroy, OnInit, signal } from "@angular/core";
 import { EventDetailsFormComponent } from "./event-details-form/event-details-form.component";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { Subject } from "rxjs";
@@ -14,9 +14,9 @@ import { AppBaseComponent } from "@app/components/base/app-base.component";
 import { eventDetailsForm, formTitles, inviteUsersForm, users, verifyForm } from "./constants";
 import { EventUserFormComponent } from "./event-user-form/event-user-form.component";
 import { VerifyEventFormComponent } from "./verify-event-form/verify-event-form.component";
-import { IUserDto } from "@app/models";
+import { IEventDetailOwnerDto, IUserDto } from "@app/models";
 import { EventService } from "@app/services";
-import { buildCreatEventForm, subscribeDateDeadlineToDateChange, subscribeTimeDeadlineToTimeChange, createEventDtoFromCreateEventForm } from "./create-event.setup";
+import { buildCreateEventForm, subscribeDateDeadlineToDateChange, subscribeTimeDeadlineToTimeChange, createEventDtoFromCreateEventForm } from "./create-event.setup";
 
 /**
  * TODO:
@@ -42,22 +42,24 @@ import { buildCreatEventForm, subscribeDateDeadlineToDateChange, subscribeTimeDe
 })
 export class CreateEventComponent
 	extends AppBaseComponent
-	implements OnDestroy, OnInit {
-	currentStep = 1;
+	implements OnDestroy, OnInit
+{
 	form!: FormGroup<ICreateEventForm>;
 	formTitles = formTitles;
 	private destroy = new Subject<void>();
-	isPending = signal(false);
-	selectedUsers = signal<IUserDto[]>([]);
 	readonly formSteps = {
 		formDetailStep: 1,
 		formUserStep: 2,
 		formVerifyStep: 3,
 	}
+	currentStep = this.formSteps.formDetailStep;
+	isPending = signal(false);
+	selectedUsers = signal<IUserDto[]>([]);
+	initialEvent = input<IEventDetailOwnerDto>()
 
 	constructor(private fb: FormBuilder, private service: EventService) {
 		super();
-		this.form = buildCreatEventForm(this.fb);
+		this.form = buildCreateEventForm(this.fb);
 		this.selectedUsersEffect();
 	}
 
