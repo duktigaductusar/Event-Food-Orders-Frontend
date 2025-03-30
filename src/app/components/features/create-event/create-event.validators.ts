@@ -131,7 +131,7 @@ export function deadlineBeforeEventValidator(
 		deadlineTime.minute
 	);
 
-	if (deadline >= event) {
+	if (deadline > event) {
 		return { [eventDetailsValidationGroupKeys.deadlineAfterEvent]: true };
 	}
 

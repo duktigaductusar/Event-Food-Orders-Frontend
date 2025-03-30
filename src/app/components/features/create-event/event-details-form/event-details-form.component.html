@@ -32,9 +32,9 @@
 					formValidationKeys.required
 				)
 			) {
-				<div class="invalid-feedback">
-					{{ t("event-create.detailsForm.nameWarningMessage") }}
-				</div>
+				<app-invalid-input-feedback
+					[text]="t('event-create.detailsForm.nameWarning')"
+				></app-invalid-input-feedback>
 			}
 		</div>
 
@@ -61,15 +61,13 @@
 					formValidationKeys.required
 				)
 			) {
-				<div class="invalid-feedback">
-					{{
-						t("event-create.detailsForm.descriptionWarningMessage")
-					}}
-				</div>
+				<app-invalid-input-feedback
+					[text]="t('event-create.detailsForm.descriptionWarning')"
+				></app-invalid-input-feedback>
 			}
 		</div>
 
-		<div class="my-5">
+		<div class="mt-5 mb-3">
 			<h4 class="text-black">
 				{{ t("event-create.detailsForm.subtitleDate") }}
 			</h4>
@@ -101,24 +99,21 @@
 						formValidationKeys.invalidDate
 					)
 				) {
-					<div class="invalid-feedback d-block text-center">
-						{{ t("event-create.detailsForm.dateWarningMessage") }}
-					</div>
+					<app-invalid-input-feedback
+						[text]="t('event-create.detailsForm.dateWarning')"
+					></app-invalid-input-feedback>
 				}
-
 				@if (
 					hasError(
 						eventDetailsControllerNames.date,
 						formValidationKeys.invalidDateFutureDate
 					)
 				) {
-					<div class="invalid-feedback d-block text-center">
-						{{
-							t(
-								"event-create.detailsForm.dateFutureDateWarningMessage"
-							)
-						}}
-					</div>
+					<app-invalid-input-feedback
+						[text]="
+							t('event-create.detailsForm.dateFutureDateWarning')
+						"
+					></app-invalid-input-feedback>
 				}
 			</div>
 
@@ -151,21 +146,43 @@
 					hasError(
 						eventDetailsControllerNames.dateDeadline,
 						formValidationKeys.invalidDateDeadline
-					) ||
+					)
+				) {
+					<app-invalid-input-feedback
+						[text]="
+							t('event-create.detailsForm.dateDeadlineWarning')
+						"
+					></app-invalid-input-feedback>
+				}
+				@if (
 					hasGroupError(formValidationGroupKeys.deadlineAfterEvent)
 				) {
-					<div class="invalid-feedback d-block text-center">
-						{{
+					<app-invalid-input-feedback
+						[text]="
 							t(
-								"event-create.detailsForm.dateDeadlineWarningMessage"
+								'event-create.detailsForm.dateDeadlineBeforeEventDateWarning'
 							)
-						}}
-					</div>
+						"
+					></app-invalid-input-feedback>
+				}
+				@if (
+					hasError(
+						eventDetailsControllerNames.dateDeadline,
+						formValidationKeys.invalidDateFutureDate
+					)
+				) {
+					<app-invalid-input-feedback
+						[text]="
+							t(
+								'event-create.detailsForm.deadlineFutureDateWarning'
+							)
+						"
+					></app-invalid-input-feedback>
 				}
 			</div>
 		</div>
 
-		<div class="my-5">
+		<div class="mt-5 mb-3">
 			<h4 class="text-black">
 				{{ t("event-create.detailsForm.subtitleTime") }}
 			</h4>
@@ -196,9 +213,9 @@
 						formValidationKeys.invalidTime
 					)
 				) {
-					<div class="invalid-feedback d-block">
-						{{ t("event-create.detailsForm.timeWarningMessage") }}
-					</div>
+					<app-invalid-input-feedback
+						[text]="t('event-create.detailsForm.timeWarning')"
+					></app-invalid-input-feedback>
 				}
 			</div>
 
@@ -224,11 +241,9 @@
 				@if (
 					hasGroupError(formValidationGroupKeys.eventEndBeforeStart)
 				) {
-					<div class="invalid-feedback d-block">
-						{{
-							t("event-create.detailsForm.endTimeWarningMessage")
-						}}
-					</div>
+					<app-invalid-input-feedback
+						[text]="t('event-create.detailsForm.endTimeWarning')"
+					></app-invalid-input-feedback>
 				}
 			</div>
 
@@ -260,16 +275,24 @@
 					hasError(
 						eventDetailsControllerNames.timeDeadline,
 						formValidationKeys.invalidTimeDeadline
-					) ||
+					)
+				) {
+					<app-invalid-input-feedback
+						[text]="
+							t('event-create.detailsForm.timeDeadlineWarning')
+						"
+					></app-invalid-input-feedback>
+				}
+				@if (
 					hasGroupError(formValidationGroupKeys.deadlineAfterEvent)
 				) {
-					<div class="invalid-feedback d-block">
-						{{
+					<app-invalid-input-feedback
+						[text]="
 							t(
-								"event-create.detailsForm.timeDeadlineWarningMessage"
+								'event-create.detailsForm.dateDeadlineBeforeEventDateWarning'
 							)
-						}}
-					</div>
+						"
+					></app-invalid-input-feedback>
 				}
 			</div>
 		</div>

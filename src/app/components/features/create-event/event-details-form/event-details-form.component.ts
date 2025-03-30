@@ -22,6 +22,7 @@ import {
 	eventDetailsValidationGroupKeys,
 	eventDetailsValidationKeys,
 } from "../constants";
+import { InvalidInputFeedbackComponent } from "@app/components/shared/invalid-input-feedback/invalid-input-feedback.component";
 
 @Component({
 	selector: "app-event-details-form",
@@ -31,7 +32,8 @@ import {
 		NgbDatepickerModule,
 		NgbTimepickerModule,
 		ResponsiveFormComponent,
-		RequiredLabelComponent
+		RequiredLabelComponent,
+		InvalidInputFeedbackComponent
 	],
 	templateUrl: "./event-details-form.component.html",
 	styleUrl: "./event-details-form.component.css",
