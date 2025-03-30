@@ -1,6 +1,8 @@
-<div class="invalid-feedback d-block">
-	<p>
-		<i class="bi bi-exclamation-triangle"></i>
-		{{ text() }}
-	</p>
-</div>
+@if (show()) {
+	<div class="invalid-feedback d-block">
+		<p>
+			<i class="bi bi-exclamation-triangle"></i>
+			{{ text() }}
+		</p>
+	</div>
+}
