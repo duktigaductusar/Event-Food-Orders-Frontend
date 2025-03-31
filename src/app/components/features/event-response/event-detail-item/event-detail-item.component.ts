@@ -46,6 +46,7 @@ export class EventDetailItemComponent
 
 	isPending = signal(false);
 
+	//todo take this from token. Use MSAL library
 	userId = "b9448949-0ed9-4bb1-8319-8616fe2d0dd4"
 
 	constructor(
