@@ -46,7 +46,7 @@ export class EventDetailItemComponent
 
 	isPending = signal(false);
 
-	userId = "b9448949-0ed9-4bb1-8319-8616fe2d0dd4"
+	userId = "9c4ab470-c98d-4297-99a6-93327de5c784"
 
 	constructor(
 		private router: Router,
