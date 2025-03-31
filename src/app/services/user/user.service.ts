@@ -13,7 +13,7 @@ export class UserService {
 	constructor(private http: HttpClient) { }
 
 	getUsers(queryString: string): Observable<IUserDto[]> {
-		return this.http.get<IUserDto[]>(`${this.apiUrl}/users`, {
+		return this.http.get<IUserDto[]>(`${this.apiUrl}`, {
 			params: { queryString }
 		}).pipe(
 			catchError(error => {
