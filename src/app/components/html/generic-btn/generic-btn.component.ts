@@ -4,6 +4,8 @@ import { CommonModule } from "@angular/common";
 export type GenericBtnCompClrType =
 	| "secondary"
 	| "primary"
+	| "info"
+	| "success"
 	| "danger"
 	| "warning";
 

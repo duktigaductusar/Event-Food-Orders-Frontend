@@ -1,5 +1,5 @@
 <app-responsive-form
-	[formGroup]="form"
+	[formGroup]="form()"
 	[withParentStyle]="
 		'bg-white card shadow-sm d-flex justify-content-between mb-4'
 	"
@@ -9,74 +9,280 @@
 		<ng-content select="[header]"></ng-content>
 	</div>
 	<div class="p-4">
-		<div class="mb-2">
-			<h4 class="text-center text-black">{{ step }}. {{ title }}</h4>
+		<div class="m-3">
+			<h4 class="text-center text-black">{{ derivedTitle() }}</h4>
 		</div>
 		<div class="mb-3">
-			<label for="title" class="form-label">Namn</label>
+			<app-required-label
+				[for]="'title'"
+				[label]="t('event-create.detailsForm.nameLabel')"
+			>
+			</app-required-label>
 			<input
 				id="title"
 				type="text"
 				class="form-control"
-				formControlName="title"
-				placeholder="Ange event namn..."
-				[ngClass]="getControlClass('title')"
+				[placeholder]="t('event-create.detailsForm.namePlaceholder')"
+				[formControlName]="eventDetailsControllerNames.title"
+				[ngClass]="getControlClass(eventDetailsControllerNames.title)"
 			/>
-			@if (hasError("title", "required")) {
-				<div class="invalid-feedback">Ange event tittel.</div>
-			}
+			<app-invalid-input-feedback
+				[show]="
+					hasError(
+						eventDetailsControllerNames.title,
+						formValidationKeys.required
+					)
+				"
+				[text]="t('event-create.detailsForm.nameWarning')"
+			></app-invalid-input-feedback>
 		</div>
 
 		<div class="mb-3">
-			<label for="description" class="form-label">Beskrivining</label>
+			<app-required-label
+				[for]="'description'"
+				[label]="t('event-create.detailsForm.descriptionLabel')"
+			>
+			</app-required-label>
 			<textarea
 				id="description"
 				class="form-control"
-				formControlName="description"
-				placeholder="Ange event beskrivning..."
-				[ngClass]="getControlClass('description')"
+				[placeholder]="
+					t('event-create.detailsForm.descriptionPlaceholder')
+				"
+				[formControlName]="eventDetailsControllerNames.description"
+				[ngClass]="
+					getControlClass(eventDetailsControllerNames.description)
+				"
 			></textarea>
-			@if (hasError("description", "required")) {
-				<div class="invalid-feedback">Ange event Beskrivining.</div>
-			}
+			<app-invalid-input-feedback
+				[show]="
+					hasError(
+						eventDetailsControllerNames.description,
+						formValidationKeys.required
+					)
+				"
+				[text]="t('event-create.detailsForm.descriptionWarning')"
+			></app-invalid-input-feedback>
 		</div>
 
-		<div class="row">
+		<div class="mt-5 mb-3">
+			<h4 class="text-black">
+				{{ t("event-create.detailsForm.subtitleDate") }}
+			</h4>
+		</div>
+		<div class="row justify-content-center">
 			<div class="col-md-6 mb-3">
-				<label for="date" class="form-label"
-					>Event Datum <i class="bi bi-calendar"></i
-				></label>
+				<app-required-label
+					[for]="'date'"
+					[label]="t('event-create.detailsForm.dateLabel')"
+					[withClass]="'m-2'"
+				>
+					<i class="bi bi-calendar"></i>
+				</app-required-label>
+
 				<div
 					class="datepicker-wrapper"
-					[ngClass]="getControlClass('date', false)"
+					[ngClass]="
+						getControlClass(eventDetailsControllerNames.date, false)
+					"
 				>
-					<ngb-datepicker formControlName="date"></ngb-datepicker>
+					<ngb-datepicker
+						[formControlName]="eventDetailsControllerNames.date"
+					></ngb-datepicker>
 				</div>
-				@if (hasError("date", "invalidDate")) {
-					<div class="invalid-feedback d-block">
-						Ange ett giltigt datum.
-					</div>
-				}
+				<app-invalid-input-feedback
+					[show]="
+						hasError(
+							eventDetailsControllerNames.date,
+							formValidationKeys.invalidDate
+						)
+					"
+					[text]="t('event-create.detailsForm.dateWarning')"
+				></app-invalid-input-feedback>
+
+				<app-invalid-input-feedback
+					[show]="
+						hasError(
+							eventDetailsControllerNames.date,
+							formValidationKeys.invalidDateFutureDate
+						)
+					"
+					[text]="t('event-create.detailsForm.dateFutureDateWarning')"
+				></app-invalid-input-feedback>
 			</div>
 
 			<div class="col-md-6 mb-3">
-				<label for="time" class="form-label"
-					>Starttid <i class="bi bi-clock"></i
-				></label>
+				<app-required-label
+					[for]="'date-deadline'"
+					[label]="t('event-create.detailsForm.dateLabelDeadline')"
+					[withClass]="'m-2'"
+				>
+					<i class="bi bi-calendar"></i>
+				</app-required-label>
+
+				<div
+					class="datepicker-wrapper"
+					[ngClass]="
+						getControlClass(
+							eventDetailsControllerNames.dateDeadline,
+							false
+						)
+					"
+				>
+					<ngb-datepicker
+						[formControlName]="
+							eventDetailsControllerNames.dateDeadline
+						"
+					></ngb-datepicker>
+				</div>
+				<app-invalid-input-feedback
+					[show]="
+						hasError(
+							eventDetailsControllerNames.dateDeadline,
+							formValidationKeys.invalidDateDeadline
+						)
+					"
+					[text]="t('event-create.detailsForm.dateDeadlineWarning')"
+				></app-invalid-input-feedback>
+
+				<app-invalid-input-feedback
+					[show]="
+						hasGroupError(
+							formValidationGroupKeys.deadlineAfterEvent
+						)
+					"
+					[text]="
+						t(
+							'event-create.detailsForm.dateDeadlineBeforeEventDateWarning'
+						)
+					"
+				></app-invalid-input-feedback>
+
+				<app-invalid-input-feedback
+					[show]="
+						hasError(
+							eventDetailsControllerNames.dateDeadline,
+							formValidationKeys.invalidDateFutureDate
+						)
+					"
+					[text]="
+						t('event-create.detailsForm.deadlineFutureDateWarning')
+					"
+				></app-invalid-input-feedback>
+			</div>
+		</div>
+
+		<div class="mt-5 mb-3">
+			<h4 class="text-black">
+				{{ t("event-create.detailsForm.subtitleTime") }}
+			</h4>
+		</div>
+		<div class="row">
+			<div class="col-md-4 mb-3">
+				<app-required-label
+					[for]="'time'"
+					[label]="t('event-create.detailsForm.timeLabel')"
+					[withClass]="'m-2'"
+				>
+					<i class="bi bi-clock"></i
+				></app-required-label>
 				<div
 					class="timepicker-wrapper"
-					[ngClass]="getControlClass('time', false)"
+					[ngClass]="
+						getControlClass(eventDetailsControllerNames.time, false)
+					"
 				>
 					<ngb-timepicker
-						formControlName="time"
+						[formControlName]="eventDetailsControllerNames.time"
 						[spinners]="false"
 					></ngb-timepicker>
 				</div>
-				@if (hasError("time", "invalidTime")) {
-					<div class="invalid-feedback d-block">
-						Ange en giltig tid.
-					</div>
-				}
+				<app-invalid-input-feedback
+					[show]="
+						hasError(
+							eventDetailsControllerNames.time,
+							formValidationKeys.invalidTime
+						)
+					"
+					[text]="t('event-create.detailsForm.timeWarning')"
+				></app-invalid-input-feedback>
+			</div>
+
+			<div class="col-md-4 mb-3">
+				<label for="end-time" class="form-label"
+					>{{ t("event-create.detailsForm.endTimeLabel") }}
+					<i class="bi bi-clock"></i
+				></label>
+				<div
+					class="timepicker-wrapper"
+					[ngClass]="
+						getControlClass(
+							eventDetailsControllerNames.endTime,
+							false
+						)
+					"
+				>
+					<ngb-timepicker
+						[formControlName]="eventDetailsControllerNames.endTime"
+						[spinners]="false"
+					></ngb-timepicker>
+				</div>
+				<app-invalid-input-feedback
+					[show]="
+						hasGroupError(
+							formValidationGroupKeys.eventEndBeforeStart
+						)
+					"
+					[text]="t('event-create.detailsForm.endTimeWarning')"
+				></app-invalid-input-feedback>
+			</div>
+
+			<div class="col-md-4 mb-3">
+				<app-required-label
+					[for]="'time-deadline'"
+					[label]="t('event-create.detailsForm.timeLabelDeadline')"
+					[withClass]="'m-2'"
+				>
+					<i class="bi bi-clock"></i
+				></app-required-label>
+				<div
+					class="timepicker-wrapper"
+					[ngClass]="
+						getControlClass(
+							eventDetailsControllerNames.timeDeadline,
+							false
+						)
+					"
+				>
+					<ngb-timepicker
+						[formControlName]="
+							eventDetailsControllerNames.timeDeadline
+						"
+						[spinners]="false"
+					></ngb-timepicker>
+				</div>
+				<app-invalid-input-feedback
+					[show]="
+						hasError(
+							eventDetailsControllerNames.timeDeadline,
+							formValidationKeys.invalidTimeDeadline
+						)
+					"
+					[text]="t('event-create.detailsForm.timeDeadlineWarning')"
+				></app-invalid-input-feedback>
+
+				<app-invalid-input-feedback
+					[show]="
+						hasGroupError(
+							formValidationGroupKeys.deadlineAfterEvent
+						)
+					"
+					[text]="
+						t(
+							'event-create.detailsForm.dateDeadlineBeforeEventDateWarning'
+						)
+					"
+				></app-invalid-input-feedback>
 			</div>
 		</div>
 	</div>

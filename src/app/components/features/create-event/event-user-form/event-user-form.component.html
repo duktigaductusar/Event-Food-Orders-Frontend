@@ -1,5 +1,5 @@
 <app-responsive-form
-	[formGroup]="form"
+	[formGroup]="form()"
 	[withParentStyle]="
 		'bg-white card shadow-sm d-flex justify-content-between mb-4'
 	"
@@ -11,59 +11,83 @@
 	<div class="p-4">
 		<div class="flex-column justify-content-center w-100">
 			<div class="mb-2">
-				<h4 class="text-center text-black">{{ step }}. {{ title }}</h4>
+				<h4 class="text-center text-black">{{ derivedTitle() }}</h4>
 			</div>
 			<div class="container my-3">
-				<h3>Sök användare</h3>
+				<label for="search" class="form-label">
+					{{ t("event-create.userForm.searchUserLabel") }}
+				</label>
 				<div class="position-relative mb-3">
 					<input
+						id="search"
 						class="form-control pe-5"
 						type="text"
-						placeholder="Namn, mail..."
-						[(ngModel)]="searchTerm"
+						[placeholder]="
+							t('event-create.userForm.searchUserPlaceholder')
+						"
+						[ngModel]="query"
+						(ngModelChange)="onSearchInputChange($event)"
 					/>
 
-					@if (searchTerm.length > 0) {
+					@if (query.length > 0) {
 						<i
 							class="bi bi-x-circle-fill position-absolute top-50 end-0 translate-middle-y me-3 text-muted"
 							style="cursor: pointer"
-							(click)="searchTerm = ''"
+							(click)="onSearchInputChange('')"
 							title="Rensa sökning"
 						></i>
 					}
 				</div>
 
-				@if (filteredEmails.length > 0) {
+				@if (filteredUsers.length > 0) {
 					<ul class="list-group">
-						@for (email of filteredEmails; track email) {
+						@for (user of filteredUsers; track user.userId) {
 							<li
 								class="list-group-item d-flex justify-content-between align-items-center"
-								(click)="toggleSelect(email)"
-								[class.active]="isSelected(email)"
+								(click)="toggleSelect(user)"
+								[class.active]="isSelected(user)"
 								style="cursor: pointer"
 							>
 								<i class="bi bi-person-add"></i>
-								{{ email }}
+								<div class="d-flex flex-column">
+									<span>{{ user.email }}</span>
+									<small class="text-muted">{{
+										user.username
+									}}</small>
+								</div>
 							</li>
 						}
 					</ul>
-				} @else if (
-					searchTerm.length > 0 && filteredEmails.length === 0
+				}
+
+				@if (
+					query.length > 0 &&
+					filteredUsers.length === 0 &&
+					!isPending()
 				) {
 					<div class="alert alert-warning">
-						Inga användare hittades
+						{{ t("event-create.userForm.noUsersFoundInfo") }}
 					</div>
 				}
 
-				@if (selectedEmails.length > 0) {
+				@if (isPending()) {
+					<div class="text-center my-3">
+						<div class="spinner-border text-primary" role="status">
+							<span class="visually-hidden">Loading...</span>
+						</div>
+					</div>
+				}
+
+				@if (selectedUsers().length > 0) {
 					<div class="mt-4">
-						<h5>Valda användare</h5>
+						<h5>{{ t("event-create.userForm.selectedUsers") }}</h5>
 						<ul class="list-group">
-							@for (email of selectedEmails; track email) {
+							@for (user of selectedUsers(); track user) {
 								<li
 									class="list-group-item d-flex justify-content-between align-items-center"
 								>
-									<i class="bi bi-person"></i> {{ email }}
+									<i class="bi bi-person-check"></i>
+									{{ user.email }}
 								</li>
 							}
 						</ul>

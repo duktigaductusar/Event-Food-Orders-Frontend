@@ -4,5 +4,6 @@ export const appRoutes = {
 	EVENT_INVITE: "event-invite",
 	LOGIN: "login",
 	LOGOUT: "logout",
+	TEST: "test",
 	HOME: "",
 } as const;

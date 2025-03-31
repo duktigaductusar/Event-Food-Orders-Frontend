@@ -18,6 +18,6 @@ msalInstance
 		}
 		return bootstrapApplication(AppComponent, appConfig);
 	})
-	.catch((error: any) => {
+	.catch(error => {
 		console.error("MSAL Initialization error: ", error);
 	});

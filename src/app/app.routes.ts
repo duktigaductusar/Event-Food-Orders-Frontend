@@ -2,10 +2,10 @@ import { Routes } from "@angular/router";
 import {
 	EventCreatePageComponent,
 	EventDetailsPageComponent,
-	EventInvitePageComponent,
 	HomePageComponent,
 	LoginPageComponent,
 	LogoutPageComponent,
+	ApiTestComponent
 } from "@app/components";
 import { appRoutes } from "./constants";
 import { MsalGuard } from "@azure/msal-angular";
@@ -27,17 +27,13 @@ export const routes: Routes = [
 				path: `${appRoutes.EVENT_DETAILS}/:id`,
 				component: EventDetailsPageComponent,
 			},
-			{
-				path: appRoutes.EVENT_INVITE,
-				component: EventInvitePageComponent,
-			},
 		],
 	},
 	{ path: appRoutes.LOGIN, component: LoginPageComponent },
-	{
-		path: appRoutes.LOGOUT,
+	{ path: appRoutes.TEST, component: ApiTestComponent},
+	{ path: appRoutes.LOGOUT,
 		component: LogoutPageComponent,
-		canActivate: [MsalGuard],
+		canActivate: [MsalGuard]
 	},
-	{ path: "**", redirectTo: "login" },
+	{ path: "**", redirectTo: "" },
 ];

@@ -1,5 +1,4 @@
-export const formTitles = {
-	eventDetailTitle: "Event detaljer",
-	addUserTitle: "Ductus deltagare",
-	formVerificationTitle: "Verifiera",
-} as const;
+export * from "./formTitles";
+export * from "./formKeys";
+export * from "./formValidationKeys";
+export * from "./controllerNames";
