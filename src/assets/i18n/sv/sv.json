@@ -48,6 +48,10 @@
 			"itemTimeDeadline": "Deadline tid:"
 		}
 	},
+	"event-management": {
+		"ownerRegister": "Anmäl mig",
+		"cancelEvent": "Ställ in event"
+	},
 	"event-details": {
 		"title": "Event-details page"
 	},

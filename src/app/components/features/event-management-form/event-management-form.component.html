@@ -22,8 +22,15 @@
 				{{ selectedEventDto()?.description }}
 			</p>
 		</div>
-        <button>Anmäl mig!</button>
-        <button>Ställ in event!</button>
+        <app-generic-btn
+				[borderColor]="'secondary'"
+				[label]="t('event-management.ownerRegister')"
+        />
+        
+        <app-generic-btn
+				[borderColor]="'secondary'"
+				[label]="t('event-management.cancelEvent')"
+        />
 		<div class="card-footer text-center">
 		</div>
 </div>
