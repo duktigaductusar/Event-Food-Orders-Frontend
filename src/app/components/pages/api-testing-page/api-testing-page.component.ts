@@ -1,8 +1,7 @@
 import { Component } from "@angular/core";
-import { Router } from "@angular/router";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
 import { MsalService } from "@azure/msal-angular";
-import { environment } from "@environments/environment.development";
+import { environment } from "@environments";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AccountInfo, AuthenticationResult } from "@azure/msal-browser";
 

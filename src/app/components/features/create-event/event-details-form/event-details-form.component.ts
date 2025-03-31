@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, computed, input } from "@angular/core";
 import {
 	FormGroup,
 	ReactiveFormsModule,
@@ -9,7 +9,7 @@ import {
 	NgbDatepickerModule,
 	NgbTimepickerModule,
 } from "@ng-bootstrap/ng-bootstrap";
-import { ResponsiveFormComponent } from "@app/components/html";
+import { RequiredLabelComponent, ResponsiveFormComponent } from "@app/components/html";
 import {
 	EventDetailsFormControllerNameType,
 	EventDetailsValidationGroupKeysType,
@@ -22,6 +22,7 @@ import {
 	eventDetailsValidationGroupKeys,
 	eventDetailsValidationKeys,
 } from "../constants";
+import { InvalidInputFeedbackComponent } from "@app/components/shared/invalid-input-feedback/invalid-input-feedback.component";
 
 @Component({
 	selector: "app-event-details-form",
@@ -31,6 +32,8 @@ import {
 		NgbDatepickerModule,
 		NgbTimepickerModule,
 		ResponsiveFormComponent,
+		RequiredLabelComponent,
+		InvalidInputFeedbackComponent
 	],
 	templateUrl: "./event-details-form.component.html",
 	styleUrl: "./event-details-form.component.css",
@@ -39,14 +42,15 @@ export class EventDetailsFormComponent extends AppBaseComponent {
 	readonly formValidationKeys = eventDetailsValidationKeys;
 	readonly formValidationGroupKeys = eventDetailsValidationGroupKeys;
 	readonly eventDetailsControllerNames = eventDetailsControllerNames;
-	@Input() form!: FormGroup<IEventDetailsForm>;
-	@Input() step!: number;
-	@Input() title = "";
+	form = input<FormGroup<IEventDetailsForm>>(null!);
+	step = input<number>(null!);
+	title = input("");
+	derivedTitle = computed<string>(() => `${this.step()}. ${this.title()}`)
 
 	private getControl(
 		controlName: EventDetailsFormControllerNameType
 	): AbstractControl {
-		return this.form.get(controlName)!;
+		return this.form().get(controlName)!;
 	}
 
 	getControlClass(
@@ -77,6 +81,6 @@ export class EventDetailsFormComponent extends AppBaseComponent {
 	}
 
 	hasGroupError(errorKey: EventDetailsValidationGroupKeysType): boolean {
-		return this.form?.touched && this.form?.errors?.[errorKey];
+		return this.form().touched && this.form().errors?.[errorKey];
 	}
 }

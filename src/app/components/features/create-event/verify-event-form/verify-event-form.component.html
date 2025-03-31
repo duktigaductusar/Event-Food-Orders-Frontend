@@ -94,11 +94,8 @@
 				}}
 			</h5>
 			<ul class="list-group">
-				@for (
-					email of form.value.inviteUsersForm?.emails;
-					track email
-				) {
-					<li class="list-group-item">{{ email }}</li>
+				@for (user of form.value.inviteUsersForm?.users; track user) {
+					<li class="list-group-item">{{ user.email }}</li>
 				}
 			</ul>
 		</div>

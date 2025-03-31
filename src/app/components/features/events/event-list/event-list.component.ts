@@ -18,8 +18,7 @@ import { SpinnerComponent } from "@app/components/shared";
 export class EventListComponent extends AppBaseComponent implements OnInit {
 	eventDtos: IEventDto[] = [];
 	currentPage = 1;
-	itemsPerPage = 8;
-
+	itemsPerPage = 16;
 	isPending = signal(false);
 
 	constructor(private eventService: EventService) {

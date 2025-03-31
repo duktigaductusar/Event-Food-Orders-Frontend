@@ -2,9 +2,9 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable, signal } from "@angular/core";
 import { IEventDto } from "@app/models";
 import { IEventDetailDto } from "@app/models/IEventDetailDto.model";
-// TODO
-import { environment } from "@environments/environment.development";
-import { type Observable, of } from "rxjs";
+import { IEventForCreationDto } from "@app/models/IEventForCreationDto";
+import { environment } from "@environments";
+import { catchError, type Observable, of } from "rxjs";
 
 @Injectable({
 	providedIn: "root",
@@ -43,6 +43,17 @@ export class EventService {
 
 	getDetailEvent(): Observable<IEventDetailDto> {
 		return of(this.eventDetail);
+	}
+
+	createEvent(body: IEventForCreationDto) {
+		return this.http.post<IEventDto>(`${this.apiUrl}`, body, {
+			headers: { 'Content-Type': 'application/json' }
+		  })
+			.pipe(catchError(error => {
+				console.error('Error fetching users:', error);
+				// TODO CHange to custom Event class instade of empty array
+				return of([]);
+			}));
 	}
 
 	// getEventById(id: string): Observable<IEventDto | undefined> {
