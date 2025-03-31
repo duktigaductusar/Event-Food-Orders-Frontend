@@ -1,13 +1,16 @@
 import { Component, OnInit, signal, Signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppBaseComponent } from '@app/components/base/app-base.component';
+import { DatetimelabelComponent, StatusLabelComponent } from '@app/components/shared';
 import { IEventDto } from '@app/models';
 import { IEventDetailDto } from '@app/models/IEventDetailDto.model';
 import { EventService } from '@app/services';
 
 @Component({
   selector: 'app-event-management-form',
-  imports: [],
+  imports: [
+      DatetimelabelComponent,
+      StatusLabelComponent,],
   templateUrl: './event-management-form.component.html',
   styleUrl: './event-management-form.component.css'
 })
