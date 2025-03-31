@@ -23,26 +23,12 @@ export class EventService {
 		this.selectedEventDto.set(item);
 	}
 
-	private eventDetail: IEventDetailDto = {
-		id: "1",
-		title: "Business Meeting",
-		description: "Quarterly review with stakeholders",
-		date: new Date("2024-07-15"),
-		isOwner: false,
-		responseType: "PENDING",
-		deadline: new Date("2025-08-12"),
-		participantID: "3",
-		wantsMeal: true,
-		allergies: ["vego"],
-		preferences: ["testpreferences"],
-	};
-
 	getEvents(): Observable<IEventDto[]> {
 		return this.http.get<IEventDto[]>(`${this.apiUrl}/all`);
 	}
 
-	getDetailEvent(): Observable<IEventDetailDto> {
-		return of(this.eventDetail);
+	getDetailEvent(participantId:string, userId: string): Observable<IEventDetailDto> {
+		return this.http.get<IEventDetailDto>(`${this.apiUrl}/${participantId}?userId=${userId}`);
 	}
 
 	createEvent(body: IEventForCreationDto) {
