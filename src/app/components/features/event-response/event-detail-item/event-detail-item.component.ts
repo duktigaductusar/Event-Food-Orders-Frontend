@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
 import { EventService } from "@app/services";
 import { DatetimelabelComponent } from "../../../shared/datetimelabel/datetimelabel.component";
-import { IEventDto } from "@app/models";
+import { IEventDto, IParticipantForResponseDto, IParticipantForUpdateDto } from "@app/models";
 import { StatusLabelComponent } from "../../../shared/status-label/status-label.component";
 import { ResponsiveFormComponent } from "../../../html/responsive-form/responsive-form.component";
 import {
@@ -13,6 +13,9 @@ import {
 	Validators,
 } from "@angular/forms";
 import { IEventDetailDto } from "@app/models/IEventDetailDto.model";
+import { IParticipantResponseForm } from "../interfaces";
+import type { ParticipantResponseType } from "@types";
+import { ParticipantService } from "@app/services/participant/participant.service";
 
 @Component({
 	selector: "app-event-detail-item",
@@ -29,37 +32,48 @@ export class EventDetailItemComponent
 	extends AppBaseComponent
 	implements OnInit
 {
-	eventForm: FormGroup;
+	eventForm: FormGroup<IParticipantResponseForm>;
 	selectedEventDto: Signal<IEventDto | null>;
 
 	eventDetailDto: IEventDetailDto | null = null;
 
+	responseTypes: { id: ParticipantResponseType, label: string }[] = [
+		{ id: "PENDING", label: "Avvaktar"},
+		{ id: "ATTENDING_ONLINE", label: "Online"},
+		{ id: "ATTENDING_OFFICE", label: "På plats"},
+		{ id: "NOT_ATTENDING", label: "Avvisa"}
+	 ] as const;
+
 	isPending = signal(false);
+
+	userId = "b9448949-0ed9-4bb1-8319-8616fe2d0dd4"
 
 	constructor(
 		private router: Router,
 		public eventService: EventService,
+		private participantService: ParticipantService,
 		private fb: FormBuilder
 	) {
 		super();
 		this.selectedEventDto = signal(this.eventService.selectedEventDto());
-		this.eventForm = this.fb.group({
-			preference: ["", [Validators.required, Validators.minLength(3)]],
-			allergy: ["", [Validators.required, Validators.minLength(10)]],
+		this.eventForm = this.fb.nonNullable.group({
+			preferences: fb.nonNullable.control("", [Validators.minLength(3)]),
+			allergies: fb.nonNullable.control("", [Validators.minLength(10)]),
+			wantsMeal: fb.nonNullable.control(false, [Validators.required]),
+			responseType: fb.nonNullable.control("PENDING" as ParticipantResponseType, [Validators.required]),
 		});
 	}
-	ngOnInit(): void {
-		// console.log(this.service?.selectedEventDto());
+	ngOnInit(): void {		
 		this.loadEventDetailDto();
 	}
 
-	createTextFromArray(items: string[]) {
-		return;
-	}
-
 	loadEventDetailDto(): void {
+		const currentEventId = this.selectedEventDto()?.id
+		if (currentEventId == null) {
+			return
+		}
 		this.isPending.set(true);
-		this.eventService.getDetailEvent().subscribe({
+		this.eventService.getDetailEvent(currentEventId, this.userId).subscribe({
 			next: item => {
 				this.eventDetailDto = item;
 				console.log(item);
@@ -70,9 +84,35 @@ export class EventDetailItemComponent
 	}
 
 	onSubmit = () => {
+		const currentParticipantId = this.eventDetailDto?.participantId
+		if (currentParticipantId == null) {
+			return
+		}
+
 		if (this.eventForm.valid) {
-			console.log("Event Created:", this.eventForm.value);
-			alert("Event successfully created!");
+			// console.log("Event Created:", this.eventForm.value);
+			const Dto:IParticipantForUpdateDto= {
+				responseType: this.eventForm.value.responseType ?? "PENDING",
+				wantsMeal: this.eventForm.value.wantsMeal ?? false,
+				allergies: this.eventForm.value.allergies ?? '',
+				preferences: this.eventForm.value.preferences ?? ''
+			}
+			console.log(Dto)
+
+			this.isPending.set(true);
+			this.participantService.respondToEvent(Dto,currentParticipantId).subscribe({
+				next: response => {
+					console.log(response)
+				},
+				error: error => {
+					console.error("Error fetching users:", error);					
+				},
+				complete: () => this.isPending.set(false),
+			});
 		}
 	};
+
+	isAttendingAtOffice() {
+		return this.eventForm.value.responseType === "ATTENDING_OFFICE"		
+	}
 }
