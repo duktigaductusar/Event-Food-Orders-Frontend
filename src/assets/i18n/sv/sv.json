@@ -51,7 +51,8 @@
 	"event-management": {
 		"ownerRegister": "Anmäl mig",
 		"cancelEvent": "Ställ in event",
-		"invitedParticipantsHeader": "Inbjudna deltagare"
+		"invitedParticipantsHeader": "Inbjudna deltagare",
+		"noParticipantsFound": "Hittade inga deltagare"
 	},
 	"event-details": {
 		"title": "Event-details page"
