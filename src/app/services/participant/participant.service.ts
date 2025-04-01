@@ -20,7 +20,8 @@ export class ParticipantService {
       .pipe(catchError(error => {
         console.error('Error fetching users:', error);
         // TODO CHange to custom Event class instade of empty array
-        return of([]);
+        //return of([]);
+        throw new Error("testerror")
       }));
   }
 
