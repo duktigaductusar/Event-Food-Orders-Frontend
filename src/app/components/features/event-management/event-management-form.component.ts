@@ -30,8 +30,8 @@ export class EventManagementFormComponent
   users: IUserDto[] = [];
 
 	isPending = signal(false);
-
-	userId = "a33f4c1b-7f77-4537-8266-c2d43328e268"
+//todo fetch this from MSAL library
+	userId = "77d7e9a1-baff-493f-b9f4-9497a07b94fc"
 	private modalService = inject(NgbModal);
 
   constructor(
