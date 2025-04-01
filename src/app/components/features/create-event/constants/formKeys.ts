@@ -1,21 +1,16 @@
-export const title = "title";
+export const formControllers = {
+    title: "title",
+    description: "description",
+    date: "date",
+    time: "time",
+    endTime: "endTime",
+    dateDeadline: "dateDeadline",
+    timeDeadline: "timeDeadline",
+    users: "users",
+} as const
 
-export const description = "description";
-
-export const date = "date";
-
-export const time = "time";
-
-export const endTime = "endTime";
-
-export const dateDeadline = "dateDeadline";
-
-export const timeDeadline = "timeDeadline";
-
-export const users = "users";
-
-export const eventDetailsForm = "eventDetailsForm";
-
-export const inviteUsersForm = "inviteUsersForm";
-
-export const verifyForm = "verifyForm";
+export const formGroups = {
+    eventDetailsForm: "eventDetailsForm",
+    inviteUsersForm: "inviteUsersForm",
+    verifyForm: "verifyForm" // An empty form group used for verification.
+} as const
