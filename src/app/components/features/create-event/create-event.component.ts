@@ -1,4 +1,12 @@
-import { Component, effect, inject, input, OnDestroy, OnInit, signal } from "@angular/core";
+import {
+	Component,
+	effect,
+	inject,
+	input,
+	OnDestroy,
+	OnInit,
+	signal,
+} from "@angular/core";
 import { EventDetailsFormComponent } from "./event-details-form/event-details-form.component";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { Subject } from "rxjs";
@@ -16,7 +24,12 @@ import { EventUserFormComponent } from "./event-user-form/event-user-form.compon
 import { VerifyEventFormComponent } from "./verify-event-form/verify-event-form.component";
 import { IEventDetailOwnerDto, IEventDto, IUserDto } from "@app/models";
 import { EventService } from "@app/services";
-import { buildCreateEventForm, subscribeDateDeadlineToDateChange, subscribeTimeDeadlineToTimeChange, createEventDtoFromCreateEventForm } from "./create-event.setup";
+import {
+	buildCreateEventForm,
+	subscribeDateDeadlineToDateChange,
+	subscribeTimeDeadlineToTimeChange,
+	createEventDtoFromCreateEventForm,
+} from "./create-event.setup";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { CreateEventResultModalComponent } from "./create-event-result-modal/create-event-result-modal.component";
 
@@ -43,7 +56,8 @@ import { CreateEventResultModalComponent } from "./create-event-result-modal/cre
 })
 export class CreateEventComponent
 	extends AppBaseComponent
-	implements OnDestroy, OnInit {
+	implements OnDestroy, OnInit
+{
 	form!: FormGroup<ICreateEventForm>;
 	formTitles = formTitles;
 	private destroy = new Subject<void>();
@@ -51,11 +65,11 @@ export class CreateEventComponent
 		formDetailStep: 1,
 		formUserStep: 2,
 		formVerifyStep: 3,
-	}
+	};
 	currentStep = this.formSteps.formDetailStep;
 	isPending = signal(false);
 	selectedUsers = signal<IUserDto[]>([]);
-	initialEvent = input<IEventDetailOwnerDto>()
+	initialEvent = input<IEventDetailOwnerDto>();
 	private modalService = inject(NgbModal);
 
 	constructor(
@@ -69,15 +83,23 @@ export class CreateEventComponent
 
 	selectedUsersEffect() {
 		effect(() => {
-			const form = this.getFormGroupForCurrentStep(this.formSteps.formUserStep);
+			const form = this.getFormGroupForCurrentStep(
+				this.formSteps.formUserStep
+			);
 			form.get(formControllers.users)?.setValue(this.selectedUsers());
 			form.get(formControllers.users)?.markAsTouched();
-		})
+		});
 	}
 
 	ngOnInit(): void {
-		subscribeDateDeadlineToDateChange(this.eventDetailsFormGroup, this.destroy);
-		subscribeTimeDeadlineToTimeChange(this.eventDetailsFormGroup, this.destroy);
+		subscribeDateDeadlineToDateChange(
+			this.eventDetailsFormGroup,
+			this.destroy
+		);
+		subscribeTimeDeadlineToTimeChange(
+			this.eventDetailsFormGroup,
+			this.destroy
+		);
 	}
 
 	get eventDetailsFormGroup(): FormGroup {
@@ -102,11 +124,13 @@ export class CreateEventComponent
 	}
 
 	private getFormGroupForCurrentStep(step: number): FormGroup {
-		return this.form.get([
-			formGroups.eventDetailsForm,
-			formGroups.inviteUsersForm,
-			formGroups.verifyForm
-		][step - 1]) as FormGroup;
+		return this.form.get(
+			[
+				formGroups.eventDetailsForm,
+				formGroups.inviteUsersForm,
+				formGroups.verifyForm,
+			][step - 1]
+		) as FormGroup;
 	}
 
 	getSubFormTitles() {
@@ -151,22 +175,28 @@ export class CreateEventComponent
 	};
 
 	openSuccessModal(event: IEventDto) {
-		const modalRef = this.modalService.open(CreateEventResultModalComponent, {
-			container: 'body',
-			backdrop: true,
-			centered: true,
-			backdropClass: "app-modal-custom"
-		})
+		const modalRef = this.modalService.open(
+			CreateEventResultModalComponent,
+			{
+				container: "body",
+				backdrop: true,
+				centered: true,
+				backdropClass: "app-modal-custom",
+			}
+		);
 		modalRef.componentInstance.event = event;
 	}
 
 	openErrorModal() {
-		const modalRef = this.modalService.open(CreateEventResultModalComponent, {
-			container: 'body',
-			backdrop: true,
-			centered: true,
-			backdropClass: "app-modal-custom"
-		})
+		const modalRef = this.modalService.open(
+			CreateEventResultModalComponent,
+			{
+				container: "body",
+				backdrop: true,
+				centered: true,
+				backdropClass: "app-modal-custom",
+			}
+		);
 
 		modalRef.componentInstance.error = "Error";
 	}
