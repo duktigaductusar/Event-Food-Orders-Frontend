@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IParticipantForResponseDto, IParticipantForUpdateDto } from '@app/models';
 import { environment } from '@environments/environment';
-import { catchError, of } from 'rxjs';
+import { catchError, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -24,5 +24,7 @@ export class ParticipantService {
       }));
   }
 
-
+  getParticipantsInEvent(eventId: string, userId: string): Observable<IParticipantForResponseDto[]> {
+    return this.http.get<IParticipantForResponseDto[]>(`${this.apiUrl}/${eventId}/all?userId=${userId}`)
+  }
 }

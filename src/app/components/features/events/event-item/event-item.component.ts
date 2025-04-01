@@ -44,6 +44,11 @@ export class EventItemComponent extends AppBaseComponent {
 		this.router.navigate([`/${appRoutes.EVENT_DETAILS}`, this.eventDto.id]);
 	}
 
+	editEvent() {
+		this.service.setSelectedEvent(this.eventDto);
+		this.router.navigate([`/${appRoutes.EVENT_MANAGEMENT}`, this.eventDto.id]);
+	}
+
 	// selectMoreInfo() {
 	// 	throw new Error("");
 	// }
