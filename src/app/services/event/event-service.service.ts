@@ -45,4 +45,14 @@ export class EventService {
 	// getEventById(id: string): Observable<IEventDto | undefined> {
 	// 	return of(this.events.find(event => event.id === id));
 	// }
+
+	deleteEvent(eventId: string): Observable<boolean> {
+		return this.http.delete<boolean>(`${this.apiUrl}/${eventId}`)
+			.pipe(
+				catchError(error => {
+					console.error('Error deleting event:', error);
+					return of(false);
+			}),
+		);
+	}
 }

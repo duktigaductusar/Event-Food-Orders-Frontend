@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, Signal } from '@angular/core';
+import { Component, inject, OnInit, signal, Signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppBaseComponent } from '@app/components/base/app-base.component';
 import { GenericBtnComponent } from '@app/components/html';
@@ -7,6 +7,8 @@ import { IEventDto, IParticipantForResponseDto, IUserDto } from '@app/models';
 import { IEventDetailDto } from '@app/models/IEventDetailDto.model';
 import { EventService, UserService } from '@app/services';
 import { ParticipantService } from '@app/services/participant/participant.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { EventManagementDeleteModalComponentComponent } from './event-management-delete-modal-component/event-management-delete-modal-component.component';
 
 @Component({
   selector: 'app-event-management-form',
@@ -18,8 +20,8 @@ import { ParticipantService } from '@app/services/participant/participant.servic
   styleUrl: './event-management-form.component.css'
 })
 export class EventManagementFormComponent
-extends AppBaseComponent
-implements OnInit
+  extends AppBaseComponent
+  implements OnInit
 {
   selectedEventDto: Signal<IEventDto | null>;
 	eventDetailDto: IEventDetailDto | null = null;
@@ -29,7 +31,8 @@ implements OnInit
 
 	isPending = signal(false);
 
-	userId = "9c4ab470-c98d-4297-99a6-93327de5c784"
+	userId = "a33f4c1b-7f77-4537-8266-c2d43328e268"
+	private modalService = inject(NgbModal);
 
   constructor(
     private router: Router,
@@ -55,7 +58,6 @@ implements OnInit
 			next: item => {
         this.loadParticipantDtos(item);
 				this.eventDetailDto = item;
-				console.log(item);
 			},
 			error: error => console.error("Test error" + error),
 			complete: () => this.isPending.set(false),
@@ -71,7 +73,6 @@ implements OnInit
 		this.participantService.getParticipantsInEvent(currentEventId, this.userId).subscribe({
 			next: item => {
 				this.participants = item;
-				console.log(item);
         this.loadUserDtos(item);
 			},
 			error: error => console.error("Test error" + error),
@@ -85,15 +86,44 @@ implements OnInit
 			return
 		}
     const currentParticipantIds = participantDtos.map(p => p.userId);
-    console.log(currentParticipantIds);
 		this.isPending.set(true);
     this.userService.getUsersFromId(currentParticipantIds).subscribe({
       next: item => {
-        console.log("users: " + item);
         this.users = item;
       },
       error: error => console.error("Test error" + error),
       complete: () => this.isPending.set(false),
     });
   };
+
+  deleteEventAssert(): void {
+    if (this.eventDetailDto === null || this.eventDetailDto === undefined) {
+      return;
+    }
+    this.openDeleteModal(this.eventDetailDto);
+  }
+
+  deleteEvent(): void {
+    if (this.eventDetailDto === null || this.eventDetailDto === undefined) {
+      return;
+    }
+    this.isPending.set(true);
+    this.eventService.deleteEvent(this.eventDetailDto.id).subscribe({
+      next: item => {
+        console.log("Delete item: ", item);
+      },
+      error: error => console.log("Test error ", error),
+      complete: () => this.isPending.set(false)
+    });
+  }
+
+  openDeleteModal(event: IEventDetailDto) {
+      const modalRef = this.modalService.open(EventManagementDeleteModalComponentComponent, {
+        container: 'body',
+        backdrop: true,
+        centered: true,
+        backdropClass: "app-modal-custom"
+      })
+      modalRef.componentInstance.event = event;
+    }
 }
