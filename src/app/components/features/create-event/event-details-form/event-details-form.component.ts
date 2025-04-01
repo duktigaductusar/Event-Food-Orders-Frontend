@@ -9,7 +9,10 @@ import {
 	NgbDatepickerModule,
 	NgbTimepickerModule,
 } from "@ng-bootstrap/ng-bootstrap";
-import { RequiredLabelComponent, ResponsiveFormComponent } from "@app/components/html";
+import {
+	RequiredLabelComponent,
+	ResponsiveFormComponent,
+} from "@app/components/html";
 import {
 	EventDetailsFormControllerNameType,
 	EventDetailsValidationGroupKeysType,
@@ -33,7 +36,7 @@ import { InvalidInputFeedbackComponent } from "@app/components/shared/invalid-in
 		NgbTimepickerModule,
 		ResponsiveFormComponent,
 		RequiredLabelComponent,
-		InvalidInputFeedbackComponent
+		InvalidInputFeedbackComponent,
 	],
 	templateUrl: "./event-details-form.component.html",
 	styleUrl: "./event-details-form.component.css",
@@ -45,7 +48,7 @@ export class EventDetailsFormComponent extends AppBaseComponent {
 	form = input<FormGroup<IEventDetailsForm>>(null!);
 	step = input<number>(null!);
 	title = input("");
-	derivedTitle = computed<string>(() => `${this.step()}. ${this.title()}`)
+	derivedTitle = computed<string>(() => `${this.step()}. ${this.title()}`);
 
 	private getControl(
 		controlName: EventDetailsFormControllerNameType

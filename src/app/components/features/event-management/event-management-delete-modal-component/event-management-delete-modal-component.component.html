@@ -2,8 +2,8 @@
 	<div class="border border-5 border-danger p-3 bg-white">
 		<div class="modal-header">
 			<h4 class="text-danger">
-                {{ t('event-management.noEventForDeletion') }}
-            </h4>
+				{{ t("event-management.noEventForDeletion") }}
+			</h4>
 			<button
 				type="button"
 				class="btn-close"
@@ -16,8 +16,8 @@
 	<div class="border border-5 border-info p-3 bg-white">
 		<div class="modal-header">
 			<h4 class="text-danger">
-                {{ t('event-management.deleteEventPrompt') }}
-            </h4>
+				{{ t("event-management.deleteEventPrompt") }}
+			</h4>
 			<button
 				type="button"
 				class="btn-close"
@@ -38,7 +38,7 @@
 				(click)="callDeleteMethod()"
 			></app-generic-btn>
 			<app-generic-btn
-            [label]="t('event-management.abortDeleteButton')"
+				[label]="t('event-management.abortDeleteButton')"
 				[icon]="'x-lg'"
 				[borderColor]="'secondary'"
 				(click)="activeModal.dismiss('Cancel click')"

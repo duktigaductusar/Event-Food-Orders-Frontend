@@ -1,3 +1,3 @@
 export interface IUserIdsDto {
-    userIds: string[]
+	userIds: string[];
 }

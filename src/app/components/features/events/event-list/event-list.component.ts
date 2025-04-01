@@ -87,9 +87,10 @@ export class EventListComponent extends AppBaseComponent implements OnInit {
 	}
 
 	handleResponseType(response: IParticipantForResponseDto) {
-		this.eventDtos = this.eventDtos.map(item => item.id === response.eventId
-			? { ...item, responseType: response.responseType }
-			: item
-		)
+		this.eventDtos = this.eventDtos.map(item =>
+			item.id === response.eventId
+				? { ...item, responseType: response.responseType }
+				: item
+		);
 	}
 }
