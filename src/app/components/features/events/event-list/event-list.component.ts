@@ -59,10 +59,6 @@ export class EventListComponent extends AppBaseComponent implements OnInit {
 		return this.eventDtos.slice(startIndex, startIndex + this.itemsPerPage);
 	}
 
-	onCardSelected(card: IEventDto): void {
-		console.log("Card selected:", card);
-	}
-
 	onActionTriggered(event: { action: string; card: IEventDto }): void {
 		console.log(
 			"Action triggered:",

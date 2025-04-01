@@ -1,9 +1,9 @@
-import { Component, OnInit, Signal, signal } from "@angular/core";
-import { Router } from "@angular/router";
+import { Component, computed, OnInit, Signal, signal } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
 import { EventService } from "@app/services";
 import { DatetimelabelComponent } from "../../../shared/datetimelabel/datetimelabel.component";
-import { IEventDto, IParticipantForResponseDto, IParticipantForUpdateDto } from "@app/models";
+import { IEventDto, IParticipantForUpdateDto } from "@app/models";
 import { StatusLabelComponent } from "../../../shared/status-label/status-label.component";
 import { ResponsiveFormComponent } from "../../../html/responsive-form/responsive-form.component";
 import {
@@ -29,11 +29,10 @@ import { ParticipantService } from "@app/services/participant/participant.servic
 	styleUrl: "./event-detail-item.component.css",
 })
 export class EventDetailItemComponent
-	extends AppBaseComponent
-	implements OnInit
+	extends AppBaseComponent implements OnInit
 {
 	eventForm: FormGroup<IParticipantResponseForm>;
-	selectedEventDto: Signal<IEventDto | null>;
+	selectedEventDto: Signal<IEventDto | null> ;
 
 	eventDetailDto: IEventDetailDto | null = null;
 
@@ -47,16 +46,18 @@ export class EventDetailItemComponent
 	isPending = signal(false);
 
 	//todo take this from token. Use MSAL library
+	//todo always check that we use the correct event id for this user id
 	userId = "77d7e9a1-baff-493f-b9f4-9497a07b94fc"
 
 	constructor(
 		private router: Router,
+		private route: ActivatedRoute,
 		public eventService: EventService,
 		private participantService: ParticipantService,
 		private fb: FormBuilder
 	) {
 		super();
-		this.selectedEventDto = signal(this.eventService.selectedEventDto());
+		this.selectedEventDto = computed(()=> this.eventService.selectedEventDto());
 		this.eventForm = this.fb.nonNullable.group({
 			preferences: fb.nonNullable.control("", [Validators.minLength(3)]),
 			allergies: fb.nonNullable.control("", [Validators.minLength(10)]),
@@ -64,32 +65,26 @@ export class EventDetailItemComponent
 			responseType: fb.nonNullable.control("PENDING" as ParticipantResponseType, [Validators.required]),
 		});
 	}
-	ngOnInit(): void {		
-		this.loadEventDetailDto();
+	
+	ngOnInit(): void {
+		this.route.paramMap.subscribe(params => {
+			const eventId = params.get('id');			
+			if (eventId) {
+				this.loadEventDetailDto(eventId);
+			}
+		});
 	}
 
-	loadEventDetailDto(): void {
-		const currentEventId = this.selectedEventDto()?.id
-		if (currentEventId == null) {
-			return
-		}
+	loadEventDetailDto(eventId: string): void {
 		this.isPending.set(true);
-		this.eventService.getDetailEvent(currentEventId, this.userId).subscribe({
+		this.eventService.getDetailEvent(eventId, this.userId).subscribe({
 			next: item => {
 				this.eventDetailDto = item;
-				console.log(item);
+				this.eventService.selectedEventDto.set(item)
 			},
 			error: error => console.error("Test error" + error),
 			complete: () => this.isPending.set(false),
 		});
-	}
-
-	getDerivedTitle() {
-		const currentTitle = this.eventDetailDto; 
-		if (currentTitle == null) {
-			return this.selectedEventDto()?.title
-		}
-		return currentTitle.title
 	}
 
 	onSubmit = () => {
@@ -98,8 +93,7 @@ export class EventDetailItemComponent
 			return
 		}
 
-		if (this.eventForm.valid) {
-			// console.log("Event Created:", this.eventForm.value);
+		if (this.eventForm.valid) {			
 			const Dto:IParticipantForUpdateDto= {
 				responseType: this.eventForm.value.responseType ?? "PENDING",
 				wantsMeal: this.eventForm.value.wantsMeal ?? false,

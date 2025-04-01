@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, input } from "@angular/core";
+import { Component, input, signal } from "@angular/core";
 import type { IEventDto, IParticipantForUpdateDto } from "@app/models";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
 import { DatetimelabelComponent } from "@app/components/shared/datetimelabel/datetimelabel.component";
@@ -22,13 +22,11 @@ import { ParticipantService } from "@app/services/participant/participant.servic
 	styleUrl: "event-item.component.css",
 })
 export class EventItemComponent extends AppBaseComponent {
-	@Input() eventDto!: IEventDto;
-	@Output() cardClick = new EventEmitter<void>();
-	// @Output() actionClick = new EventEmitter<{
-	// 	action: string;
-	// 	eventDto: IEventDto;
-	// }>();
+	eventDto = signal<IEventDto | null> (null)
+	// @Input() eventDto!: IEventDto;
 	participantId = input<string>()
+
+	isPending = signal(false)
 
 	participantResponseTypes : ParticipantResponseType[] = ["PENDING", "ATTENDING_ONLINE", "ATTENDING_OFFICE", "NOT_ATTENDING"]
 
@@ -41,52 +39,39 @@ export class EventItemComponent extends AppBaseComponent {
 	}
 
 	onAction(event: Event, action: ParticipantResponseType): void {
-		event.stopPropagation(); // Prevent card click event
-		// this.actionClick.emit({ action, eventDto: this.eventDto });
+		event.stopPropagation();
 		const Dto:Partial<IParticipantForUpdateDto>= {
 			responseType: action,			
 		}
-		//todo need to fetch participant id before updating the response
-		// switch (action) {
-		// 	case "PENDING":
-		// 		return "Waiting for response...";
-		// 	case "ATTENDING_ONLINE":
-		// 		return "Participant is joining online.";
-		// 	case "ATTENDING_OFFICE":
-		// 		return "Participant is attending in the office.";
-		// 	case "NOT_ATTENDING":
-		// 		return "Participant is not attending.";
-		// 	default:
-		// 		return "Unknown response.";
-		// }
+		
 		const currentParticipantId=this.participantId()
 
 		if (currentParticipantId==null)
 			return
+
+		this.isPending.set(true)
 		this.participantService.respondToEvent(Dto, currentParticipantId).subscribe({
 			next: result => {
 				console.log(result)
 			},
 			error: error => console.error("Test error" + error),
-			// complete: () => this.isPending.set(false),
+			complete: () => this.isPending.set(false),
 		})
 	}	
 
 	onEdit(event: Event): void {
 		event.stopPropagation();
-		//this.actionClick.
+		//to do implement this
 	}
 
 	selectedEvent() {
-		this.eventService.setSelectedEvent(this.eventDto);
-		this.router.navigate([`/${appRoutes.EVENT_DETAILS}`, this.eventDto.id]);
+		if (this.isPending() || this.eventDto()==null){
+			return
+		}
+		this.eventService.setSelectedEvent(this.eventDto()!);
+		this.router.navigate([`/${appRoutes.EVENT_DETAILS}`, this.eventDto()!.id]);
 	}
 
-	// selectMoreInfo() {
-	// 	throw new Error("");
-	// }
 
-	// showInvitation() {
-	// 	throw new Error("");
-	// }
+
 }
