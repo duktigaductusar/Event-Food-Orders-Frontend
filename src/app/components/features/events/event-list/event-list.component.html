@@ -7,6 +7,7 @@
 				<div class="col">
 					<app-event-item
 						[eventDto]="item"
+						[participantId]="item.participantId"
 						(cardClick)="onCardSelected(item)"
 						class="h-100"
 					></app-event-item>

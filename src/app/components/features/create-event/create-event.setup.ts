@@ -2,10 +2,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NgbDateStruct, NgbTimeStruct } from "@ng-bootstrap/ng-bootstrap";
 import { Observable, takeUntil } from "rxjs";
 import {
-	date,
-	eventDetailsForm,
-	inviteUsersForm,
-	time,
+	formControllers,
+	formGroups,
 } from "./constants";
 import { environment } from "@environments";
 import { ICreateEventForm } from "./interfaces";
@@ -15,81 +13,73 @@ import { dateValidator, timeValidator, dateDeadlineValidator, timeDeadlineValida
 import { toDateTimeISOStrig, getDateFromNgbTimeAndDateStructs, dateToNgbDateStruct, dateToNgbTimeStruct, isLessThanOneDayInFuture } from "@app/utility";
 
 export function buildCreateEventForm(
-  fb: FormBuilder,
-  initial?: Partial<IEventDetailOwnerDto>
+	fb: FormBuilder,
+	initial?: Partial<IEventDetailOwnerDto>
 ) {
-  return fb.nonNullable.group({
-    eventDetailsForm: fb.nonNullable.group({
-      title: fb.nonNullable.control(
-        initial?.title ?? '',
-        Validators.required
-      ),
-      description: fb.nonNullable.control(
-        initial?.description ?? '',
-        Validators.required
-      ),
-      date: fb.nonNullable.control(
-        dateToNgbDateStruct(initial?.date) ?? ({} as NgbDateStruct),
-        [Validators.required, dateValidator, dateValidatorFutureDate]
-      ),
-      time: fb.nonNullable.control(
-        dateToNgbTimeStruct(initial?.date) ?? ({} as NgbTimeStruct),
-        [Validators.required, timeValidator]
-      ),
-      endTime: fb.nonNullable.control(
-        dateToNgbTimeStruct(initial?.endTime) ?? ({} as NgbTimeStruct)
-      ),
-      dateDeadline: fb.nonNullable.control(
-        dateToNgbDateStruct(initial?.deadline) ?? ({} as NgbDateStruct),
-        [Validators.required, dateDeadlineValidator, dateValidatorFutureDate]
-      ),
-      timeDeadline: fb.nonNullable.control(
-        dateToNgbTimeStruct(initial?.deadline) ?? ({} as NgbTimeStruct),
-        [Validators.required, timeDeadlineValidator]
-      ),
-    }, {
-      validators: [deadlineBeforeEventValidator, endTimeValidator]
-    }),
+	return fb.nonNullable.group({
+		eventDetailsForm: fb.nonNullable.group({
+			title: fb.nonNullable.control(
+				initial?.title ?? '',
+				Validators.required
+			),
+			description: fb.nonNullable.control(
+				initial?.description ?? '',
+				Validators.required
+			),
+			date: fb.nonNullable.control(
+				dateToNgbDateStruct(initial?.date) ?? ({} as NgbDateStruct),
+				[Validators.required, dateValidator, dateValidatorFutureDate]
+			),
+			time: fb.nonNullable.control(
+				dateToNgbTimeStruct(initial?.date) ?? ({} as NgbTimeStruct),
+				[Validators.required, timeValidator]
+			),
+			endTime: fb.nonNullable.control(
+				dateToNgbTimeStruct(initial?.endTime) ?? ({} as NgbTimeStruct)
+			),
+			dateDeadline: fb.nonNullable.control(
+				dateToNgbDateStruct(initial?.deadline) ?? ({} as NgbDateStruct),
+				[Validators.required, dateDeadlineValidator, dateValidatorFutureDate]
+			),
+			timeDeadline: fb.nonNullable.control(
+				dateToNgbTimeStruct(initial?.deadline) ?? ({} as NgbTimeStruct),
+				[Validators.required, timeDeadlineValidator]
+			),
+		}, {
+			validators: [deadlineBeforeEventValidator, endTimeValidator]
+		}),
 
-    inviteUsersForm: fb.nonNullable.group({
-      users: fb.nonNullable.control(
-        initial?.users ?? []
-      )
-    })
-  });
+		inviteUsersForm: fb.nonNullable.group({
+			users: fb.nonNullable.control(
+				initial?.users ?? []
+			)
+		})
+	});
 }
 
-export function createEventDtoFromCreateEventForm(form: FormGroup<ICreateEventForm>) {
-	if (
-		form.valid &&
-		form.value[eventDetailsForm]?.title != null &&
-		form.value[eventDetailsForm]?.description != null &&
-		form.value[eventDetailsForm]?.date != null &&
-		form.value[eventDetailsForm]?.time != null &&
-		form.value[eventDetailsForm]?.dateDeadline != null &&
-		form.value[eventDetailsForm]?.timeDeadline != null
-	) {
-		const dto: IEventForCreationDto = {
-			title: form.value[eventDetailsForm]?.title,
-			description: form.value[eventDetailsForm]?.description,
-			date: toDateTimeISOStrig(
-				form.value[eventDetailsForm]?.date,
-				form.value[eventDetailsForm]?.time
-			),
-			endTime: getDateFromNgbTimeAndDateStructs(
-				form.value[eventDetailsForm]?.date,
-				form.value[eventDetailsForm]?.endTime
-			)?.toISOString() ?? null,
-			deadline: toDateTimeISOStrig(
-				form.value[eventDetailsForm]?.dateDeadline,
-				form.value[eventDetailsForm]?.timeDeadline
-			),
-			userIds: form.value[inviteUsersForm]?.users?.map(p => p.userId) ?? [],
-		}
-
-		return dto
-	} else {
-		return null
+export function createEventDtoFromCreateEventForm(
+	form: FormGroup<ICreateEventForm>
+): IEventForCreationDto | null {
+	if (!form.valid) {
+		return null;
+	}
+	
+	return {
+		title: form.getRawValue()[formGroups.eventDetailsForm]?.title,
+		description: form.getRawValue()[formGroups.eventDetailsForm]?.description,
+		date: toDateTimeISOStrig(
+			form.getRawValue()[formGroups.eventDetailsForm]?.date,
+			form.getRawValue()[formGroups.eventDetailsForm]?.time
+		),
+		endTime: getDateFromNgbTimeAndDateStructs(
+			form.getRawValue()[formGroups.eventDetailsForm]?.date,
+			form.getRawValue()[formGroups.eventDetailsForm]?.endTime
+		)?.toISOString() ?? null,
+		deadline: toDateTimeISOStrig(
+			form.getRawValue()[formGroups.eventDetailsForm]?.dateDeadline,
+			form.getRawValue()[formGroups.eventDetailsForm]?.timeDeadline
+		),
+		userIds: form.value[formGroups.inviteUsersForm]?.users?.map(p => p.userId) ?? [],
 	}
 }
 
@@ -98,7 +88,7 @@ export function subscribeDateDeadlineToDateChange(
 	destroy: Observable<void>
 ): void {
 	eventDetailsGroup
-		.get(date)
+		.get(formControllers.date)
 		?.valueChanges.pipe(takeUntil(destroy))
 		.subscribe((selectedDate: NgbDateStruct) => {
 			if (
@@ -115,7 +105,7 @@ export function subscribeDateDeadlineToDateChange(
 				selectedDate.day
 			);
 
-			if(!isLessThanOneDayInFuture(deadline)) {
+			if (!isLessThanOneDayInFuture(deadline)) {
 				deadline.setDate(deadline.getDate() - environment.defaultDeadline);
 			}
 
@@ -137,7 +127,7 @@ export function subscribeTimeDeadlineToTimeChange(
 	destroy: Observable<void>
 ) {
 	eventDetailsGroup
-		.get(time)
+		.get(formControllers.time)
 		?.valueChanges.pipe(takeUntil(destroy))
 		.subscribe((selectedTime: NgbTimeStruct) => {
 			if (selectedTime?.hour == null || selectedTime?.minute == null)

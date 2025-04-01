@@ -13,7 +13,7 @@ export class ParticipantService {
 
 	constructor(private http: HttpClient) { }
 
-  respondToEvent(body: IParticipantForUpdateDto, id:string) {
+  respondToEvent(body: Partial<IParticipantForUpdateDto>, id:string) {
     return this.http.put<IParticipantForResponseDto>(`${this.apiUrl}/${id}`, body, {
       headers: { 'Content-Type': 'application/json' }
       })

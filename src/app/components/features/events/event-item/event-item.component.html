@@ -16,13 +16,53 @@
 	</div>
 
 	<div class="card-footer bg-transparent border-top-0">
-		@if (eventDto.isOwner) {
-			<!-- <button
-				class="btn btn-sm btn-outline-secondary w-100"
-				(click)="onAction($event, 'edit')"
+		@if (eventDto.responseType === "PENDING") {
+			<div class="d-grid gap-2">
+				<button
+					class="btn btn-sm btn-outline-primary"
+					(click)="onAction($event, 'ATTENDING_ONLINE')"
+				>
+					<i class="bi bi-laptop"></i>
+					{{ t("home.onlineBtnLabel") }}
+				</button>
+				<button
+					class="btn btn-sm btn-outline-primary"
+					(click)="onAction($event, 'ATTENDING_OFFICE')"
+				>
+					<i class="bi bi-building"></i>
+					{{ t("home.officeBtnLabel") }}
+				</button>
+				<button
+					class="btn btn-sm btn-outline-danger"
+					(click)="onAction($event, 'NOT_ATTENDING')"
+				>
+					<i class="bi bi-x-circle"></i>
+					{{ t("home.rejectBtnLabel") }}
+				</button>
+			</div>
+		} @else if (
+			eventDto.responseType === "ATTENDING_ONLINE" ||
+			eventDto.responseType === "ATTENDING_OFFICE"
+		) {
+			<button
+				class="btn btn-sm btn-outline-warning w-100"
+				(click)="onAction($event, 'PENDING')"
 			>
-				<i class="bi bi-pencil"></i> {{ t("home.updateBtnLabel") }}
-			</button> -->
+				<i class="bi bi-arrow-counterclockwise"></i>
+				{{ t("home.regretBtnLabel") }}
+			</button>
+		} @else if (eventDto.responseType === "NOT_ATTENDING") {
+			<button
+				class="btn btn-sm btn-outline-secondary w-100"
+				(click)="onAction($event, 'PENDING')"
+			>
+				<i class="bi bi-arrow-clockwise"></i>
+				{{ t("home.regretRejectBtnLabel") }}
+			</button>
+		}
+	</div>
+	@if (eventDto.isOwner) {
+		<div class="card-footer text-center">
 			<app-generic-btn
 				[borderColor]="'secondary'"
 				[label]="t('home.updateBtnLabel')"
@@ -30,51 +70,6 @@
 				(action)="onEdit($event)"
 			>
 			</app-generic-btn>
-		} @else {
-			@if (eventDto.responseType === "PENDING") {
-				<div class="d-grid gap-2">
-					<button
-						class="btn btn-sm btn-outline-primary"
-						(click)="onAction($event, 'ATTENDING_ONLINE')"
-					>
-						<i class="bi bi-laptop"></i>
-						{{ t("home.onlineBtnLabel") }}
-					</button>
-					<button
-						class="btn btn-sm btn-outline-primary"
-						(click)="onAction($event, 'ATTENDING_OFFICE')"
-					>
-						<i class="bi bi-building"></i>
-						{{ t("home.officeBtnLabel") }}
-					</button>
-					<button
-						class="btn btn-sm btn-outline-danger"
-						(click)="onAction($event, 'NOT_ATTENDING')"
-					>
-						<i class="bi bi-x-circle"></i>
-						{{ t("home.rejectBtnLabel") }}
-					</button>
-				</div>
-			} @else if (
-				eventDto.responseType === "ATTENDING_ONLINE" ||
-				eventDto.responseType === "ATTENDING_OFFICE"
-			) {
-				<button
-					class="btn btn-sm btn-outline-warning w-100"
-					(click)="onAction($event, 'PENDING')"
-				>
-					<i class="bi bi-arrow-counterclockwise"></i>
-					{{ t("home.regretBtnLabel") }}
-				</button>
-			} @else if (eventDto.responseType === "NOT_ATTENDING") {
-				<button
-					class="btn btn-sm btn-outline-secondary w-100"
-					(click)="onAction($event, 'PENDING')"
-				>
-					<i class="bi bi-arrow-clockwise"></i>
-					{{ t("home.regretRejectBtnLabel") }}
-				</button>
-			}
-		}
-	</div>
+		</div>
+	}
 </div>

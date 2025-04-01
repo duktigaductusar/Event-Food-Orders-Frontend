@@ -47,7 +47,7 @@ export class EventDetailItemComponent
 	isPending = signal(false);
 
 	//todo take this from token. Use MSAL library
-	userId = "b9448949-0ed9-4bb1-8319-8616fe2d0dd4"
+	userId = "77d7e9a1-baff-493f-b9f4-9497a07b94fc"
 
 	constructor(
 		private router: Router,
@@ -82,6 +82,14 @@ export class EventDetailItemComponent
 			error: error => console.error("Test error" + error),
 			complete: () => this.isPending.set(false),
 		});
+	}
+
+	getDerivedTitle() {
+		const currentTitle = this.eventDetailDto; 
+		if (currentTitle == null) {
+			return this.selectedEventDto()?.title
+		}
+		return currentTitle.title
 	}
 
 	onSubmit = () => {

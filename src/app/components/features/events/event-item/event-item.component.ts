@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Component, Input, Output, EventEmitter, input } from "@angular/core";
 import type { IEventDto, IParticipantForUpdateDto } from "@app/models";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
 import { DatetimelabelComponent } from "@app/components/shared/datetimelabel/datetimelabel.component";
@@ -8,6 +8,7 @@ import { appRoutes } from "@app/constants";
 import { EventService } from "@app/services";
 import { StatusLabelComponent } from "../../../shared";
 import type { ParticipantResponseType } from "@types";
+import { ParticipantService } from "@app/services/participant/participant.service";
 
 @Component({
 	selector: "app-event-item",
@@ -27,12 +28,14 @@ export class EventItemComponent extends AppBaseComponent {
 	// 	action: string;
 	// 	eventDto: IEventDto;
 	// }>();
+	participantId = input<string>()
 
 	participantResponseTypes : ParticipantResponseType[] = ["PENDING", "ATTENDING_ONLINE", "ATTENDING_OFFICE", "NOT_ATTENDING"]
 
 	constructor(
 		private router: Router,
-		private service: EventService
+		private eventService: EventService,
+		private participantService: ParticipantService,
 	) {
 		super();
 	}
@@ -40,11 +43,8 @@ export class EventItemComponent extends AppBaseComponent {
 	onAction(event: Event, action: ParticipantResponseType): void {
 		event.stopPropagation(); // Prevent card click event
 		// this.actionClick.emit({ action, eventDto: this.eventDto });
-		const Dto:IParticipantForUpdateDto= {
-			responseType: "PENDING",
-			wantsMeal: false,
-			allergies: '',
-			preferences: ''
+		const Dto:Partial<IParticipantForUpdateDto>= {
+			responseType: action,			
 		}
 		//todo need to fetch participant id before updating the response
 		// switch (action) {
@@ -59,7 +59,18 @@ export class EventItemComponent extends AppBaseComponent {
 		// 	default:
 		// 		return "Unknown response.";
 		// }
-	}
+		const currentParticipantId=this.participantId()
+
+		if (currentParticipantId==null)
+			return
+		this.participantService.respondToEvent(Dto, currentParticipantId).subscribe({
+			next: result => {
+				console.log(result)
+			},
+			error: error => console.error("Test error" + error),
+			// complete: () => this.isPending.set(false),
+		})
+	}	
 
 	onEdit(event: Event): void {
 		event.stopPropagation();
@@ -67,7 +78,7 @@ export class EventItemComponent extends AppBaseComponent {
 	}
 
 	selectedEvent() {
-		this.service.setSelectedEvent(this.eventDto);
+		this.eventService.setSelectedEvent(this.eventDto);
 		this.router.navigate([`/${appRoutes.EVENT_DETAILS}`, this.eventDto.id]);
 	}
 
