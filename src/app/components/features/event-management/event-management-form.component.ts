@@ -92,4 +92,11 @@ implements OnInit
       complete: () => this.isPending.set(false),
     });
   };
+
+  deleteEvent(): void {
+    if (this.eventDetailDto === null || this.eventDetailDto === undefined) {
+      return;
+    }
+    this.eventService.deleteEvent(this.eventDetailDto.id);
+  }
 }

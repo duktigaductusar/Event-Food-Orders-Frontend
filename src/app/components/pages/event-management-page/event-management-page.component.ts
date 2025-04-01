@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { EventManagementFormComponent } from "../../features/event-management-form/event-management-form.component";
+import { EventManagementFormComponent } from "../../features/event-management/event-management-form.component";
 import { MainLayoutComponent } from '@app/components/layouts';
 
 @Component({
