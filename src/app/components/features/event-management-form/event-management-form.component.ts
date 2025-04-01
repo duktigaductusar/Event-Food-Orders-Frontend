@@ -3,9 +3,9 @@ import { Router } from '@angular/router';
 import { AppBaseComponent } from '@app/components/base/app-base.component';
 import { GenericBtnComponent } from '@app/components/html';
 import { DatetimelabelComponent, StatusLabelComponent } from '@app/components/shared';
-import { IEventDto, IParticipantForResponseDto } from '@app/models';
+import { IEventDto, IParticipantForResponseDto, IUserDto } from '@app/models';
 import { IEventDetailDto } from '@app/models/IEventDetailDto.model';
-import { EventService } from '@app/services';
+import { EventService, UserService } from '@app/services';
 import { ParticipantService } from '@app/services/participant/participant.service';
 
 @Component({
@@ -25,6 +25,7 @@ implements OnInit
 	eventDetailDto: IEventDetailDto | null = null;
 
   participants: IParticipantForResponseDto[] = [];
+  users: IUserDto[] = [];
 
 	isPending = signal(false);
 
@@ -33,7 +34,8 @@ implements OnInit
   constructor(
     private router: Router,
     public eventService: EventService,
-    public participantService: ParticipantService
+    public participantService: ParticipantService,
+    public userService: UserService
   ) {
     super();
     this.selectedEventDto = signal(this.eventService.selectedEventDto());
@@ -41,7 +43,6 @@ implements OnInit
 
   ngOnInit(): void {
     this.loadEventDetailDto();
-    this.loadParticipantDtos();
   }
 
 	loadEventDetailDto(): void {
@@ -52,6 +53,7 @@ implements OnInit
 		this.isPending.set(true);
 		this.eventService.getDetailEvent(currentEventId, this.userId).subscribe({
 			next: item => {
+        this.loadParticipantDtos(item);
 				this.eventDetailDto = item;
 				console.log(item);
 			},
@@ -60,8 +62,8 @@ implements OnInit
 		});
 	}
 
-  loadParticipantDtos(): void {
-    const currentEventId = this.selectedEventDto()?.id
+  loadParticipantDtos(eventDto: IEventDetailDto): void {
+    const currentEventId = eventDto.id
 		if (currentEventId == null) {
 			return
 		}
@@ -70,9 +72,28 @@ implements OnInit
 			next: item => {
 				this.participants = item;
 				console.log(item);
+        this.loadUserDtos(item);
 			},
 			error: error => console.error("Test error" + error),
 			complete: () => this.isPending.set(false),
 		});
   }
+
+  loadUserDtos(participantDtos: IParticipantForResponseDto[]): void {
+    const currentEventId = this.selectedEventDto()?.id
+		if (currentEventId == null) {
+			return
+		}
+    const currentParticipantIds = participantDtos.map(p => p.userId);
+    console.log(currentParticipantIds);
+		this.isPending.set(true);
+    this.userService.getUsersFromId(currentParticipantIds).subscribe({
+      next: item => {
+        console.log("users: " + item);
+        this.users = item;
+      },
+      error: error => console.error("Test error" + error),
+      complete: () => this.isPending.set(false),
+    });
+  };
 }

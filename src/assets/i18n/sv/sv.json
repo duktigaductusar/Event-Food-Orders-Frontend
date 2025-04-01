@@ -50,7 +50,8 @@
 	},
 	"event-management": {
 		"ownerRegister": "Anmäl mig",
-		"cancelEvent": "Ställ in event"
+		"cancelEvent": "Ställ in event",
+		"invitedParticipantsHeader": "Inbjudna deltagare"
 	},
 	"event-details": {
 		"title": "Event-details page"
