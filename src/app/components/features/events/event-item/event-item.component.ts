@@ -22,7 +22,7 @@ import { ParticipantService } from "@app/services/participant/participant.servic
 	styleUrl: "event-item.component.css",
 })
 export class EventItemComponent extends AppBaseComponent {
-	eventDto = signal<IEventDto | null> (null)
+	eventDto = input<IEventDto | null> (null)
 	// @Input() eventDto!: IEventDto;
 	participantId = input<string>()
 
@@ -71,6 +71,16 @@ export class EventItemComponent extends AppBaseComponent {
 		this.eventService.setSelectedEvent(this.eventDto()!);
 		this.router.navigate([`/${appRoutes.EVENT_DETAILS}`, this.eventDto()!.id]);
 	}
+
+	editEvent() {
+		if (this.isPending() || this.eventDto()==null){
+			return
+		}
+		this.eventService.setSelectedEvent(this.eventDto()!);
+		this.router.navigate([`/${appRoutes.EVENT_MANAGEMENT}`, this.eventDto()!.id]);
+	}
+
+	
 
 
 

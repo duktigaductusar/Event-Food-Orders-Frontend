@@ -6,17 +6,19 @@
 		class="card-header py-3 d-flex justify-content-between align-items-center"
 	>
 		<h5 class="m-0 fw-bold text-primary">
-			{{ eventDto.title }}
+			{{ eventDto()?.title }}
 		</h5>
 	</div>
 
-	<div class="card-body">
-		<app-datetimelabel [datevalue]="eventDto.date"></app-datetimelabel>
-		<app-status-label [eventDto]="eventDto"></app-status-label>
-	</div>
+	@if(eventDto()!=null){
+		<div class="card-body">
+			<app-datetimelabel [datevalue]="eventDto()!.date"></app-datetimelabel>
+			<app-status-label [eventDto]="eventDto()!"></app-status-label>
+		</div>
+	}
 
 	<div class="card-footer bg-transparent border-top-0">
-		@if (eventDto.responseType === "PENDING") {
+		@if (eventDto()?.responseType === "PENDING") {
 			<div class="d-grid gap-2">
 				<button
 					class="btn btn-sm btn-outline-primary"
@@ -44,8 +46,8 @@
 				</button>
 			</div>
 		} @else if (
-			eventDto.responseType === "ATTENDING_ONLINE" ||
-			eventDto.responseType === "ATTENDING_OFFICE"
+			eventDto()?.responseType === "ATTENDING_ONLINE" ||
+			eventDto()?.responseType === "ATTENDING_OFFICE"
 		) {
 			<button
 				class="btn btn-sm btn-outline-warning w-100"
@@ -55,7 +57,7 @@
 				<i class="bi bi-arrow-counterclockwise"></i>
 				{{ t("home.regretBtnLabel") }}
 			</button>
-		} @else if (eventDto.responseType === "NOT_ATTENDING") {
+		} @else if (eventDto()?.responseType === "NOT_ATTENDING") {
 			<button
 				class="btn btn-sm btn-outline-secondary w-100"
 				[disabled]="isPending()"
@@ -66,7 +68,7 @@
 			</button>
 		}
 	</div>
-	@if (eventDto.isOwner) {
+	@if (eventDto()?.isOwner) {
 		<div class="card-footer text-center">
 			<app-generic-btn
 				[borderColor]="'secondary'"

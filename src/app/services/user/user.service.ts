@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { IUserDto } from "@app/models";
+import { IUserDto, IUserIdsDto } from "@app/models";
 import { environment } from "@environments/environment";
 import { Observable, catchError, of } from "rxjs";
 
@@ -22,5 +22,22 @@ export class UserService {
 				return of([]);
 			})
 		);
+	}
+
+	getUsersFromId(userIdsAsStringArray: string[]): Observable<IUserDto[]> {
+		console.log("userIdsAsStringArray: ", userIdsAsStringArray)
+		const body: IUserIdsDto = {
+			userIds: userIdsAsStringArray
+		}
+		console.log("Id body ids: ", body.userIds)
+		console.log("Id body: ", body)
+		return this.http.post<IUserDto[]>(`${this.apiUrl}/userId`, body, {
+			headers: { 'Content-Type': 'application/json' }
+		})
+			.pipe(catchError(error => {
+				console.error('Error fetching users:', error);
+				// TODO CHange to custom Event class instade of empty array
+				return of([]);
+		}));
 	}
 }
