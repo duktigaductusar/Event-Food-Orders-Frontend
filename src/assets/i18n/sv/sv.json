@@ -52,7 +52,10 @@
 		"ownerRegister": "Anmäl mig",
 		"cancelEvent": "Ställ in event",
 		"invitedParticipantsHeader": "Inbjudna deltagare",
-		"noParticipantsFound": "Hittade inga deltagare"
+		"noParticipantsFound": "Hittade inga deltagare",
+		"noEventForDeletion": "Något gick fel",
+		"deleteEventPrompt": "Vill du ställa in detta event?",
+		"deleteEventButton": "Ställ in"
 	},
 	"event-details": {
 		"title": "Event-details page"
