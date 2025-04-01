@@ -11,7 +11,7 @@ import { CommonModule } from "@angular/common";
 import { CreateEventFooterContainerComponent } from "./create-event-footer-container/create-event-footer-container.component";
 import { CreateEventHeaderContainerComponent } from "./create-event-header-container/create-event-header-container.component";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
-import { eventDetailsForm, formTitles, inviteUsersForm, users, verifyForm } from "./constants";
+import { formControllers, formGroups, formTitles } from "./constants";
 import { EventUserFormComponent } from "./event-user-form/event-user-form.component";
 import { VerifyEventFormComponent } from "./verify-event-form/verify-event-form.component";
 import { IEventDetailOwnerDto, IEventDto, IUserDto } from "@app/models";
@@ -70,8 +70,8 @@ export class CreateEventComponent
 	selectedUsersEffect() {
 		effect(() => {
 			const form = this.getFormGroupForCurrentStep(this.formSteps.formUserStep);
-			form.get(users)?.setValue(this.selectedUsers());
-			form.get(users)?.markAsTouched();
+			form.get(formControllers.users)?.setValue(this.selectedUsers());
+			form.get(formControllers.users)?.markAsTouched();
 		})
 	}
 
@@ -81,11 +81,11 @@ export class CreateEventComponent
 	}
 
 	get eventDetailsFormGroup(): FormGroup {
-		return this.form.get(eventDetailsForm) as FormGroup;
+		return this.form.get(formGroups.eventDetailsForm) as FormGroup;
 	}
 
 	get inviteUsersForm(): FormGroup {
-		return this.form.get(inviteUsersForm) as FormGroup;
+		return this.form.get(formGroups.inviteUsersForm) as FormGroup;
 	}
 
 	nextStep() {
@@ -102,9 +102,11 @@ export class CreateEventComponent
 	}
 
 	private getFormGroupForCurrentStep(step: number): FormGroup {
-		return this.form.get(
-			[eventDetailsForm, inviteUsersForm, verifyForm][step - 1]
-		) as FormGroup;
+		return this.form.get([
+			formGroups.eventDetailsForm,
+			formGroups.inviteUsersForm,
+			formGroups.verifyForm
+		][step - 1]) as FormGroup;
 	}
 
 	getSubFormTitles() {

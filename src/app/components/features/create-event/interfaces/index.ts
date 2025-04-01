@@ -1,40 +1,34 @@
 import { FormControl, FormGroup } from "@angular/forms";
 import { NgbDateStruct, NgbTimeStruct } from "@ng-bootstrap/ng-bootstrap";
-import * as formConstants from "../constants";
+import { eventDetailsControllerNames, eventDetailsValidationGroupKeys, eventDetailsValidationKeys, formControllers, formGroups } from "../constants";
 import { IUserDto } from "@app/models";
 
 export interface IEventDetailsForm {
-	[formConstants.title]: FormControl<string>;
-	[formConstants.description]: FormControl<string>;
-	[formConstants.date]: FormControl<NgbDateStruct>;
-	[formConstants.time]: FormControl<NgbTimeStruct>;
-	[formConstants.endTime]: FormControl<NgbTimeStruct>;
-	[formConstants.dateDeadline]: FormControl<NgbDateStruct>;
-	[formConstants.timeDeadline]: FormControl<NgbTimeStruct>;
+	[formControllers.title]: FormControl<string>;
+	[formControllers.description]: FormControl<string>;
+	[formControllers.date]: FormControl<NgbDateStruct>;
+	[formControllers.time]: FormControl<NgbTimeStruct>;
+	[formControllers.endTime]: FormControl<NgbTimeStruct>;
+	[formControllers.dateDeadline]: FormControl<NgbDateStruct>;
+	[formControllers.timeDeadline]: FormControl<NgbTimeStruct>;
 }
 
 export interface IInviteForm {
-	[formConstants.users]: FormControl<IUserDto[]>;
+	[formControllers.users]: FormControl<IUserDto[]>;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const mainFormKeys = {
-	eventDetailsForm: formConstants.eventDetailsForm,
-	inviteUsersForm: formConstants.inviteUsersForm,
-} as const;
-
-export type FormKeyType = keyof typeof mainFormKeys;
+export type FormKeyType = keyof typeof formGroups;
 
 export type EventDetailsValidationKeysType =
-	keyof typeof formConstants.eventDetailsValidationKeys;
+	keyof typeof eventDetailsValidationKeys;
 
 export type EventDetailsValidationGroupKeysType =
-	keyof typeof formConstants.eventDetailsValidationGroupKeys;
+	keyof typeof eventDetailsValidationGroupKeys;
 
 export type EventDetailsFormControllerNameType =
-	keyof typeof formConstants.eventDetailsControllerNames;
+	keyof typeof eventDetailsControllerNames;
 
 export interface ICreateEventForm {
-	[formConstants.eventDetailsForm]: FormGroup<IEventDetailsForm>;
-	[formConstants.inviteUsersForm]: FormGroup<IInviteForm>;
+	[formGroups.eventDetailsForm]: FormGroup<IEventDetailsForm>;
+	[formGroups.inviteUsersForm]: FormGroup<IInviteForm>;
 }
