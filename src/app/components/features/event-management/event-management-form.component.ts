@@ -97,6 +97,13 @@ implements OnInit
     if (this.eventDetailDto === null || this.eventDetailDto === undefined) {
       return;
     }
-    this.eventService.deleteEvent(this.eventDetailDto.id);
+    this.isPending.set(true);
+    this.eventService.deleteEvent(this.eventDetailDto.id).subscribe({
+      next: item => {
+        console.log("Delete item: ", item);
+      },
+      error: error => console.log("Test error ", error),
+      complete: () => this.isPending.set(false)
+    });
   }
 }
