@@ -55,7 +55,8 @@
 		"noParticipantsFound": "Hittade inga deltagare",
 		"noEventForDeletion": "Något gick fel",
 		"deleteEventPrompt": "Vill du ställa in detta event?",
-		"deleteEventButton": "Ställ in"
+		"deleteEventButton": "Ställ in",
+		"abortDeleteButton": "Avbryt"
 	},
 	"event-details": {
 		"title": "Event-details page"

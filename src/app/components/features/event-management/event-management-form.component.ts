@@ -103,7 +103,19 @@ export class EventManagementFormComponent
     this.openDeleteModal(this.eventDetailDto);
   }
 
+  openDeleteModal(event: IEventDetailDto) {
+      const modalRef = this.modalService.open(EventManagementDeleteModalComponentComponent, {
+        container: 'body',
+        backdrop: true,
+        centered: true,
+        backdropClass: "app-modal-custom"
+      })
+      modalRef.componentInstance.event = event;
+      modalRef.componentInstance.manager = this;
+    }
+
   deleteEvent(): void {
+    console.log("Delete event in manager triggered")
     if (this.eventDetailDto === null || this.eventDetailDto === undefined) {
       return;
     }
@@ -116,14 +128,4 @@ export class EventManagementFormComponent
       complete: () => this.isPending.set(false)
     });
   }
-
-  openDeleteModal(event: IEventDetailDto) {
-      const modalRef = this.modalService.open(EventManagementDeleteModalComponentComponent, {
-        container: 'body',
-        backdrop: true,
-        centered: true,
-        backdropClass: "app-modal-custom"
-      })
-      modalRef.componentInstance.event = event;
-    }
 }
