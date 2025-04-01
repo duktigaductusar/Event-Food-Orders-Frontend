@@ -25,12 +25,9 @@ export class UserService {
 	}
 
 	getUsersFromId(userIdsAsStringArray: string[]): Observable<IUserDto[]> {
-		console.log("userIdsAsStringArray: ", userIdsAsStringArray)
 		const body: IUserIdsDto = {
 			userIds: userIdsAsStringArray
 		}
-		console.log("Id body ids: ", body.userIds)
-		console.log("Id body: ", body)
 		return this.http.post<IUserDto[]>(`${this.apiUrl}/userId`, body, {
 			headers: { 'Content-Type': 'application/json' }
 		})

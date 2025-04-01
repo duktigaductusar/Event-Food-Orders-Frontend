@@ -55,7 +55,6 @@ implements OnInit
 			next: item => {
         this.loadParticipantDtos(item);
 				this.eventDetailDto = item;
-				console.log(item);
 			},
 			error: error => console.error("Test error" + error),
 			complete: () => this.isPending.set(false),
@@ -71,7 +70,6 @@ implements OnInit
 		this.participantService.getParticipantsInEvent(currentEventId, this.userId).subscribe({
 			next: item => {
 				this.participants = item;
-				console.log(item);
         this.loadUserDtos(item);
 			},
 			error: error => console.error("Test error" + error),
@@ -85,11 +83,9 @@ implements OnInit
 			return
 		}
     const currentParticipantIds = participantDtos.map(p => p.userId);
-    console.log(currentParticipantIds);
 		this.isPending.set(true);
     this.userService.getUsersFromId(currentParticipantIds).subscribe({
       next: item => {
-        console.log("users: " + item);
         this.users = item;
       },
       error: error => console.error("Test error" + error),
