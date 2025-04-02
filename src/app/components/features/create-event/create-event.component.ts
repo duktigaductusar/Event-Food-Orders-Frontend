@@ -32,6 +32,7 @@ import {
 } from "./create-event.setup";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { CreateEventResultModalComponent } from "./create-event-result-modal/create-event-result-modal.component";
+import { ApiError } from "@app/interceptors/api-error.interceptor";
 
 /**
  * TODO:
@@ -162,13 +163,13 @@ export class CreateEventComponent
 		}
 
 		this.isPending.set(true);
+		console.log("eventDto", eventDto)
 		this.eventService.createEvent(eventDto).subscribe({
 			next: event => {
 				this.openSuccessModal(event as IEventDto);
 			},
-			error: error => {
-				console.error("Error fetching users:", error);
-				this.openErrorModal();
+			error: (error: ApiError) => {
+				console.error("Error fetching users:", error.message);
 			},
 			complete: () => this.isPending.set(false),
 		});
@@ -185,20 +186,6 @@ export class CreateEventComponent
 			}
 		);
 		modalRef.componentInstance.event = event;
-	}
-
-	openErrorModal() {
-		const modalRef = this.modalService.open(
-			CreateEventResultModalComponent,
-			{
-				container: "body",
-				backdrop: true,
-				centered: true,
-				backdropClass: "app-modal-custom",
-			}
-		);
-
-		modalRef.componentInstance.error = "Error";
 	}
 
 	ngOnDestroy() {

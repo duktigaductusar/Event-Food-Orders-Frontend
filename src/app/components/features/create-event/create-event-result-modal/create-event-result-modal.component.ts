@@ -13,5 +13,4 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 export class CreateEventResultModalComponent {
 	activeModal = inject(NgbActiveModal);
 	@Input() event: IEventDto | null = null;
-	@Input() error: string | null = null;
 }

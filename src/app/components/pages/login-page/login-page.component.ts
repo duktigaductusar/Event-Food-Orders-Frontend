@@ -26,7 +26,7 @@ export class LoginPageComponent extends AppBaseComponent {
 
 	handleOnClick(): void {
 		this.msalService.loginRedirect({
-			scopes: []
+			scopes: [],
 		});
 	}
 }

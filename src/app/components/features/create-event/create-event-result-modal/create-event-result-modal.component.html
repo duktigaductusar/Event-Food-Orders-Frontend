@@ -1,27 +1,4 @@
-@if (event === null || error !== null) {
-	<div class="border border-5 border-danger p-3 bg-white">
-		<div class="modal-header">
-			<h4 class="text-danger">Error when creating event</h4>
-			<button
-				type="button"
-				class="btn-close"
-				aria-label="Close"
-				(click)="activeModal.dismiss('Cross click')"
-			></button>
-		</div>
-		<div class="modal-body">
-			<p>TODO! Update this text</p>
-		</div>
-		<div class="modal-footer d-flex justify-content-center">
-			<app-generic-btn
-				[label]="'close'"
-				[icon]="'check-circle'"
-				[borderColor]="'danger'"
-				(click)="activeModal.close('Close click')"
-			></app-generic-btn>
-		</div>
-	</div>
-} @else {
+@if (event !== null) {
 	<div class="border border-5 border-info p-3 bg-white">
 		<div class="modal-header">
 			<h4 class="text-success">Event created</h4>

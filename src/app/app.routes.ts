@@ -8,9 +8,8 @@ import {
 	ApiTestComponent,
 } from "@app/components";
 import { appRoutes } from "./constants";
-// import { MsalGuard } from "@azure/msal-angular";
-import { EventManagementPageComponent } from "./components/pages/event-management-page/event-management-page.component";
 import { MsalGuard } from "@azure/msal-angular";
+import { EventManagementPageComponent } from "./components/pages/event-management-page/event-management-page.component";
 
 export const routes: Routes = [
 	{
