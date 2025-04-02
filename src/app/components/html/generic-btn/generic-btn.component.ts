@@ -20,7 +20,7 @@ export class GenericBtnComponent extends CSSClassComponent {
 	icon = input("pencil");
 	iconRight = input(false);
 	disabled = input(false);
-	action = output<MouseEvent>()
+	action = output<MouseEvent>();
 
 	protected override getDefaultClass(): string {
 		return `btn btn-sm w-100 btn-outline-${this.borderColor()}`;

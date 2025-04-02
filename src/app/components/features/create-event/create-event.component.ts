@@ -32,6 +32,7 @@ import {
 } from "./create-event.setup";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { CreateEventResultModalComponent } from "./create-event-result-modal/create-event-result-modal.component";
+import { ApiError } from "@app/interceptors/api-error.interceptor";
 
 /**
  * TODO:
@@ -166,8 +167,8 @@ export class CreateEventComponent
 			next: event => {
 				this.openSuccessModal(event as IEventDto);
 			},
-			error: error => {
-				console.error("Error fetching users:", error);
+			error: (error: ApiError) => {
+				console.error("Error fetching users:", error.message);
 				this.openErrorModal();
 			},
 			complete: () => this.isPending.set(false),
