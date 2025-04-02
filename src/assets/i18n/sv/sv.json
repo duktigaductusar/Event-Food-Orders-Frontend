@@ -58,13 +58,16 @@
 		"deleteEventButton": "Ställ in",
 		"abortDeleteButton": "Avbryt"
 	},
-	"event-details": {
-		"title": "Event-details page"
+	"event-response": {
+		"responseType": "Svarsalternativ",
+		"preferences": "Preferenser",
+		"allergies": "Allergier",
+		"wantsFood": "Jag vill ha mat",
+		"yes": "Ja",
+		"no": "Nej",
+		"send": "Skicka"
 	},
-	"event-invite": {
-		"title": "Event-invite page"
-	},
-	"home": {
+	"events": {
 		"title": "Index Sida!",
 		"labelEventOwner": "Värd",
 		"labelOnline": "Anmäld Online",
@@ -77,7 +80,8 @@
 		"rejectBtnLabel": "Avvisa inbjudan",
 		"regretBtnLabel": "Ångra anmälan",
 		"regretRejectBtnLabel": "Ångra avvisan",
-		"titleNoEvent": "Inga event hittades"
+		"titleNoEvent": "Inga event hittades",
+		"showMyEvents": "Visa event jag äger"
 	},
 	"login": {
 		"title": "Login Sida!"
