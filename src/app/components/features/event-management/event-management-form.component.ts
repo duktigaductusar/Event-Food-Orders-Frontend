@@ -6,12 +6,13 @@ import {
 	DatetimelabelComponent,
 	StatusLabelComponent,
 } from "@app/components/shared";
-import { IEventDto, IParticipantForResponseDto, IUserDto } from "@app/models";
+import { IEventDetailOwnerDto, IEventDto, IParticipantForResponseDto, IUserDto } from "@app/models";
 import { IEventDetailDto } from "@app/models/IEventDetailDto.model";
 import { EventService, UserService } from "@app/services";
 import { ParticipantService } from "@app/services/participant/participant.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { EventManagementDeleteModalComponentComponent } from "./event-management-delete-modal-component/event-management-delete-modal-component.component";
+import { EditEventComponent } from "./edit-event/edit-event.component";
 
 @Component({
 	selector: "app-event-management-form",
@@ -19,6 +20,7 @@ import { EventManagementDeleteModalComponentComponent } from "./event-management
 		DatetimelabelComponent,
 		StatusLabelComponent,
 		GenericBtnComponent,
+		EditEventComponent
 	],
 	templateUrl: "./event-management-form.component.html",
 	styleUrl: "./event-management-form.component.css",
@@ -27,6 +29,7 @@ export class EventManagementFormComponent
 	extends AppBaseComponent
 	implements OnInit
 {
+	edit = signal(false);
 	selectedEventDto: Signal<IEventDto | null>;
 	eventDetailDto: IEventDetailDto | null = null;
 
@@ -37,6 +40,16 @@ export class EventManagementFormComponent
 //todo fetch this from MSAL library
 	userId = "a84c12d5-9075-42d2-b467-6b345b7d8c9f"
 	private modalService = inject(NgbModal);
+	
+	// TODO Merge particpants and event detai dto
+	mockEventDetailOwnerDto: IEventDetailOwnerDto = {
+		date: "2025-03-31T10:12:00.000Z",
+		deadline: "2025-03-31T10:12:00.000Z",
+		description: "test event",
+		endTime: null,
+		title: "My Test Event",
+		users: []
+	}// ['8ef89f5a-c315-470c-9f52-2e6a06dd1197'] }
 
 	constructor(
 		private router: Router,
@@ -50,6 +63,10 @@ export class EventManagementFormComponent
 
 	ngOnInit(): void {
 		this.loadEventDetailDto();
+	}
+
+	toggleEdit() {
+		this.edit.update(prev => !prev)
 	}
 
 	loadEventDetailDto(): void {

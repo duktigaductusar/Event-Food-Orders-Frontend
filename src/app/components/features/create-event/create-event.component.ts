@@ -78,7 +78,6 @@ export class CreateEventComponent
 		private eventService: EventService
 	) {
 		super();
-		this.form = buildCreateEventForm(this.fb);
 		this.selectedUsersEffect();
 	}
 
@@ -93,6 +92,12 @@ export class CreateEventComponent
 	}
 
 	ngOnInit(): void {
+		if (this.initialEvent != null) {
+			this.form = buildCreateEventForm(this.fb, this.initialEvent());
+		} else {
+			this.form = buildCreateEventForm(this.fb);
+		}
+		
 		subscribeDateDeadlineToDateChange(
 			this.eventDetailsFormGroup,
 			this.destroy
