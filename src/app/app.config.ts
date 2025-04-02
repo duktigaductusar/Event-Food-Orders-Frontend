@@ -1,6 +1,10 @@
 import { ApplicationConfig, provideZoneChangeDetection } from "@angular/core";
 import { provideRouter } from "@angular/router";
-import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import {
+	HTTP_INTERCEPTORS,
+	provideHttpClient,
+	withInterceptorsFromDi,
+} from "@angular/common/http";
 import { routes } from "./app.routes";
 import {
 	MSAL_INSTANCE,
@@ -15,6 +19,10 @@ import {
 import { PublicClientApplication, InteractionType } from "@azure/msal-browser";
 import { environment } from "@environments/environment.development";
 import { debuggingInterceptor } from "./components/pages/api-testing-page/debuggingInterceptor";
+import {
+	ApiErrorInterceptor,
+	JsonContentTypeInterceptor,
+} from "./interceptors";
 
 export function MSALInstanceFactory(): PublicClientApplication {
 	return new PublicClientApplication({
@@ -68,6 +76,16 @@ export const appConfig: ApplicationConfig = {
 		MsalBroadcastService,
 		{ provide: HTTP_INTERCEPTORS, useClass: debuggingInterceptor, multi: true},
 		{ provide: HTTP_INTERCEPTORS, useClass: MsalInterceptor, multi: true },
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: JsonContentTypeInterceptor,
+			multi: true,
+		},
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: ApiErrorInterceptor,
+			multi: true,
+		},
 		provideHttpClient(withInterceptorsFromDi()),
 		provideZoneChangeDetection({ eventCoalescing: true }),
 		provideRouter(routes),
