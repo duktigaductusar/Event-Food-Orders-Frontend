@@ -31,6 +31,7 @@
 					id="responseType"
 					class="form-select"
 					formControlName="responseType"
+					[value]="eventDetailDto?.responseType"
 				>
 					@for (type of responseTypes; track $index) {
 						<option [value]="type.id">{{ type.label }}</option>
@@ -38,7 +39,7 @@
 				</select>
 			</div>
 
-			@if (isAttendingAtOffice()) {
+			@if (isAttendingAtOffice !== undefined && isAttendingAtOffice()) {
 				<label for="preferences" class="form-label">
 					{{ t("event-response.preferences") }}</label
 				>
@@ -96,7 +97,6 @@
 			>
 				<i class="bi bi-check-circle"></i>
 				{{ t("event-response.send") }}
-				Skicka
 			</button>
 		</div>
 	</app-responsive-form>

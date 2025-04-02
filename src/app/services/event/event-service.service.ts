@@ -28,11 +28,11 @@ export class EventService {
 	}
 
 	getDetailEvent(
-		participantId: string,
+		eventId: string,
 		userId: string
 	): Observable<IEventDetailDto> {
 		return this.http.get<IEventDetailDto>(
-			`${this.apiUrl}/${participantId}?userId=${userId}`
+			`${this.apiUrl}/${eventId}?userId=${userId}`
 		);
 	}
 
