@@ -8,6 +8,7 @@ import {
 } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
+import { GlobalErrorService } from "@app/services/utility/global-error.service";
 
 export class ApiError {
 	constructor(
@@ -26,6 +27,8 @@ export class ApiError {
 
 @Injectable()
 export class ApiErrorInterceptor implements HttpInterceptor {
+	constructor(private errorService: GlobalErrorService) {}
+
 	intercept(
 		req: HttpRequest<unknown>,
 		next: HttpHandler
@@ -33,8 +36,17 @@ export class ApiErrorInterceptor implements HttpInterceptor {
 		return next.handle(req).pipe(
 			catchError((error: HttpErrorResponse) => {
 				const apiError = ApiError.fromHttpError(error);
-				// TODO Show modal from here usign service and modal
-				// Registered in app config etc...
+
+				if (![401, 403].includes(apiError.status)) {
+					this.errorService.showError(
+						apiError.message,
+						`Error ${apiError.status}`
+					);
+				} else {
+					// TODO Navigate to index on 401 and 403
+					console.log("show error");
+				}
+
 				return throwError(() => apiError);
 			})
 		);

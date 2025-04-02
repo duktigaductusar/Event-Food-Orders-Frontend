@@ -4,7 +4,7 @@ import { IEventDto } from "@app/models";
 import { IEventDetailDto } from "@app/models/IEventDetailDto.model";
 import { IEventForCreationDto } from "@app/models/IEventForCreationDto";
 import { environment } from "@environments";
-import { catchError, type Observable, of } from "rxjs";
+import type { Observable } from "rxjs";
 
 @Injectable({
 	providedIn: "root",
@@ -23,6 +23,28 @@ export class EventService {
 		this.selectedEventDto.set(item);
 	}
 
+	getEvents(): Observable<IEventDto[]> {
+		return this.http.get<IEventDto[]>(`${this.apiUrl}/all`);
+	}
+
+	getDetailEvent(
+		participantId: string,
+		userId: string
+	): Observable<IEventDetailDto> {
+		return this.http.get<IEventDetailDto>(
+			`${this.apiUrl}/${participantId}?userId=${userId}`
+		);
+	}
+
+	createEvent(body: IEventForCreationDto): Observable<IEventDto> {
+		return this.http.post<IEventDto>(this.apiUrl, body);
+	}
+
+	deleteEvent(eventId: string): Observable<boolean> {
+		return this.http.delete<boolean>(`${this.apiUrl}/${eventId}`);
+	}
+
+	// TODO Check if new interceptors work
 	// getEvents(): Observable<IEventDto[]> {
 	// 	return this.http.get<IEventDto[]>(`${this.apiUrl}/all`);
 	// }
@@ -58,52 +80,4 @@ export class EventService {
 	// 		})
 	// 	);
 	// }
-
-	getEvents(): Observable<IEventDto[]> {
-		return this.http.get<IEventDto[]>(`${this.apiUrl}/all`);
-	}
-
-	getDetailEvent(
-		participantId: string,
-		userId: string
-	): Observable<IEventDetailDto> {
-		return this.http.get<IEventDetailDto>(
-			`${this.apiUrl}/${participantId}?userId=${userId}`
-		);
-	}
-
-	createEvent(body: IEventForCreationDto): Observable<IEventDto> {
-		return this.http.post<IEventDto>(this.apiUrl, body);
-	}
-
-	deleteEvent(eventId: string): Observable<boolean> {
-		return this.http.delete<boolean>(`${this.apiUrl}/${eventId}`);
-	}
 }
-
-// @Injectable({ providedIn: 'root' })
-// export class EventService {
-// 	private apiUrl = 'https://api.example.com/events';
-
-// 	constructor(private http: HttpClient) {}
-
-// 	getEvents(): Observable<IEventDto[]> {
-// 		return this.http.get<IEventDto[]>(`${this.apiUrl}/all`);
-// 	}
-
-// 	getDetailEvent(participantId: string, userId: string): Observable<IEventDetailDto> {
-// 		return this.http.get<IEventDetailDto>(
-// 			`${this.apiUrl}/${participantId}?userId=${userId}`
-// 		);
-// 	}
-
-// 	createEvent(body: IEventForCreationDto): Observable<IEventDto> {
-// 		return this.http.post<IEventDto>(this.apiUrl, body, {
-// 			headers: { 'Content-Type': 'application/json' }
-// 		});
-// 	}
-
-// 	deleteEvent(eventId: string): Observable<boolean> {
-// 		return this.http.delete<boolean>(`${this.apiUrl}/${eventId}`);
-// 	}
-// }

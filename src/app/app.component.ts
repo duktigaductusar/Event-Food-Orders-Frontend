@@ -10,11 +10,12 @@ import {
 import { LoggerService } from "./services/LoggingService/logger.service";
 import { MsalService } from "@azure/msal-angular";
 import { EventMessage } from "@azure/msal-browser";
+import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
 	selector: "app-root",
 	standalone: true,
-	imports: [RouterOutlet],
+	imports: [RouterOutlet, NgbModalModule],
 	templateUrl: "./app.component.html",
 	styleUrl: "./app.component.css",
 })
