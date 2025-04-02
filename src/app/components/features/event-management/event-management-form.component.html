@@ -1,74 +1,75 @@
-<!-- todo:
-1.Language update
- -->
-<div class="container py-4">
-	<div
-		class="card-header py-3 d-flex justify-content-between align-items-center"
-	>
-		<h5 class="m-0 fw-bold text-primary">
-			{{ selectedEventDto()!.title }}
-		</h5>
-		@if (!edit()) {
-			<div class="d-flex justify-content-center">
+<div class="mx-auto" [ngStyle]="getContainerStyle()">
+	@if (!edit()) {
+		<app-responsive-form
+			[withParentStyle]="'card shadow-sm mb-4 bg-white border-top-0'"
+		>
+			<div
+				class="card-header p-4 d-flex justify-content-between align-items-center"
+			>
+				<h5 class="m-0 fw-bold text-primary">
+					{{ selectedEventDto()!.title }}
+				</h5>
+			</div>
+			<div class="d-flex justify-content-center p-4">
 				<app-generic-btn label="Edit event" (click)="toggleEdit()">
 					<i class="bi bi-pencil-square"></i>
 				</app-generic-btn>
 			</div>
-		} @else {
-			<div class="d-flex justify-content-center">
-				<app-generic-btn label="Stop Editing" (click)="toggleEdit()">
-					<i class="bi bi-pencil-slash"></i>
-				</app-generic-btn>
+			<div class="card-body bg-white p-4">
+				@if (selectedEventDto() !== null) {
+					<app-datetimelabel
+						[datevalue]="fromDateTimeISOStringForEventDto()"
+					></app-datetimelabel>
+					<app-status-label
+						[eventDto]="selectedEventDto()!"
+					></app-status-label>
+				}
+				<p class="mb-2 text-secondary">
+					{{ selectedEventDto()?.description }}
+				</p>
 			</div>
-			<!-- <app-edit-event [event]="mockEventDetailOwnerDto"></app-edit-event> -->
-		}
-	</div>
-	@if (!edit()) {
-		<div class="card-body bg-white">
-			@if (selectedEventDto() !== null) {
-				<app-datetimelabel
-					[datevalue]="selectedEventDto()!.date"
-				></app-datetimelabel>
-				<app-status-label
-					[eventDto]="selectedEventDto()!"
-				></app-status-label>
+			<div class="p-4">
+				<app-generic-btn
+					[borderColor]="'secondary'"
+					[label]="t('event-management.ownerRegister')"
+				/>
+
+				<app-generic-btn
+					[borderColor]="'secondary'"
+					[label]="t('event-management.cancelEvent')"
+					(action)="deleteEventAssert()"
+				/>
+			</div>
+			<div class="card-footer text-center"></div>
+
+			@if (participants.length > 0) {
+				<div class="p-4">
+					<h5>
+						{{ t("event-management.invitedParticipantsHeader") }}
+					</h5>
+					<ul class="list-group">
+						@for (user of users; track user.userId) {
+							<li
+								class="list-group-item d-flex justify-content-between align-items-center"
+							>
+								<i class="bi bi-person-check"></i>
+								{{ user.email }}
+							</li>
+						} @empty {
+							<p>
+								{{ t("event-management.noParticipantsFound") }}
+							</p>
+						}
+					</ul>
+				</div>
 			}
-			<p class="mb-2 text-secondary">
-				{{ selectedEventDto()?.description }}
-			</p>
-		</div>
-		<app-generic-btn
-			[borderColor]="'secondary'"
-			[label]="t('event-management.ownerRegister')"
-		/>
-
-		<app-generic-btn
-			[borderColor]="'secondary'"
-			[label]="t('event-management.cancelEvent')"
-			(action)="deleteEventAssert()"
-		/>
-		<div class="card-footer text-center"></div>
-
-		@if (participants.length > 0) {
-			<div class="mt-4">
-				<h5>{{ t("event-management.invitedParticipantsHeader") }}</h5>
-				<ul class="list-group">
-					@for (user of users; track user.userId) {
-						<li
-							class="list-group-item d-flex justify-content-between align-items-center"
-						>
-							<i class="bi bi-person-check"></i>
-							{{ user.email }}
-						</li>
-					} @empty {
-						<p>
-							{{ t("event-management.noParticipantsFound") }}
-						</p>
-					}
-				</ul>
-			</div>
-		}
+		</app-responsive-form>
 	} @else {
-		<app-edit-event [event]="mockEventDetailOwnerDto"></app-edit-event>
+		<div class="d-flex justify-content-center">
+			<app-generic-btn label="Stop Editing" (click)="toggleEdit()">
+				<i class="bi bi-pencil-slash"></i>
+			</app-generic-btn>
+		</div>
+		<app-edit-event [event]="createEventDetailOwnerDto()"></app-edit-event>
 	}
 </div>

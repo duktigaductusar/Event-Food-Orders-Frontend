@@ -57,8 +57,7 @@ import { ApiError } from "@app/interceptors/api-error.interceptor";
 })
 export class CreateEventComponent
 	extends AppBaseComponent
-	implements OnDestroy, OnInit
-{
+	implements OnDestroy, OnInit {
 	form!: FormGroup<ICreateEventForm>;
 	formTitles = formTitles;
 	private destroy = new Subject<void>();
@@ -70,7 +69,7 @@ export class CreateEventComponent
 	currentStep = this.formSteps.formDetailStep;
 	isPending = signal(false);
 	selectedUsers = signal<IUserDto[]>([]);
-	initialEvent = input<IEventDetailOwnerDto>();
+	initialEvent = input<Partial<IEventDetailOwnerDto>>();
 	private modalService = inject(NgbModal);
 
 	constructor(
@@ -97,7 +96,7 @@ export class CreateEventComponent
 		} else {
 			this.form = buildCreateEventForm(this.fb);
 		}
-		
+
 		subscribeDateDeadlineToDateChange(
 			this.eventDetailsFormGroup,
 			this.destroy
@@ -114,6 +113,13 @@ export class CreateEventComponent
 
 	get inviteUsersForm(): FormGroup {
 		return this.form.get(formGroups.inviteUsersForm) as FormGroup;
+	}
+
+	getDerivedUsers() {
+		return [
+			...(this.initialEvent()?.users ?? []),
+			...(this.form.value.inviteUsersForm?.users ?? [])
+		];
 	}
 
 	nextStep() {
@@ -145,10 +151,6 @@ export class CreateEventComponent
 			formTitles.addUserTitle,
 			formTitles.formVerificationTitle,
 		];
-	}
-
-	getDerivedContainerStyle() {
-		return { "max-width": `${breakpoints.lg}px` };
 	}
 
 	onSelectedUsersChange(user: IUserDto) {

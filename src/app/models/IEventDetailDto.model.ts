@@ -1,7 +1,7 @@
 import { IEventDto } from "./IEventDto.model";
 
 export interface IEventDetailDto extends IEventDto {
-	deadline: Date;
+	deadline: string; // Date
 	participantId: string;
 	wantsMeal: boolean;
 	allergies: string[];

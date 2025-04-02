@@ -82,7 +82,7 @@ export class EventDetailItemComponent
 			}
 		});
 
-		this.eventForm.get("responseType")?.valueChanges.subscribe(value => {
+		this.eventForm.get("responseType")?.valueChanges.subscribe(_ => {
 			this.clearFields();
 		});
 	}

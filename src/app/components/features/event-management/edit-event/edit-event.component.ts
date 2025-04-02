@@ -9,5 +9,5 @@ import { IEventDetailOwnerDto } from '@app/models';
   styleUrl: './edit-event.component.css'
 })
 export class EditEventComponent {
-  event = input<IEventDetailOwnerDto>() 
+  event = input<Partial<IEventDetailOwnerDto>>() 
 }
