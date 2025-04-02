@@ -1,15 +1,15 @@
 <div class="mx-auto" [ngStyle]="getDerivedContainerStyle()">
 	<div class="m-sm-4">
-		@switch (step) {
-			@case (1) {
+		@switch (currentStep) {
+			@case (formSteps.formDetailStep) {
 				<app-event-details-form
 					[title]="formTitles.eventDetailTitle"
-					[step]="step"
+					[step]="currentStep"
 					[form]="eventDetailsFormGroup"
 				>
 					<app-create-event-header-container header>
 						<app-multistep-form-navigation-header
-							[step]="step"
+							[step]="currentStep"
 							[steps]="getSubFormTitles()"
 						></app-multistep-form-navigation-header>
 					</app-create-event-header-container>
@@ -18,26 +18,26 @@
 							[icon]="'arrow-right'"
 							[iconRight]="true"
 							[borderColor]="'primary'"
-							[label]="'Nästa'"
+							[label]="t('event-create.btnNext')"
 							[customClass]="'mt-3'"
-							[disabled]="eventDetailsFormGroup.invalid"
 							(action)="nextStep()"
 						>
 						</app-generic-btn>
 					</app-create-event-footer-container>
 				</app-event-details-form>
 			}
-			@case (2) {
+			@case (formSteps.formUserStep) {
 				<app-event-user-form
 					[title]="formTitles.addUserTitle"
-					[step]="step"
-					[selectedEmails]="form.value.inviteUsersForm?.emails ?? []"
+					[step]="currentStep"
+					[selectedUsers]="form.value.inviteUsersForm?.users ?? []"
 					[form]="inviteUsersForm"
+					(selectedUsersChange)="onSelectedUsersChange($event)"
 				>
 					<app-create-event-header-container header>
 						<app-multistep-form-navigation-header
 							[steps]="getSubFormTitles()"
-							[step]="step"
+							[step]="currentStep"
 						>
 						</app-multistep-form-navigation-header>
 					</app-create-event-header-container>
@@ -45,7 +45,7 @@
 						<app-generic-btn
 							[icon]="'arrow-left'"
 							[borderColor]="'secondary'"
-							[label]="'Tillbaka'"
+							[label]="t('event-create.btnPrev')"
 							[customClass]="'mt-3'"
 							(action)="prevStep()"
 						>
@@ -54,25 +54,24 @@
 							[icon]="'arrow-right'"
 							[iconRight]="true"
 							[borderColor]="'primary'"
-							[label]="'Nästa'"
+							[label]="t('event-create.btnNext')"
 							[customClass]="'mt-3'"
-							[disabled]="inviteUsersForm.invalid"
 							(action)="nextStep()"
 						>
 						</app-generic-btn>
 					</app-create-event-footer-container>
 				</app-event-user-form>
 			}
-			@case (3) {
+			@case (formSteps.formVerifyStep) {
 				<app-verify-event-form
 					[title]="formTitles.formVerificationTitle"
-					[step]="step"
+					[step]="currentStep"
 					[form]="form"
 				>
 					<app-create-event-header-container header>
 						<app-multistep-form-navigation-header
 							[steps]="getSubFormTitles()"
-							[step]="step"
+							[step]="currentStep"
 						>
 						</app-multistep-form-navigation-header>
 					</app-create-event-header-container>
@@ -80,7 +79,7 @@
 						<app-generic-btn
 							[icon]="'arrow-left'"
 							[borderColor]="'secondary'"
-							[label]="'Tillbaka'"
+							[label]="t('event-create.btnPrev')"
 							[customClass]="'mt-3'"
 							(action)="prevStep()"
 						>
@@ -89,13 +88,16 @@
 							[icon]="'check2-circle'"
 							[iconRight]="true"
 							[borderColor]="'primary'"
-							[label]="'Ok'"
+							[label]="t('event-create.btnOk')"
 							[customClass]="'mt-3'"
 							(action)="submit()"
 						>
 						</app-generic-btn>
 					</app-create-event-footer-container>
 				</app-verify-event-form>
+			}
+			@default {
+				<p></p>
 			}
 		}
 	</div>

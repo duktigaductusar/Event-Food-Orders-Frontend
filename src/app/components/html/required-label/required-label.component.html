@@ -1,0 +1,5 @@
+<label [for]="for()" class="form-label">
+	{{ label() }}
+	<ng-content></ng-content>
+	<span [ngClass]="getDerivedClass()">*</span>
+</label>

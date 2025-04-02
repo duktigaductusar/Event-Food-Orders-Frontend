@@ -1,7 +1,19 @@
-import { Component, Input, OnInit } from "@angular/core";
+import {
+	Component,
+	computed,
+	input,
+	OnDestroy,
+	OnInit,
+	output,
+	signal,
+} from "@angular/core";
 import { FormGroup, FormsModule } from "@angular/forms";
 import { ResponsiveFormComponent } from "../../../html/responsive-form/responsive-form.component";
 import { IInviteForm } from "../interfaces";
+import { AppBaseComponent } from "@app/components/base/app-base.component";
+import { UserService } from "@app/services";
+import { IUserDto } from "@app/models";
+import { Subject, debounceTime, distinctUntilChanged, takeUntil } from "rxjs";
 
 @Component({
 	selector: "app-event-user-form",
@@ -9,77 +21,88 @@ import { IInviteForm } from "../interfaces";
 	templateUrl: "./event-user-form.component.html",
 	styleUrl: "./event-user-form.component.css",
 })
-export class EventUserFormComponent {
-	@Input() form!: FormGroup<IInviteForm>;
-	@Input() step!: number;
-	@Input() title = "";
-	@Input() selectedEmails: string[] = [];
+export class EventUserFormComponent
+	extends AppBaseComponent
+	implements OnInit, OnDestroy
+{
+	private users: IUserDto[] = [];
+	query = "";
+	private querySubject = new Subject<string>();
+	private destroySubject = new Subject<void>();
+	form = input<FormGroup<IInviteForm>>(null!);
+	selectedUsers = input<IUserDto[]>([]);
+	step = input<number>(null!);
+	title = input<string>(null!);
+	derivedTitle = computed<string>(() => `${this.step()}. ${this.title()}`);
+	selectedUsersChange = output<IUserDto>();
+	isPending = signal(false);
 
-	searchTerm = "";
+	constructor(private service: UserService) {
+		super();
+	}
 
-	emails: string[] = [
-		"anna.svensson@ductus.se",
-		"erik.nilsson@ductus.se",
-		"johan.larsson@ductus.se",
-		"karl.johansson@ductus.se",
-		"lisa.andersson@ductus.se",
-		"marcus.pettersson@ductus.se",
-		"eva.olsson@ductus.se",
-		"daniel.karlsson@ductus.se",
-		"sofie.nyström@ductus.se",
-		"mats.sjöberg@ductus.se",
-		"carina.ahlberg@ductus.se",
-		"fredrik.lindqvist@ductus.se",
-		"emma.holmgren@ductus.se",
-		"jonas.sundberg@ductus.se",
-		"nina.eriksson@ductus.se",
-		"henrik.björk@ductus.se",
-		"camilla.lind@ductus.se",
-		"patrik.dahl@ductus.se",
-		"maria.forsberg@ductus.se",
-		"andreas.nordin@ductus.se",
-		"ida.jacobsson@ductus.se",
-		"peter.berglund@ductus.se",
-		"sofia.larsson@ductus.se",
-		"tobias.hansson@ductus.se",
-		"sara.eklund@ductus.se",
-		"martin.holm@ductus.se",
-		"jenny.bergström@ductus.se",
-		"alexander.lindgren@ductus.se",
-		"malin.jonsson@ductus.se",
-		"linus.karlberg@ductus.se",
-		"rebecca.sundin@ductus.se",
-		"mikael.andersson@ductus.se",
-		"frida.lindahl@ductus.se",
-		"josefine.wiklund@ductus.se",
-		"sebastian.nilsson@ductus.se",
-		"elin.sandberg@ductus.se",
-		"joakim.berg@ductus.se",
-		"therese.holmberg@ductus.se",
-		"niklas.sjödin@ductus.se",
-		"agnes.lundgren@ductus.se",
-	];
-
-	get filteredEmails(): string[] {
-		if (this.searchTerm.length < 1) return [];
-		return this.emails.filter(email =>
-			email.toLowerCase().includes(this.searchTerm.toLowerCase())
+	get filteredUsers(): IUserDto[] {
+		return this.users.filter(
+			user =>
+				user.email.toLowerCase().includes(this.query.toLowerCase()) ||
+				user.username.toLowerCase().includes(this.query.toLowerCase())
 		);
 	}
 
-	toggleSelect(email: string) {
-		const index = this.selectedEmails.indexOf(email);
-		if (index > -1) {
-			this.selectedEmails.splice(index, 1);
-		} else {
-			this.selectedEmails.push(email);
-		}
-
-		this.form.get("emails")?.setValue([...this.selectedEmails]);
-		this.form.get("emails")?.markAsTouched();
+	ngOnInit() {
+		this.setupSearchListener();
 	}
 
-	isSelected(email: string): boolean {
-		return this.selectedEmails.includes(email);
+	ngOnDestroy() {
+		this.destroySubject.next();
+		this.destroySubject.complete();
+	}
+
+	private setupSearchListener() {
+		this.querySubject
+			.pipe(
+				debounceTime(300),
+				distinctUntilChanged(),
+				takeUntil(this.destroySubject)
+			)
+			.subscribe(q => {
+				this.getUsers(q);
+			});
+	}
+
+	onSearchInputChange(query: string) {
+		this.query = query;
+		this.querySubject.next(query);
+	}
+
+	getUsers(query: string) {
+		if (query.length < 1) {
+			this.users = [];
+			return;
+		}
+
+		this.isPending.set(true);
+		this.service.getUsers(query).subscribe({
+			next: u => {
+				this.users = u;
+			},
+			error: error => {
+				console.error("Error fetching users:", error);
+				this.users = [];
+			},
+			complete: () => {
+				this.isPending.set(false);
+			},
+		});
+	}
+
+	toggleSelect(user: IUserDto) {
+		this.selectedUsersChange.emit(user);
+	}
+
+	isSelected(user: IUserDto): boolean {
+		return this.selectedUsers()
+			.map(u => u.userId)
+			.includes(user.userId);
 	}
 }

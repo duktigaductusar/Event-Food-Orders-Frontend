@@ -7,8 +7,9 @@
 				<div class="col">
 					<app-event-item
 						[eventDto]="item"
-						(cardClick)="onCardSelected(item)"
+						[participantId]="item.participantId"
 						class="h-100"
+						(participantResult)="handleResponseType($event)"
 					></app-event-item>
 				</div>
 			}

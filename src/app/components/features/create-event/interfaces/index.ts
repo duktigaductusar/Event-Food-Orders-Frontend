@@ -1,25 +1,40 @@
 import { FormControl, FormGroup } from "@angular/forms";
 import { NgbDateStruct, NgbTimeStruct } from "@ng-bootstrap/ng-bootstrap";
+import {
+	eventDetailsControllerNames,
+	eventDetailsValidationGroupKeys,
+	eventDetailsValidationKeys,
+	formControllers,
+	formGroups,
+} from "../constants";
+import { IUserDto } from "@app/models";
 
 export interface IEventDetailsForm {
-	title: FormControl<string>;
-	description: FormControl<string>;
-	date: FormControl<NgbDateStruct>;
-	time: FormControl<NgbTimeStruct>;
-	// deadline: FormControl<NgbTimeStruct>;
+	[formControllers.title]: FormControl<string>;
+	[formControllers.description]: FormControl<string>;
+	[formControllers.date]: FormControl<NgbDateStruct>;
+	[formControllers.time]: FormControl<NgbTimeStruct>;
+	[formControllers.endTime]: FormControl<NgbTimeStruct>;
+	[formControllers.dateDeadline]: FormControl<NgbDateStruct>;
+	[formControllers.timeDeadline]: FormControl<NgbTimeStruct>;
 }
 
 export interface IInviteForm {
-	emails: FormControl<string[]>;
+	[formControllers.users]: FormControl<IUserDto[]>;
 }
 
-export const eventDetailsForm = "eventDetailsForm";
+export type FormKeyType = keyof typeof formGroups;
 
-export const inviteUsersForm = "inviteUsersForm";
+export type EventDetailsValidationKeysType =
+	keyof typeof eventDetailsValidationKeys;
 
-export const verifyForm = "verifyForm";
+export type EventDetailsValidationGroupKeysType =
+	keyof typeof eventDetailsValidationGroupKeys;
+
+export type EventDetailsFormControllerNameType =
+	keyof typeof eventDetailsControllerNames;
 
 export interface ICreateEventForm {
-	[eventDetailsForm]: FormGroup<IEventDetailsForm>;
-	[inviteUsersForm]: FormGroup<IInviteForm>;
+	[formGroups.eventDetailsForm]: FormGroup<IEventDetailsForm>;
+	[formGroups.inviteUsersForm]: FormGroup<IInviteForm>;
 }

@@ -1,6 +1,62 @@
 {
 	"event-create": {
-		"title": "Event-create page"
+		"btnNext": "Nästa",
+		"btnPrev": "Tillbaka",
+		"btnOk": "Ok",
+		"detailsForm": {
+			"title": "Event detaljer",
+			"subtitleDate": "Datum och deadline för eventet",
+			"subtitleTime": "Tider och deadline för eventet",
+			"nameLabel": "Namn",
+			"descriptionLabel": "Beskrivning",
+			"dateLabel": "Datum för eventet",
+			"timeLabel": "Startar",
+			"endTimeLabel": "Slutar",
+			"dateLabelDeadline": "Datum för deadline",
+			"timeLabelDeadline": "Tid för deadline",
+			"namePlaceholder": "event namn...",
+			"descriptionPlaceholder": "event beskrivning...",
+			"nameWarning": "Ange event namn.",
+			"descriptionWarning": "Ange event beskrivining.",
+			"dateWarning": "Ange ett giltigt datum.",
+			"dateFutureDateWarning": "Datum måste vara minst en dag i förväg.",
+			"timeWarning": "Ange en giltig tid.",
+			"endTimeWarning": "Sluttid kan ej vara före starttid.",
+			"dateDeadlineWarning": "Ange ett giltigt datum för deadline.",
+			"dateDeadlineBeforeEventDateWarning": "Deadline kan inte ligga efter event datum.",
+			"deadlineFutureDateWarning": "Deadline måste vara minst en dag i förväg.",
+			"timeDeadlineWarning": "Ange en giltig tid för deadline."
+		},
+		"userForm": {
+			"title": "Ductus deltagare",
+			"searchUserLabel": "Sök användare",
+			"searchUserPlaceholder": "Namn, mail...",
+			"noUsersFoundInfo": "Inga användare hittades",
+			"selectedUsers": "Valda användare"
+		},
+		"verifyForm": {
+			"title": "Verifiera",
+			"stepOneTitle": "Steg 1: {{title}}",
+			"stepTwoTitle": "Steg 2: {{title}}",
+			"itemTitle": "Tittel:",
+			"itemDescription": "Beskrivning:",
+			"itemDate": "Datum:",
+			"itemTime": "Starttid:",
+			"itemEndTime": "Sluttid:",
+			"itemNoEndTime": "Ingen sluttid satt",
+			"itemDateDeadline": "Deadline datum:",
+			"itemTimeDeadline": "Deadline tid:"
+		}
+	},
+	"event-management": {
+		"ownerRegister": "Anmäl mig",
+		"cancelEvent": "Ställ in event",
+		"invitedParticipantsHeader": "Inbjudna deltagare",
+		"noParticipantsFound": "Hittade inga deltagare",
+		"noEventForDeletion": "Något gick fel",
+		"deleteEventPrompt": "Vill du ställa in detta event?",
+		"deleteEventButton": "Ställ in",
+		"abortDeleteButton": "Avbryt"
 	},
 	"event-details": {
 		"title": "Event-details page"
@@ -15,7 +71,7 @@
 		"labelOffice": "Anmäld på plats",
 		"labelReject": "Avvisat",
 		"labelPending": "Inväntar svar",
-		"updateBtnLabel": "Redigera",
+		"updateBtnLabel": "Hantera",
 		"onlineBtnLabel": "Delta online",
 		"officeBtnLabel": "Delta på plats",
 		"rejectBtnLabel": "Avvisa inbjudan",

@@ -1,10 +1,12 @@
 import { Component, HostListener, Input } from "@angular/core";
-import { FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
+import {
+	FormGroup,
+	AbstractControl,
+	ReactiveFormsModule,
+} from "@angular/forms";
 import { breakpoints } from "@app/components/style";
 
-//todo:
-// 1.Goal is for the form to be reusable throughout the whole application.
 @Component({
 	selector: "app-responsive-form",
 	standalone: true,
@@ -12,22 +14,15 @@ import { breakpoints } from "@app/components/style";
 	templateUrl: "./responsive-form.component.html",
 	styleUrls: ["./responsive-form.component.css"],
 })
-export class ResponsiveFormComponent {
-	@Input() formGroup!: FormGroup;
+export class ResponsiveFormComponent<
+	T extends { [K in keyof T]: AbstractControl },
+> {
+	@Input() formGroup!: FormGroup<T>;
 	@Input() submitHandler!: () => void;
 	@Input() withParentStyle = "";
 	@Input() useResponsiveDesign = false;
 
 	isSmallScreen = false;
-
-	computedClass() {
-		if (this.useResponsiveDesign && this.isSmallScreen) {
-			return "";
-		} else if (this.withParentStyle.length !== 0) {
-			return this.withParentStyle;
-		}
-		return `card shadow-sm mb-4 py-3 card-header d-flex justify-content-between`;
-	}
 
 	constructor() {
 		this.checkScreenSize();
@@ -40,5 +35,14 @@ export class ResponsiveFormComponent {
 
 	private checkScreenSize() {
 		this.isSmallScreen = window.innerWidth < breakpoints.sm;
+	}
+
+	computedClass(): string {
+		if (this.useResponsiveDesign && this.isSmallScreen) {
+			return "";
+		} else if (this.withParentStyle.length !== 0) {
+			return this.withParentStyle;
+		}
+		return `card shadow-sm mb-4 py-3 card-header d-flex justify-content-between`;
 	}
 }

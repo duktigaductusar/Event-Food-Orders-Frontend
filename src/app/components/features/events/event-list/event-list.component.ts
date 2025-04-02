@@ -4,7 +4,7 @@
 import { Component, signal, type OnInit } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { EventItemComponent } from "../event-item/event-item.component";
-import { IEventDto } from "@app/models";
+import { IEventDto, IParticipantForResponseDto } from "@app/models";
 import { EventService } from "@app/services";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
 import { SpinnerComponent } from "@app/components/shared";
@@ -18,8 +18,7 @@ import { SpinnerComponent } from "@app/components/shared";
 export class EventListComponent extends AppBaseComponent implements OnInit {
 	eventDtos: IEventDto[] = [];
 	currentPage = 1;
-	itemsPerPage = 8;
-
+	itemsPerPage = 16;
 	isPending = signal(false);
 
 	constructor(private eventService: EventService) {
@@ -60,10 +59,6 @@ export class EventListComponent extends AppBaseComponent implements OnInit {
 		return this.eventDtos.slice(startIndex, startIndex + this.itemsPerPage);
 	}
 
-	onCardSelected(card: IEventDto): void {
-		console.log("Card selected:", card);
-	}
-
 	onActionTriggered(event: { action: string; card: IEventDto }): void {
 		console.log(
 			"Action triggered:",
@@ -88,7 +83,14 @@ export class EventListComponent extends AppBaseComponent implements OnInit {
 				break;
 		}
 
-		// Refresh events
 		this.loadEvents();
+	}
+
+	handleResponseType(response: IParticipantForResponseDto) {
+		this.eventDtos = this.eventDtos.map(item =>
+			item.id === response.eventId
+				? { ...item, responseType: response.responseType }
+				: item
+		);
 	}
 }

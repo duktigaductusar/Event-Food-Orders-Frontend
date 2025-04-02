@@ -1,8 +1,7 @@
 import { Component } from "@angular/core";
-import { Router } from "@angular/router";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
 import { MsalService } from "@azure/msal-angular";
-import { environment } from "@environments/environment.development";
+import { environment } from "@environments";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AccountInfo, AuthenticationResult } from "@azure/msal-browser";
 
@@ -12,17 +11,20 @@ import { AccountInfo, AuthenticationResult } from "@azure/msal-browser";
 	imports: [],
 })
 export class ApiTestComponent extends AppBaseComponent {
-    activeAccount: AccountInfo | null = null;
-	constructor(private msalService: MsalService, private http: HttpClient) {
+	activeAccount: AccountInfo | null = null;
+	constructor(
+		private msalService: MsalService,
+		private http: HttpClient
+	) {
 		super();
-        this.activeAccount = this.msalService.instance.getActiveAccount();
+		this.activeAccount = this.msalService.instance.getActiveAccount();
 	}
 
 	handleOnClick(): void {
 		if (!this.activeAccount) {
-            console.error("No active account found.")
-            return;
-        }
+			console.error("No active account found.");
+			return;
+		}
 
         this.http.get(`${environment.apiUrl}/Auth/status`).subscribe({
                 next: (response) => console.log('API response:', response),

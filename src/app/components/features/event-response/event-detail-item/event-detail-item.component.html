@@ -1,0 +1,96 @@
+<!-- todo:
+1.Language update
+ -->
+<div class="container py-4">
+	<app-responsive-form
+		[formGroup]="eventForm"
+		[submitHandler]="onSubmit"
+		[withParentStyle]="'card shadow-sm mb-4 bg-white border-top-0'"
+	>
+		<div
+			class="card-header py-3 d-flex justify-content-between align-items-center"
+		>
+			<h5 class="m-0 fw-bold text-primary">
+				{{ selectedEventDto()?.title }}
+			</h5>
+		</div>
+		<div class="card-body bg-white">
+			@if (selectedEventDto() !== null) {
+				<app-datetimelabel
+					[datevalue]="selectedEventDto()!.date"
+				></app-datetimelabel>
+				<app-status-label
+					[eventDto]="selectedEventDto()!"
+				></app-status-label>
+			}
+			<p class="mb-2 text-secondary">
+				{{ selectedEventDto()?.description }}
+			</p>
+			<div class="mb-3">
+				<label for="responseType" class="form-label">Svarstyp</label>
+				<select
+					id="responseType"
+					class="form-select"
+					formControlName="responseType"
+				>
+					@for (type of responseTypes; track $index) {
+						<option [value]="type.id">{{ type.label }}</option>
+					}
+				</select>
+			</div>
+
+			@if (isAttendingAtOffice()) {
+				<label for="preferences" class="form-label">Preferenser</label>
+				<textarea
+					id="preferences"
+					class="form-control"
+					formControlName="preferences"
+					placeholder="Skriv dina preferenser"
+				></textarea>
+				<label for="allergies" class="form-label">Allergier</label>
+				<textarea
+					id="allergies"
+					class="form-control"
+					formControlName="allergies"
+					placeholder="Skriv dina allergier"
+				></textarea>
+				<div class="mb-3">
+					<p class="form-label d-block">Jag vill ha mat</p>
+					<div class="form-check form-check-inline">
+						<input
+							class="form-check-input"
+							type="radio"
+							formControlName="wantsMeal"
+							[value]="true"
+							id="food-yes"
+						/>
+						<label class="form-check-label" for="food-yes"
+							>Ja</label
+						>
+					</div>
+					<div class="form-check form-check-inline">
+						<input
+							class="form-check-input"
+							type="radio"
+							formControlName="wantsMeal"
+							[value]="false"
+							id="food-no"
+						/>
+						<label for="food-no" class="form-check-label"
+							>Nej</label
+						>
+					</div>
+				</div>
+			}
+		</div>
+		<div class="card-footer text-center">
+			<button
+				type="submit"
+				class="btn btn-primary"
+				[disabled]="eventForm.invalid"
+			>
+				<i class="bi bi-check-circle"></i> Skicka
+			</button>
+		</div>
+	</app-responsive-form>
+</div>

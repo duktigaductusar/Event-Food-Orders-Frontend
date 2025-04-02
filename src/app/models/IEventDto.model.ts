@@ -8,4 +8,5 @@ export interface IEventDto {
 	isActive?: boolean;
 	isOwner: boolean;
 	responseType: ParticipantResponseType;
+	participantId: string;
 }

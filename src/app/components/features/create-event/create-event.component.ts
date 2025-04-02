@@ -1,44 +1,43 @@
-import { Component } from "@angular/core";
+import {
+	Component,
+	effect,
+	inject,
+	input,
+	OnDestroy,
+	OnInit,
+	signal,
+} from "@angular/core";
 import { EventDetailsFormComponent } from "./event-details-form/event-details-form.component";
-import {
-	AbstractControl,
-	FormBuilder,
-	FormGroup,
-	ValidationErrors,
-	Validators,
-} from "@angular/forms";
-import {
-	eventDetailsForm,
-	ICreateEventForm,
-	inviteUsersForm,
-} from "./interfaces";
-import { NgbDateStruct, NgbTimeStruct } from "@ng-bootstrap/ng-bootstrap";
-import { EventUserFormComponent } from "./event-user-form/event-user-form.component";
-import { VerifyEventFormComponent } from "./verify-event-form/verify-event-form.component";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { Subject } from "rxjs";
+
+import { ICreateEventForm } from "./interfaces";
 import { MultiStepFormHeaderComponent } from "./multistep-form-navigation-header/multistep-form-navigation-header.component";
 import { GenericBtnComponent } from "@app/components/html";
 import { breakpoints } from "@app/components/style";
 import { CommonModule } from "@angular/common";
 import { CreateEventFooterContainerComponent } from "./create-event-footer-container/create-event-footer-container.component";
 import { CreateEventHeaderContainerComponent } from "./create-event-header-container/create-event-header-container.component";
-import { formTitles } from "./constants";
-import { IEventForCreationDto } from "@app/models/IEventForCreationDto";
+import { AppBaseComponent } from "@app/components/base/app-base.component";
+import { formControllers, formGroups, formTitles } from "./constants";
+import { EventUserFormComponent } from "./event-user-form/event-user-form.component";
+import { VerifyEventFormComponent } from "./verify-event-form/verify-event-form.component";
+import { IEventDetailOwnerDto, IEventDto, IUserDto } from "@app/models";
+import { EventService } from "@app/services";
+import {
+	buildCreateEventForm,
+	subscribeDateDeadlineToDateChange,
+	subscribeTimeDeadlineToTimeChange,
+	createEventDtoFromCreateEventForm,
+} from "./create-event.setup";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { CreateEventResultModalComponent } from "./create-event-result-modal/create-event-result-modal.component";
 
 /**
  * TODO:
  * 1) Create Server
- * 		1.1) can be used for reusable methods.
- * 		1.2) For shared state
- * 		1.3) For local/session storage state if needed
- * 2) Update Custom Validation of NGB-DATEPICKER and NGB-TEIMEPICKER values
- * 		2.1) Should be valid dates, e.g., not old dates.
- * 		2.2) Deadline must be before event date.
- * 3) Add deadlines input.
- * 4) Update field for adding users, e.g, show all.
- * 5) Convert form date and time to javascript date type when submit.
- * 6) Update submit button to type submit.
- * 7) Update JSON translation files.
- * 8) Connect submit with backend.
+ * 		1.1) For shared state
+ * 		1.2) For local/session storage state if needed
  */
 @Component({
 	selector: "app-create-event",
@@ -55,56 +54,83 @@ import { IEventForCreationDto } from "@app/models/IEventForCreationDto";
 	],
 	templateUrl: "./create-event.component.html",
 })
-export class CreateEventComponent {
-	step = 1;
+export class CreateEventComponent
+	extends AppBaseComponent
+	implements OnDestroy, OnInit
+{
 	form!: FormGroup<ICreateEventForm>;
 	formTitles = formTitles;
+	private destroy = new Subject<void>();
+	readonly formSteps = {
+		formDetailStep: 1,
+		formUserStep: 2,
+		formVerifyStep: 3,
+	};
+	currentStep = this.formSteps.formDetailStep;
+	isPending = signal(false);
+	selectedUsers = signal<IUserDto[]>([]);
+	initialEvent = input<IEventDetailOwnerDto>();
+	private modalService = inject(NgbModal);
 
-	constructor(private fb: FormBuilder) {
-		this.form = this.fb.nonNullable.group({
-			eventDetailsForm: this.fb.nonNullable.group({
-				title: this.fb.nonNullable.control("", Validators.required),
-				description: this.fb.nonNullable.control(
-					"",
-					Validators.required
-				),
-				date: this.fb.nonNullable.control({} as NgbDateStruct, [
-					Validators.required,
-					this.dateValidator.bind(this),
-				]),
-				time: this.fb.nonNullable.control({} as NgbTimeStruct, [
-					Validators.required,
-					this.timeValidator.bind(this),
-				]),
-			}),
-			inviteUsersForm: this.fb.nonNullable.group({
-				emails: this.fb.nonNullable.control([] as string[]),
-			}),
+	constructor(
+		private fb: FormBuilder,
+		private eventService: EventService
+	) {
+		super();
+		this.form = buildCreateEventForm(this.fb);
+		this.selectedUsersEffect();
+	}
+
+	selectedUsersEffect() {
+		effect(() => {
+			const form = this.getFormGroupForCurrentStep(
+				this.formSteps.formUserStep
+			);
+			form.get(formControllers.users)?.setValue(this.selectedUsers());
+			form.get(formControllers.users)?.markAsTouched();
 		});
 	}
 
+	ngOnInit(): void {
+		subscribeDateDeadlineToDateChange(
+			this.eventDetailsFormGroup,
+			this.destroy
+		);
+		subscribeTimeDeadlineToTimeChange(
+			this.eventDetailsFormGroup,
+			this.destroy
+		);
+	}
+
 	get eventDetailsFormGroup(): FormGroup {
-		return this.form.get(eventDetailsForm) as FormGroup;
+		return this.form.get(formGroups.eventDetailsForm) as FormGroup;
 	}
 
 	get inviteUsersForm(): FormGroup {
-		return this.form.get(inviteUsersForm) as FormGroup;
+		return this.form.get(formGroups.inviteUsersForm) as FormGroup;
 	}
 
-	dateValidator(control: AbstractControl): ValidationErrors | null {
-		const value = control.value;
-		if (!value || !value.year || !value.month || !value.day) {
-			return { invalidDate: true };
+	nextStep() {
+		const group = this.getFormGroupForCurrentStep(this.currentStep);
+		if (group.invalid) {
+			group.markAllAsTouched();
+			return;
 		}
-		return null;
+		this.currentStep++;
 	}
 
-	timeValidator(control: AbstractControl): ValidationErrors | null {
-		const value = control.value;
-		if (!value || value.hour == null || value.minute == null) {
-			return { invalidTime: true };
-		}
-		return null;
+	prevStep() {
+		this.currentStep--;
+	}
+
+	private getFormGroupForCurrentStep(step: number): FormGroup {
+		return this.form.get(
+			[
+				formGroups.eventDetailsForm,
+				formGroups.inviteUsersForm,
+				formGroups.verifyForm,
+			][step - 1]
+		) as FormGroup;
 	}
 
 	getSubFormTitles() {
@@ -119,63 +145,64 @@ export class CreateEventComponent {
 		return { "max-width": `${breakpoints.lg}px` };
 	}
 
-	nextStep() {
-		const group = this.getGroupForStep(this.step);
-		if (group.invalid) {
-			group.markAllAsTouched();
-			return;
-		}
-		this.step++;
-	}
-
-	prevStep() {
-		this.step--;
-	}
-
-	private getGroupForStep(step: number): FormGroup {
-		return this.form.get(
-			[eventDetailsForm, inviteUsersForm, "verifyForm"][step - 1]
-		) as FormGroup;
+	onSelectedUsersChange(user: IUserDto) {
+		this.selectedUsers.update(prev => {
+			const alreadySelected = prev.some(u => u.userId === user.userId);
+			return alreadySelected
+				? prev.filter(u => u.userId !== user.userId)
+				: [...prev, user];
+		});
 	}
 
 	submit = () => {
-		if (this.form.valid &&
-			this.form.value[eventDetailsForm]?.title != null &&
-			this.form.value[eventDetailsForm]?.title != null &&
-			this.form.value[eventDetailsForm]?.date != null &&
-			this.form.value[eventDetailsForm]?.time != null
-		) {
-			console.log("Submitting...");
-			console.log("Form values:", this.form.value);
-			const dateTime = this.toDateTime(
-				this.form.value[eventDetailsForm]?.date,
-				this.form.value[eventDetailsForm]?.time
-			)
-
-			const dto : IEventForCreationDto = {
-				title: this.form.value[eventDetailsForm]?.title,
-				description: this.form.value[eventDetailsForm]?.title,
-				date: dateTime,
-				deadline: dateTime
-			}
-
-			console.log("Event create DTO:", dto);
-		} else {
+		const eventDto = createEventDtoFromCreateEventForm(this.form);
+		if (eventDto == null) {
 			this.form.markAllAsTouched();
+			return;
 		}
+
+		this.isPending.set(true);
+		this.eventService.createEvent(eventDto).subscribe({
+			next: event => {
+				this.openSuccessModal(event as IEventDto);
+			},
+			error: error => {
+				console.error("Error fetching users:", error);
+				this.openErrorModal();
+			},
+			complete: () => this.isPending.set(false),
+		});
 	};
 
-	toDateTime = (
-		date: NgbDateStruct,
-		time: NgbTimeStruct
-	) => {
-		return new Date(
-			date.year,
-			date.month - 1,
-			date.day,
-			time.hour,
-			time.minute,
-			time.second
+	openSuccessModal(event: IEventDto) {
+		const modalRef = this.modalService.open(
+			CreateEventResultModalComponent,
+			{
+				container: "body",
+				backdrop: true,
+				centered: true,
+				backdropClass: "app-modal-custom",
+			}
 		);
-	};
+		modalRef.componentInstance.event = event;
+	}
+
+	openErrorModal() {
+		const modalRef = this.modalService.open(
+			CreateEventResultModalComponent,
+			{
+				container: "body",
+				backdrop: true,
+				centered: true,
+				backdropClass: "app-modal-custom",
+			}
+		);
+
+		modalRef.componentInstance.error = "Error";
+	}
+
+	ngOnDestroy() {
+		this.destroy.next();
+		this.destroy.complete();
+	}
 }

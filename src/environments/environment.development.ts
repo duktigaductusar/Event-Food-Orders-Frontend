@@ -1,5 +1,6 @@
 export const environment = {
 	production: false,
+	defaultDeadline: 1,
 	apiUrl: "http://localhost:8080/api",
 	baseUrl: "http://localhost:",
 	azureAd: {
@@ -8,6 +9,6 @@ export const environment = {
 		authority:
 			"https://login.microsoftonline.com/f84f6fe6-b0e4-4db1-b7d6-b7c280fb507f",
 		loginRedirectUri: "http://localhost:4200/",
-		logoutRedirectUri: "http://localhost:4200/login"
+		logoutRedirectUri: "http://localhost:4200/login",
 	},
 };

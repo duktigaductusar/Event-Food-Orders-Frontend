@@ -2,19 +2,19 @@ import { Routes } from "@angular/router";
 import {
 	EventCreatePageComponent,
 	EventDetailsPageComponent,
-	EventInvitePageComponent,
 	HomePageComponent,
 	LoginPageComponent,
 	LogoutPageComponent,
-	ApiTestComponent
+	ApiTestComponent,
 } from "@app/components";
 import { appRoutes } from "./constants";
-import { MsalGuard } from "@azure/msal-angular";
+// import { MsalGuard } from "@azure/msal-angular";
+import { EventManagementPageComponent } from "./components/pages/event-management-page/event-management-page.component";
 
 export const routes: Routes = [
 	{
 		path: "",
-		canActivate: [MsalGuard],
+		// canActivate: [MsalGuard],
 		children: [
 			{
 				path: appRoutes.HOME,
@@ -29,13 +29,17 @@ export const routes: Routes = [
 				component: EventDetailsPageComponent,
 			},
 			{
-				path: appRoutes.EVENT_INVITE,
-				component: EventInvitePageComponent,
+				path: `${appRoutes.EVENT_MANAGEMENT}/:id`,
+				component: EventManagementPageComponent,
 			},
 		],
 	},
 	{ path: appRoutes.LOGIN, component: LoginPageComponent },
-	{ path: appRoutes.TEST, component: ApiTestComponent},
-	{ path: appRoutes.LOGOUT,	component: LogoutPageComponent,	canActivate: [MsalGuard]},
+	{ path: appRoutes.TEST, component: ApiTestComponent },
+	{
+		path: appRoutes.LOGOUT,
+		component: LogoutPageComponent,
+		// canActivate: [MsalGuard]
+	},
 	{ path: "**", redirectTo: "" },
 ];

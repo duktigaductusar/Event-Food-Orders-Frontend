@@ -1,80 +1,82 @@
-<!-- todo:
-1.Clean up code, remove comments
- -->
 <div class="card shadow-sm h-100 d-flex flex-column" (click)="selectedEvent()">
 	<div
 		class="card-header py-3 d-flex justify-content-between align-items-center"
 	>
 		<h5 class="m-0 fw-bold text-primary">
-			{{ eventDto.title }}
+			{{ eventDto()?.title }}
 		</h5>
 	</div>
 
-	<div class="card-body">
-		<app-datetimelabel [datevalue]="eventDto.date"></app-datetimelabel>
-		<app-status-label [eventDto]="eventDto"></app-status-label>
-	</div>
+	@if (eventDto() !== null) {
+		<div class="card-body">
+			<app-datetimelabel
+				[datevalue]="eventDto()!.date"
+			></app-datetimelabel>
+			<app-status-label [eventDto]="eventDto()!"></app-status-label>
+		</div>
+	}
 
 	<div class="card-footer bg-transparent border-top-0">
-		@if (eventDto.isOwner) {
-			<!-- <button
-				class="btn btn-sm btn-outline-secondary w-100"
-				(click)="onAction($event, 'edit')"
+		@if (eventDto()?.responseType === "PENDING") {
+			<div class="d-grid gap-2">
+				<button
+					class="btn btn-sm btn-outline-primary"
+					[disabled]="isPending()"
+					(click)="onAction($event, 'ATTENDING_ONLINE')"
+				>
+					<i class="bi bi-laptop"></i>
+					{{ t("home.onlineBtnLabel") }}
+				</button>
+				<button
+					class="btn btn-sm btn-outline-primary"
+					[disabled]="isPending()"
+					(click)="onAction($event, 'ATTENDING_OFFICE')"
+				>
+					<i class="bi bi-building"></i>
+					{{ t("home.officeBtnLabel") }}
+				</button>
+				<button
+					class="btn btn-sm btn-outline-danger"
+					[disabled]="isPending()"
+					(click)="onAction($event, 'NOT_ATTENDING')"
+				>
+					<i class="bi bi-x-circle"></i>
+					{{ t("home.rejectBtnLabel") }}
+				</button>
+			</div>
+		} @else if (
+			eventDto()?.responseType === "ATTENDING_ONLINE" ||
+			eventDto()?.responseType === "ATTENDING_OFFICE"
+		) {
+			<button
+				class="btn btn-sm btn-outline-warning w-100"
+				[disabled]="isPending()"
+				(click)="onAction($event, 'PENDING')"
 			>
-				<i class="bi bi-pencil"></i> {{ t("home.updateBtnLabel") }}
-			</button> -->
+				<i class="bi bi-arrow-counterclockwise"></i>
+				{{ t("home.regretBtnLabel") }}
+			</button>
+		} @else if (eventDto()?.responseType === "NOT_ATTENDING") {
+			<button
+				class="btn btn-sm btn-outline-secondary w-100"
+				[disabled]="isPending()"
+				(click)="onAction($event, 'PENDING')"
+			>
+				<i class="bi bi-arrow-clockwise"></i>
+				{{ t("home.regretRejectBtnLabel") }}
+			</button>
+		}
+	</div>
+	@if (eventDto()?.isOwner) {
+		<div class="card-footer text-center">
 			<app-generic-btn
 				[borderColor]="'secondary'"
 				[label]="t('home.updateBtnLabel')"
 				[icon]="'pencil'"
-				(action)="onAction($event, 'edit')"
+				[disabled]="isPending()"
+				(action)="editEvent()"
 			>
 			</app-generic-btn>
-		} @else {
-			@if (eventDto.responseType === "PENDING") {
-				<div class="d-grid gap-2">
-					<button
-						class="btn btn-sm btn-outline-primary"
-						(click)="onAction($event, 'attend_online')"
-					>
-						<i class="bi bi-laptop"></i>
-						{{ t("home.onlineBtnLabel") }}
-					</button>
-					<button
-						class="btn btn-sm btn-outline-primary"
-						(click)="onAction($event, 'attend_office')"
-					>
-						<i class="bi bi-building"></i>
-						{{ t("home.officeBtnLabel") }}
-					</button>
-					<button
-						class="btn btn-sm btn-outline-danger"
-						(click)="onAction($event, 'decline')"
-					>
-						<i class="bi bi-x-circle"></i>
-						{{ t("home.rejectBtnLabel") }}
-					</button>
-				</div>
-			} @else if (
-				eventDto.responseType === "ATTENDING_ONLINE" ||
-				eventDto.responseType === "ATTENDING_OFFICE"
-			) {
-				<button
-					class="btn btn-sm btn-outline-warning w-100"
-					(click)="onAction($event, 'cancel_attendance')"
-				>
-					<i class="bi bi-arrow-counterclockwise"></i>
-					{{ t("home.regretBtnLabel") }}
-				</button>
-			} @else if (eventDto.responseType === "NOT_ATTENDING") {
-				<button
-					class="btn btn-sm btn-outline-secondary w-100"
-					(click)="onAction($event, 'undo_decline')"
-				>
-					<i class="bi bi-arrow-clockwise"></i>
-					{{ t("home.regretRejectBtnLabel") }}
-				</button>
-			}
-		}
-	</div>
+		</div>
+	}
 </div>

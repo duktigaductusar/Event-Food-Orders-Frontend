@@ -1,12 +1,18 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
-import type { IEventDto } from "@app/models";
+import { Component, input, output, signal } from "@angular/core";
+import type {
+	IEventDto,
+	IParticipantForResponseDto,
+	IParticipantForUpdateDto,
+} from "@app/models";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
 import { DatetimelabelComponent } from "@app/components/shared/datetimelabel/datetimelabel.component";
 import { GenericBtnComponent } from "../../../html/generic-btn/generic-btn.component";
 import { Router } from "@angular/router";
 import { appRoutes } from "@app/constants";
 import { EventService } from "@app/services";
-import { StatusLabelComponent } from "../status-label/status-label.component";
+import { StatusLabelComponent } from "../../../shared";
+import type { ParticipantResponseType } from "@types";
+import { ParticipantService } from "@app/services/participant/participant.service";
 
 @Component({
 	selector: "app-event-item",
@@ -20,35 +26,66 @@ import { StatusLabelComponent } from "../status-label/status-label.component";
 	styleUrl: "event-item.component.css",
 })
 export class EventItemComponent extends AppBaseComponent {
-	@Input() eventDto!: IEventDto;
-	@Output() cardClick = new EventEmitter<void>();
-	@Output() actionClick = new EventEmitter<{
-		action: string;
-		eventDto: IEventDto;
-	}>();
+	eventDto = input<IEventDto | null>(null);
+	participantId = input<string>();
+	isPending = signal(false);
+	participantResult = output<IParticipantForResponseDto>();
+	participantResponseTypes: ParticipantResponseType[] = [
+		"PENDING",
+		"ATTENDING_ONLINE",
+		"ATTENDING_OFFICE",
+		"NOT_ATTENDING",
+	];
 
 	constructor(
 		private router: Router,
-		private service: EventService
+		private eventService: EventService,
+		private participantService: ParticipantService
 	) {
 		super();
 	}
 
-	onAction(event: Event, action: string): void {
-		event.stopPropagation(); // Prevent card click event
-		this.actionClick.emit({ action, eventDto: this.eventDto });
+	onAction(event: Event, action: ParticipantResponseType): void {
+		event.stopPropagation();
+		const Dto: Partial<IParticipantForUpdateDto> = {
+			responseType: action,
+		};
+
+		const currentParticipantId = this.participantId();
+
+		if (currentParticipantId == null) return;
+
+		this.isPending.set(true);
+		this.participantService
+			.respondToEvent(Dto, currentParticipantId)
+			.subscribe({
+				next: result => {
+					this.participantResult.emit(result);
+				},
+				error: error => console.error("Test error" + error),
+				complete: () => this.isPending.set(false),
+			});
 	}
 
 	selectedEvent() {
-		this.service.setSelectedEvent(this.eventDto);
-		this.router.navigate([`/${appRoutes.EVENT_DETAILS}`, this.eventDto.id]);
+		if (this.isPending() || this.eventDto() == null) {
+			return;
+		}
+		this.eventService.setSelectedEvent(this.eventDto()!);
+		this.router.navigate([
+			`/${appRoutes.EVENT_DETAILS}`,
+			this.eventDto()!.id,
+		]);
 	}
 
-	// selectMoreInfo() {
-	// 	throw new Error("");
-	// }
-
-	// showInvitation() {
-	// 	throw new Error("");
-	// }
+	editEvent() {
+		if (this.isPending() || this.eventDto() == null) {
+			return;
+		}
+		this.eventService.setSelectedEvent(this.eventDto()!);
+		this.router.navigate([
+			`/${appRoutes.EVENT_MANAGEMENT}`,
+			this.eventDto()!.id,
+		]);
+	}
 }
