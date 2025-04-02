@@ -1,8 +1,8 @@
-import type { ParticipantResponseType } from "@types"
+import type { ParticipantResponseType } from "@types";
 
 export interface IParticipantForUpdateDto {
-    responseType: ParticipantResponseType
-    wantsMeal: boolean
-    allergies: string
-    preferences: string
+	responseType: ParticipantResponseType;
+	wantsMeal: boolean;
+	allergies: string;
+	preferences: string;
 }

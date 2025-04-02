@@ -11,36 +11,44 @@ import { AccountInfo, AuthenticationResult } from "@azure/msal-browser";
 	imports: [],
 })
 export class ApiTestComponent extends AppBaseComponent {
-    activeAccount: AccountInfo | null = null;
-	constructor(private msalService: MsalService, private http: HttpClient) {
+	activeAccount: AccountInfo | null = null;
+	constructor(
+		private msalService: MsalService,
+		private http: HttpClient
+	) {
 		super();
-        this.activeAccount = this.msalService.instance.getActiveAccount();
+		this.activeAccount = this.msalService.instance.getActiveAccount();
 	}
 
 	handleOnClick(): void {
 		if (!this.activeAccount) {
-            console.error("No active account found.")
-            return;
-        }
+			console.error("No active account found.");
+			return;
+		}
 
-        const tokenRequest = {
-            scopes: ["openid", "email", "Mail.Send", "profile"],
-            account: this.activeAccount
-        };
-
-        this.msalService.acquireTokenSilent(tokenRequest)
-        .subscribe({
-          next: (result: AuthenticationResult) => {
-            const headers = new HttpHeaders({
-              'Authorization': `Bearer ${result.idToken}`
-            });
-            this.http.get(`${environment.apiUrl}/Auth/status`, { headers })
-              .subscribe({
+        this.http.get(`${environment.apiUrl}/Auth/status`).subscribe({
                 next: (response) => console.log('API response:', response),
                 error: (error) => console.error('API call error:', error)
-              });
-          },
-          error: (error) => console.error('Token acquisition error:', error)
-        });
+            });
+
+        // const tokenRequest = {
+        //     scopes: ["openid", "email", "Mail.Send", "profile"],
+        //     account: this.activeAccount
+        // };
+
+        // this.msalService.acquireTokenSilent(tokenRequest)
+        // .subscribe({
+        //   next: (result: AuthenticationResult) => {
+        //     const headers = new HttpHeaders({
+        //       'Authorization': `Bearer ${result.idToken}`
+        //     });
+        //     this.http.get(`${environment.apiUrl}/Auth/status`, { headers })
+        //       .subscribe({
+        //         next: (response) => console.log('API response:', response),
+        //         error: (error) => console.error('API call error:', error)
+        //       });
+        //   },
+        //   error: (error) => console.error('Token acquisition error:', error)
+        // });
 	}
 }

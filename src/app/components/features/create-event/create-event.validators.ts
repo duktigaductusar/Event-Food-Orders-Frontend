@@ -39,7 +39,6 @@ export function dateValidatorFutureDate(
 	return null;
 }
 
-
 export function timeValidator(
 	control: AbstractControl
 ): ValidationErrors | null {
@@ -109,8 +108,12 @@ export function deadlineBeforeEventValidator(
 ): ValidationErrors | null {
 	const date = group.get(eventDetailsControllerNames.date)?.value;
 	const time = group.get(eventDetailsControllerNames.time)?.value;
-	const deadlineDate = group.get(eventDetailsControllerNames.dateDeadline)?.value;
-	const deadlineTime = group.get(eventDetailsControllerNames.timeDeadline)?.value;
+	const deadlineDate = group.get(
+		eventDetailsControllerNames.dateDeadline
+	)?.value;
+	const deadlineTime = group.get(
+		eventDetailsControllerNames.timeDeadline
+	)?.value;
 
 	if (!date || !time || !deadlineDate || !deadlineTime) {
 		return null;

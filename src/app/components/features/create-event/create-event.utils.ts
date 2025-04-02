@@ -19,7 +19,7 @@
 // 	if (date == null) {
 // 		return {} as NgbDateStruct
 // 	}
-	
+
 // 	const d = typeof date === 'string' ? new Date(date) : date;
 
 // 	return {
@@ -29,14 +29,13 @@
 // 	};
 // }
 
-
 // export function dateToNgbTimeStruct(date: Date | string | undefined | null): NgbTimeStruct {
 // 	if (date == null) {
 // 		return {} as NgbTimeStruct
 // 	}
-	
+
 // 	const d = typeof date === 'string' ? new Date(date) : date;
-	
+
 // 	return {
 // 		hour: d.getHours(),
 // 		minute: d.getMinutes(),

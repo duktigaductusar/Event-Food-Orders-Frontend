@@ -1,4 +1,12 @@
-import { Component, computed, input, OnDestroy, OnInit, output, signal } from "@angular/core";
+import {
+	Component,
+	computed,
+	input,
+	OnDestroy,
+	OnInit,
+	output,
+	signal,
+} from "@angular/core";
 import { FormGroup, FormsModule } from "@angular/forms";
 import { ResponsiveFormComponent } from "../../../html/responsive-form/responsive-form.component";
 import { IInviteForm } from "../interfaces";
@@ -13,7 +21,10 @@ import { Subject, debounceTime, distinctUntilChanged, takeUntil } from "rxjs";
 	templateUrl: "./event-user-form.component.html",
 	styleUrl: "./event-user-form.component.css",
 })
-export class EventUserFormComponent extends AppBaseComponent implements OnInit, OnDestroy {
+export class EventUserFormComponent
+	extends AppBaseComponent
+	implements OnInit, OnDestroy
+{
 	private users: IUserDto[] = [];
 	query = "";
 	private querySubject = new Subject<string>();
@@ -22,7 +33,7 @@ export class EventUserFormComponent extends AppBaseComponent implements OnInit, 
 	selectedUsers = input<IUserDto[]>([]);
 	step = input<number>(null!);
 	title = input<string>(null!);
-	derivedTitle = computed<string>(() => `${this.step()}. ${this.title()}`)
+	derivedTitle = computed<string>(() => `${this.step()}. ${this.title()}`);
 	selectedUsersChange = output<IUserDto>();
 	isPending = signal(false);
 
@@ -31,9 +42,10 @@ export class EventUserFormComponent extends AppBaseComponent implements OnInit, 
 	}
 
 	get filteredUsers(): IUserDto[] {
-		return this.users.filter(user =>
-			user.email.toLowerCase().includes(this.query.toLowerCase()) ||
-			user.username.toLowerCase().includes(this.query.toLowerCase())
+		return this.users.filter(
+			user =>
+				user.email.toLowerCase().includes(this.query.toLowerCase()) ||
+				user.username.toLowerCase().includes(this.query.toLowerCase())
 		);
 	}
 
@@ -47,13 +59,15 @@ export class EventUserFormComponent extends AppBaseComponent implements OnInit, 
 	}
 
 	private setupSearchListener() {
-		this.querySubject.pipe(
-			debounceTime(300),
-			distinctUntilChanged(),
-			takeUntil(this.destroySubject)
-		).subscribe(q => {
-			this.getUsers(q);
-		});
+		this.querySubject
+			.pipe(
+				debounceTime(300),
+				distinctUntilChanged(),
+				takeUntil(this.destroySubject)
+			)
+			.subscribe(q => {
+				this.getUsers(q);
+			});
 	}
 
 	onSearchInputChange(query: string) {
@@ -69,12 +83,16 @@ export class EventUserFormComponent extends AppBaseComponent implements OnInit, 
 
 		this.isPending.set(true);
 		this.service.getUsers(query).subscribe({
-			next: u => { this.users = u; },
+			next: u => {
+				this.users = u;
+			},
 			error: error => {
 				console.error("Error fetching users:", error);
 				this.users = [];
 			},
-			complete: () => { this.isPending.set(false); },
+			complete: () => {
+				this.isPending.set(false);
+			},
 		});
 	}
 
@@ -83,6 +101,8 @@ export class EventUserFormComponent extends AppBaseComponent implements OnInit, 
 	}
 
 	isSelected(user: IUserDto): boolean {
-		return this.selectedUsers().map(u => u.userId).includes(user.userId);
+		return this.selectedUsers()
+			.map(u => u.userId)
+			.includes(user.userId);
 	}
 }
