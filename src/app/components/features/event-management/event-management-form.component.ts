@@ -16,6 +16,7 @@ import { EditEventComponent } from "./edit-event/edit-event.component";
 import { ResponsiveFormComponent } from "../../html/responsive-form/responsive-form.component";
 import { CommonModule } from "@angular/common";
 import { fromDateTimeISOString } from "@app/utility";
+import { appRoutes } from "@app/constants";
 
 @Component({
 	selector: "app-event-management-form",
@@ -121,6 +122,14 @@ export class EventManagementFormComponent
 		});
 	}
 
+	registerToEvent() {
+			this.eventService.setSelectedEvent(this.selectedEventDto()!);
+			this.router.navigate([
+				`/${appRoutes.EVENT_DETAILS}`,
+				this.selectedEventDto()!.id,
+			]);
+		}
+
 	deleteEventAssert(): void {
 		if (this.eventDetailDto === null || this.eventDetailDto === undefined) {
 			return;
@@ -175,7 +184,16 @@ export class EventManagementFormComponent
 				console.log("Delete item: ", item);
 			},
 			error: error => console.log("Test error ", error),
-			complete: () => this.isPending.set(false),
+			complete: () => {
+				this.navigateToHome();
+				this.isPending.set(false)
+			},
 		});
+	}
+
+	navigateToHome() {
+		this.router.navigate([
+			`/${appRoutes.HOME}`,
+		]);
 	}
 }

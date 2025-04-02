@@ -6,21 +6,35 @@
 				type="button"
 				class="btn-close"
 				aria-label="Close"
-				(click)="activeModal.dismiss('Cross click')"
+				(click)="navigateHomeByDismiss()"
 			></button>
 		</div>
 		<div class="modal-body">
 			<p>Titel: {{ event.title }}</p>
 			<p>Description: {{ event.description }}</p>
 			<p>Date: {{ event.date }}</p>
-		</div>
-		<div class="modal-footer d-flex justify-content-center">
-			<app-generic-btn
-				[label]="'close'"
-				[icon]="'check-circle'"
-				[borderColor]="'success'"
-				(click)="activeModal.close('Close click')"
-			></app-generic-btn>
+			<div
+				class="modal-footer d-flex flex-row justify-content-center gap-2"
+			>
+				<app-generic-btn
+					[label]="'Nytt event'"
+					[icon]="'plus-square'"
+					[borderColor]="'success'"
+					(click)="navigateCreateNewevent()"
+				></app-generic-btn>
+				<app-generic-btn
+					[label]="'Hantera eventet'"
+					[icon]="'pencil'"
+					[borderColor]="'success'"
+					(click)="navigateManageEvent(event.id)"
+				></app-generic-btn>
+				<app-generic-btn
+					[label]="'Hem'"
+					[icon]="'house'"
+					[borderColor]="'success'"
+					(click)="navigateHomeByCancel()"
+				></app-generic-btn>
+			</div>
 		</div>
 	</div>
 }

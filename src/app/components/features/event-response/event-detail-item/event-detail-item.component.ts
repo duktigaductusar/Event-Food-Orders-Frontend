@@ -16,6 +16,7 @@ import { IEventDetailDto } from "@app/models/IEventDetailDto.model";
 import { IParticipantResponseForm } from "../interfaces";
 import type { ParticipantResponseType } from "@types";
 import { ParticipantService } from "@app/services/participant/participant.service";
+import { fromDateTimeISOString } from "@app/utility";
 
 @Component({
 	selector: "app-event-detail-item",
@@ -105,6 +106,10 @@ export class EventDetailItemComponent
 			error: error => console.error("Test error" + error),
 			complete: () => this.isPending.set(false),
 		});
+	}
+
+	fromDateTimeISOStringForEventDto() {
+		return fromDateTimeISOString(this.selectedEventDto()!.date)
 	}
 
 	onSubmit = () => {

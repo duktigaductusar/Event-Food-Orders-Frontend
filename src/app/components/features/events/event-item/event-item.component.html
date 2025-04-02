@@ -10,7 +10,7 @@
 	@if (eventDto() !== null) {
 		<div class="card-body">
 			<app-datetimelabel
-				[datevalue]="eventDto()!.date"
+				[datevalue]="fromDateTimeISOStringForEventDto()"
 			></app-datetimelabel>
 			<app-status-label [eventDto]="eventDto()!"></app-status-label>
 		</div>
