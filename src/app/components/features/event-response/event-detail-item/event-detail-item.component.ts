@@ -48,7 +48,7 @@ export class EventDetailItemComponent
 
 	//todo take this from token. Use MSAL library
 	//todo always check that we use the correct event id for this user id
-	userId = "77d7e9a1-baff-493f-b9f4-9497a07b94fc";
+	userId = "a84c12d5-9075-42d2-b467-6b345b7d8c9f"
 
 	constructor(
 		private router: Router,
