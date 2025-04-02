@@ -1,1 +1,22 @@
-<p>error-modal works!</p>
+<div class="border border-5 border-danger p-3 bg-white">
+	<div class="modal-header">
+		<h5 class="modal-title">{{ title }}</h5>
+		<button
+			type="button"
+			class="btn-close"
+			aria-label="Close"
+			(click)="close()"
+		></button>
+	</div>
+	<div class="modal-body">
+		<p>{{ message }}</p>
+	</div>
+	<div class="modal-footer d-flex justify-content-center">
+		<app-generic-btn
+			[label]="'close'"
+			[icon]="'check-circle'"
+			[borderColor]="'danger'"
+			(click)="activeModal.close('Close click')"
+		></app-generic-btn>
+	</div>
+</div>
