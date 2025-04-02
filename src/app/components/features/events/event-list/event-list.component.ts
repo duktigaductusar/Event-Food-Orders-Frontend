@@ -17,6 +17,8 @@ import { SpinnerComponent } from "@app/components/shared";
 })
 export class EventListComponent extends AppBaseComponent implements OnInit {
 	eventDtos: IEventDto[] = [];
+	filteredEventDtos: IEventDto[] = [];
+	showOnlyOwned = false;
 	currentPage = 1;
 	itemsPerPage = 16;
 	isPending = signal(false);
@@ -35,10 +37,24 @@ export class EventListComponent extends AppBaseComponent implements OnInit {
 			next: events => {
 				console.log(events)
 				this.eventDtos = events;
+				this.applyFilter();
 			},
 			error: error => console.error("Test error" + error),
 			complete: () => this.isPending.set(false),
 		});
+	}
+
+	toggleOwnedEvents(event: Event) : void {
+		this.showOnlyOwned = (event.target as HTMLInputElement).checked;
+		this.applyFilter();
+	}
+
+	applyFilter() : void {
+		if (this.showOnlyOwned) {
+			this.filteredEventDtos = this.eventDtos.filter(event => event.isOwner);
+		} else {
+			this.filteredEventDtos = [...this.eventDtos];
+		}
 	}
 
 	updateEventResponse(
@@ -57,7 +73,7 @@ export class EventListComponent extends AppBaseComponent implements OnInit {
 
 	getCurrentPageItems(): IEventDto[] {
 		const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-		return this.eventDtos.slice(startIndex, startIndex + this.itemsPerPage);
+		return this.filteredEventDtos.slice(startIndex, startIndex + this.itemsPerPage);
 	}
 
 	onActionTriggered(event: { action: string; card: IEventDto }): void {
@@ -93,5 +109,6 @@ export class EventListComponent extends AppBaseComponent implements OnInit {
 				? { ...item, responseType: response.responseType }
 				: item
 		);
+		this.applyFilter();
 	}
 }

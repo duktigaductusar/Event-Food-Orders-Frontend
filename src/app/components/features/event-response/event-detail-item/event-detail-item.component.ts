@@ -35,6 +35,7 @@ export class EventDetailItemComponent
 {
 	eventForm: FormGroup<IParticipantResponseForm>;
 	selectedEventDto: Signal<IEventDto | null>;
+	isAttendingAtOffice: Signal<boolean> | undefined;
 
 	eventDetailDto: IEventDetailDto | null = null;
 
@@ -66,10 +67,13 @@ export class EventDetailItemComponent
 			preferences: fb.nonNullable.control("", [
 				Validators.maxLength(1000),
 			]),
-			allergies: fb.nonNullable.control("", [Validators.maxLength(1000)]),
-			wantsMeal: fb.nonNullable.control(false, [Validators.required]),
-			responseType: fb.nonNullable.control(
-				"PENDING" as ParticipantResponseType,
+			allergies: fb.nonNullable.control("", [
+				Validators.maxLength(1000)
+			]),
+			wantsMeal: fb.nonNullable.control(false, [
+				Validators.required
+			]),
+			responseType: fb.nonNullable.control("PENDING" as ParticipantResponseType,
 				[Validators.required]
 			),
 		});
@@ -83,16 +87,9 @@ export class EventDetailItemComponent
 			}
 		});
 
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		this.eventForm.get("responseType")?.valueChanges.subscribe(_ => {
 			this.clearFields();
-		});
-	}
-
-	clearFields(): void {
-		this.eventForm.patchValue({
-			preferences: "",
-			allergies: "",
-			wantsMeal: false,
 		});
 	}
 
@@ -102,6 +99,9 @@ export class EventDetailItemComponent
 			next: item => {
 				this.eventDetailDto = item;
 				this.eventService.selectedEventDto.set(item);
+				console.log("Return detail event: ", item)
+				this.initFields();
+				this.initIsAttendingAtOffice();
 			},
 			error: error => console.error("Test error" + error),
 			complete: () => this.isPending.set(false),
@@ -110,6 +110,15 @@ export class EventDetailItemComponent
 
 	fromDateTimeISOStringForEventDto() {
 		return fromDateTimeISOString(this.selectedEventDto()!.date)
+	}
+	
+	clearFields(): void {
+		this.eventForm.patchValue({
+			preferences: this.eventDetailDto?.preferences ?? "",
+			allergies: this.eventDetailDto?.allergies ?? "",
+			wantsMeal: this.eventDetailDto?.wantsMeal ?? false,
+		});
+		this.setIsAttendingAtOffice();
 	}
 
 	onSubmit = () => {
@@ -145,7 +154,27 @@ export class EventDetailItemComponent
 		}
 	};
 
-	isAttendingAtOffice() {
-		return this.eventForm.value.responseType === "ATTENDING_OFFICE";
+	initFields(): void {
+		this.eventForm.setValue({
+			preferences: this.eventDetailDto?.preferences ?? "",
+			allergies: this.eventDetailDto?.allergies ?? "",
+			wantsMeal: this.eventDetailDto?.wantsMeal ?? false,
+			responseType: this.eventDetailDto?.responseType ?? "PENDING"
+		})
+	}
+
+	initIsAttendingAtOffice(): void {
+		this.isAttendingAtOffice = computed(() =>
+			this.eventDetailDto?.responseType == "ATTENDING_OFFICE"
+		)
+		console.log("init reponse: ", this.eventDetailDto?.responseType);
+	}
+
+	setIsAttendingAtOffice(): void {
+		this.isAttendingAtOffice = computed(() =>
+			this.eventForm.value.responseType === "ATTENDING_OFFICE"
+		)
+		console.log("set reponse: ", this.eventForm.value.responseType);
+		console.log("at office: ", this.isAttendingAtOffice());
 	}
 }

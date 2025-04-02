@@ -1,4 +1,7 @@
-<div class="card shadow-sm h-100 d-flex flex-column" (click)="selectedEvent()">
+<div
+	class="card shadow-sm border-0 rounded-4 h-100 d-flex flex-column"
+	(click)="selectedEvent()"
+>
 	<div
 		class="card-header py-3 d-flex justify-content-between align-items-center"
 	>
@@ -25,7 +28,7 @@
 					(click)="onAction($event, 'ATTENDING_ONLINE')"
 				>
 					<i class="bi bi-laptop"></i>
-					{{ t("home.onlineBtnLabel") }}
+					{{ t("events.onlineBtnLabel") }}
 				</button>
 				<button
 					class="btn btn-sm btn-outline-primary"
@@ -33,7 +36,7 @@
 					(click)="onAction($event, 'ATTENDING_OFFICE')"
 				>
 					<i class="bi bi-building"></i>
-					{{ t("home.officeBtnLabel") }}
+					{{ t("events.officeBtnLabel") }}
 				</button>
 				<button
 					class="btn btn-sm btn-outline-danger"
@@ -41,7 +44,7 @@
 					(click)="onAction($event, 'NOT_ATTENDING')"
 				>
 					<i class="bi bi-x-circle"></i>
-					{{ t("home.rejectBtnLabel") }}
+					{{ t("events.rejectBtnLabel") }}
 				</button>
 			</div>
 		} @else if (
@@ -54,7 +57,7 @@
 				(click)="onAction($event, 'PENDING')"
 			>
 				<i class="bi bi-arrow-counterclockwise"></i>
-				{{ t("home.regretBtnLabel") }}
+				{{ t("events.regretBtnLabel") }}
 			</button>
 		} @else if (eventDto()?.responseType === "NOT_ATTENDING") {
 			<button
@@ -63,7 +66,7 @@
 				(click)="onAction($event, 'PENDING')"
 			>
 				<i class="bi bi-arrow-clockwise"></i>
-				{{ t("home.regretRejectBtnLabel") }}
+				{{ t("events.regretRejectBtnLabel") }}
 			</button>
 		}
 	</div>
@@ -71,7 +74,7 @@
 		<div class="card-footer text-center">
 			<app-generic-btn
 				[borderColor]="'secondary'"
-				[label]="t('home.updateBtnLabel')"
+				[label]="t('events.updateBtnLabel')"
 				[icon]="'pencil'"
 				[disabled]="isPending()"
 				(action)="editEvent()"
