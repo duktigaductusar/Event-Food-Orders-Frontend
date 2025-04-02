@@ -1,3 +1,5 @@
+// Deprecated 28/3/2025 - RR. Login process should be started automatically, use MSAL Guard from "/".
+
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
@@ -24,7 +26,7 @@ export class LoginPageComponent extends AppBaseComponent {
 
 	handleOnClick(): void {
 		this.msalService.loginRedirect({
-			scopes: ["Mail.Send"],
+			scopes: []
 		});
 	}
 }
