@@ -10,11 +10,12 @@ import {
 import { appRoutes } from "./constants";
 // import { MsalGuard } from "@azure/msal-angular";
 import { EventManagementPageComponent } from "./components/pages/event-management-page/event-management-page.component";
+import { MsalGuard } from "@azure/msal-angular";
 
 export const routes: Routes = [
 	{
 		path: "",
-		// canActivate: [MsalGuard],
+		canActivate: [MsalGuard],
 		children: [
 			{
 				path: appRoutes.HOME,
