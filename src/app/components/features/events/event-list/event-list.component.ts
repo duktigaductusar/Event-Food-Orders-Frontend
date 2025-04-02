@@ -35,6 +35,7 @@ export class EventListComponent extends AppBaseComponent implements OnInit {
 		this.isPending.set(true);
 		this.eventService.getEvents().subscribe({
 			next: events => {
+				console.log(events)
 				this.eventDtos = events;
 				this.applyFilter();
 			},

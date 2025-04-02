@@ -13,6 +13,7 @@ import { EventService } from "@app/services";
 import { StatusLabelComponent } from "../../../shared";
 import type { ParticipantResponseType } from "@types";
 import { ParticipantService } from "@app/services/participant/participant.service";
+import { fromDateTimeISOString } from "@app/utility";
 
 @Component({
 	selector: "app-event-item",
@@ -76,6 +77,10 @@ export class EventItemComponent extends AppBaseComponent {
 			`/${appRoutes.EVENT_DETAILS}`,
 			this.eventDto()!.id,
 		]);
+	}
+
+	fromDateTimeISOStringForEventDto() {
+		return fromDateTimeISOString(this.eventDto()!.date)
 	}
 
 	editEvent() {

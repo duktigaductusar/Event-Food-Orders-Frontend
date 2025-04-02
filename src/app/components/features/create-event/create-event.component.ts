@@ -19,7 +19,7 @@ import { CommonModule } from "@angular/common";
 import { CreateEventFooterContainerComponent } from "./create-event-footer-container/create-event-footer-container.component";
 import { CreateEventHeaderContainerComponent } from "./create-event-header-container/create-event-header-container.component";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
-import { formControllers, formGroups, formTitles } from "./constants";
+import { formControllers, formGroups, formTitles, newEventResultSelection } from "./constants";
 import { EventUserFormComponent } from "./event-user-form/event-user-form.component";
 import { VerifyEventFormComponent } from "./verify-event-form/verify-event-form.component";
 import { IEventDetailOwnerDto, IEventDto, IUserDto } from "@app/models";
@@ -30,7 +30,7 @@ import {
 	subscribeTimeDeadlineToTimeChange,
 	createEventDtoFromCreateEventForm,
 } from "./create-event.setup";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgbDateStruct, NgbModal, NgbTimeStruct } from "@ng-bootstrap/ng-bootstrap";
 import { CreateEventResultModalComponent } from "./create-event-result-modal/create-event-result-modal.component";
 import { ApiError } from "@app/interceptors/api-error.interceptor";
 
@@ -57,8 +57,7 @@ import { ApiError } from "@app/interceptors/api-error.interceptor";
 })
 export class CreateEventComponent
 	extends AppBaseComponent
-	implements OnDestroy, OnInit
-{
+	implements OnDestroy, OnInit {
 	form!: FormGroup<ICreateEventForm>;
 	formTitles = formTitles;
 	private destroy = new Subject<void>();
@@ -70,7 +69,7 @@ export class CreateEventComponent
 	currentStep = this.formSteps.formDetailStep;
 	isPending = signal(false);
 	selectedUsers = signal<IUserDto[]>([]);
-	initialEvent = input<IEventDetailOwnerDto>();
+	initialEvent = input<Partial<IEventDetailOwnerDto>>();
 	private modalService = inject(NgbModal);
 
 	constructor(
@@ -78,7 +77,6 @@ export class CreateEventComponent
 		private eventService: EventService
 	) {
 		super();
-		this.form = buildCreateEventForm(this.fb);
 		this.selectedUsersEffect();
 	}
 
@@ -93,6 +91,12 @@ export class CreateEventComponent
 	}
 
 	ngOnInit(): void {
+		if (this.initialEvent != null) {
+			this.form = buildCreateEventForm(this.fb, this.initialEvent());
+		} else {
+			this.form = buildCreateEventForm(this.fb);
+		}
+
 		subscribeDateDeadlineToDateChange(
 			this.eventDetailsFormGroup,
 			this.destroy
@@ -109,6 +113,13 @@ export class CreateEventComponent
 
 	get inviteUsersForm(): FormGroup {
 		return this.form.get(formGroups.inviteUsersForm) as FormGroup;
+	}
+
+	getDerivedUsers() {
+		return [
+			...(this.initialEvent()?.users ?? []),
+			...(this.form.value.inviteUsersForm?.users ?? [])
+		];
 	}
 
 	nextStep() {
@@ -142,10 +153,6 @@ export class CreateEventComponent
 		];
 	}
 
-	getDerivedContainerStyle() {
-		return { "max-width": `${breakpoints.lg}px` };
-	}
-
 	onSelectedUsersChange(user: IUserDto) {
 		this.selectedUsers.update(prev => {
 			const alreadySelected = prev.some(u => u.userId === user.userId);
@@ -166,6 +173,9 @@ export class CreateEventComponent
 		console.log("eventDto", eventDto)
 		this.eventService.createEvent(eventDto).subscribe({
 			next: event => {
+				// TODO Replace with clear
+				// Use this to reset previouse event i service.
+				this.eventService.selectedEventDto.set(null)
 				this.openSuccessModal(event as IEventDto);
 			},
 			error: (error: ApiError) => {
@@ -186,6 +196,31 @@ export class CreateEventComponent
 			}
 		);
 		modalRef.componentInstance.event = event;
+
+		modalRef.result
+		.then((result) => {
+			if (result === newEventResultSelection.newEventFormSelection) {
+				this.currentStep = this.formSteps.formDetailStep;
+				this.form.reset({
+					eventDetailsForm: {
+						title: "",
+						description: "",
+						date: {} as NgbDateStruct,
+						time: {} as NgbTimeStruct,
+						endTime: {} as NgbTimeStruct,
+						dateDeadline: {} as NgbDateStruct,
+						timeDeadline: {} as NgbTimeStruct,
+					},
+					inviteUsersForm: {
+						users: [],
+					},
+				});
+			}
+		})
+		.catch((reason) => {
+			
+			console.log('Modal dismissed:', reason);
+		});
 	}
 
 	ngOnDestroy() {

@@ -1,17 +1,22 @@
-import { Component, inject, OnInit, signal, Signal } from "@angular/core";
-import { Router } from "@angular/router";
+import { Component, computed, inject, OnInit, signal, Signal } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
 import { GenericBtnComponent } from "@app/components/html";
 import {
 	DatetimelabelComponent,
 	StatusLabelComponent,
 } from "@app/components/shared";
-import { IEventDto, IParticipantForResponseDto, IUserDto } from "@app/models";
+import { IEventDetailOwnerDto, IEventDto, IParticipantForResponseDto, IUserDto } from "@app/models";
 import { IEventDetailDto } from "@app/models/IEventDetailDto.model";
 import { EventService, UserService } from "@app/services";
 import { ParticipantService } from "@app/services/participant/participant.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { EventManagementDeleteModalComponentComponent } from "./event-management-delete-modal-component/event-management-delete-modal-component.component";
+import { EditEventComponent } from "./edit-event/edit-event.component";
+import { ResponsiveFormComponent } from "../../html/responsive-form/responsive-form.component";
+import { CommonModule } from "@angular/common";
+import { fromDateTimeISOString } from "@app/utility";
+import { appRoutes } from "@app/constants";
 
 @Component({
 	selector: "app-event-management-form",
@@ -19,51 +24,64 @@ import { EventManagementDeleteModalComponentComponent } from "./event-management
 		DatetimelabelComponent,
 		StatusLabelComponent,
 		GenericBtnComponent,
+		EditEventComponent,
+		ResponsiveFormComponent,
+		CommonModule
 	],
 	templateUrl: "./event-management-form.component.html",
 	styleUrl: "./event-management-form.component.css",
 })
 export class EventManagementFormComponent
 	extends AppBaseComponent
-	implements OnInit
-{
+	implements OnInit {
+	edit = signal(false);
 	selectedEventDto: Signal<IEventDto | null>;
 	eventDetailDto: IEventDetailDto | null = null;
-
 	participants: IParticipantForResponseDto[] = [];
 	users: IUserDto[] = [];
-
 	isPending = signal(false);
-//todo fetch this from MSAL library
+	//todo fetch this from MSAL library
 	userId = "a84c12d5-9075-42d2-b467-6b345b7d8c9f"
 	private modalService = inject(NgbModal);
 
 	constructor(
 		private router: Router,
+		private route: ActivatedRoute,
 		public eventService: EventService,
 		public participantService: ParticipantService,
 		public userService: UserService
 	) {
 		super();
-		this.selectedEventDto = signal(this.eventService.selectedEventDto());
+		this.selectedEventDto = computed(() => this.eventService.selectedEventDto());
 	}
 
 	ngOnInit(): void {
-		this.loadEventDetailDto();
+		if (this.selectedEventDto() != null) {
+			this.loadEventDetailDto(this.selectedEventDto()?.id);
+		}
+
+		this.route.paramMap.subscribe(params => {
+			const eventId = params.get("id");
+			if (eventId) {
+				this.loadEventDetailDto(eventId);
+			}
+		});
 	}
 
-	loadEventDetailDto(): void {
-		const currentEventId = this.selectedEventDto()?.id;
+	loadEventDetailDto(currentEventId?: string): void {
 		if (currentEventId == null) {
 			return;
 		}
+
 		this.isPending.set(true);
 		this.eventService
 			.getDetailEvent(currentEventId, this.userId)
 			.subscribe({
 				next: item => {
-					this.loadParticipantDtos(item);
 					this.eventDetailDto = item;
+					this.eventService.selectedEventDto.set(item);
+					this.loadParticipantDtos(item);
+					
 				},
 				error: error => console.error("Test error" + error),
 				complete: () => this.isPending.set(false),
@@ -104,11 +122,41 @@ export class EventManagementFormComponent
 		});
 	}
 
+	registerToEvent() {
+			this.eventService.setSelectedEvent(this.selectedEventDto()!);
+			this.router.navigate([
+				`/${appRoutes.EVENT_DETAILS}`,
+				this.selectedEventDto()!.id,
+			]);
+		}
+
 	deleteEventAssert(): void {
 		if (this.eventDetailDto === null || this.eventDetailDto === undefined) {
 			return;
 		}
 		this.openDeleteModal(this.eventDetailDto);
+	}
+
+	toggleEdit() {
+		console.log("created real: ", this.createEventDetailOwnerDto())
+		this.edit.update(prev => !prev)
+		if (!this.edit()) {
+			this.loadEventDetailDto(this.selectedEventDto()?.id);
+		}
+	}
+
+	createEventDetailOwnerDto(): Partial<IEventDetailOwnerDto> {
+		return {
+			title: this.eventDetailDto?.title,
+			description: this.eventDetailDto?.description,
+			date: this.eventDetailDto?.date,
+			deadline: this.eventDetailDto?.deadline,
+			users: this.users
+		}
+	}
+
+	fromDateTimeISOStringForEventDto() {
+		return fromDateTimeISOString(this.selectedEventDto()!.date)
 	}
 
 	openDeleteModal(event: IEventDetailDto) {
@@ -136,7 +184,16 @@ export class EventManagementFormComponent
 				console.log("Delete item: ", item);
 			},
 			error: error => console.log("Test error ", error),
-			complete: () => this.isPending.set(false),
+			complete: () => {
+				this.navigateToHome();
+				this.isPending.set(false)
+			},
 		});
+	}
+
+	navigateToHome() {
+		this.router.navigate([
+			`/${appRoutes.HOME}`,
+		]);
 	}
 }

@@ -16,6 +16,7 @@ import { IEventDetailDto } from "@app/models/IEventDetailDto.model";
 import { IParticipantResponseForm } from "../interfaces";
 import type { ParticipantResponseType } from "@types";
 import { ParticipantService } from "@app/services/participant/participant.service";
+import { fromDateTimeISOString } from "@app/utility";
 
 @Component({
 	selector: "app-event-detail-item",
@@ -86,7 +87,8 @@ export class EventDetailItemComponent
 			}
 		});
 
-		this.eventForm.get("responseType")?.valueChanges.subscribe(value => {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		this.eventForm.get("responseType")?.valueChanges.subscribe(_ => {
 			this.clearFields();
 		});
 	}
@@ -106,6 +108,10 @@ export class EventDetailItemComponent
 		});
 	}
 
+	fromDateTimeISOStringForEventDto() {
+		return fromDateTimeISOString(this.selectedEventDto()!.date)
+	}
+	
 	clearFields(): void {
 		this.eventForm.patchValue({
 			preferences: this.eventDetailDto?.preferences ?? "",
@@ -113,9 +119,6 @@ export class EventDetailItemComponent
 			wantsMeal: this.eventDetailDto?.wantsMeal ?? false,
 		});
 		this.setIsAttendingAtOffice();
-		// console.log("EventDetailDto: ", this.eventDetailDto)
-		// console.log("EventDetailDto-preferences: ", this.eventDetailDto?.preferences)
-		console.log("Preferences: ", this.eventForm.get("preferences")?.value)
 	}
 
 	onSubmit = () => {

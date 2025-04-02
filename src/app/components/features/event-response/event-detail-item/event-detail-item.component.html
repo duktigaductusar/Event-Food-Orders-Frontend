@@ -14,7 +14,7 @@
 		<div class="card-body bg-white">
 			@if (selectedEventDto() !== null) {
 				<app-datetimelabel
-					[datevalue]="selectedEventDto()!.date"
+					[datevalue]="fromDateTimeISOStringForEventDto()"
 				></app-datetimelabel>
 				<app-status-label
 					[eventDto]="selectedEventDto()!"

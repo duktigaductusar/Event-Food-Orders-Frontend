@@ -54,6 +54,14 @@ export function fromDateTimeISOString(isoString: string): Date {
 	return new Date(isoString);
 }
 
+export function toDateTimeISOStringFromDate(date?: Date): string | undefined {
+	if (date == null) {
+		return;
+	}
+
+	return date.toISOString();
+}
+
 export function toDateTimeISOStrig(date: NgbDateStruct, time: NgbTimeStruct) {
 	return new Date(
 		date.year,
