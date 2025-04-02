@@ -14,7 +14,7 @@ import { EventManagementPageComponent } from "./components/pages/event-managemen
 export const routes: Routes = [
 	{
 		path: "",
-		canActivate: [MsalGuard],
+		//canActivate: [MsalGuard],
 		children: [
 			{
 				path: appRoutes.HOME,

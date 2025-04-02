@@ -31,7 +31,7 @@ export class EventManagementFormComponent
 
 	isPending = signal(false);
 //todo fetch this from MSAL library
-	userId = "77d7e9a1-baff-493f-b9f4-9497a07b94fc"
+	userId = "a84c12d5-9075-42d2-b467-6b345b7d8c9f"
 	private modalService = inject(NgbModal);
 
   constructor(
