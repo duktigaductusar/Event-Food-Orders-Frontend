@@ -35,7 +35,6 @@ export class ApiErrorInterceptor implements HttpInterceptor {
 	): Observable<HttpEvent<unknown>> {
 		return next.handle(req).pipe(
 			catchError((error: HttpErrorResponse) => {
-				console.log('error', error)
 				const apiError = ApiError.fromHttpError(error);
 
 				if (![401, 403].includes(apiError.status)) {

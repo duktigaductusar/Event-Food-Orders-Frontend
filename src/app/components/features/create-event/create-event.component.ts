@@ -163,6 +163,7 @@ export class CreateEventComponent
 		}
 
 		this.isPending.set(true);
+		console.log("eventDto", eventDto)
 		this.eventService.createEvent(eventDto).subscribe({
 			next: event => {
 				this.openSuccessModal(event as IEventDto);

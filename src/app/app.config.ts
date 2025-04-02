@@ -39,13 +39,15 @@ export function MSALInstanceFactory(): PublicClientApplication {
 	});
 }
 
-export function msalInterceptorConfigFactory(): MsalInterceptorConfiguration{
+export function msalInterceptorConfigFactory(): MsalInterceptorConfiguration {
 	const protectedResourceMap = new Map<string, string[]>();
 	//Works on a prefix match. As long as the URL starts with the apiUrl found in environment then interceptor will append tokens.
-	protectedResourceMap.set(`${environment.apiUrl}`, [`api://${environment.azureAd.apiId}/user`]);
+	protectedResourceMap.set(`${environment.apiUrl}`, [
+		`api://${environment.azureAd.apiId}/user`,
+	]);
 	return {
 		interactionType: InteractionType.Redirect,
-		protectedResourceMap
+		protectedResourceMap,
 	};
 }
 
@@ -74,16 +76,20 @@ export const appConfig: ApplicationConfig = {
 		MsalService,
 		MsalGuard,
 		MsalBroadcastService,
-		{ provide: HTTP_INTERCEPTORS, useClass: debuggingInterceptor, multi: true},
-		{ provide: HTTP_INTERCEPTORS, useClass: MsalInterceptor, multi: true },
 		{
 			provide: HTTP_INTERCEPTORS,
-			useClass: JsonContentTypeInterceptor,
+			useClass: ApiErrorInterceptor,
 			multi: true,
 		},
 		{
 			provide: HTTP_INTERCEPTORS,
-			useClass: ApiErrorInterceptor,
+			useClass: debuggingInterceptor,
+			multi: true,
+		},
+		{ provide: HTTP_INTERCEPTORS, useClass: MsalInterceptor, multi: true },
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: JsonContentTypeInterceptor,
 			multi: true,
 		},
 		provideHttpClient(withInterceptorsFromDi()),

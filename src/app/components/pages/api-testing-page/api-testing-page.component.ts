@@ -26,29 +26,29 @@ export class ApiTestComponent extends AppBaseComponent {
 			return;
 		}
 
-        this.http.get(`${environment.apiUrl}/Auth/status`).subscribe({
-                next: (response) => console.log('API response:', response),
-                error: (error) => console.error('API call error:', error)
-            });
+		this.http.get(`${environment.apiUrl}/Auth/status`).subscribe({
+			next: response => console.log("API response:", response),
+			error: error => console.error("API call error:", error),
+		});
 
-        // const tokenRequest = {
-        //     scopes: ["openid", "email", "Mail.Send", "profile"],
-        //     account: this.activeAccount
-        // };
+		// const tokenRequest = {
+		//     scopes: ["openid", "email", "Mail.Send", "profile"],
+		//     account: this.activeAccount
+		// };
 
-        // this.msalService.acquireTokenSilent(tokenRequest)
-        // .subscribe({
-        //   next: (result: AuthenticationResult) => {
-        //     const headers = new HttpHeaders({
-        //       'Authorization': `Bearer ${result.idToken}`
-        //     });
-        //     this.http.get(`${environment.apiUrl}/Auth/status`, { headers })
-        //       .subscribe({
-        //         next: (response) => console.log('API response:', response),
-        //         error: (error) => console.error('API call error:', error)
-        //       });
-        //   },
-        //   error: (error) => console.error('Token acquisition error:', error)
-        // });
+		// this.msalService.acquireTokenSilent(tokenRequest)
+		// .subscribe({
+		//   next: (result: AuthenticationResult) => {
+		//     const headers = new HttpHeaders({
+		//       'Authorization': `Bearer ${result.idToken}`
+		//     });
+		//     this.http.get(`${environment.apiUrl}/Auth/status`, { headers })
+		//       .subscribe({
+		//         next: (response) => console.log('API response:', response),
+		//         error: (error) => console.error('API call error:', error)
+		//       });
+		//   },
+		//   error: (error) => console.error('Token acquisition error:', error)
+		// });
 	}
 }

@@ -8,10 +8,7 @@ export class GlobalErrorService {
 
 	constructor(private modalService: NgbModal) {}
 
-	showError(
-		message: string,
-		title = "An error occurred"
-	) {
+	showError(message: string, title = "An error occurred") {
 		if (this.modalIsOpen) return;
 
 		this.modalIsOpen = true;
