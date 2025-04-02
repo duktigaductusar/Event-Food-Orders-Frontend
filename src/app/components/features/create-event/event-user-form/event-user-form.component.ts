@@ -14,10 +14,11 @@ import { AppBaseComponent } from "@app/components/base/app-base.component";
 import { UserService } from "@app/services";
 import { IUserDto } from "@app/models";
 import { Subject, debounceTime, distinctUntilChanged, takeUntil } from "rxjs";
+import { CommonModule } from "@angular/common";
 
 @Component({
 	selector: "app-event-user-form",
-	imports: [ResponsiveFormComponent, FormsModule],
+	imports: [ResponsiveFormComponent, FormsModule, CommonModule],
 	templateUrl: "./event-user-form.component.html",
 	styleUrl: "./event-user-form.component.css",
 })
