@@ -29,6 +29,6 @@ export class ErrorModalComponent {
 	constructor(public activeModal: NgbActiveModal) {}
 
 	close(): void {
-		this.activeModal.close(); // or use dismiss() if it's cancel-like
+		this.activeModal.close();
 	}
 }

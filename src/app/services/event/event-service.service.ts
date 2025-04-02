@@ -43,41 +43,4 @@ export class EventService {
 	deleteEvent(eventId: string): Observable<boolean> {
 		return this.http.delete<boolean>(`${this.apiUrl}/${eventId}`);
 	}
-
-	// TODO Check if new interceptors work
-	// getEvents(): Observable<IEventDto[]> {
-	// 	return this.http.get<IEventDto[]>(`${this.apiUrl}/all`);
-	// }
-
-	// getDetailEvent(
-	// 	participantId: string,
-	// 	userId: string
-	// ): Observable<IEventDetailDto> {
-	// 	return this.http.get<IEventDetailDto>(
-	// 		`${this.apiUrl}/${participantId}?userId=${userId}`
-	// 	);
-	// }
-
-	// createEvent(body: IEventForCreationDto) {
-	// 	return this.http
-	// 		.post<IEventDto>(`${this.apiUrl}`, body, {
-	// 			headers: { "Content-Type": "application/json" },
-	// 		})
-	// 		.pipe(
-	// 			catchError(error => {
-	// 				console.error("Error fetching users:", error);
-	// 				// TODO CHange to custom Event class instade of empty array
-	// 				return of([]);
-	// 			})
-	// 		);
-	// }
-
-	// deleteEvent(eventId: string): Observable<boolean> {
-	// 	return this.http.delete<boolean>(`${this.apiUrl}/${eventId}`).pipe(
-	// 		catchError(error => {
-	// 			console.error("Error deleting event:", error);
-	// 			return of(false);
-	// 		})
-	// 	);
-	// }
 }

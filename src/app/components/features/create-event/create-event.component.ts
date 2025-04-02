@@ -169,7 +169,6 @@ export class CreateEventComponent
 			},
 			error: (error: ApiError) => {
 				console.error("Error fetching users:", error.message);
-				this.openErrorModal();
 			},
 			complete: () => this.isPending.set(false),
 		});
@@ -186,20 +185,6 @@ export class CreateEventComponent
 			}
 		);
 		modalRef.componentInstance.event = event;
-	}
-
-	openErrorModal() {
-		const modalRef = this.modalService.open(
-			CreateEventResultModalComponent,
-			{
-				container: "body",
-				backdrop: true,
-				centered: true,
-				backdropClass: "app-modal-custom",
-			}
-		);
-
-		modalRef.componentInstance.error = "Error";
 	}
 
 	ngOnDestroy() {
