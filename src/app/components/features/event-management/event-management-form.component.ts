@@ -1,3 +1,4 @@
+// todo: this service uses state
 import {
 	Component,
 	computed,
@@ -20,7 +21,7 @@ import {
 	IUserDto,
 } from "@app/models";
 import { IEventDetailDto } from "@app/models/eventDtos/IEventDetailDto.model";
-import { EventService, UserService } from "@app/services";
+import { EventService, EventStateService, UserService } from "@app/services";
 
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { EventManagementDeleteModalComponentComponent } from "./event-management-delete-modal-component/event-management-delete-modal-component.component";
@@ -62,12 +63,13 @@ export class EventManagementFormComponent
 		private router: Router,
 		private route: ActivatedRoute,
 		public eventService: EventService,
+		public eventStateService: EventStateService,
 		public participantService: ParticipantService,
 		public userService: UserService
 	) {
 		super();
 		this.selectedEventDto = computed(() =>
-			this.eventService.selectedEventDto()
+			this.eventStateService.selectedEventDto()
 		);
 	}
 
@@ -95,7 +97,7 @@ export class EventManagementFormComponent
 			.subscribe({
 				next: item => {
 					this.eventDetailDto = item;
-					this.eventService.selectedEventDto.set(item);
+					this.eventStateService.selectedEventDto.set(item);
 					this.loadParticipantDtos(item);
 				},
 				error: error => console.error("Test error" + error),
@@ -138,7 +140,7 @@ export class EventManagementFormComponent
 	}
 
 	registerToEvent() {
-		this.eventService.setSelectedEvent(this.selectedEventDto()!);
+		this.eventStateService.setSelectedEvent(this.selectedEventDto()!);
 		this.router.navigate([
 			`/${appRoutes.EVENT_DETAILS}`,
 			this.selectedEventDto()!.id,

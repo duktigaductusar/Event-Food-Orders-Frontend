@@ -1,3 +1,4 @@
+// todo: this service uses state
 import {
 	Component,
 	effect,
@@ -14,7 +15,6 @@ import { Subject } from "rxjs";
 import { ICreateEventForm } from "./interfaces";
 import { MultiStepFormHeaderComponent } from "./multistep-form-navigation-header/multistep-form-navigation-header.component";
 import { GenericBtnComponent } from "@app/components/html";
-import { breakpoints } from "@app/components/style";
 import { CommonModule } from "@angular/common";
 import { CreateEventFooterContainerComponent } from "./create-event-footer-container/create-event-footer-container.component";
 import { CreateEventHeaderContainerComponent } from "./create-event-header-container/create-event-header-container.component";
@@ -28,7 +28,7 @@ import {
 import { EventUserFormComponent } from "./event-user-form/event-user-form.component";
 import { VerifyEventFormComponent } from "./verify-event-form/verify-event-form.component";
 import { IEventDetailOwnerDto, IEventDto, IUserDto } from "@app/models";
-import { EventService } from "@app/services";
+import { EventService, EventStateService } from "@app/services";
 import {
 	buildCreateEventForm,
 	subscribeDateDeadlineToDateChange,
@@ -84,7 +84,8 @@ export class CreateEventComponent
 
 	constructor(
 		private fb: FormBuilder,
-		private eventService: EventService
+		private eventService: EventService,
+		private eventStateService: EventStateService,
 	) {
 		super();
 		this.selectedUsersEffect();
@@ -185,7 +186,7 @@ export class CreateEventComponent
 			next: event => {
 				// TODO Replace with clear
 				// Use this to reset previouse event i service.
-				this.eventService.selectedEventDto.set(null);
+				this.eventStateService.selectedEventDto.set(null);
 				this.openSuccessModal(event as IEventDto);
 			},
 			error: (error: ApiError) => {

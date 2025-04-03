@@ -1,3 +1,4 @@
+// todo: this service uses state
 import { Component, input, output, signal } from "@angular/core";
 import type {
 	IEventDto,
@@ -9,7 +10,7 @@ import { DatetimelabelComponent } from "@app/components/shared/datetimelabel/dat
 import { GenericBtnComponent } from "../../../html/generic-btn/generic-btn.component";
 import { Router } from "@angular/router";
 import { appRoutes } from "@app/constants";
-import { EventService } from "@app/services";
+import { EventService, EventStateService } from "@app/services";
 import { StatusLabelComponent } from "../../../shared";
 import type { ParticipantResponseType } from "@types";
 import { fromDateTimeISOString } from "@app/utility";
@@ -41,6 +42,7 @@ export class EventItemComponent extends AppBaseComponent {
 	constructor(
 		private router: Router,
 		private eventService: EventService,
+		public eventStateService: EventStateService,
 		private participantService: ParticipantService
 	) {
 		super();
@@ -72,7 +74,7 @@ export class EventItemComponent extends AppBaseComponent {
 		if (this.isPending() || this.eventDto() == null) {
 			return;
 		}
-		this.eventService.setSelectedEvent(this.eventDto()!);
+		this.eventStateService.setSelectedEvent(this.eventDto()!);
 		this.router.navigate([
 			`/${appRoutes.EVENT_DETAILS}`,
 			this.eventDto()!.id,
@@ -87,7 +89,7 @@ export class EventItemComponent extends AppBaseComponent {
 		if (this.isPending() || this.eventDto() == null) {
 			return;
 		}
-		this.eventService.setSelectedEvent(this.eventDto()!);
+		this.eventStateService.setSelectedEvent(this.eventDto()!);
 		this.router.navigate([
 			`/${appRoutes.EVENT_MANAGEMENT}`,
 			this.eventDto()!.id,

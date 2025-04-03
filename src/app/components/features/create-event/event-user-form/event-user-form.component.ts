@@ -18,6 +18,7 @@ import { CommonModule } from "@angular/common";
 
 @Component({
 	selector: "app-event-user-form",
+	standalone: true,
 	imports: [ResponsiveFormComponent, FormsModule, CommonModule],
 	templateUrl: "./event-user-form.component.html",
 	styleUrl: "./event-user-form.component.css",

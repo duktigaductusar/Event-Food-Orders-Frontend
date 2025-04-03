@@ -13,15 +13,15 @@ export class EventService {
 	private apiUrl = `${environment.apiUrl}/event`;
 	private http: HttpClient;
 
-	selectedEventDto = signal<IEventDto | null>(null);
+	// selectedEventDto = signal<IEventDto | null>(null);
 
 	constructor(http: HttpClient) {
 		this.http = http;
 	}
 
-	setSelectedEvent(item: IEventDto) {
-		this.selectedEventDto.set(item);
-	}
+	// setSelectedEvent(item: IEventDto) {
+	// 	this.selectedEventDto.set(item);
+	// }
 
 	getEvents(): Observable<IEventDto[]> {
 		return this.http.get<IEventDto[]>(`${this.apiUrl}/all`);
