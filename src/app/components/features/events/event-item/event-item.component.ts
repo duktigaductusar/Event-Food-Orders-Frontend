@@ -12,8 +12,8 @@ import { appRoutes } from "@app/constants";
 import { EventService } from "@app/services";
 import { StatusLabelComponent } from "../../../shared";
 import type { ParticipantResponseType } from "@types";
-import { ParticipantService } from "@app/services/participant/participant.service";
 import { fromDateTimeISOString } from "@app/utility";
+import { ParticipantService } from "@app/services/participant/participant.service";
 
 @Component({
 	selector: "app-event-item",

@@ -21,7 +21,7 @@ import {
 } from "@app/models";
 import { IEventDetailDto } from "@app/models/eventDtos/IEventDetailDto.model";
 import { EventService, UserService } from "@app/services";
-import { ParticipantService } from "@app/services/participant/participant.service";
+
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { EventManagementDeleteModalComponentComponent } from "./event-management-delete-modal-component/event-management-delete-modal-component.component";
 import { EditEventComponent } from "./edit-event/edit-event.component";
@@ -29,6 +29,7 @@ import { ResponsiveFormComponent } from "../../html/responsive-form/responsive-f
 import { CommonModule } from "@angular/common";
 import { fromDateTimeISOString } from "@app/utility";
 import { appRoutes } from "@app/constants";
+import { ParticipantService } from "@app/services/participant/participant.service";
 
 @Component({
 	selector: "app-event-management-form",

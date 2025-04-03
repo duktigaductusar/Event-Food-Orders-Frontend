@@ -7,10 +7,12 @@ import {
 	Router,
 	RouterOutlet,
 } from "@angular/router";
-import { LoggerService } from "./services/LoggingService/logger.service";
+
 import { MsalService } from "@azure/msal-angular";
 import { EventMessage } from "@azure/msal-browser";
 import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
+import { LoggerService } from "./services/utility/logger.service";
+
 
 @Component({
 	selector: "app-root",
