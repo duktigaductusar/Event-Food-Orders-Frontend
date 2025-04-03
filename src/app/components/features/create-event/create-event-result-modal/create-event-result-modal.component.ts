@@ -18,34 +18,29 @@ export class CreateEventResultModalComponent {
 	@Input() event: IEventDto | null = null;
 	createNewEvent = output();
 
-	constructor(private readonly router: Router) { }
+	constructor(private readonly router: Router) {}
 
 	navigateHomeByDismiss() {
-		this.activeModal.dismiss(newEventResultSelection.crossSelection)
-		this.navigateToHome()
+		this.activeModal.dismiss(newEventResultSelection.crossSelection);
+		this.navigateToHome();
 	}
 
 	navigateHomeByCancel() {
-		this.activeModal.close(newEventResultSelection.homeSelection)
-		this.navigateToHome()
+		this.activeModal.close(newEventResultSelection.homeSelection);
+		this.navigateToHome();
 	}
 
 	navigateToHome() {
-		this.router.navigate([
-			`/${appRoutes.HOME}`,
-		]);
+		this.router.navigate([`/${appRoutes.HOME}`]);
 	}
 
 	navigateManageEvent(id: string) {
-		this.activeModal.close(newEventResultSelection.manageEventSelection)
-		this.router.navigate([
-			`/${appRoutes.EVENT_MANAGEMENT}`,
-			id
-		]);
+		this.activeModal.close(newEventResultSelection.manageEventSelection);
+		this.router.navigate([`/${appRoutes.EVENT_MANAGEMENT}`, id]);
 	}
 
 	navigateCreateNewevent() {
-		this.activeModal.close(newEventResultSelection.newEventFormSelection)
+		this.activeModal.close(newEventResultSelection.newEventFormSelection);
 		// this.activeModal.close('Close click')
 		// this.router.navigate([
 		// 	`/${appRoutes.EVENT_CREATE}`,

@@ -80,7 +80,7 @@ export class EventItemComponent extends AppBaseComponent {
 	}
 
 	fromDateTimeISOStringForEventDto() {
-		return fromDateTimeISOString(this.eventDto()!.date)
+		return fromDateTimeISOString(this.eventDto()!.date);
 	}
 
 	editEvent() {

@@ -35,7 +35,6 @@ export class EventListComponent extends AppBaseComponent implements OnInit {
 		this.isPending.set(true);
 		this.eventService.getEvents().subscribe({
 			next: events => {
-				console.log(events)
 				this.eventDtos = events;
 				this.applyFilter();
 			},
@@ -44,14 +43,16 @@ export class EventListComponent extends AppBaseComponent implements OnInit {
 		});
 	}
 
-	toggleOwnedEvents(event: Event) : void {
+	toggleOwnedEvents(event: Event): void {
 		this.showOnlyOwned = (event.target as HTMLInputElement).checked;
 		this.applyFilter();
 	}
 
-	applyFilter() : void {
+	applyFilter(): void {
 		if (this.showOnlyOwned) {
-			this.filteredEventDtos = this.eventDtos.filter(event => event.isOwner);
+			this.filteredEventDtos = this.eventDtos.filter(
+				event => event.isOwner
+			);
 		} else {
 			this.filteredEventDtos = [...this.eventDtos];
 		}
@@ -73,7 +74,10 @@ export class EventListComponent extends AppBaseComponent implements OnInit {
 
 	getCurrentPageItems(): IEventDto[] {
 		const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-		return this.filteredEventDtos.slice(startIndex, startIndex + this.itemsPerPage);
+		return this.filteredEventDtos.slice(
+			startIndex,
+			startIndex + this.itemsPerPage
+		);
 	}
 
 	onActionTriggered(event: { action: string; card: IEventDto }): void {

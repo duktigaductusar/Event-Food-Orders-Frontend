@@ -1,8 +1,9 @@
-@if (eventDto.isOwner) {
-	<span class="badge bg-secondary">
-		{{ t("events.labelEventOwner") }}
-	</span>
-} @else {
+<div class="d-flex gap-2">
+	@if (eventDto.isOwner) {
+		<span class="badge bg-secondary">
+			{{ t("events.labelEventOwner") }}
+		</span>
+	}
 	@if (eventDto.responseType === "ATTENDING_ONLINE") {
 		<span class="badge bg-success">
 			{{ t("events.labelOnline") }}
@@ -20,4 +21,4 @@
 			{{ t("events.labelPending") }}
 		</span>
 	}
-}
+</div>

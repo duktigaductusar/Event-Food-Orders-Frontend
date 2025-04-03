@@ -1,4 +1,11 @@
-import { Component, computed, inject, OnInit, signal, Signal } from "@angular/core";
+import {
+	Component,
+	computed,
+	inject,
+	OnInit,
+	signal,
+	Signal,
+} from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
 import { GenericBtnComponent } from "@app/components/html";
@@ -6,7 +13,12 @@ import {
 	DatetimelabelComponent,
 	StatusLabelComponent,
 } from "@app/components/shared";
-import { IEventDetailOwnerDto, IEventDto, IParticipantForResponseDto, IUserDto } from "@app/models";
+import {
+	IEventDetailOwnerDto,
+	IEventDto,
+	IParticipantForResponseDto,
+	IUserDto,
+} from "@app/models";
 import { IEventDetailDto } from "@app/models/IEventDetailDto.model";
 import { EventService, UserService } from "@app/services";
 import { ParticipantService } from "@app/services/participant/participant.service";
@@ -26,14 +38,15 @@ import { appRoutes } from "@app/constants";
 		GenericBtnComponent,
 		EditEventComponent,
 		ResponsiveFormComponent,
-		CommonModule
+		CommonModule,
 	],
 	templateUrl: "./event-management-form.component.html",
 	styleUrl: "./event-management-form.component.css",
 })
 export class EventManagementFormComponent
 	extends AppBaseComponent
-	implements OnInit {
+	implements OnInit
+{
 	edit = signal(false);
 	selectedEventDto: Signal<IEventDto | null>;
 	eventDetailDto: IEventDetailDto | null = null;
@@ -41,7 +54,7 @@ export class EventManagementFormComponent
 	users: IUserDto[] = [];
 	isPending = signal(false);
 	//todo fetch this from MSAL library
-	userId = "a84c12d5-9075-42d2-b467-6b345b7d8c9f"
+	userId = "a84c12d5-9075-42d2-b467-6b345b7d8c9f";
 	private modalService = inject(NgbModal);
 
 	constructor(
@@ -52,7 +65,9 @@ export class EventManagementFormComponent
 		public userService: UserService
 	) {
 		super();
-		this.selectedEventDto = computed(() => this.eventService.selectedEventDto());
+		this.selectedEventDto = computed(() =>
+			this.eventService.selectedEventDto()
+		);
 	}
 
 	ngOnInit(): void {
@@ -81,7 +96,6 @@ export class EventManagementFormComponent
 					this.eventDetailDto = item;
 					this.eventService.selectedEventDto.set(item);
 					this.loadParticipantDtos(item);
-					
 				},
 				error: error => console.error("Test error" + error),
 				complete: () => this.isPending.set(false),
@@ -123,12 +137,12 @@ export class EventManagementFormComponent
 	}
 
 	registerToEvent() {
-			this.eventService.setSelectedEvent(this.selectedEventDto()!);
-			this.router.navigate([
-				`/${appRoutes.EVENT_DETAILS}`,
-				this.selectedEventDto()!.id,
-			]);
-		}
+		this.eventService.setSelectedEvent(this.selectedEventDto()!);
+		this.router.navigate([
+			`/${appRoutes.EVENT_DETAILS}`,
+			this.selectedEventDto()!.id,
+		]);
+	}
 
 	deleteEventAssert(): void {
 		if (this.eventDetailDto === null || this.eventDetailDto === undefined) {
@@ -138,8 +152,8 @@ export class EventManagementFormComponent
 	}
 
 	toggleEdit() {
-		console.log("created real: ", this.createEventDetailOwnerDto())
-		this.edit.update(prev => !prev)
+		console.log("created real: ", this.createEventDetailOwnerDto());
+		this.edit.update(prev => !prev);
 		if (!this.edit()) {
 			this.loadEventDetailDto(this.selectedEventDto()?.id);
 		}
@@ -151,12 +165,12 @@ export class EventManagementFormComponent
 			description: this.eventDetailDto?.description,
 			date: this.eventDetailDto?.date,
 			deadline: this.eventDetailDto?.deadline,
-			users: this.users
-		}
+			users: this.users,
+		};
 	}
 
 	fromDateTimeISOStringForEventDto() {
-		return fromDateTimeISOString(this.selectedEventDto()!.date)
+		return fromDateTimeISOString(this.selectedEventDto()!.date);
 	}
 
 	openDeleteModal(event: IEventDetailDto) {
@@ -186,14 +200,12 @@ export class EventManagementFormComponent
 			error: error => console.log("Test error ", error),
 			complete: () => {
 				this.navigateToHome();
-				this.isPending.set(false)
+				this.isPending.set(false);
 			},
 		});
 	}
 
 	navigateToHome() {
-		this.router.navigate([
-			`/${appRoutes.HOME}`,
-		]);
+		this.router.navigate([`/${appRoutes.HOME}`]);
 	}
 }

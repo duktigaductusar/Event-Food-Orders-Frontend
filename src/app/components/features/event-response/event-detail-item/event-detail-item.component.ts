@@ -50,7 +50,7 @@ export class EventDetailItemComponent
 
 	//todo take this from token. Use MSAL library
 	//todo always check that we use the correct event id for this user id
-	userId = "a84c12d5-9075-42d2-b467-6b345b7d8c9f"
+	userId = "a84c12d5-9075-42d2-b467-6b345b7d8c9f";
 
 	constructor(
 		private router: Router,
@@ -67,13 +67,10 @@ export class EventDetailItemComponent
 			preferences: fb.nonNullable.control("", [
 				Validators.maxLength(1000),
 			]),
-			allergies: fb.nonNullable.control("", [
-				Validators.maxLength(1000)
-			]),
-			wantsMeal: fb.nonNullable.control(false, [
-				Validators.required
-			]),
-			responseType: fb.nonNullable.control("PENDING" as ParticipantResponseType,
+			allergies: fb.nonNullable.control("", [Validators.maxLength(1000)]),
+			wantsMeal: fb.nonNullable.control(false, [Validators.required]),
+			responseType: fb.nonNullable.control(
+				"PENDING" as ParticipantResponseType,
 				[Validators.required]
 			),
 		});
@@ -99,7 +96,6 @@ export class EventDetailItemComponent
 			next: item => {
 				this.eventDetailDto = item;
 				this.eventService.selectedEventDto.set(item);
-				console.log("Return detail event: ", item)
 				this.initFields();
 				this.initIsAttendingAtOffice();
 			},
@@ -109,9 +105,9 @@ export class EventDetailItemComponent
 	}
 
 	fromDateTimeISOStringForEventDto() {
-		return fromDateTimeISOString(this.selectedEventDto()!.date)
+		return fromDateTimeISOString(this.selectedEventDto()!.date);
 	}
-	
+
 	clearFields(): void {
 		this.eventForm.patchValue({
 			preferences: this.eventDetailDto?.preferences ?? "",
@@ -159,21 +155,21 @@ export class EventDetailItemComponent
 			preferences: this.eventDetailDto?.preferences ?? "",
 			allergies: this.eventDetailDto?.allergies ?? "",
 			wantsMeal: this.eventDetailDto?.wantsMeal ?? false,
-			responseType: this.eventDetailDto?.responseType ?? "PENDING"
-		})
+			responseType: this.eventDetailDto?.responseType ?? "PENDING",
+		});
 	}
 
 	initIsAttendingAtOffice(): void {
-		this.isAttendingAtOffice = computed(() =>
-			this.eventDetailDto?.responseType == "ATTENDING_OFFICE"
-		)
+		this.isAttendingAtOffice = computed(
+			() => this.eventDetailDto?.responseType == "ATTENDING_OFFICE"
+		);
 		console.log("init reponse: ", this.eventDetailDto?.responseType);
 	}
 
 	setIsAttendingAtOffice(): void {
-		this.isAttendingAtOffice = computed(() =>
-			this.eventForm.value.responseType === "ATTENDING_OFFICE"
-		)
+		this.isAttendingAtOffice = computed(
+			() => this.eventForm.value.responseType === "ATTENDING_OFFICE"
+		);
 		console.log("set reponse: ", this.eventForm.value.responseType);
 		console.log("at office: ", this.isAttendingAtOffice());
 	}
