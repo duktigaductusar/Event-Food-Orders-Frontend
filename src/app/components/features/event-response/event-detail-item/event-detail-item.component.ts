@@ -19,6 +19,7 @@ import type { ParticipantResponseType } from "@types";
 
 import { fromDateTimeISOString } from "@app/utility";
 import { ParticipantService } from "@app/services/api/participant.service";
+import { appRoutes } from "@app/constants";
 
 @Component({
 	selector: "app-event-detail-item",
@@ -103,7 +104,9 @@ export class EventDetailItemComponent
 				this.initIsAttendingAtOffice();
 			},
 			error: error => console.error("Test error" + error),
-			complete: () => this.isPending.set(false),
+			complete: () => {
+				this.isPending.set(false)				
+			}, 
 		});
 	}
 
@@ -148,7 +151,10 @@ export class EventDetailItemComponent
 					error: error => {
 						console.error("Error fetching users:", error);
 					},
-					complete: () => this.isPending.set(false),
+					complete: () => {
+						this.isPending.set(false)
+						this.router.navigate([appRoutes.HOME])
+					} 
 				});
 		}
 	};
