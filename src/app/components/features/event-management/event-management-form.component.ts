@@ -29,7 +29,7 @@ import { ResponsiveFormComponent } from "../../html/responsive-form/responsive-f
 import { CommonModule } from "@angular/common";
 import { fromDateTimeISOString } from "@app/utility";
 import { appRoutes } from "@app/constants";
-import { ParticipantService } from "@app/services/participant/participant.service";
+import { ParticipantService } from "@app/services/api/participant.service";
 
 @Component({
 	selector: "app-event-management-form",
