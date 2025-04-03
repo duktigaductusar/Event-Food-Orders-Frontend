@@ -1,6 +1,12 @@
-export type { IEventDto } from "./IEventDto.model";
-export type { IUserDto } from "./IUserDto.model";
-export type { IUserIdsDto } from "./IUserIdsDto.model";
-export type { IEventDetailOwnerDto } from "./IEventDetailOwnerDto.model";
-export type { IParticipantForUpdateDto } from "./IParticipantForUpdateDto.model";
-export type { IParticipantForResponseDto } from "./IParticipantForResponseDto.model";
+export type { IEventDetailDto } from "./eventDtos/IEventDetailDto.model";
+export type { IEventDetailOwnerDto } from "./eventDtos/IEventDetailOwnerDto.model";
+export type { IEventDto } from "./eventDtos/IEventDto.model";
+export type { IEventForCreationDto } from "./eventDtos/IEventForCreationDto";
+
+export type { IParticipantForUpdateDto } from "./participantDtos/IParticipantForUpdateDto.model";
+export type { IParticipantForResponseDto } from "./participantDtos/IParticipantForResponseDto.model";
+
+export type { IUserDto } from "./userDtos/IUserDto.model";
+export type { IUserIdsDto } from "./userDtos/IUserIdsDto.model";
+
+

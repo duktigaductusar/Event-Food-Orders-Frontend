@@ -8,7 +8,7 @@ import {
 } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
-import { GlobalErrorService } from "@app/services/utility/global-error.service";
+import { ApiErrorService } from "@app/services/utility/api-error.service";
 
 export class ApiError {
 	constructor(
@@ -27,7 +27,7 @@ export class ApiError {
 
 @Injectable()
 export class ApiErrorInterceptor implements HttpInterceptor {
-	constructor(private errorService: GlobalErrorService) {}
+	constructor(private errorService: ApiErrorService) {}
 
 	intercept(
 		req: HttpRequest<unknown>,

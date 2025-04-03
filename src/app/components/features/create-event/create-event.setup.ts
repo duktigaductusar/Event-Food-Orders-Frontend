@@ -5,7 +5,7 @@ import { formControllers, formGroups } from "./constants";
 import { environment } from "@environments";
 import { ICreateEventForm } from "./interfaces";
 import { IEventDetailOwnerDto } from "@app/models";
-import { IEventForCreationDto } from "@app/models/IEventForCreationDto";
+import { IEventForCreationDto } from "@app/models/eventDtos/IEventForCreationDto";
 import {
 	dateValidator,
 	timeValidator,

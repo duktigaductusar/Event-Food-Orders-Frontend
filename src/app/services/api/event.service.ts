@@ -1,8 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable, signal } from "@angular/core";
 import { IEventDto } from "@app/models";
-import { IEventDetailDto } from "@app/models/IEventDetailDto.model";
-import { IEventForCreationDto } from "@app/models/IEventForCreationDto";
+import { IEventDetailDto } from "@app/models/eventDtos/IEventDetailDto.model";
+import { IEventForCreationDto } from "@app/models/eventDtos/IEventForCreationDto";
 import { environment } from "@environments";
 import type { Observable } from "rxjs";
 
@@ -13,15 +13,15 @@ export class EventService {
 	private apiUrl = `${environment.apiUrl}/event`;
 	private http: HttpClient;
 
-	selectedEventDto = signal<IEventDto | null>(null);
+	// selectedEventDto = signal<IEventDto | null>(null);
 
 	constructor(http: HttpClient) {
 		this.http = http;
 	}
 
-	setSelectedEvent(item: IEventDto) {
-		this.selectedEventDto.set(item);
-	}
+	// setSelectedEvent(item: IEventDto) {
+	// 	this.selectedEventDto.set(item);
+	// }
 
 	getEvents(): Observable<IEventDto[]> {
 		return this.http.get<IEventDto[]>(`${this.apiUrl}/all`);

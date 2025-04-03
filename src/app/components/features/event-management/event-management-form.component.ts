@@ -1,3 +1,4 @@
+// todo: this service uses state
 import {
 	Component,
 	computed,
@@ -19,9 +20,9 @@ import {
 	IParticipantForResponseDto,
 	IUserDto,
 } from "@app/models";
-import { IEventDetailDto } from "@app/models/IEventDetailDto.model";
-import { EventService, UserService } from "@app/services";
-import { ParticipantService } from "@app/services/participant/participant.service";
+import { IEventDetailDto } from "@app/models/eventDtos/IEventDetailDto.model";
+import { EventService, EventStateService, UserService } from "@app/services";
+
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { EventManagementDeleteModalComponentComponent } from "./event-management-delete-modal-component/event-management-delete-modal-component.component";
 import { EditEventComponent } from "./edit-event/edit-event.component";
@@ -29,6 +30,7 @@ import { ResponsiveFormComponent } from "../../html/responsive-form/responsive-f
 import { CommonModule } from "@angular/common";
 import { fromDateTimeISOString } from "@app/utility";
 import { appRoutes } from "@app/constants";
+import { ParticipantService } from "@app/services/api/participant.service";
 
 @Component({
 	selector: "app-event-management-form",
@@ -61,12 +63,13 @@ export class EventManagementFormComponent
 		private router: Router,
 		private route: ActivatedRoute,
 		public eventService: EventService,
+		public eventStateService: EventStateService,
 		public participantService: ParticipantService,
 		public userService: UserService
 	) {
 		super();
 		this.selectedEventDto = computed(() =>
-			this.eventService.selectedEventDto()
+			this.eventStateService.selectedEventDto()
 		);
 	}
 
@@ -94,7 +97,7 @@ export class EventManagementFormComponent
 			.subscribe({
 				next: item => {
 					this.eventDetailDto = item;
-					this.eventService.selectedEventDto.set(item);
+					this.eventStateService.selectedEventDto.set(item);
 					this.loadParticipantDtos(item);
 				},
 				error: error => console.error("Test error" + error),
@@ -137,7 +140,7 @@ export class EventManagementFormComponent
 	}
 
 	registerToEvent() {
-		this.eventService.setSelectedEvent(this.selectedEventDto()!);
+		this.eventStateService.setSelectedEvent(this.selectedEventDto()!);
 		this.router.navigate([
 			`/${appRoutes.EVENT_DETAILS}`,
 			this.selectedEventDto()!.id,

@@ -1,7 +1,8 @@
+// todo: this service uses state
 import { Component, computed, OnInit, Signal, signal } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
-import { EventService } from "@app/services";
+import { EventService, EventStateService } from "@app/services";
 import { DatetimelabelComponent } from "../../../shared/datetimelabel/datetimelabel.component";
 import { IEventDto, IParticipantForUpdateDto } from "@app/models";
 import { StatusLabelComponent } from "../../../shared/status-label/status-label.component";
@@ -12,11 +13,12 @@ import {
 	ReactiveFormsModule,
 	Validators,
 } from "@angular/forms";
-import { IEventDetailDto } from "@app/models/IEventDetailDto.model";
+import { IEventDetailDto } from "@app/models/eventDtos/IEventDetailDto.model";
 import { IParticipantResponseForm } from "../interfaces";
 import type { ParticipantResponseType } from "@types";
-import { ParticipantService } from "@app/services/participant/participant.service";
+
 import { fromDateTimeISOString } from "@app/utility";
+import { ParticipantService } from "@app/services/api/participant.service";
 
 @Component({
 	selector: "app-event-detail-item",
@@ -56,12 +58,13 @@ export class EventDetailItemComponent
 		private router: Router,
 		private route: ActivatedRoute,
 		public eventService: EventService,
+		public eventStateService: EventStateService,
 		private participantService: ParticipantService,
 		private fb: FormBuilder
 	) {
 		super();
 		this.selectedEventDto = computed(() =>
-			this.eventService.selectedEventDto()
+			this.eventStateService.selectedEventDto()
 		);
 		this.eventForm = this.fb.nonNullable.group({
 			preferences: fb.nonNullable.control("", [
@@ -95,7 +98,7 @@ export class EventDetailItemComponent
 		this.eventService.getDetailEvent(eventId, this.userId).subscribe({
 			next: item => {
 				this.eventDetailDto = item;
-				this.eventService.selectedEventDto.set(item);
+				this.eventStateService.selectedEventDto.set(item);
 				this.initFields();
 				this.initIsAttendingAtOffice();
 			},
