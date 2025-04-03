@@ -31,6 +31,8 @@ import { CommonModule } from "@angular/common";
 import { fromDateTimeISOString } from "@app/utility";
 import { appRoutes } from "@app/constants";
 import { ParticipantService } from "@app/services/api/participant.service";
+import { IEventDetailInfoDto } from "@app/models/eventDtos/IEventDetailInfoDto.model";
+import { IParticipantWithUserDto } from "@app/models/participantDtos/IParticipantWithUserDto.model";
 
 @Component({
 	selector: "app-event-management-form",
@@ -51,8 +53,8 @@ export class EventManagementFormComponent
 {
 	edit = signal(false);
 	selectedEventDto: Signal<IEventDto | null>;
-	eventDetailDto: IEventDetailDto | null = null;
-	participants: IParticipantForResponseDto[] = [];
+	eventDetailDto: IEventDetailInfoDto | null = null;
+	participants: IParticipantWithUserDto[] = [];
 	users: IUserDto[] = [];
 	isPending = signal(false);
 	//todo fetch this from MSAL library
@@ -75,69 +77,99 @@ export class EventManagementFormComponent
 
 	ngOnInit(): void {
 		if (this.selectedEventDto() != null) {
-			this.loadEventDetailDto(this.selectedEventDto()?.id);
+			this.loadEventDetailInfoDto(this.selectedEventDto()?.id);
 		}
 
 		this.route.paramMap.subscribe(params => {
 			const eventId = params.get("id");
 			if (eventId) {
-				this.loadEventDetailDto(eventId);
+				this.loadEventDetailInfoDto(eventId);
 			}
 		});
 	}
 
-	loadEventDetailDto(currentEventId?: string): void {
+	loadEventDetailInfoDto(currentEventId?: string): void {
 		if (currentEventId == null) {
 			return;
 		}
 
 		this.isPending.set(true);
 		this.eventService
-			.getDetailEvent(currentEventId, this.userId)
+			.getDetailInfoEvent(currentEventId)
 			.subscribe({
 				next: item => {
 					this.eventDetailDto = item;
 					this.eventStateService.selectedEventDto.set(item);
-					this.loadParticipantDtos(item);
+					this.participants = item.participants;
+          this.setUsers();
 				},
 				error: error => console.error("Test error" + error),
 				complete: () => this.isPending.set(false),
 			});
 	}
 
-	loadParticipantDtos(eventDto: IEventDetailDto): void {
-		const currentEventId = eventDto.id;
-		if (currentEventId == null) {
-			return;
-		}
-		this.isPending.set(true);
-		this.participantService
-			.getParticipantsInEvent(currentEventId, this.userId)
-			.subscribe({
-				next: item => {
-					this.participants = item;
-					this.loadUserDtos(item);
-				},
-				error: error => console.error("Test error" + error),
-				complete: () => this.isPending.set(false),
-			});
-	}
+  setUsers() {
+    this.participants.forEach(p => {
+      this.users.push({
+        userId: p.userId,
+        username: p.userName,
+        email: p.email
+      })
+    });
+  }
 
-	loadUserDtos(participantDtos: IParticipantForResponseDto[]): void {
-		const currentEventId = this.selectedEventDto()?.id;
-		if (currentEventId == null) {
-			return;
-		}
-		const currentParticipantIds = participantDtos.map(p => p.userId);
-		this.isPending.set(true);
-		this.userService.getUsersFromId(currentParticipantIds).subscribe({
-			next: item => {
-				this.users = item;
-			},
-			error: error => console.error("Test error" + error),
-			complete: () => this.isPending.set(false),
-		});
-	}
+	// loadEventDetailDto(currentEventId?: string): void {
+	// 	if (currentEventId == null) {
+	// 		return;
+	// 	}
+
+	// 	this.isPending.set(true);
+	// 	this.eventService
+	// 		.getDetailEvent(currentEventId, this.userId)
+	// 		.subscribe({
+	// 			next: item => {
+	// 				this.eventDetailDto = item;
+	// 				this.eventStateService.selectedEventDto.set(item);
+	// 				this.loadParticipantDtos(item);
+	// 			},
+	// 			error: error => console.error("Test error" + error),
+	// 			complete: () => this.isPending.set(false),
+	// 		});
+	// }
+
+	// loadParticipantDtos(eventDto: IEventDetailDto): void {
+	// 	const currentEventId = eventDto.id;
+	// 	if (currentEventId == null) {
+	// 		return;
+	// 	}
+	// 	this.isPending.set(true);
+	// 	this.participantService
+	// 		.getParticipantsInEvent(currentEventId, this.userId)
+	// 		.subscribe({
+	// 			next: item => {
+	// 				this.participants = item;
+	// 				this.loadUserDtos(item);
+	// 			},
+	// 			error: error => console.error("Test error" + error),
+	// 			complete: () => this.isPending.set(false),
+	// 		});
+	// }
+
+	// loadUserDtos(participantDtos: IParticipantForResponseDto[]): void {
+	// 	const currentEventId = this.selectedEventDto()?.id;
+	// 	if (currentEventId == null) {
+	// 		return;
+	// 	}
+	// 	const currentParticipantIds = participantDtos.map(p => p.userId);
+	// 	this.isPending.set(true);
+	// 	this.userService.getUsersFromId(currentParticipantIds).subscribe({
+	// 		next: item => {
+	// 			this.users = item;
+	// 		},
+	// 		error: error => console.error("Test error" + error),
+	// 		complete: () => this.isPending.set(false),
+	// 	});
+	// }
 
 	registerToEvent() {
 		this.eventStateService.setSelectedEvent(this.selectedEventDto()!);
@@ -158,7 +190,7 @@ export class EventManagementFormComponent
 		console.log("created real: ", this.createEventDetailOwnerDto());
 		this.edit.update(prev => !prev);
 		if (!this.edit()) {
-			this.loadEventDetailDto(this.selectedEventDto()?.id);
+			this.loadEventDetailInfoDto(this.selectedEventDto()?.id);
 		}
 	}
 
