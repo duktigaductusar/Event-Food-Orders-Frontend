@@ -13,7 +13,13 @@ import { IInviteForm } from "../interfaces";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
 import { UserService } from "@app/services";
 import { IUserDto } from "@app/models";
-import { Subject, debounceTime, distinctUntilChanged, takeUntil } from "rxjs";
+import {
+	Subject,
+	debounceTime,
+	distinctUntilChanged,
+	finalize,
+	takeUntil,
+} from "rxjs";
 import { CommonModule } from "@angular/common";
 
 @Component({
@@ -84,18 +90,18 @@ export class EventUserFormComponent
 		}
 
 		this.isPending.set(true);
-		this.service.getUsers(query).subscribe({
-			next: u => {
-				this.users = u;
-			},
-			error: error => {
-				console.error("Error fetching users:", error);
-				this.users = [];
-			},
-			complete: () => {
-				this.isPending.set(false);
-			},
-		});
+		this.service
+			.getUsers(query)
+			.pipe(finalize(() => this.isPending.set(false)))
+			.subscribe({
+				next: u => {
+					this.users = u;
+				},
+				error: error => {
+					console.error("Error fetching users:", error);
+					this.users = [];
+				},
+			});
 	}
 
 	toggleSelect(user: IUserDto) {

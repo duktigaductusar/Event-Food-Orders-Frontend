@@ -31,6 +31,7 @@ import { CommonModule } from "@angular/common";
 import { fromDateTimeISOString } from "@app/utility";
 import { appRoutes } from "@app/constants";
 import { ParticipantService } from "@app/services/api/participant.service";
+import { finalize } from "rxjs";
 
 @Component({
 	selector: "app-event-management-form",
@@ -94,6 +95,7 @@ export class EventManagementFormComponent
 		this.isPending.set(true);
 		this.eventService
 			.getDetailEvent(currentEventId, this.userId)
+			.pipe(finalize(() => this.isPending.set(false)))
 			.subscribe({
 				next: item => {
 					this.eventDetailDto = item;
@@ -101,7 +103,6 @@ export class EventManagementFormComponent
 					this.loadParticipantDtos(item);
 				},
 				error: error => console.error("Test error" + error),
-				complete: () => this.isPending.set(false),
 			});
 	}
 
@@ -113,13 +114,13 @@ export class EventManagementFormComponent
 		this.isPending.set(true);
 		this.participantService
 			.getParticipantsInEvent(currentEventId, this.userId)
+			.pipe(finalize(() => this.isPending.set(false)))
 			.subscribe({
 				next: item => {
 					this.participants = item;
 					this.loadUserDtos(item);
 				},
 				error: error => console.error("Test error" + error),
-				complete: () => this.isPending.set(false),
 			});
 	}
 
@@ -130,13 +131,15 @@ export class EventManagementFormComponent
 		}
 		const currentParticipantIds = participantDtos.map(p => p.userId);
 		this.isPending.set(true);
-		this.userService.getUsersFromId(currentParticipantIds).subscribe({
-			next: item => {
-				this.users = item;
-			},
-			error: error => console.error("Test error" + error),
-			complete: () => this.isPending.set(false),
-		});
+		this.userService
+			.getUsersFromId(currentParticipantIds)
+			.pipe(finalize(() => this.isPending.set(false)))
+			.subscribe({
+				next: item => {
+					this.users = item;
+				},
+				error: error => console.error("Test error" + error),
+			});
 	}
 
 	registerToEvent() {
@@ -196,16 +199,20 @@ export class EventManagementFormComponent
 			return;
 		}
 		this.isPending.set(true);
-		this.eventService.deleteEvent(this.eventDetailDto.id).subscribe({
-			next: item => {
-				console.log("Delete item: ", item);
-			},
-			error: error => console.log("Test error ", error),
-			complete: () => {
-				this.navigateToHome();
-				this.isPending.set(false);
-			},
-		});
+		this.eventService
+			.deleteEvent(this.eventDetailDto.id)
+			.pipe(finalize(() => this.isPending.set(false)))
+			.subscribe({
+				next: item => {
+					console.log("Delete item: ", item);
+				},
+				error: error => {
+					console.log("Test error ", error);
+				},
+				complete: () => {
+					this.navigateToHome();
+				},
+			});
 	}
 
 	navigateToHome() {
