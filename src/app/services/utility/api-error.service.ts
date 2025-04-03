@@ -3,7 +3,7 @@ import { ErrorModalComponent } from "@app/components/html/error-modal/error-moda
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 @Injectable({ providedIn: "root" })
-export class GlobalErrorService {
+export class ApiErrorService {
 	private modalIsOpen = false;
 
 	constructor(private modalService: NgbModal) {}
