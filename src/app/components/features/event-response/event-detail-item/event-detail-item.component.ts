@@ -20,6 +20,7 @@ import type { ParticipantResponseType } from "@types";
 import { fromDateTimeISOString } from "@app/utility";
 import { ParticipantService } from "@app/services/api/participant.service";
 import { appRoutes } from "@app/constants";
+import { finalize } from "rxjs";
 
 @Component({
 	selector: "app-event-detail-item",
@@ -96,18 +97,18 @@ export class EventDetailItemComponent
 
 	loadEventDetailDto(eventId: string): void {
 		this.isPending.set(true);
-		this.eventService.getDetailEvent(eventId, this.userId).subscribe({
-			next: item => {
-				this.eventDetailDto = item;
-				this.eventStateService.selectedEventDto.set(item);
-				this.initFields();
-				this.initIsAttendingAtOffice();
-			},
-			error: error => console.error("Test error" + error),
-			complete: () => {
-				this.isPending.set(false)				
-			}, 
-		});
+		this.eventService
+			.getDetailEvent(eventId, this.userId)
+			.pipe(finalize(() => this.isPending.set(false)))
+			.subscribe({
+				next: item => {
+					this.eventDetailDto = item;
+					this.eventStateService.selectedEventDto.set(item);
+					this.initFields();
+					this.initIsAttendingAtOffice();
+				},
+				error: error => console.error("Test error" + error),
+			});
 	}
 
 	fromDateTimeISOStringForEventDto() {
@@ -125,12 +126,9 @@ export class EventDetailItemComponent
 
 	onSubmit = () => {
 		const currentParticipantId = this.eventDetailDto?.participantId;
-		console.log(currentParticipantId);
 		if (currentParticipantId == null) {
 			return;
 		}
-
-		console.log(this.eventForm.valid);
 
 		if (this.eventForm.valid) {
 			const Dto: IParticipantForUpdateDto = {
@@ -139,11 +137,11 @@ export class EventDetailItemComponent
 				allergies: this.eventForm.getRawValue().allergies,
 				preferences: this.eventForm.getRawValue().preferences,
 			};
-			console.log(Dto);
 
 			this.isPending.set(true);
 			this.participantService
 				.respondToEvent(Dto, currentParticipantId)
+				.pipe(finalize(() => this.isPending.set(false)))
 				.subscribe({
 					next: response => {
 						console.log(response);
@@ -152,9 +150,8 @@ export class EventDetailItemComponent
 						console.error("Error fetching users:", error);
 					},
 					complete: () => {
-						this.isPending.set(false)
-						this.router.navigate([appRoutes.HOME])
-					} 
+						this.router.navigate([appRoutes.HOME]);
+					},
 				});
 		}
 	};
@@ -172,14 +169,11 @@ export class EventDetailItemComponent
 		this.isAttendingAtOffice = computed(
 			() => this.eventDetailDto?.responseType == "ATTENDING_OFFICE"
 		);
-		console.log("init reponse: ", this.eventDetailDto?.responseType);
 	}
 
 	setIsAttendingAtOffice(): void {
 		this.isAttendingAtOffice = computed(
 			() => this.eventForm.value.responseType === "ATTENDING_OFFICE"
 		);
-		console.log("set reponse: ", this.eventForm.value.responseType);
-		console.log("at office: ", this.isAttendingAtOffice());
 	}
 }

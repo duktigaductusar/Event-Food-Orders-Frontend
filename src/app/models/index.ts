@@ -8,5 +8,3 @@ export type { IParticipantForResponseDto } from "./participantDtos/IParticipantF
 
 export type { IUserDto } from "./userDtos/IUserDto.model";
 export type { IUserIdsDto } from "./userDtos/IUserIdsDto.model";
-
-

@@ -8,6 +8,7 @@ import { IEventDto, IParticipantForResponseDto } from "@app/models";
 import { EventService } from "@app/services";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
 import { SpinnerComponent } from "@app/components/shared";
+import { finalize } from "rxjs";
 
 @Component({
 	selector: "app-event-list",
@@ -33,14 +34,16 @@ export class EventListComponent extends AppBaseComponent implements OnInit {
 
 	loadEvents(): void {
 		this.isPending.set(true);
-		this.eventService.getEvents().subscribe({
-			next: events => {
-				this.eventDtos = events;
-				this.applyFilter();
-			},
-			error: error => console.error("Test error" + error),
-			complete: () => this.isPending.set(false),
-		});
+		this.eventService
+			.getEvents()
+			.pipe(finalize(() => this.isPending.set(false)))
+			.subscribe({
+				next: events => {
+					this.eventDtos = events;
+					this.applyFilter();
+				},
+				error: error => console.error("Test error" + error),
+			});
 	}
 
 	toggleOwnedEvents(event: Event): void {
