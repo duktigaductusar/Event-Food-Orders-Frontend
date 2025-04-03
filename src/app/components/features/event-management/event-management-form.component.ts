@@ -19,7 +19,7 @@ import {
 	IParticipantForResponseDto,
 	IUserDto,
 } from "@app/models";
-import { IEventDetailDto } from "@app/models/IEventDetailDto.model";
+import { IEventDetailDto } from "@app/models/eventDtos/IEventDetailDto.model";
 import { EventService, UserService } from "@app/services";
 import { ParticipantService } from "@app/services/participant/participant.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";

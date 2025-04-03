@@ -12,7 +12,7 @@ import {
 	ReactiveFormsModule,
 	Validators,
 } from "@angular/forms";
-import { IEventDetailDto } from "@app/models/IEventDetailDto.model";
+import { IEventDetailDto } from "@app/models/eventDtos/IEventDetailDto.model";
 import { IParticipantResponseForm } from "../interfaces";
 import type { ParticipantResponseType } from "@types";
 import { ParticipantService } from "@app/services/participant/participant.service";

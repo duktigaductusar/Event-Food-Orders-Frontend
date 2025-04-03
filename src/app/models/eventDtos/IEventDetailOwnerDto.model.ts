@@ -1,4 +1,4 @@
-import { IUserDto } from "./IUserDto.model";
+import { IUserDto } from "../userDtos/IUserDto.model";
 
 export interface IEventDetailOwnerDto {
 	title: string;
