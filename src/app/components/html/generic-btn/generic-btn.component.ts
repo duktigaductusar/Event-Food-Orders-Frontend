@@ -1,34 +1,32 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { Component, input, output } from "@angular/core";
+import { CSSClassComponent } from "@app/components/base/css-class-base.component";
 
 export type GenericBtnCompClrType =
 	| "secondary"
 	| "primary"
+	| "info"
+	| "success"
 	| "danger"
 	| "warning";
 
 @Component({
 	selector: "app-generic-btn",
 	standalone: true,
-	imports: [CommonModule],
-	template: `
-		<button
-			class="btn btn-sm w-100"
-			[ngClass]="'btn-outline-' + borderColor"
-			(click)="onClick($event)"
-		>
-			<i [class]="'bi bi-' + icon"></i> {{ label }}
-		</button>
-	`,
+	templateUrl: "generic-btn.component.html",
 })
-export class GenericBtnComponent {
-	@Input() borderColor: GenericBtnCompClrType = "secondary";
-	@Input() label = "Click Me";
-	@Input() icon = "pencil";
+export class GenericBtnComponent extends CSSClassComponent {
+	borderColor = input<GenericBtnCompClrType>("secondary");
+	label = input("Click Me");
+	icon = input("pencil");
+	iconRight = input(false);
+	disabled = input(false);
+	action = output<MouseEvent>();
 
-	@Output() action = new EventEmitter<Event>();
+	protected override getDefaultClass(): string {
+		return `btn btn-sm w-100 btn-outline-${this.borderColor()}`;
+	}
 
-	onClick(event: Event) {
+	onClick(event: MouseEvent) {
 		this.action.emit(event);
 	}
 }

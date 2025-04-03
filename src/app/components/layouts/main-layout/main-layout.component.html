@@ -41,7 +41,7 @@
 				<i class="bi bi-plus-square-fill fs-4 text-secondary"></i>
 				<a
 					class="nav-link text-secondary flex-grow-1"
-					[routerLink]="appRoutes.EVENT_CREATE"
+					[routerLink]="'/' + appRoutes.EVENT_CREATE"
 					routerLinkActive="active"
 					(click)="closeSidebar()"
 					>{{ t("navigation.create_event_link") }}</a
@@ -51,7 +51,7 @@
 				<i class="bi bi-plus-square-fill fs-4 text-secondary"></i>
 				<a
 					class="nav-link text-secondary flex-grow-1"
-					[routerLink]="appRoutes.LOGIN"
+					[routerLink]="'/' + appRoutes.LOGIN"
 					routerLinkActive="active"
 					(click)="closeSidebar()"
 					>{{ t("navigation.login_link") }}</a
@@ -61,6 +61,6 @@
 	</div>
 </ng-template>
 
-<div class="container mt-4">
+<div class="mt-4">
 	<ng-content></ng-content>
 </div>
