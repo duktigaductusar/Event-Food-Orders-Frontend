@@ -33,6 +33,7 @@ import { appRoutes } from "@app/constants";
 import { ParticipantService } from "@app/services/api/participant.service";
 import { IEventDetailInfoDto } from "@app/models/eventDtos/IEventDetailInfoDto.model";
 import { IParticipantWithUserDto } from "@app/models/participantDtos/IParticipantWithUserDto.model";
+import { finalize } from "rxjs";
 
 @Component({
 	selector: "app-event-management-form",
@@ -96,6 +97,7 @@ export class EventManagementFormComponent
 		this.isPending.set(true);
 		this.eventService
 			.getDetailInfoEvent(currentEventId)
+			.pipe(finalize(() => this.isPending.set(false)))
 			.subscribe({
 				next: item => {
 					this.eventDetailDto = item;
@@ -104,7 +106,6 @@ export class EventManagementFormComponent
           this.setUsers();
 				},
 				error: error => console.error("Test error" + error),
-				complete: () => this.isPending.set(false),
 			});
 	}
 
@@ -228,16 +229,20 @@ export class EventManagementFormComponent
 			return;
 		}
 		this.isPending.set(true);
-		this.eventService.deleteEvent(this.eventDetailDto.id).subscribe({
-			next: item => {
-				console.log("Delete item: ", item);
-			},
-			error: error => console.log("Test error ", error),
-			complete: () => {
-				this.navigateToHome();
-				this.isPending.set(false);
-			},
-		});
+		this.eventService
+			.deleteEvent(this.eventDetailDto.id)
+			.pipe(finalize(() => this.isPending.set(false)))
+			.subscribe({
+				next: item => {
+					console.log("Delete item: ", item);
+				},
+				error: error => {
+					console.log("Test error ", error);
+				},
+				complete: () => {
+					this.navigateToHome();
+				},
+			});
 	}
 
 	navigateToHome() {

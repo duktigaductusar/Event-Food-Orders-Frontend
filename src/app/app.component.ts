@@ -13,7 +13,6 @@ import { EventMessage } from "@azure/msal-browser";
 import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
 import { LoggerService } from "./services/utility/logger.service";
 
-
 @Component({
 	selector: "app-root",
 	standalone: true,

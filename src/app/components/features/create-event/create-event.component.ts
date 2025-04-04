@@ -10,7 +10,7 @@ import {
 } from "@angular/core";
 import { EventDetailsFormComponent } from "./event-details-form/event-details-form.component";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { Subject } from "rxjs";
+import { finalize, Subject } from "rxjs";
 
 import { ICreateEventForm } from "./interfaces";
 import { MultiStepFormHeaderComponent } from "./multistep-form-navigation-header/multistep-form-navigation-header.component";
@@ -85,7 +85,7 @@ export class CreateEventComponent
 	constructor(
 		private fb: FormBuilder,
 		private eventService: EventService,
-		private eventStateService: EventStateService,
+		private eventStateService: EventStateService
 	) {
 		super();
 		this.selectedUsersEffect();
@@ -181,19 +181,18 @@ export class CreateEventComponent
 		}
 
 		this.isPending.set(true);
-		console.log("eventDto", eventDto);
-		this.eventService.createEvent(eventDto).subscribe({
-			next: event => {
-				// TODO Replace with clear
-				// Use this to reset previouse event i service.
-				this.eventStateService.selectedEventDto.set(null);
-				this.openSuccessModal(event as IEventDto);
-			},
-			error: (error: ApiError) => {
-				console.error("Error fetching users:", error.message);
-			},
-			complete: () => this.isPending.set(false),
-		});
+		this.eventService
+			.createEvent(eventDto)
+			.pipe(finalize(() => this.isPending.set(false)))
+			.subscribe({
+				next: event => {
+					this.eventStateService.selectedEventDto.set(null);
+					this.openSuccessModal(event as IEventDto);
+				},
+				error: (error: ApiError) => {
+					console.error("Error fetching users:", error.message);
+				},
+			});
 	};
 
 	openSuccessModal(event: IEventDto) {

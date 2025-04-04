@@ -15,6 +15,7 @@ import { StatusLabelComponent } from "../../../shared";
 import type { ParticipantResponseType } from "@types";
 import { fromDateTimeISOString } from "@app/utility";
 import { ParticipantService } from "@app/services/api/participant.service";
+import { finalize } from "rxjs";
 
 @Component({
 	selector: "app-event-item",
@@ -61,12 +62,12 @@ export class EventItemComponent extends AppBaseComponent {
 		this.isPending.set(true);
 		this.participantService
 			.respondToEvent(Dto, currentParticipantId)
+			.pipe(finalize(() => this.isPending.set(false)))
 			.subscribe({
 				next: result => {
 					this.participantResult.emit(result);
 				},
 				error: error => console.error("Test error" + error),
-				complete: () => this.isPending.set(false),
 			});
 	}
 
