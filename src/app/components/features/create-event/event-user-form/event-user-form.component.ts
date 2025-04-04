@@ -45,8 +45,13 @@ export class EventUserFormComponent
 	get filteredUsers(): IUserDto[] {
 		return this.users.filter(
 			user =>
+				user.email != null &&
+				user.username != null &&
+				user.email.endsWith("ductus.se")&&
+				(
 				user.email.toLowerCase().includes(this.query.toLowerCase()) ||
 				user.username.toLowerCase().includes(this.query.toLowerCase())
+				)
 		);
 	}
 
