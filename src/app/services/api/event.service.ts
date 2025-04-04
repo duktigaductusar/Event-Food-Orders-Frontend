@@ -24,7 +24,6 @@ export class EventService {
 
 	getDetailEvent(
 		eventId: string,
-		userId: string
 	): Observable<IEventDetailDto> {
 		return this.http.get<IEventDetailDto>(
 			`${this.apiUrl}/${eventId}`

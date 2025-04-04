@@ -12,6 +12,7 @@ import { AppBaseComponent } from "@app/components/base/app-base.component";
 import { GenericBtnComponent } from "@app/components/html";
 import {
 	DatetimelabelComponent,
+	SpinnerComponent,
 	StatusLabelComponent,
 } from "@app/components/shared";
 import {
@@ -34,6 +35,7 @@ import { ParticipantService } from "@app/services/api/participant.service";
 import { IEventDetailInfoDto } from "@app/models/eventDtos/IEventDetailInfoDto.model";
 import { IParticipantWithUserDto } from "@app/models/participantDtos/IParticipantWithUserDto.model";
 import { finalize } from "rxjs";
+import { ResponsiveDivComponent } from "@app/components/html/responsive-div.component/responsive-div.component";
 
 @Component({
 	selector: "app-event-management-form",
@@ -42,8 +44,9 @@ import { finalize } from "rxjs";
 		StatusLabelComponent,
 		GenericBtnComponent,
 		EditEventComponent,
-		ResponsiveFormComponent,
 		CommonModule,
+    ResponsiveDivComponent,
+    SpinnerComponent
 	],
 	templateUrl: "./event-management-form.component.html",
 	styleUrl: "./event-management-form.component.css",
@@ -58,8 +61,7 @@ export class EventManagementFormComponent
 	participants: IParticipantWithUserDto[] = [];
 	users: IUserDto[] = [];
 	isPending = signal(false);
-	//todo MSAL fixes this automatically, remove hard coded user Ids
-	userId = "a84c12d5-9075-42d2-b467-6b345b7d8c9f";
+
 	private modalService = inject(NgbModal);
 
 	constructor(
@@ -77,9 +79,10 @@ export class EventManagementFormComponent
 	}
 
 	ngOnInit(): void {
-		if (this.selectedEventDto() != null) {
-			this.loadEventDetailInfoDto(this.selectedEventDto()?.id);
-		}
+    // TODO look into removing these following three lines
+		// if (this.selectedEventDto() != null) {
+		// 	this.loadEventDetailInfoDto(this.selectedEventDto()?.id);
+		// }
 
 		this.route.paramMap.subscribe(params => {
 			const eventId = params.get("id");
