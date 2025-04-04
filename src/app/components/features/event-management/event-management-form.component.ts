@@ -58,7 +58,7 @@ export class EventManagementFormComponent
 	participants: IParticipantWithUserDto[] = [];
 	users: IUserDto[] = [];
 	isPending = signal(false);
-	//todo fetch this from MSAL library
+	//todo MSAL fixes this automatically, remove hard coded user Ids
 	userId = "a84c12d5-9075-42d2-b467-6b345b7d8c9f";
 	private modalService = inject(NgbModal);
 
@@ -118,59 +118,6 @@ export class EventManagementFormComponent
       })
     });
   }
-
-	// loadEventDetailDto(currentEventId?: string): void {
-	// 	if (currentEventId == null) {
-	// 		return;
-	// 	}
-
-	// 	this.isPending.set(true);
-	// 	this.eventService
-	// 		.getDetailEvent(currentEventId, this.userId)
-	// 		.subscribe({
-	// 			next: item => {
-	// 				this.eventDetailDto = item;
-	// 				this.eventStateService.selectedEventDto.set(item);
-	// 				this.loadParticipantDtos(item);
-	// 			},
-	// 			error: error => console.error("Test error" + error),
-	// 			complete: () => this.isPending.set(false),
-	// 		});
-	// }
-
-	// loadParticipantDtos(eventDto: IEventDetailDto): void {
-	// 	const currentEventId = eventDto.id;
-	// 	if (currentEventId == null) {
-	// 		return;
-	// 	}
-	// 	this.isPending.set(true);
-	// 	this.participantService
-	// 		.getParticipantsInEvent(currentEventId, this.userId)
-	// 		.subscribe({
-	// 			next: item => {
-	// 				this.participants = item;
-	// 				this.loadUserDtos(item);
-	// 			},
-	// 			error: error => console.error("Test error" + error),
-	// 			complete: () => this.isPending.set(false),
-	// 		});
-	// }
-
-	// loadUserDtos(participantDtos: IParticipantForResponseDto[]): void {
-	// 	const currentEventId = this.selectedEventDto()?.id;
-	// 	if (currentEventId == null) {
-	// 		return;
-	// 	}
-	// 	const currentParticipantIds = participantDtos.map(p => p.userId);
-	// 	this.isPending.set(true);
-	// 	this.userService.getUsersFromId(currentParticipantIds).subscribe({
-	// 		next: item => {
-	// 			this.users = item;
-	// 		},
-	// 		error: error => console.error("Test error" + error),
-	// 		complete: () => this.isPending.set(false),
-	// 	});
-	// }
 
 	registerToEvent() {
 		this.eventStateService.setSelectedEvent(this.selectedEventDto()!);
