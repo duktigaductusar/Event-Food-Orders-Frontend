@@ -133,6 +133,10 @@ export class CreateEventComponent
 		];
 	}
 
+	toggleEdit() {		
+		this.eventStateService.toggleEditEvent()
+	}
+
 	nextStep() {
 		const group = this.getFormGroupForCurrentStep(this.currentStep);
 		if (group.invalid) {

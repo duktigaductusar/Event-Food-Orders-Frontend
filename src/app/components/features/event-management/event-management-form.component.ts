@@ -55,7 +55,6 @@ export class EventManagementFormComponent
 	extends AppBaseComponent
 	implements OnInit
 {
-	edit = signal(false);
 	selectedEventDto: Signal<IEventDto | null>;
 	eventDetailDto: IEventDetailInfoDto | null = null;
 	participants: IParticipantWithUserDto[] = [];
@@ -139,10 +138,11 @@ export class EventManagementFormComponent
 
 	toggleEdit() {
 		console.log("created real: ", this.createEventDetailOwnerDto());
-		this.edit.update(prev => !prev);
-		if (!this.edit()) {
-			this.loadEventDetailInfoDto(this.selectedEventDto()?.id);
-		}
+		this.eventStateService.toggleEditEvent(()=>{			
+			if (!this.eventStateService.editEvent()) {
+				this.loadEventDetailInfoDto(this.selectedEventDto()?.id);
+			}
+		})
 	}
 
 	createEventDetailOwnerDto(): Partial<IEventDetailOwnerDto> {
