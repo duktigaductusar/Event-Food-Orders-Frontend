@@ -21,6 +21,7 @@ import { fromDateTimeISOString } from "@app/utility";
 import { ParticipantService } from "@app/services/api/participant.service";
 import { appRoutes } from "@app/constants";
 import { finalize } from "rxjs";
+import { SpinnerComponent } from "@app/components/shared";
 
 @Component({
 	selector: "app-event-detail-item",
@@ -29,6 +30,7 @@ import { finalize } from "rxjs";
 		StatusLabelComponent,
 		ResponsiveFormComponent,
 		ReactiveFormsModule,
+		SpinnerComponent
 	],
 	templateUrl: "./event-detail-item.component.html",
 	styleUrl: "./event-detail-item.component.css",
@@ -51,10 +53,6 @@ export class EventDetailItemComponent
 	] as const;
 
 	isPending = signal(false);
-
-	//todo take this from token. Use MSAL library
-	//todo always check that we use the correct event id for this user id
-	userId = "a84c12d5-9075-42d2-b467-6b345b7d8c9f";
 
 	constructor(
 		private router: Router,
@@ -98,7 +96,7 @@ export class EventDetailItemComponent
 	loadEventDetailDto(eventId: string): void {
 		this.isPending.set(true);
 		this.eventService
-			.getDetailEvent(eventId, this.userId)
+			.getDetailEvent(eventId)
 			.pipe(finalize(() => this.isPending.set(false)))
 			.subscribe({
 				next: item => {

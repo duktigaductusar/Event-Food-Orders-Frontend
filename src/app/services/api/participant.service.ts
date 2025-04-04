@@ -23,11 +23,10 @@ export class ParticipantService {
 	}
 
 	getParticipantsInEvent(
-		eventId: string,
-		userId: string
+		eventId: string
 	): Observable<IParticipantForResponseDto[]> {
 		return this.http.get<IParticipantForResponseDto[]>(
-			`${this.apiUrl}/${eventId}/all?userId=${userId}`
+			`${this.apiUrl}/${eventId}/all`
 		);
 	}
 }

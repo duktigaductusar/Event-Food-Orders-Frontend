@@ -1,6 +1,9 @@
-<div class="mx-auto" [ngStyle]="getContainerStyle()">
+@if (isPending()) {
+	<app-spinner></app-spinner>
+} @else {
+	<div class="mx-auto" [ngStyle]="getContainerStyle()">
 	@if (!edit()) {
-		<app-responsive-form
+		<app-responsive-div
 			[withParentStyle]="'card shadow-sm mb-4 bg-white border-top-0'"
 		>
 			<div
@@ -41,6 +44,7 @@
 					[label]="t('event-management.cancelEvent')"
 					(action)="deleteEventAssert()"
 				/>
+				<!-- //<button>{{t('event-management.cancelEvent')}}</button> -->
 			</div>
 			<div class="card-footer text-center"></div>
 
@@ -65,7 +69,7 @@
 					</ul>
 				</div>
 			}
-		</app-responsive-form>
+		</app-responsive-div>
 	} @else {
 		<div class="d-flex justify-content-center">
 			<app-generic-btn label="Stop Editing" (click)="toggleEdit()">
@@ -75,3 +79,4 @@
 		<app-edit-event [event]="createEventDetailOwnerDto()"></app-edit-event>
 	}
 </div>
+}

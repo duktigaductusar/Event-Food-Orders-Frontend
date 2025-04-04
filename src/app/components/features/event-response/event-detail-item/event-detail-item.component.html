@@ -1,4 +1,7 @@
-<div class="container py-4">
+@if (isPending()) {
+	<app-spinner></app-spinner>
+} @else {
+	<div class="container py-4">
 	<app-responsive-form
 		[formGroup]="eventForm"
 		[submitHandler]="onSubmit"
@@ -101,3 +104,4 @@
 		</div>
 	</app-responsive-form>
 </div>
+}
