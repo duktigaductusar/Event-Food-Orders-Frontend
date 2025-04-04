@@ -60,6 +60,7 @@ export class EventManagementFormComponent
 	participants: IParticipantWithUserDto[] = [];
 	users: IUserDto[] = [];
 	isPending = signal(false);
+	even = signal(false);
 
 	private modalService = inject(NgbModal);
 

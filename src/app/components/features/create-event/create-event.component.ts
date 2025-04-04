@@ -27,7 +27,7 @@ import {
 } from "./constants";
 import { EventUserFormComponent } from "./event-user-form/event-user-form.component";
 import { VerifyEventFormComponent } from "./verify-event-form/verify-event-form.component";
-import { IEventDetailOwnerDto, IEventDto, IUserDto } from "@app/models";
+import { IEventDetailOwnerDto, IEventDto, IEventForCreationDto, IUserDto } from "@app/models";
 import { EventService, EventStateService } from "@app/services";
 import {
 	buildCreateEventForm,
@@ -80,6 +80,7 @@ export class CreateEventComponent
 	isPending = signal(false);
 	selectedUsers = signal<IUserDto[]>([]);
 	initialEvent = input<Partial<IEventDetailOwnerDto>>();
+	initialEventId = input<string | null>(null);
 	private modalService = inject(NgbModal);
 
 	constructor(
@@ -184,6 +185,14 @@ export class CreateEventComponent
 			return;
 		}
 
+		if (!this.eventStateService.editEvent()){
+			this.submitCreate(eventDto)
+		} else {
+			this.submitEdit(eventDto)
+		}
+	};
+
+	submitCreate(eventDto: IEventForCreationDto) {
 		this.isPending.set(true);
 		this.eventService
 			.createEvent(eventDto)
@@ -191,13 +200,34 @@ export class CreateEventComponent
 			.subscribe({
 				next: event => {
 					this.eventStateService.selectedEventDto.set(null);
-					this.openSuccessModal(event as IEventDto);
+					this.openSuccessModal(event)
 				},
 				error: (error: ApiError) => {
 					console.error("Error fetching users:", error.message);
 				},
 			});
-	};
+	}
+
+	submitEdit(eventDto: IEventForCreationDto) {
+		// TODO Implement edit request to service then toggle edit mode
+		const currentEventId = this.initialEventId();
+		if (currentEventId == null) {
+			return;
+		}
+
+		this.isPending.set(true);
+		this.eventService
+			.updateEvent(currentEventId, eventDto)
+			.pipe(finalize(() => this.isPending.set(false)))
+			.subscribe({
+				next: () => {
+					this.eventStateService.toggleEditEvent();			
+				},
+				error: (error: ApiError) => {
+					console.error("Error fetching users:", error.message);
+				},
+			});
+	}
 
 	openSuccessModal(event: IEventDto) {
 		const modalRef = this.modalService.open(

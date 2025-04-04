@@ -81,6 +81,7 @@
 		} @else {
 			<app-edit-event
 				[event]="createEventDetailOwnerDto()"
+				[eventId]="eventDetailDto?.id ?? null"
 			></app-edit-event>
 		}
 	</div>

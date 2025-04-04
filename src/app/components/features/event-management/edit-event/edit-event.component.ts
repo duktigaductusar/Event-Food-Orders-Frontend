@@ -10,4 +10,5 @@ import { IEventDetailOwnerDto } from "@app/models";
 })
 export class EditEventComponent {
 	event = input<Partial<IEventDetailOwnerDto>>();
+	eventId = input<string | null>(null);
 }

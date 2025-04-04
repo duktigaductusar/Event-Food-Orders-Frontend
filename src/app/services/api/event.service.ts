@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { IEventDto } from "@app/models";
+import { IEventDto, IEventForUpdateDto } from "@app/models";
 import { IEventDetailDto } from "@app/models/eventDtos/IEventDetailDto.model";
 import { IEventDetailInfoDto } from "@app/models/eventDtos/IEventDetailInfoDto.model";
 import { IEventForCreationDto } from "@app/models/eventDtos/IEventForCreationDto";
@@ -44,5 +44,9 @@ export class EventService {
 
 	deleteEvent(eventId: string): Observable<boolean> {
 		return this.http.delete<boolean>(`${this.apiUrl}/${eventId}`);
+	}
+
+	updateEvent(eventId: string, body: IEventForUpdateDto): Observable<IEventDto> {
+		return this.http.put<IEventDto>(`${this.apiUrl}/${eventId}`, body);
 	}
 }
