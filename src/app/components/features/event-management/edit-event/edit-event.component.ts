@@ -1,4 +1,11 @@
-import { Component, input, OnDestroy, signal, OnInit } from "@angular/core";
+import {
+	Component,
+	input,
+	OnDestroy,
+	signal,
+	OnInit,
+	computed,
+} from "@angular/core";
 import { finalize } from "rxjs";
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { IEventDetailOwnerDto, IEventForCreationDto } from "@app/models";
@@ -7,14 +14,16 @@ import { EventService, EventStateService, StorageService } from "@app/services";
 import { ApiError } from "@app/interceptors/api-error.interceptor";
 import {
 	buildCreateEventForm,
+	createEventDtoFromEventForm,
 	EventFormBaseComponent,
 	ICreateEventForm,
-	isFormData,
+	isEventFormData,
 } from "@app/components/shared";
+import { GenericBtnComponent } from "../../../html/generic-btn/generic-btn.component";
 
 @Component({
 	selector: "app-edit-event",
-	imports: [EventFormBaseComponent],
+	imports: [EventFormBaseComponent, GenericBtnComponent],
 	templateUrl: "./edit-event.component.html",
 	styleUrl: "./edit-event.component.css",
 })
@@ -23,6 +32,7 @@ export class EditEventComponent implements OnDestroy, OnInit {
 	eventId = input<string | null>(null);
 
 	form!: FormGroup<ICreateEventForm>;
+	computedForm = computed(() => this.form);
 	isPending = signal(false);
 	private autoFormSaver!: FormAutoSaver<Partial<IEventForCreationDto>>;
 
@@ -31,17 +41,31 @@ export class EditEventComponent implements OnDestroy, OnInit {
 		private eventService: EventService,
 		private eventStateService: EventStateService,
 		private storageService: StorageService
-	) {
-		this.form = buildCreateEventForm(this.fb, this.event());
-	}
+	) {}
 
 	ngOnInit(): void {
+		this.form = buildCreateEventForm(this.fb, this.event());
+		const currentEventData = createEventDtoFromEventForm(this.form);
+		if (currentEventData != null) {
+			this.storageService.setItem("UPDATE_EVENT_FORM", currentEventData);
+		}
+
 		this.autoFormSaver = new FormAutoSaver(
 			this.form,
 			this.storageService,
 			"UPDATE_EVENT_FORM",
-			isFormData
+			isEventFormData
 		);
+	}
+
+	getTitleForEditingForm() {
+		return `Stop editing '${this.event()?.title}'`;
+	}
+
+	toggleEdit() {
+		this.eventStateService.toggleEditEvent(() => {
+			this.storageService.clear();
+		});
 	}
 
 	submitEdit(eventDto: IEventForCreationDto) {

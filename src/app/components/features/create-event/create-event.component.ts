@@ -14,7 +14,7 @@ import {
 	buildCreateEventForm,
 	EventFormBaseComponent,
 	ICreateEventForm,
-	isFormData,
+	isEventFormData,
 } from "@app/components/shared";
 import { CreateEventResultModalComponent } from "./create-event-result-modal/create-event-result-modal.component";
 import { newEventResultSelection } from "./create-event-result-modal/newEventResultSelection";
@@ -36,16 +36,15 @@ export class CreateEventComponent implements OnDestroy, OnInit {
 		private eventStateService: EventStateService,
 		private storageService: StorageService,
 		private modalService: NgbModal
-	) {
-		this.form = buildCreateEventForm(this.fb);
-	}
+	) {}
 
 	ngOnInit(): void {
+		this.form = buildCreateEventForm(this.fb);
 		this.autoFormSaver = new FormAutoSaver(
 			this.form,
 			this.storageService,
 			"NEW_EVENT_FORM",
-			isFormData
+			isEventFormData
 		);
 	}
 

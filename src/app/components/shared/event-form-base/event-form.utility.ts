@@ -7,7 +7,7 @@ import {
 import { formGroups } from "./constants";
 import { ICreateEventForm } from "./interfaces";
 
-export function isFormData(
+export function isEventFormData(
 	value: unknown
 ): value is Partial<IEventForCreationDto> {
 	if (typeof value !== "object" || value === null) return false;
@@ -27,7 +27,7 @@ export function isFormData(
 	);
 }
 
-export function createEventDtoFromCreateEventForm(
+export function createEventDtoFromEventForm(
 	form: FormGroup<ICreateEventForm>
 ): IEventForCreationDto | null {
 	if (!form.valid) {

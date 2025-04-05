@@ -2,7 +2,7 @@ import { FormGroup } from "@angular/forms";
 import { StorageKeyType, StorageService, StorageType } from "@app/services";
 import { Subscription, debounceTime } from "rxjs";
 
-const defaultDebounceTime = 5000
+const defaultDebounceTime = 5000;
 
 export class FormAutoSaver<T> {
 	private sub?: Subscription;
@@ -14,7 +14,10 @@ export class FormAutoSaver<T> {
 		private storageService: StorageService,
 		private storageKey: StorageKeyType,
 		private typeGuard: (value: unknown) => value is T,
-		options?: { debounceTimeMs?: number; storageType?: StorageType }
+		options?: {
+			debounceTimeMs?: number;
+			storageType?: StorageType;
+		}
 	) {
 		this.storageType = options?.storageType ?? "local";
 
@@ -23,6 +26,7 @@ export class FormAutoSaver<T> {
 			this.typeGuard,
 			this.storageType
 		);
+
 		if (saved != null) {
 			this.form.patchValue(saved);
 		}

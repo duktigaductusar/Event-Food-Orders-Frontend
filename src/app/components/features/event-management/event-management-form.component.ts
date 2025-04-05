@@ -15,19 +15,13 @@ import {
 	SpinnerComponent,
 	StatusLabelComponent,
 } from "@app/components/shared";
-import {
-	IEventDetailOwnerDto,
-	IEventDto,
-	IParticipantForResponseDto,
-	IUserDto,
-} from "@app/models";
+import { IEventDetailOwnerDto, IEventDto, IUserDto } from "@app/models";
 import { IEventDetailDto } from "@app/models/eventDtos/IEventDetailDto.model";
 import { EventService, EventStateService, UserService } from "@app/services";
 
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { EventManagementDeleteModalComponentComponent } from "./event-management-delete-modal-component/event-management-delete-modal-component.component";
 import { EditEventComponent } from "./edit-event/edit-event.component";
-import { ResponsiveFormComponent } from "../../html/responsive-form/responsive-form.component";
 import { CommonModule } from "@angular/common";
 import { fromDateTimeISOString } from "@app/utility";
 import { appRoutes } from "@app/constants";
@@ -138,7 +132,6 @@ export class EventManagementFormComponent
 	}
 
 	toggleEdit() {
-		console.log("created real: ", this.createEventDetailOwnerDto());
 		this.eventStateService.toggleEditEvent(() => {
 			if (!this.eventStateService.editEvent()) {
 				this.loadEventDetailInfoDto(this.selectedEventDto()?.id);

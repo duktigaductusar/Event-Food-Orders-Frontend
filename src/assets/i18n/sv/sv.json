@@ -28,7 +28,7 @@
 			"timeDeadlineWarning": "Ange en giltig tid för deadline."
 		},
 		"userForm": {
-			"title": "Ductus deltagare",
+			"title": "Deltagare",
 			"searchUserLabel": "Sök användare",
 			"searchUserPlaceholder": "Namn, mail...",
 			"noUsersFoundInfo": "Inga användare hittades",

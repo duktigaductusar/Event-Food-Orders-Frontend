@@ -27,12 +27,11 @@ import {
 	IEventForCreationDto,
 	IUserDto,
 } from "@app/models";
-import { EventStateService } from "@app/services";
 import {
 	subscribeDateDeadlineToDateChange,
 	subscribeTimeDeadlineToTimeChange,
 } from "./event-form.setup";
-import { createEventDtoFromCreateEventForm } from "./event-form.utility";
+import { createEventDtoFromEventForm } from "./event-form.utility";
 import { EventFormHeaderContainerComponent } from "./event-form-header-container/event-form-header-container.component";
 
 @Component({
@@ -78,7 +77,7 @@ export class EventFormBaseComponent
 		return value;
 	});
 
-	constructor(private eventStateService: EventStateService) {
+	constructor() {
 		super();
 		this.selectedUsersEffect();
 	}
@@ -117,10 +116,6 @@ export class EventFormBaseComponent
 			...(this.initialEvent()?.users ?? []),
 			...(this.safeForm().value.inviteUsersForm?.users ?? []),
 		];
-	}
-
-	toggleEdit() {
-		this.eventStateService.toggleEditEvent();
 	}
 
 	nextStep() {
@@ -166,7 +161,7 @@ export class EventFormBaseComponent
 	}
 
 	submit = () => {
-		const eventDto = createEventDtoFromCreateEventForm(this.safeForm());
+		const eventDto = createEventDtoFromEventForm(this.safeForm());
 		if (eventDto == null) {
 			this.form()?.markAllAsTouched();
 			return;
