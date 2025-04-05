@@ -45,8 +45,8 @@ import { ResponsiveDivComponent } from "@app/components/html/responsive-div.comp
 		GenericBtnComponent,
 		EditEventComponent,
 		CommonModule,
-    ResponsiveDivComponent,
-    SpinnerComponent
+		ResponsiveDivComponent,
+		SpinnerComponent,
 	],
 	templateUrl: "./event-management-form.component.html",
 	styleUrl: "./event-management-form.component.css",
@@ -79,7 +79,7 @@ export class EventManagementFormComponent
 	}
 
 	ngOnInit(): void {
-    // TODO look into removing these following three lines
+		// TODO look into removing these following three lines
 		// if (this.selectedEventDto() != null) {
 		// 	this.loadEventDetailInfoDto(this.selectedEventDto()?.id);
 		// }
@@ -106,21 +106,21 @@ export class EventManagementFormComponent
 					this.eventDetailDto = item;
 					this.eventStateService.selectedEventDto.set(item);
 					this.participants = item.participants;
-          this.setUsers();
+					this.setUsers();
 				},
 				error: error => console.error("Test error" + error),
 			});
 	}
 
-  setUsers() {
-    this.participants.forEach(p => {
-      this.users.push({
-        userId: p.userId,
-        username: p.userName,
-        email: p.email
-      })
-    });
-  }
+	setUsers() {
+		this.participants.forEach(p => {
+			this.users.push({
+				userId: p.userId,
+				username: p.userName,
+				email: p.email,
+			});
+		});
+	}
 
 	registerToEvent() {
 		this.eventStateService.setSelectedEvent(this.selectedEventDto()!);
@@ -139,11 +139,11 @@ export class EventManagementFormComponent
 
 	toggleEdit() {
 		console.log("created real: ", this.createEventDetailOwnerDto());
-		this.eventStateService.toggleEditEvent(()=>{			
+		this.eventStateService.toggleEditEvent(() => {
 			if (!this.eventStateService.editEvent()) {
 				this.loadEventDetailInfoDto(this.selectedEventDto()?.id);
 			}
-		})
+		});
 	}
 
 	createEventDetailOwnerDto(): Partial<IEventDetailOwnerDto> {

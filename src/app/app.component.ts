@@ -1,7 +1,5 @@
 import { Component } from "@angular/core";
-import {
-	RouterOutlet,
-} from "@angular/router";
+import { RouterOutlet } from "@angular/router";
 import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
@@ -13,6 +11,4 @@ import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
 })
 export class AppComponent {
 	title = "dd-frontend";
-
-	constructor() {}
 }

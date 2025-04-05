@@ -1,4 +1,3 @@
-// todo: this service uses state
 import {
 	Component,
 	effect,
@@ -27,8 +26,13 @@ import {
 } from "./constants";
 import { EventUserFormComponent } from "./event-user-form/event-user-form.component";
 import { VerifyEventFormComponent } from "./verify-event-form/verify-event-form.component";
-import { IEventDetailOwnerDto, IEventDto, IEventForCreationDto, IUserDto } from "@app/models";
-import { EventService, EventStateService } from "@app/services";
+import {
+	IEventDetailOwnerDto,
+	IEventDto,
+	IEventForCreationDto,
+	IUserDto,
+} from "@app/models";
+import { EventService, EventStateService, StorageService } from "@app/services";
 import {
 	buildCreateEventForm,
 	subscribeDateDeadlineToDateChange,
@@ -42,13 +46,9 @@ import {
 } from "@ng-bootstrap/ng-bootstrap";
 import { CreateEventResultModalComponent } from "./create-event-result-modal/create-event-result-modal.component";
 import { ApiError } from "@app/interceptors/api-error.interceptor";
+import { FormAutoSaver } from "@app/components/base/form-auto-saver.component";
+import { isFormData } from "./create-event.utility";
 
-/**
- * TODO:
- * 1) Create Server
- * 		1.1) For shared state
- * 		1.2) For local/session storage state if needed
- */
 @Component({
 	selector: "app-create-event",
 	standalone: true,
@@ -71,6 +71,7 @@ export class CreateEventComponent
 	form!: FormGroup<ICreateEventForm>;
 	formTitles = formTitles;
 	private destroy = new Subject<void>();
+	private autoFormSaver!: FormAutoSaver<Partial<IEventForCreationDto>>;
 	readonly formSteps = {
 		formDetailStep: 1,
 		formUserStep: 2,
@@ -81,12 +82,14 @@ export class CreateEventComponent
 	selectedUsers = signal<IUserDto[]>([]);
 	initialEvent = input<Partial<IEventDetailOwnerDto>>();
 	initialEventId = input<string | null>(null);
+	currentEvent: Partial<IEventDto> = {};
 	private modalService = inject(NgbModal);
 
 	constructor(
 		private fb: FormBuilder,
 		private eventService: EventService,
-		private eventStateService: EventStateService
+		private eventStateService: EventStateService,
+		private storageService: StorageService
 	) {
 		super();
 		this.selectedUsersEffect();
@@ -117,6 +120,14 @@ export class CreateEventComponent
 			this.eventDetailsFormGroup,
 			this.destroy
 		);
+		this.autoFormSaver = new FormAutoSaver(
+			this.form,
+			this.storageService,
+			this.initialEventId() != null
+				? "UPDATE_EVENT_FORM"
+				: "NEW_EVENT_FORM",
+			isFormData
+		);
 	}
 
 	get eventDetailsFormGroup(): FormGroup {
@@ -134,8 +145,8 @@ export class CreateEventComponent
 		];
 	}
 
-	toggleEdit() {		
-		this.eventStateService.toggleEditEvent()
+	toggleEdit() {
+		this.eventStateService.toggleEditEvent();
 	}
 
 	nextStep() {
@@ -185,10 +196,10 @@ export class CreateEventComponent
 			return;
 		}
 
-		if (!this.eventStateService.editEvent()){
-			this.submitCreate(eventDto)
+		if (!this.eventStateService.editEvent()) {
+			this.submitCreate(eventDto);
 		} else {
-			this.submitEdit(eventDto)
+			this.submitEdit(eventDto);
 		}
 	};
 
@@ -200,10 +211,13 @@ export class CreateEventComponent
 			.subscribe({
 				next: event => {
 					this.eventStateService.selectedEventDto.set(null);
-					this.openSuccessModal(event)
+					this.openSuccessModal(event);
 				},
 				error: (error: ApiError) => {
 					console.error("Error fetching users:", error.message);
+				},
+				complete: () => {
+					this.autoFormSaver.destroy();
 				},
 			});
 	}
@@ -221,10 +235,13 @@ export class CreateEventComponent
 			.pipe(finalize(() => this.isPending.set(false)))
 			.subscribe({
 				next: () => {
-					this.eventStateService.toggleEditEvent();			
+					this.eventStateService.toggleEditEvent();
 				},
 				error: (error: ApiError) => {
 					console.error("Error fetching users:", error.message);
+				},
+				complete: () => {
+					this.autoFormSaver.destroy();
 				},
 			});
 	}
@@ -269,5 +286,6 @@ export class CreateEventComponent
 	ngOnDestroy() {
 		this.destroy.next();
 		this.destroy.complete();
+		this.autoFormSaver.destroy();
 	}
 }

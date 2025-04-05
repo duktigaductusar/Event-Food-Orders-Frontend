@@ -30,7 +30,7 @@ import { SpinnerComponent } from "@app/components/shared";
 		StatusLabelComponent,
 		ResponsiveFormComponent,
 		ReactiveFormsModule,
-		SpinnerComponent
+		SpinnerComponent,
 	],
 	templateUrl: "./event-detail-item.component.html",
 	styleUrl: "./event-detail-item.component.css",

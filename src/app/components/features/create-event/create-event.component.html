@@ -8,21 +8,23 @@
 					[form]="eventDetailsFormGroup"
 				>
 					<app-create-event-header-container header>
-						<div
-							class="px-5 pt-2 pb-4 d-flex justify-content-between align-items-center"
-						>
-							<h5 class="m-0 fw-bold text-primary">
-								{{ initialEvent()!.title }}
-							</h5>
-							<app-generic-btn
-								[icon]="'stop-circle'"
-								[label]="'Stop Editing'"
-								[customClass]="'border-0 fs-5'"
-								[borderColor]="'danger'"
-								(action)="toggleEdit()"
+						@if (initialEventId() !== null) {
+							<div
+								class="px-5 pt-2 pb-4 d-flex justify-content-between align-items-center"
 							>
-							</app-generic-btn>
-						</div>
+								<h5 class="m-0 fw-bold text-primary">
+									{{ initialEvent()?.title }}
+								</h5>
+								<app-generic-btn
+									[icon]="'stop-circle'"
+									[label]="'Stop Editing'"
+									[customClass]="'border-0 fs-5'"
+									[borderColor]="'danger'"
+									(action)="toggleEdit()"
+								>
+								</app-generic-btn>
+							</div>
+						}
 						<app-multistep-form-navigation-header
 							[step]="currentStep"
 							[steps]="getSubFormTitles()"

@@ -54,14 +54,12 @@ export class EventUserFormComponent
 			user =>
 				user.email != null &&
 				user.username != null &&
-				(
-				user.email.endsWith("ductus.se")||
-				user.email.endsWith("example.com") //ToDo: remove for prod
-				)&&
-				(
-				user.email.toLowerCase().includes(this.query.toLowerCase()) ||
-				user.username.toLowerCase().includes(this.query.toLowerCase())
-				)
+				(user.email.endsWith("ductus.se") ||
+					user.email.endsWith("example.com")) && //ToDo: remove for prod
+				(user.email.toLowerCase().includes(this.query.toLowerCase()) ||
+					user.username
+						.toLowerCase()
+						.includes(this.query.toLowerCase()))
 		);
 	}
 

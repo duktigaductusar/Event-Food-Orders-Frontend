@@ -5,7 +5,7 @@ import { IEventDto } from "@app/models";
 	providedIn: "root",
 })
 export class EventStateService {
-	editEvent=signal(false);
+	editEvent = signal(false);
 
 	selectedEventDto = signal<IEventDto | null>(null);
 
@@ -13,11 +13,10 @@ export class EventStateService {
 		this.selectedEventDto.set(item);
 	}
 
-	toggleEditEvent(callback?: () => void){
+	toggleEditEvent(callback?: () => void) {
 		this.editEvent.update(prev => !prev);
 		if (callback != null) {
 			callback();
 		}
 	}
 }
-

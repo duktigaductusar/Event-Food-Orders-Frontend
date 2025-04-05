@@ -22,17 +22,11 @@ export class EventService {
 		return this.http.get<IEventDto[]>(`${this.apiUrl}/all`);
 	}
 
-	getDetailEvent(
-		eventId: string,
-	): Observable<IEventDetailDto> {
-		return this.http.get<IEventDetailDto>(
-			`${this.apiUrl}/${eventId}`
-		);
+	getDetailEvent(eventId: string): Observable<IEventDetailDto> {
+		return this.http.get<IEventDetailDto>(`${this.apiUrl}/${eventId}`);
 	}
 
-	getDetailInfoEvent(
-		eventId: string,
-	): Observable<IEventDetailInfoDto> {
+	getDetailInfoEvent(eventId: string): Observable<IEventDetailInfoDto> {
 		return this.http.get<IEventDetailInfoDto>(
 			`${this.apiUrl}/${eventId}/info`
 		);
@@ -46,7 +40,10 @@ export class EventService {
 		return this.http.delete<boolean>(`${this.apiUrl}/${eventId}`);
 	}
 
-	updateEvent(eventId: string, body: IEventForUpdateDto): Observable<IEventDto> {
+	updateEvent(
+		eventId: string,
+		body: IEventForUpdateDto
+	): Observable<IEventDto> {
 		return this.http.put<IEventDto>(`${this.apiUrl}/${eventId}`, body);
 	}
 }
