@@ -1,8 +1,4 @@
-<app-event-form-base
-	[form]="form"
-	(submitEventForm)="submitCreate($event)"
-></app-event-form-base>
-<!-- <div class="mx-auto" [ngStyle]="getContainerStyle()">
+<div class="mx-auto" [ngStyle]="getContainerStyle()">
 	<div class="m-sm-4">
 		@switch (currentStep) {
 			@case (formSteps.formDetailStep) {
@@ -87,7 +83,7 @@
 				<app-verify-event-form
 					[title]="formTitles.formVerificationTitle"
 					[step]="currentStep"
-					[form]="form"
+					[form]="safeForm()"
 				>
 					<app-create-event-header-container header>
 						<app-multistep-form-navigation-header
@@ -122,4 +118,4 @@
 			}
 		}
 	</div>
-</div> -->
+</div>

@@ -1,1 +1,6 @@
-<app-create-event [initialEvent]="event()"></app-create-event>
+<app-event-form-base
+	[form]="form"
+	[initialEvent]="event()"
+	[initialEventId]="eventId()"
+	(submitEventForm)="submitEdit($event)"
+></app-event-form-base>

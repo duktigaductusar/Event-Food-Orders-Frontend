@@ -22,7 +22,7 @@ export class FormAutoSaver<T> {
 			this.typeGuard,
 			this.storageType
 		);
-		if (saved) {
+		if (saved != null) {
 			this.form.patchValue(saved);
 		}
 
