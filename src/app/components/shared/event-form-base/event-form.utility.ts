@@ -1,6 +1,9 @@
 import { FormGroup } from "@angular/forms";
 import { IEventForCreationDto } from "@app/models";
-import { toDateTimeISOStrig, getDateFromNgbTimeAndDateStructs } from "@app/utility";
+import {
+	toDateTimeISOStrig,
+	getDateFromNgbTimeAndDateStructs,
+} from "@app/utility";
 import { formGroups } from "./constants";
 import { ICreateEventForm } from "./interfaces";
 

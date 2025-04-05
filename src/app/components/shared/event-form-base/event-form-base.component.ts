@@ -16,8 +16,7 @@ import { ICreateEventForm } from "./interfaces";
 import { MultiStepFormHeaderComponent } from "./multistep-form-navigation-header/multistep-form-navigation-header.component";
 import { GenericBtnComponent } from "@app/components/html";
 import { CommonModule } from "@angular/common";
-import { CreateEventFooterContainerComponent } from "./create-event-footer-container/create-event-footer-container.component";
-import { CreateEventHeaderContainerComponent } from "./create-event-header-container/create-event-header-container.component";
+import { EventFormFooterContainerComponent } from "./event-form-footer-container/event-form-footer-container.component";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
 import { formControllers, formGroups, formTitles } from "./constants";
 import { EventUserFormComponent } from "./event-user-form/event-user-form.component";
@@ -34,6 +33,7 @@ import {
 	subscribeTimeDeadlineToTimeChange,
 } from "./event-form.setup";
 import { createEventDtoFromCreateEventForm } from "./event-form.utility";
+import { EventFormHeaderContainerComponent } from "./event-form-header-container/event-form-header-container.component";
 
 @Component({
 	selector: "app-event-form-base",
@@ -45,8 +45,8 @@ import { createEventDtoFromCreateEventForm } from "./event-form.utility";
 		EventUserFormComponent,
 		VerifyEventFormComponent,
 		MultiStepFormHeaderComponent,
-		CreateEventFooterContainerComponent,
-		CreateEventHeaderContainerComponent,
+		EventFormFooterContainerComponent,
+		EventFormHeaderContainerComponent,
 	],
 	templateUrl: "./event-form-base.component.html",
 })
@@ -138,7 +138,7 @@ export class EventFormBaseComponent
 		this.currentStepChange.emit(this.currentStep);
 	}
 
-	private getFormGroupForCurrentStep(step: number): FormGroup {
+	getFormGroupForCurrentStep(step: number): FormGroup {
 		return this.safeForm().get(
 			[
 				formGroups.eventDetailsForm,
