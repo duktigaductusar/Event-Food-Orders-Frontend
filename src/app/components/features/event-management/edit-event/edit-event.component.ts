@@ -1,14 +1,16 @@
 import { Component, input, OnDestroy, signal, OnInit } from "@angular/core";
-import { IEventDetailOwnerDto, IEventForCreationDto } from "@app/models";
-import { EventFormBaseComponent } from "@app/components/shared";
-import { buildCreateEventForm } from "@app/components/shared/event-form-base/create-event.setup";
+import { finalize } from "rxjs";
 import { FormGroup, FormBuilder } from "@angular/forms";
+import { IEventDetailOwnerDto, IEventForCreationDto } from "@app/models";
 import { FormAutoSaver } from "@app/components/base/form-auto-saver.component";
 import { EventService, EventStateService, StorageService } from "@app/services";
-import { isFormData } from "../../create-event/create-event.utility";
-import { ICreateEventForm } from "../../create-event/interfaces";
-import { finalize } from "rxjs";
 import { ApiError } from "@app/interceptors/api-error.interceptor";
+import {
+	EventFormBaseComponent,
+	ICreateEventForm,
+	buildCreateEventForm,
+	isFormData,
+} from "@app/components/shared";
 
 @Component({
 	selector: "app-edit-event",
@@ -28,7 +30,7 @@ export class EditEventComponent implements OnDestroy, OnInit {
 		private fb: FormBuilder,
 		private eventService: EventService,
 		private eventStateService: EventStateService,
-		private storageService: StorageService,
+		private storageService: StorageService
 	) {
 		this.form = buildCreateEventForm(this.fb, this.event());
 	}
@@ -43,7 +45,7 @@ export class EditEventComponent implements OnDestroy, OnInit {
 	}
 
 	submitEdit(eventDto: IEventForCreationDto) {
-	 	const currentEventId = this.eventId();
+		const currentEventId = this.eventId();
 		if (currentEventId == null) {
 			return;
 		}

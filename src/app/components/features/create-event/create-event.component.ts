@@ -1,23 +1,24 @@
-import {
-	Component,
-	OnDestroy,
-	OnInit,
-	signal,
-} from "@angular/core";
+import { Component, OnDestroy, OnInit, signal } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { finalize } from "rxjs";
 
-import { ICreateEventForm } from "./interfaces";
-import { newEventResultSelection } from "./constants";
 import { IEventDto, IEventForCreationDto } from "@app/models";
 import { EventService, EventStateService, StorageService } from "@app/services";
-import { buildCreateEventForm, } from "./create-event.setup";
-import { NgbDateStruct, NgbModal, NgbTimeStruct } from "@ng-bootstrap/ng-bootstrap";
-import { CreateEventResultModalComponent } from "./create-event-result-modal/create-event-result-modal.component";
+import {
+	NgbDateStruct,
+	NgbModal,
+	NgbTimeStruct,
+} from "@ng-bootstrap/ng-bootstrap";
 import { ApiError } from "@app/interceptors/api-error.interceptor";
 import { FormAutoSaver } from "@app/components/base/form-auto-saver.component";
-import { isFormData } from "./create-event.utility";
-import { EventFormBaseComponent } from "@app/components/shared";
+import {
+	CreateEventResultModalComponent,
+	EventFormBaseComponent,
+	ICreateEventForm,
+	buildCreateEventForm,
+	isFormData,
+	newEventResultSelection,
+} from "@app/components/shared";
 
 @Component({
 	selector: "app-create-event",
@@ -84,7 +85,7 @@ export class CreateEventComponent implements OnDestroy, OnInit {
 			.then(result => {
 				this.storageService.clear();
 				if (result === newEventResultSelection.newEventFormSelection) {
-					this.resetForm()
+					this.resetForm();
 				}
 			})
 			.catch(reason => {

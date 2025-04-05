@@ -19,11 +19,7 @@ import { CommonModule } from "@angular/common";
 import { CreateEventFooterContainerComponent } from "./create-event-footer-container/create-event-footer-container.component";
 import { CreateEventHeaderContainerComponent } from "./create-event-header-container/create-event-header-container.component";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
-import {
-	formControllers,
-	formGroups,
-	formTitles,
-} from "./constants";
+import { formControllers, formGroups, formTitles } from "./constants";
 import { EventUserFormComponent } from "./event-user-form/event-user-form.component";
 import { VerifyEventFormComponent } from "./verify-event-form/verify-event-form.component";
 import {
@@ -66,25 +62,23 @@ export class EventFormBaseComponent
 		formVerifyStep: 3,
 	};
 	currentStep = this.formSteps.formDetailStep;
-  selectedUsers = signal<IUserDto[]>([]);
-  form = input<FormGroup<ICreateEventForm>>();
+	selectedUsers = signal<IUserDto[]>([]);
+	form = input<FormGroup<ICreateEventForm>>();
 	initialEvent = input<Partial<IEventDetailOwnerDto>>();
 	initialEventId = input<string | null>(null);
-  submitEventForm = output<IEventForCreationDto>();
-  currentStepChange = output<number>();
+	submitEventForm = output<IEventForCreationDto>();
+	currentStepChange = output<number>();
 	currentEvent: Partial<IEventDto> = {};
 
-  readonly safeForm = computed(() => {
-    const value = this.form();
-    if (!value) {
-      throw new Error('Input "form" must be defined');
-    }
-    return value;
-  });
+	readonly safeForm = computed(() => {
+		const value = this.form();
+		if (!value) {
+			throw new Error('Input "form" must be defined');
+		}
+		return value;
+	});
 
-	constructor(
-		private eventStateService: EventStateService,
-	) {
+	constructor(private eventStateService: EventStateService) {
 		super();
 		this.selectedUsersEffect();
 	}
@@ -136,12 +130,12 @@ export class EventFormBaseComponent
 			return;
 		}
 		this.currentStep++;
-    this.currentStepChange.emit(this.currentStep)
+		this.currentStepChange.emit(this.currentStep);
 	}
 
 	prevStep() {
 		this.currentStep--;
-    this.currentStepChange.emit(this.currentStep)
+		this.currentStepChange.emit(this.currentStep);
 	}
 
 	private getFormGroupForCurrentStep(step: number): FormGroup {
@@ -178,7 +172,7 @@ export class EventFormBaseComponent
 			return;
 		}
 
-    this.submitEventForm.emit(eventDto);
+		this.submitEventForm.emit(eventDto);
 	};
 
 	ngOnDestroy() {
