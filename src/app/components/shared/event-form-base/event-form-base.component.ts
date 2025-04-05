@@ -32,8 +32,8 @@ import { EventStateService } from "@app/services";
 import {
 	subscribeDateDeadlineToDateChange,
 	subscribeTimeDeadlineToTimeChange,
-	createEventDtoFromCreateEventForm,
-} from "./create-event.setup";
+} from "./event-form.setup";
+import { createEventDtoFromCreateEventForm } from "./event-form.utility";
 
 @Component({
 	selector: "app-event-form-base",

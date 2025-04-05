@@ -6,9 +6,9 @@ import { FormAutoSaver } from "@app/components/base/form-auto-saver.component";
 import { EventService, EventStateService, StorageService } from "@app/services";
 import { ApiError } from "@app/interceptors/api-error.interceptor";
 import {
+	buildCreateEventForm,
 	EventFormBaseComponent,
 	ICreateEventForm,
-	buildCreateEventForm,
 	isFormData,
 } from "@app/components/shared";
 

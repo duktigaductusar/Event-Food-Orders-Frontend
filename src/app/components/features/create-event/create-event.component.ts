@@ -1,24 +1,23 @@
 import { Component, OnDestroy, OnInit, signal } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { finalize } from "rxjs";
-
-import { IEventDto, IEventForCreationDto } from "@app/models";
-import { EventService, EventStateService, StorageService } from "@app/services";
 import {
 	NgbDateStruct,
 	NgbModal,
 	NgbTimeStruct,
 } from "@ng-bootstrap/ng-bootstrap";
+import { IEventDto, IEventForCreationDto } from "@app/models";
+import { EventService, EventStateService, StorageService } from "@app/services";
 import { ApiError } from "@app/interceptors/api-error.interceptor";
 import { FormAutoSaver } from "@app/components/base/form-auto-saver.component";
 import {
-	CreateEventResultModalComponent,
+	buildCreateEventForm,
 	EventFormBaseComponent,
 	ICreateEventForm,
-	buildCreateEventForm,
 	isFormData,
-	newEventResultSelection,
 } from "@app/components/shared";
+import { CreateEventResultModalComponent } from "./create-event-result-modal/create-event-result-modal.component";
+import { newEventResultSelection } from "./create-event-result-modal/newEventResultSelection";
 
 @Component({
 	selector: "app-create-event",
