@@ -3,10 +3,10 @@ import { Injectable } from "@angular/core";
 export type StorageType = "local" | "session";
 
 export const storageKeys = {
-	newEventForm: "new_event_form",
-	updateEventForm: "update_event_form",
-	updateEventId: "update_event_id",
-	eventResponseForm: "event_response_form",
+	newEventForm: "efo.new_event_form",
+	updateEventForm: "efo.update_event_form",
+	updateEventId: "efo.update_event_id",
+	eventResponseForm: "efo.event_response_form",
 } as const;
 
 export type StorageKeyType = (typeof storageKeys)[keyof typeof storageKeys];
