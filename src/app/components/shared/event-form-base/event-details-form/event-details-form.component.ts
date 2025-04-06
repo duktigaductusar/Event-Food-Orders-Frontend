@@ -3,6 +3,7 @@ import {
 	computed,
 	input,
 	ViewChild,
+	effect,
 	AfterViewInit,
 } from "@angular/core";
 import {
@@ -14,6 +15,7 @@ import { CommonModule } from "@angular/common";
 import {
 	NgbDatepicker,
 	NgbDatepickerModule,
+	NgbDateStruct,
 	NgbTimepickerModule,
 } from "@ng-bootstrap/ng-bootstrap";
 import {
@@ -31,6 +33,7 @@ import {
 	eventDetailsControllerNames,
 	eventDetailsValidationGroupKeys,
 	eventDetailsValidationKeys,
+	formControllers,
 } from "../constants";
 import { InvalidInputFeedbackComponent } from "@app/components/shared/invalid-input-feedback/invalid-input-feedback.component";
 
@@ -48,27 +51,43 @@ import { InvalidInputFeedbackComponent } from "@app/components/shared/invalid-in
 	templateUrl: "./event-details-form.component.html",
 	styleUrl: "./event-details-form.component.css",
 })
-export class EventDetailsFormComponent extends AppBaseComponent {
+export class EventDetailsFormComponent
+	extends AppBaseComponent
+	implements AfterViewInit
+{
 	readonly formValidationKeys = eventDetailsValidationKeys;
 	readonly formValidationGroupKeys = eventDetailsValidationGroupKeys;
 	readonly eventDetailsControllerNames = eventDetailsControllerNames;
 	form = input<FormGroup<IEventDetailsForm>>(null!);
 	step = input<number>(null!);
 	title = input("");
+	changedDeadline = input<NgbDateStruct | null>(null);
 	derivedTitle = computed<string>(() => `${this.step()}. ${this.title()}`);
+	@ViewChild("datePicker") datePicker?: NgbDatepicker;
 	@ViewChild("deadlineDatePicker") deadlineDatePicker?: NgbDatepicker;
 
 	constructor() {
 		super();
-		this.navigateDeadlinePickerToDate =
-			this.navigateDeadlinePickerToDate.bind(this);
+		this.changedDeadlineEffect();
 	}
 
-	navigateDeadlinePickerToDate(): void {
-		const value = this.getControl(eventDetailsControllerNames.date).value;
-		if (value) {
+	changedDeadlineEffect() {
+		effect(() => {
+			const value = this.changedDeadline();
+			if (value == null) {
+				return;
+			}
 			this.deadlineDatePicker?.navigateTo(value);
-		}
+		});
+	}
+
+	ngAfterViewInit(): void {
+		this.datePicker?.navigateTo(
+			this.getControl(formControllers.date).value
+		);
+		this.deadlineDatePicker?.navigateTo(
+			this.getControl(formControllers.dateDeadline).value
+		);
 	}
 
 	private getControl(

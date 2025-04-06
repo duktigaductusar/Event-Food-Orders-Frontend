@@ -5,8 +5,8 @@
 		"btnOk": "Ok",
 		"detailsForm": {
 			"title": "Event detaljer",
-			"subtitleDate": "Datum och deadline för eventet",
-			"subtitleTime": "Tider och deadline för eventet",
+			"subtitleDateAndTime": "Datum och tid för eventet",
+			"subtitleDeadline": "Deadline för eventet",
 			"nameLabel": "Namn",
 			"descriptionLabel": "Beskrivning",
 			"dateLabel": "Datum för eventet",

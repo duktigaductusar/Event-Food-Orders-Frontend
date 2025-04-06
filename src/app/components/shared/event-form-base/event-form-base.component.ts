@@ -4,10 +4,8 @@ import {
 	effect,
 	input,
 	OnDestroy,
-	OnInit,
 	output,
 	signal,
-	ViewChild,
 	AfterViewInit,
 } from "@angular/core";
 import { EventDetailsFormComponent } from "./event-details-form/event-details-form.component";
@@ -35,6 +33,7 @@ import {
 } from "./event-form.setup";
 import { createEventDtoFromEventForm } from "./event-form.utility";
 import { EventFormHeaderContainerComponent } from "./event-form-header-container/event-form-header-container.component";
+import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
 	selector: "app-event-form-base",
@@ -64,13 +63,13 @@ export class EventFormBaseComponent
 	};
 	currentStep = this.formSteps.formDetailStep;
 	selectedUsers = signal<IUserDto[]>([]);
+	changedDeadline = signal<NgbDateStruct | null>(null);
 	form = input<FormGroup<ICreateEventForm>>();
 	initialEvent = input<Partial<IEventDetailOwnerDto>>();
 	initialEventId = input<string | null>(null);
 	submitEventForm = output<IEventForCreationDto>();
 	currentStepChange = output<number>();
 	currentEvent: Partial<IEventDto> = {};
-	@ViewChild("eventDetailsForm") eventDetailsForm?: EventDetailsFormComponent;
 
 	readonly safeForm = computed(() => {
 		const value = this.form();
@@ -99,7 +98,8 @@ export class EventFormBaseComponent
 		subscribeDateDeadlineToDateChange(
 			this.eventDetailsFormGroup,
 			this.destroy,
-			this.eventDetailsForm?.navigateDeadlinePickerToDate
+			// this.eventDetailsForm?.navigateDeadlinePickerToDate,
+			this.changedDeadline
 		);
 		subscribeTimeDeadlineToTimeChange(
 			this.eventDetailsFormGroup,

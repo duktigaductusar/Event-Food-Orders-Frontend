@@ -18,6 +18,7 @@ import {
 	dateToNgbTimeStruct,
 	isLessThanOneDayInFuture,
 } from "@app/utility";
+import { WritableSignal } from "@angular/core";
 
 export function buildCreateEventForm(
 	fb: FormBuilder,
@@ -79,7 +80,7 @@ export function buildCreateEventForm(
 export function subscribeDateDeadlineToDateChange(
 	eventDetailsGroup: FormGroup,
 	destroy: Observable<void>,
-	navigateToDate?: () => void
+	changedDeadline: WritableSignal<NgbDateStruct | null>
 ): void {
 	eventDetailsGroup
 		.get(formControllers.date)
@@ -116,7 +117,7 @@ export function subscribeDateDeadlineToDateChange(
 				{ emitEvent: false } // used to avoid recursion
 			);
 
-			navigateToDate?.();
+			changedDeadline.set(dateDeadline);
 		});
 }
 

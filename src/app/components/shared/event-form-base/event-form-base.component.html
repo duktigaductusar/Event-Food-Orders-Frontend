@@ -3,7 +3,7 @@
 		@switch (currentStep) {
 			@case (formSteps.formDetailStep) {
 				<app-event-details-form
-					#eventDetailsForm
+					[changedDeadline]="changedDeadline()"
 					[title]="formTitles.eventDetailTitle"
 					[step]="currentStep"
 					[form]="eventDetailsFormGroup"
