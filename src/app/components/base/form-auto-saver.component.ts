@@ -2,12 +2,15 @@ import { FormGroup } from "@angular/forms";
 import { StorageKeyType, StorageService, StorageType } from "@app/services";
 import { Subscription, debounceTime } from "rxjs";
 
-const defaultDebounceTime = 5000;
+const defaultDebounceTime = 2000;
 
+// TODO Check if stored event have same id as new event or something
+// to avoid bug/issue
 export class FormAutoSaver<T> {
 	private sub?: Subscription;
 	private unloadHandler;
 	private storageType: StorageType;
+	private debounceMs: number;
 
 	constructor(
 		private form: FormGroup,
@@ -17,10 +20,27 @@ export class FormAutoSaver<T> {
 		options?: {
 			debounceTimeMs?: number;
 			storageType?: StorageType;
+			setupCallback?: () => void;
 		}
 	) {
 		this.storageType = options?.storageType ?? "local";
 
+		this.debounceMs = options?.debounceTimeMs ?? defaultDebounceTime;
+
+		this.unloadHandler = () => {
+			this.storageService.setItem<T>(
+				this.storageKey,
+				this.form.getRawValue(),
+				this.storageType
+			);
+		};
+
+		if (options?.setupCallback != null) {
+			options?.setupCallback();
+		}
+	}
+
+	subscribe() {
 		const saved = this.storageService.getItem<T>(
 			this.storageKey,
 			this.typeGuard,
@@ -31,9 +51,8 @@ export class FormAutoSaver<T> {
 			this.form.patchValue(saved);
 		}
 
-		const debounceMs = options?.debounceTimeMs ?? defaultDebounceTime;
 		this.sub = this.form.valueChanges
-			.pipe(debounceTime(debounceMs))
+			.pipe(debounceTime(this.debounceMs))
 			.subscribe(value => {
 				this.storageService.setItem<T>(
 					this.storageKey,
@@ -42,13 +61,6 @@ export class FormAutoSaver<T> {
 				);
 			});
 
-		this.unloadHandler = () => {
-			this.storageService.setItem<T>(
-				this.storageKey,
-				this.form.getRawValue(),
-				this.storageType
-			);
-		};
 		window.addEventListener("beforeunload", this.unloadHandler);
 	}
 

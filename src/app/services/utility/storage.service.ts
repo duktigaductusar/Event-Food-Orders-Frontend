@@ -2,10 +2,14 @@ import { Injectable } from "@angular/core";
 
 export type StorageType = "local" | "session";
 
-export type StorageKeyType =
-	| "NEW_EVENT_FORM"
-	| "UPDATE_EVENT_FORM"
-	| "EVENT_RESPONSE_FORM";
+export const storageKeys = {
+	newEventForm: "new_event_form",
+	updateEventForm: "update_event_form",
+	updateEventId: "update_event_id",
+	eventResponseForm: "event_response_form",
+} as const;
+
+export type StorageKeyType = (typeof storageKeys)[keyof typeof storageKeys];
 
 @Injectable({ providedIn: "root" })
 export class StorageService {
@@ -34,9 +38,5 @@ export class StorageService {
 
 	removeItem(key: string, type: StorageType = "local"): void {
 		this.getStorage(type).removeItem(key);
-	}
-
-	clear(type: StorageType = "local"): void {
-		this.getStorage(type).clear();
 	}
 }

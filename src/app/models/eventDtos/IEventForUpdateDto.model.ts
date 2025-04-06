@@ -1,8 +1,3 @@
-export interface IEventForUpdateDto {
-	title: string;
-	description: string;
-	date: string;
-	endTime: string | null;
-	deadline: string;
-	userIds: string[];
-}
+import { IEventForCreationDto } from "./IEventForCreationDto";
+
+export type IEventForUpdateDto = IEventForCreationDto;

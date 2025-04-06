@@ -14,12 +14,12 @@ import { EventService, EventStateService, StorageService } from "@app/services";
 import { ApiError } from "@app/interceptors/api-error.interceptor";
 import {
 	buildCreateEventForm,
-	createEventDtoFromEventForm,
 	EventFormBaseComponent,
 	ICreateEventForm,
 	isEventFormData,
 } from "@app/components/shared";
 import { GenericBtnComponent } from "../../../html/generic-btn/generic-btn.component";
+import { storageKeys } from "@app/services/utility/storage.service";
 
 @Component({
 	selector: "app-edit-event",
@@ -28,12 +28,11 @@ import { GenericBtnComponent } from "../../../html/generic-btn/generic-btn.compo
 	styleUrl: "./edit-event.component.css",
 })
 export class EditEventComponent implements OnDestroy, OnInit {
-	event = input<Partial<IEventDetailOwnerDto>>();
-	eventId = input<string | null>(null);
-
 	form!: FormGroup<ICreateEventForm>;
 	computedForm = computed(() => this.form);
 	isPending = signal(false);
+	event = input<Partial<IEventDetailOwnerDto>>();
+	eventId = input<string | null>(null);
 	private autoFormSaver!: FormAutoSaver<Partial<IEventForCreationDto>>;
 
 	constructor(
@@ -41,21 +40,40 @@ export class EditEventComponent implements OnDestroy, OnInit {
 		private eventService: EventService,
 		private eventStateService: EventStateService,
 		private storageService: StorageService
-	) {}
+	) {
+		this.synchronizeAutoSaverData =
+			this.synchronizeAutoSaverData.bind(this);
+	}
 
 	ngOnInit(): void {
 		this.form = buildCreateEventForm(this.fb, this.event());
-		const currentEventData = createEventDtoFromEventForm(this.form);
-		if (currentEventData != null) {
-			this.storageService.setItem("UPDATE_EVENT_FORM", currentEventData);
-		}
 
 		this.autoFormSaver = new FormAutoSaver(
 			this.form,
 			this.storageService,
-			"UPDATE_EVENT_FORM",
-			isEventFormData
+			storageKeys.updateEventForm,
+			isEventFormData,
+			{ setupCallback: this.synchronizeAutoSaverData }
 		);
+		this.autoFormSaver.subscribe();
+	}
+
+	synchronizeAutoSaverData() {
+		const storedEventId = this.storageService.getItem(
+			storageKeys.updateEventId,
+			(value): value is string => typeof value === "string"
+		);
+
+		if (storedEventId == null || storedEventId !== this.eventId()) {
+			this.storageService.setItem(
+				storageKeys.updateEventId,
+				this.eventId()
+			);
+			this.storageService.setItem(
+				storageKeys.updateEventForm,
+				this.form.value
+			);
+		}
 	}
 
 	getTitleForEditingForm() {
@@ -63,9 +81,7 @@ export class EditEventComponent implements OnDestroy, OnInit {
 	}
 
 	toggleEdit() {
-		this.eventStateService.toggleEditEvent(() => {
-			this.storageService.clear();
-		});
+		this.eventStateService.toggleEditEvent();
 	}
 
 	submitEdit(eventDto: IEventForCreationDto) {
@@ -80,7 +96,7 @@ export class EditEventComponent implements OnDestroy, OnInit {
 			.pipe(finalize(() => this.isPending.set(false)))
 			.subscribe({
 				next: () => {
-					this.storageService.clear();
+					this.storageService.removeItem(storageKeys.updateEventForm);
 					this.eventStateService.toggleEditEvent();
 				},
 				error: (error: ApiError) => {

@@ -5,6 +5,7 @@ export { TranslateService } from "./utility/translate.service";
 export { EventStateService } from "./state/event-state.service";
 export {
 	StorageService,
+	storageKeys,
 	type StorageKeyType,
 	type StorageType,
 } from "./utility/storage.service";

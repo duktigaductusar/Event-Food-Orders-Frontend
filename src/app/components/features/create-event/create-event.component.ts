@@ -7,7 +7,12 @@ import {
 	NgbTimeStruct,
 } from "@ng-bootstrap/ng-bootstrap";
 import { IEventDto, IEventForCreationDto } from "@app/models";
-import { EventService, EventStateService, StorageService } from "@app/services";
+import {
+	EventService,
+	EventStateService,
+	storageKeys,
+	StorageService,
+} from "@app/services";
 import { ApiError } from "@app/interceptors/api-error.interceptor";
 import { FormAutoSaver } from "@app/components/base/form-auto-saver.component";
 import {
@@ -43,9 +48,10 @@ export class CreateEventComponent implements OnDestroy, OnInit {
 		this.autoFormSaver = new FormAutoSaver(
 			this.form,
 			this.storageService,
-			"NEW_EVENT_FORM",
+			storageKeys.newEventForm,
 			isEventFormData
 		);
+		this.autoFormSaver.subscribe();
 	}
 
 	submitCreate(eventDto: IEventForCreationDto) {
@@ -81,7 +87,7 @@ export class CreateEventComponent implements OnDestroy, OnInit {
 
 		modalRef.result
 			.then(result => {
-				this.storageService.clear();
+				this.storageService.removeItem(storageKeys.updateEventForm);
 				if (result === newEventResultSelection.newEventFormSelection) {
 					this.resetForm();
 				}

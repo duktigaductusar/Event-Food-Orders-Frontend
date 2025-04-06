@@ -87,8 +87,7 @@ export class EventDetailItemComponent
 			}
 		});
 
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		this.eventForm.get("responseType")?.valueChanges.subscribe(_ => {
+		this.eventForm.get("responseType")?.valueChanges.subscribe(() => {
 			this.clearFields();
 		});
 	}
