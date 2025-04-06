@@ -1,5 +1,10 @@
 import { FormGroup } from "@angular/forms";
-import { StorageKeyType, StorageService, StorageType } from "@app/services";
+import {
+	defaultStorage,
+	StorageKeyType,
+	StorageService,
+	StorageType,
+} from "@app/services";
 import { Subscription, debounceTime } from "rxjs";
 
 const defaultDebounceTime = 2000;
@@ -23,7 +28,7 @@ export class FormAutoSaver<T> {
 			setupCallback?: () => void;
 		}
 	) {
-		this.storageType = options?.storageType ?? "local";
+		this.storageType = options?.storageType ?? defaultStorage;
 
 		this.debounceMs = options?.debounceTimeMs ?? defaultDebounceTime;
 

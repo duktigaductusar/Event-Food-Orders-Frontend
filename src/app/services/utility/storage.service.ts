@@ -11,20 +11,26 @@ export const storageKeys = {
 
 export type StorageKeyType = (typeof storageKeys)[keyof typeof storageKeys];
 
+export const defaultStorage: StorageType = "session";
+
 @Injectable({ providedIn: "root" })
 export class StorageService {
 	private getStorage(type: StorageType): Storage {
 		return type === "local" ? localStorage : sessionStorage;
 	}
 
-	setItem<T>(key: string, value: T, type: StorageType = "local"): void {
+	setItem<T>(
+		key: string,
+		value: T,
+		type: StorageType = defaultStorage
+	): void {
 		this.getStorage(type).setItem(key, JSON.stringify(value));
 	}
 
 	getItem<T>(
 		key: string,
 		is: (value: unknown) => value is T,
-		type: StorageType = "local"
+		type: StorageType = defaultStorage
 	): T | null {
 		const raw = this.getStorage(type).getItem(key);
 		if (!raw) return null;
@@ -36,7 +42,7 @@ export class StorageService {
 		}
 	}
 
-	removeItem(key: string, type: StorageType = "local"): void {
+	removeItem(key: string, type: StorageType = defaultStorage): void {
 		this.getStorage(type).removeItem(key);
 	}
 }
