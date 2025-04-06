@@ -7,6 +7,8 @@ import {
 	OnInit,
 	output,
 	signal,
+	ViewChild,
+	AfterViewInit,
 } from "@angular/core";
 import { EventDetailsFormComponent } from "./event-details-form/event-details-form.component";
 import { FormGroup } from "@angular/forms";
@@ -51,7 +53,7 @@ import { EventFormHeaderContainerComponent } from "./event-form-header-container
 })
 export class EventFormBaseComponent
 	extends AppBaseComponent
-	implements OnDestroy, OnInit
+	implements OnDestroy, AfterViewInit
 {
 	formTitles = formTitles;
 	private destroy = new Subject<void>();
@@ -68,6 +70,7 @@ export class EventFormBaseComponent
 	submitEventForm = output<IEventForCreationDto>();
 	currentStepChange = output<number>();
 	currentEvent: Partial<IEventDto> = {};
+	@ViewChild("eventDetailsForm") eventDetailsForm?: EventDetailsFormComponent;
 
 	readonly safeForm = computed(() => {
 		const value = this.form();
@@ -92,10 +95,11 @@ export class EventFormBaseComponent
 		});
 	}
 
-	ngOnInit(): void {
+	ngAfterViewInit(): void {
 		subscribeDateDeadlineToDateChange(
 			this.eventDetailsFormGroup,
-			this.destroy
+			this.destroy,
+			this.eventDetailsForm?.navigateDeadlinePickerToDate
 		);
 		subscribeTimeDeadlineToTimeChange(
 			this.eventDetailsFormGroup,

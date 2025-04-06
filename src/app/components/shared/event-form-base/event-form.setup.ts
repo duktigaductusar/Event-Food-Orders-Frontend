@@ -78,7 +78,8 @@ export function buildCreateEventForm(
 
 export function subscribeDateDeadlineToDateChange(
 	eventDetailsGroup: FormGroup,
-	destroy: Observable<void>
+	destroy: Observable<void>,
+	navigateToDate?: () => void
 ): void {
 	eventDetailsGroup
 		.get(formControllers.date)
@@ -114,6 +115,8 @@ export function subscribeDateDeadlineToDateChange(
 				{ dateDeadline },
 				{ emitEvent: false } // used to avoid recursion
 			);
+
+			navigateToDate?.();
 		});
 }
 

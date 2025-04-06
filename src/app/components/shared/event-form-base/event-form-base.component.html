@@ -3,6 +3,7 @@
 		@switch (currentStep) {
 			@case (formSteps.formDetailStep) {
 				<app-event-details-form
+					#eventDetailsForm
 					[title]="formTitles.eventDetailTitle"
 					[step]="currentStep"
 					[form]="eventDetailsFormGroup"

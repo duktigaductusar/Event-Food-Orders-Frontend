@@ -1,4 +1,10 @@
-import { Component, computed, input } from "@angular/core";
+import {
+	Component,
+	computed,
+	input,
+	ViewChild,
+	AfterViewInit,
+} from "@angular/core";
 import {
 	FormGroup,
 	ReactiveFormsModule,
@@ -6,6 +12,7 @@ import {
 } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import {
+	NgbDatepicker,
 	NgbDatepickerModule,
 	NgbTimepickerModule,
 } from "@ng-bootstrap/ng-bootstrap";
@@ -49,6 +56,20 @@ export class EventDetailsFormComponent extends AppBaseComponent {
 	step = input<number>(null!);
 	title = input("");
 	derivedTitle = computed<string>(() => `${this.step()}. ${this.title()}`);
+	@ViewChild("deadlineDatePicker") deadlineDatePicker?: NgbDatepicker;
+
+	constructor() {
+		super();
+		this.navigateDeadlinePickerToDate =
+			this.navigateDeadlinePickerToDate.bind(this);
+	}
+
+	navigateDeadlinePickerToDate(): void {
+		const value = this.getControl(eventDetailsControllerNames.date).value;
+		if (value) {
+			this.deadlineDatePicker?.navigateTo(value);
+		}
+	}
 
 	private getControl(
 		controlName: EventDetailsFormControllerNameType
