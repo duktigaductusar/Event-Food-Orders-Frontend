@@ -30,7 +30,7 @@ import { SpinnerComponent } from "@app/components/shared";
 		StatusLabelComponent,
 		ResponsiveFormComponent,
 		ReactiveFormsModule,
-		SpinnerComponent
+		SpinnerComponent,
 	],
 	templateUrl: "./event-detail-item.component.html",
 	styleUrl: "./event-detail-item.component.css",
@@ -87,8 +87,7 @@ export class EventDetailItemComponent
 			}
 		});
 
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		this.eventForm.get("responseType")?.valueChanges.subscribe(_ => {
+		this.eventForm.get("responseType")?.valueChanges.subscribe(() => {
 			this.clearFields();
 		});
 	}

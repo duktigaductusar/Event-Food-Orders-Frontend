@@ -1,12 +1,12 @@
-import { CommonModule } from '@angular/common';
-import { Component, HostListener, Input } from '@angular/core';
-import { breakpoints } from '@app/components/style';
+import { CommonModule } from "@angular/common";
+import { Component, HostListener, Input } from "@angular/core";
+import { breakpoints } from "@app/components/style";
 
 @Component({
-  selector: 'app-responsive-div',
-  imports: [CommonModule],
-  templateUrl: './responsive-div.component.html',
-  styleUrl: './responsive-div.component.css'
+	selector: "app-responsive-div",
+	imports: [CommonModule],
+	templateUrl: "./responsive-div.component.html",
+	styleUrl: "./responsive-div.component.css",
 })
 export class ResponsiveDivComponent {
 	@Input() withParentStyle = "";

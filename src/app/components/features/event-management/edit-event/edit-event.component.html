@@ -1,1 +1,37 @@
-<app-create-event [initialEvent]="event()"></app-create-event>
+<app-event-form-base
+	[form]="computedForm()"
+	[initialEvent]="event()"
+	[initialEventId]="eventId()"
+	(submitEventForm)="submitEdit($event)"
+>
+	<div extra-header-one class="pb-4 d-flex justify-content-center">
+		<app-generic-btn
+			[icon]="'stop-circle'"
+			[label]="getTitleForEditingForm()"
+			[customClass]="'w-auto border-0 fs-5'"
+			[borderColor]="'danger'"
+			(action)="toggleEdit()"
+		>
+		</app-generic-btn>
+	</div>
+	<div extra-header-two class="pb-4 d-flex justify-content-center">
+		<app-generic-btn
+			[icon]="'stop-circle'"
+			[label]="getTitleForEditingForm()"
+			[customClass]="'w-auto border-0 fs-5'"
+			[borderColor]="'danger'"
+			(action)="toggleEdit()"
+		>
+		</app-generic-btn>
+	</div>
+	<div extra-header-three class="pb-4 d-flex justify-content-center">
+		<app-generic-btn
+			[icon]="'stop-circle'"
+			[label]="getTitleForEditingForm()"
+			[customClass]="'w-auto border-0 fs-5'"
+			[borderColor]="'danger'"
+			(action)="toggleEdit()"
+		>
+		</app-generic-btn>
+	</div>
+</app-event-form-base>

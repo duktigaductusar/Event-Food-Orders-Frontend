@@ -15,19 +15,13 @@ import {
 	SpinnerComponent,
 	StatusLabelComponent,
 } from "@app/components/shared";
-import {
-	IEventDetailOwnerDto,
-	IEventDto,
-	IParticipantForResponseDto,
-	IUserDto,
-} from "@app/models";
+import { IEventDetailOwnerDto, IEventDto, IUserDto } from "@app/models";
 import { IEventDetailDto } from "@app/models/eventDtos/IEventDetailDto.model";
 import { EventService, EventStateService, UserService } from "@app/services";
 
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { EventManagementDeleteModalComponentComponent } from "./event-management-delete-modal-component/event-management-delete-modal-component.component";
 import { EditEventComponent } from "./edit-event/edit-event.component";
-import { ResponsiveFormComponent } from "../../html/responsive-form/responsive-form.component";
 import { CommonModule } from "@angular/common";
 import { fromDateTimeISOString } from "@app/utility";
 import { appRoutes } from "@app/constants";
@@ -45,8 +39,8 @@ import { ResponsiveDivComponent } from "@app/components/html/responsive-div.comp
 		GenericBtnComponent,
 		EditEventComponent,
 		CommonModule,
-    ResponsiveDivComponent,
-    SpinnerComponent
+		ResponsiveDivComponent,
+		SpinnerComponent,
 	],
 	templateUrl: "./event-management-form.component.html",
 	styleUrl: "./event-management-form.component.css",
@@ -55,12 +49,12 @@ export class EventManagementFormComponent
 	extends AppBaseComponent
 	implements OnInit
 {
-	edit = signal(false);
 	selectedEventDto: Signal<IEventDto | null>;
 	eventDetailDto: IEventDetailInfoDto | null = null;
 	participants: IParticipantWithUserDto[] = [];
 	users: IUserDto[] = [];
 	isPending = signal(false);
+	even = signal(false);
 
 	private modalService = inject(NgbModal);
 
@@ -79,7 +73,7 @@ export class EventManagementFormComponent
 	}
 
 	ngOnInit(): void {
-    // TODO look into removing these following three lines
+		// TODO look into removing these following three lines
 		// if (this.selectedEventDto() != null) {
 		// 	this.loadEventDetailInfoDto(this.selectedEventDto()?.id);
 		// }
@@ -106,21 +100,21 @@ export class EventManagementFormComponent
 					this.eventDetailDto = item;
 					this.eventStateService.selectedEventDto.set(item);
 					this.participants = item.participants;
-          this.setUsers();
+					this.setUsers();
 				},
 				error: error => console.error("Test error" + error),
 			});
 	}
 
-  setUsers() {
-    this.participants.forEach(p => {
-      this.users.push({
-        userId: p.userId,
-        username: p.userName,
-        email: p.email
-      })
-    });
-  }
+	setUsers() {
+		this.participants.forEach(p => {
+			this.users.push({
+				userId: p.userId,
+				username: p.userName,
+				email: p.email,
+			});
+		});
+	}
 
 	registerToEvent() {
 		this.eventStateService.setSelectedEvent(this.selectedEventDto()!);
@@ -138,11 +132,11 @@ export class EventManagementFormComponent
 	}
 
 	toggleEdit() {
-		console.log("created real: ", this.createEventDetailOwnerDto());
-		this.edit.update(prev => !prev);
-		if (!this.edit()) {
-			this.loadEventDetailInfoDto(this.selectedEventDto()?.id);
-		}
+		this.eventStateService.toggleEditEvent(() => {
+			if (!this.eventStateService.editEvent()) {
+				this.loadEventDetailInfoDto(this.selectedEventDto()?.id);
+			}
+		});
 	}
 
 	createEventDetailOwnerDto(): Partial<IEventDetailOwnerDto> {

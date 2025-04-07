@@ -1,11 +1,9 @@
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NgbDateStruct, NgbTimeStruct } from "@ng-bootstrap/ng-bootstrap";
 import { Observable, takeUntil } from "rxjs";
-import { formControllers, formGroups } from "./constants";
+import { formControllers } from "./constants";
 import { environment } from "@environments";
-import { ICreateEventForm } from "./interfaces";
 import { IEventDetailOwnerDto } from "@app/models";
-import { IEventForCreationDto } from "@app/models/eventDtos/IEventForCreationDto";
 import {
 	dateValidator,
 	timeValidator,
@@ -14,14 +12,13 @@ import {
 	deadlineBeforeEventValidator,
 	endTimeValidator,
 	dateValidatorFutureDate,
-} from "./create-event.validators";
+} from "./event-form.validators";
 import {
-	toDateTimeISOStrig,
-	getDateFromNgbTimeAndDateStructs,
 	dateToNgbDateStruct,
 	dateToNgbTimeStruct,
 	isLessThanOneDayInFuture,
 } from "@app/utility";
+import { WritableSignal } from "@angular/core";
 
 export function buildCreateEventForm(
 	fb: FormBuilder,
@@ -80,39 +77,10 @@ export function buildCreateEventForm(
 	});
 }
 
-export function createEventDtoFromCreateEventForm(
-	form: FormGroup<ICreateEventForm>
-): IEventForCreationDto | null {
-	if (!form.valid) {
-		return null;
-	}
-
-	return {
-		title: form.getRawValue()[formGroups.eventDetailsForm]?.title,
-		description:
-			form.getRawValue()[formGroups.eventDetailsForm]?.description,
-		date: toDateTimeISOStrig(
-			form.getRawValue()[formGroups.eventDetailsForm]?.date,
-			form.getRawValue()[formGroups.eventDetailsForm]?.time
-		),
-		endTime:
-			getDateFromNgbTimeAndDateStructs(
-				form.getRawValue()[formGroups.eventDetailsForm]?.date,
-				form.getRawValue()[formGroups.eventDetailsForm]?.endTime
-			)?.toISOString() ?? null,
-		deadline: toDateTimeISOStrig(
-			form.getRawValue()[formGroups.eventDetailsForm]?.dateDeadline,
-			form.getRawValue()[formGroups.eventDetailsForm]?.timeDeadline
-		),
-		userIds:
-			form.value[formGroups.inviteUsersForm]?.users?.map(p => p.userId) ??
-			[],
-	};
-}
-
 export function subscribeDateDeadlineToDateChange(
 	eventDetailsGroup: FormGroup,
-	destroy: Observable<void>
+	destroy: Observable<void>,
+	changedDeadline: WritableSignal<NgbDateStruct | null>
 ): void {
 	eventDetailsGroup
 		.get(formControllers.date)
@@ -148,6 +116,8 @@ export function subscribeDateDeadlineToDateChange(
 				{ dateDeadline },
 				{ emitEvent: false } // used to avoid recursion
 			);
+
+			changedDeadline.set(dateDeadline);
 		});
 }
 

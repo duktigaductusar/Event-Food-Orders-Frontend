@@ -2,5 +2,5 @@ import { IParticipantWithUserDto } from "../participantDtos/IParticipantWithUser
 import { IEventDetailDto } from "./IEventDetailDto.model";
 
 export interface IEventDetailInfoDto extends IEventDetailDto {
-    participants: IParticipantWithUserDto[];
+	participants: IParticipantWithUserDto[];
 }
