@@ -12,8 +12,12 @@ export class UserService {
 
 	constructor(private http: HttpClient) {}
 
-	getUsers(queryString: string): Observable<IUserDto[]> {
-		return this.http.get<IUserDto[]>(`${this.apiUrl}`, {
+	getUsers(queryString: string, eventId?: string): Observable<IUserDto[]> {
+		const url = eventId == null
+			? `${this.apiUrl}`
+			: `${this.apiUrl}?eventId=${eventId}` 
+		
+		return this.http.get<IUserDto[]>(url, {
 			params: { queryString },
 		});
 	}
