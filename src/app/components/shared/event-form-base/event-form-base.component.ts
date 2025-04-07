@@ -118,7 +118,6 @@ export class EventFormBaseComponent
 
 	getDerivedUsers() {
 		return [
-			// ...(this.initialEvent()?.users ?? []),
 			...(this.safeForm().value.inviteUsersForm?.users ?? []),
 		];
 	}
