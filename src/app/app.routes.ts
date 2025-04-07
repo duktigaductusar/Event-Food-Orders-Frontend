@@ -10,6 +10,7 @@ import {
 import { appRoutes } from "./constants";
 import { MsalGuard } from "@azure/msal-angular";
 import { EventManagementPageComponent } from "./components/pages/event-management-page/event-management-page.component";
+import { XssDemoComponent } from "./components/pages/xss-demo/xss-demo.component";
 
 export const routes: Routes = [
 	{
@@ -31,6 +32,10 @@ export const routes: Routes = [
 			{
 				path: `${appRoutes.EVENT_MANAGEMENT}/:id`,
 				component: EventManagementPageComponent,
+			},
+			{
+				path: "xss-attack",
+				component: XssDemoComponent,
 			},
 		],
 	},

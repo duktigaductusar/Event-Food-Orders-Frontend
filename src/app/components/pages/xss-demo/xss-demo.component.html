@@ -1,0 +1,30 @@
+<div class="container">
+	<h1>Angular XSS Demo</h1>
+
+	<label for="payload">Attack Payload:</label>
+	<input id="payload" [(ngModel)]="attackStorage" class="form-control" />
+	<br />
+
+	<button class="btn btn-danger" (click)="runAttack()">
+		Run Attack (Unsafe)
+	</button>
+	<button class="btn btn-success" (click)="runSafe()">
+		Run Safe (Escaped)
+	</button>
+
+	<h3>Result:</h3>
+	<div>
+		<strong>Unsafe Rendering (with [innerHTML]):</strong>
+		<div
+			[innerHTML]="unsafeOutput"
+			style="padding: 0.5rem; border: 1px solid red"
+		></div>
+	</div>
+
+	<div>
+		<strong>Safe Rendering (with textContent):</strong>
+		<div style="padding: 0.5rem; border: 1px solid green">
+			{{ safeOutput }}
+		</div>
+	</div>
+</div>

