@@ -97,7 +97,7 @@ export class EditEventComponent implements OnDestroy, OnInit {
 			.subscribe({
 				next: () => {
 					this.storageService.removeItem(storageKeys.updateEventForm);
-					this.eventStateService.toggleEditEvent();
+					window.location.reload();
 				},
 				error: (error: ApiError) => {
 					console.error("Error fetching users:", error.message);
