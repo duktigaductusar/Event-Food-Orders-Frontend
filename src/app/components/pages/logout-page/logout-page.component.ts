@@ -5,6 +5,6 @@ import { LogoutComponent } from "@app/components/features/auth";
 @Component({
 	selector: "app-logout-page",
 	templateUrl: "./logout-page.component.html",
-	imports: [LogoutComponent]
+	imports: [LogoutComponent],
 })
-export class LogoutPageComponent extends AppBaseComponent { }
+export class LogoutPageComponent extends AppBaseComponent {}

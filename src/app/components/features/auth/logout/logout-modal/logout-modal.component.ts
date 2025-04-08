@@ -8,10 +8,10 @@ import { appRoutes } from "@app/constants";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
 
 @Component({
-  selector: 'app-logout-modal',
-  imports: [CommonModule, GenericBtnComponent],
-  templateUrl: './logout-modal.component.html',
-  styleUrl: './logout-modal.component.css'
+	selector: "app-logout-modal",
+	imports: [CommonModule, GenericBtnComponent],
+	templateUrl: "./logout-modal.component.html",
+	styleUrl: "./logout-modal.component.css",
 })
 export class LogoutModalComponent extends AppBaseComponent {
 	activeModal = inject(NgbActiveModal);
@@ -31,7 +31,7 @@ export class LogoutModalComponent extends AppBaseComponent {
 	}
 
 	navigateHome() {
-		this.router.navigate([appRoutes.HOME])
+		this.router.navigate([appRoutes.HOME]);
 	}
 
 	logout() {
