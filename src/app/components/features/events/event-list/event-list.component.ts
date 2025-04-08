@@ -1,6 +1,3 @@
-//todo
-//1.Error handling
-
 import { Component, signal, type OnInit } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { EventItemComponent } from "../event-item/event-item.component";

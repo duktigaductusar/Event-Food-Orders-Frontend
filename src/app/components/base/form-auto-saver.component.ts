@@ -9,8 +9,6 @@ import { Subscription, debounceTime } from "rxjs";
 
 const defaultDebounceTime = 2000;
 
-// TODO Check if stored event have same id as new event or something
-// to avoid bug/issue
 export class FormAutoSaver<T> {
 	private sub?: Subscription;
 	private unloadHandler;
