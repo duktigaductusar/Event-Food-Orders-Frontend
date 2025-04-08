@@ -31,7 +31,7 @@ export class ApiError {
 export class ApiErrorInterceptor implements HttpInterceptor {
 	constructor(
 		private readonly errorService: ApiErrorService,
-		private readonly router: Router 
+		private readonly router: Router
 	) {}
 
 	intercept(
@@ -41,12 +41,12 @@ export class ApiErrorInterceptor implements HttpInterceptor {
 		return next.handle(req).pipe(
 			catchError((error: HttpErrorResponse) => {
 				const apiError = ApiError.fromHttpError(error);
-				const forbiddenRequests = [401, 403]
+				const forbiddenRequests = [401, 403];
 
 				if (forbiddenRequests.includes(apiError.status)) {
-					this.navigateForbiddenRequestToHomePage()
+					this.navigateForbiddenRequestToHomePage();
 				} else {
-					this.displayErroMessageToUser(apiError)
+					this.displayErroMessageToUser(apiError);
 				}
 
 				return throwError(() => apiError);
@@ -55,7 +55,7 @@ export class ApiErrorInterceptor implements HttpInterceptor {
 	}
 
 	private navigateForbiddenRequestToHomePage() {
-		this.router.navigate([appRoutes.HOME])
+		this.router.navigate([appRoutes.HOME]);
 	}
 
 	private displayErroMessageToUser(apiError: ApiError) {

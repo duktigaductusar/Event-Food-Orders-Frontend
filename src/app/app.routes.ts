@@ -34,7 +34,7 @@ export const routes: Routes = [
 			},
 		],
 	},
-	{ path: appRoutes.LOGIN, component: LoginPageComponent },
+	{ path: appRoutes.LOGOUT, component: LogoutPageComponent },
 	{ path: appRoutes.TEST, component: ApiTestComponent },
 	{
 		path: appRoutes.LOGOUT,
