@@ -90,7 +90,9 @@ export class EventFormBaseComponent
 				this.formSteps.formUserStep
 			);
 			const initUsers = this.initialEvent()?.users ?? [];
-			form.get(formControllers.users)?.setValue([...initUsers, ...this.selectedUsers()]);
+			form
+				.get(formControllers.users)
+				?.setValue([...initUsers, ...this.selectedUsers()]);
 			form.get(formControllers.users)?.markAsTouched();
 		});
 	}
@@ -117,9 +119,7 @@ export class EventFormBaseComponent
 	}
 
 	getDerivedUsers() {
-		return [
-			...(this.safeForm().value.inviteUsersForm?.users ?? []),
-		];
+		return [...(this.safeForm().value.inviteUsersForm?.users ?? [])];
 	}
 
 	nextStep() {

@@ -112,6 +112,10 @@ export class EventDetailItemComponent
 		return fromDateTimeISOString(this.selectedEventDto()!.date);
 	}
 
+	fromDateTimeISOStringForEventDetailDto() {
+		return fromDateTimeISOString(this.eventDetailDto!.deadline);
+	}
+
 	clearFields(): void {
 		this.eventForm.patchValue({
 			preferences: this.eventDetailDto?.preferences ?? "",

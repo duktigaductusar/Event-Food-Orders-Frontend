@@ -43,7 +43,7 @@ export class EventUserFormComponent
 	title = input<string>(null!);
 	derivedTitle = computed<string>(() => `${this.step()}. ${this.title()}`);
 	selectedUsersChange = output<IUserDto>();
-	isPending = signal(false);	
+	isPending = signal(false);
 
 	constructor(
 		private userService: UserService,
@@ -100,7 +100,7 @@ export class EventUserFormComponent
 
 		const eventId = this.eventStateService.editEvent()
 			? this.eventStateService.selectedEventDto()?.id
-			: undefined
+			: undefined;
 
 		this.isPending.set(true);
 		this.userService
