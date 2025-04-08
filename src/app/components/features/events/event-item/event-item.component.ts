@@ -1,4 +1,3 @@
-// todo: this service uses state
 import { Component, input, output, signal } from "@angular/core";
 import type {
 	IEventDto,

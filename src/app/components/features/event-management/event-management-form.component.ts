@@ -1,4 +1,3 @@
-// todo: this service uses state
 import {
 	Component,
 	computed,
@@ -73,11 +72,6 @@ export class EventManagementFormComponent
 	}
 
 	ngOnInit(): void {
-		// TODO look into removing these following three lines
-		// if (this.selectedEventDto() != null) {
-		// 	this.loadEventDetailInfoDto(this.selectedEventDto()?.id);
-		// }
-
 		this.route.paramMap.subscribe(params => {
 			const eventId = params.get("id");
 			if (eventId) {

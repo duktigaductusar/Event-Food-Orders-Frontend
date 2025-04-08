@@ -1,4 +1,3 @@
-// todo: this service uses state
 import { Component, computed, OnInit, Signal, signal } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
