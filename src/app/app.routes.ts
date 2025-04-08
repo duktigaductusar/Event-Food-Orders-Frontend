@@ -32,7 +32,7 @@ export const routes: Routes = [
 			},
 		],
 	},
-	{ path: appRoutes.LOGOUT, component: LogoutPageComponent },	
+	{ path: appRoutes.LOGOUT, component: LogoutPageComponent },
 	{
 		path: appRoutes.LOGOUT,
 		component: LogoutPageComponent,
