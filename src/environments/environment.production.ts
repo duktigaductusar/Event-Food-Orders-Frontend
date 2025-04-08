@@ -1,8 +1,8 @@
 export const environment = {
 	production: false,
 	defaultDeadline: 1,
-	apiUrl: "http://localhost:8080/api",
-	baseUrl: "http://localhost:",
+	apiUrl: "https://api.duktiga-ductusar.online/api",
+	baseUrl: "https://api.duktiga-ductusar.online",
 	azureAd: {
 		clientId: "3049ab04-0e32-4c6b-99ed-020071d7b4ad",
 		authority:
