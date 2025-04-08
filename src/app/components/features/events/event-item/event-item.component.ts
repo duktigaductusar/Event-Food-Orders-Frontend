@@ -29,7 +29,7 @@ import { finalize } from "rxjs";
 	styleUrl: "event-item.component.css",
 })
 export class EventItemComponent extends AppBaseComponent {
-	eventDto = input<IEventDto | null>(null);
+	eventDto = input<IEventDto | null>(null);	
 	participantId = input<string>();
 	isPending = signal(false);
 	participantResult = output<IParticipantForResponseDto>();
@@ -84,7 +84,7 @@ export class EventItemComponent extends AppBaseComponent {
 
 	fromDateTimeISOStringForEventDto() {
 		return fromDateTimeISOString(this.eventDto()!.date);
-	}
+	}	
 
 	editEvent() {
 		if (this.isPending() || this.eventDto() == null) {
