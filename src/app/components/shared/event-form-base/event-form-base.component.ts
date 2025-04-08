@@ -89,7 +89,8 @@ export class EventFormBaseComponent
 			const form = this.getFormGroupForCurrentStep(
 				this.formSteps.formUserStep
 			);
-			form.get(formControllers.users)?.setValue(this.selectedUsers());
+			const initUsers = this.initialEvent()?.users ?? [];
+			form.get(formControllers.users)?.setValue([...initUsers, ...this.selectedUsers()]);
 			form.get(formControllers.users)?.markAsTouched();
 		});
 	}
@@ -117,7 +118,6 @@ export class EventFormBaseComponent
 
 	getDerivedUsers() {
 		return [
-			...(this.initialEvent()?.users ?? []),
 			...(this.safeForm().value.inviteUsersForm?.users ?? []),
 		];
 	}
