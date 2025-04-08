@@ -9,6 +9,8 @@ import {
 import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { ApiErrorService } from "@app/services/utility/api-error.service";
+import { Router } from "@angular/router";
+import { appRoutes } from "@app/constants";
 
 export class ApiError {
 	constructor(
@@ -27,7 +29,10 @@ export class ApiError {
 
 @Injectable()
 export class ApiErrorInterceptor implements HttpInterceptor {
-	constructor(private errorService: ApiErrorService) {}
+	constructor(
+		private readonly errorService: ApiErrorService,
+		private readonly router: Router
+	) {}
 
 	intercept(
 		req: HttpRequest<unknown>,
@@ -36,19 +41,27 @@ export class ApiErrorInterceptor implements HttpInterceptor {
 		return next.handle(req).pipe(
 			catchError((error: HttpErrorResponse) => {
 				const apiError = ApiError.fromHttpError(error);
+				const forbiddenRequests = [401, 403];
 
-				if (![401, 403].includes(apiError.status)) {
-					this.errorService.showError(
-						apiError.message,
-						`${apiError.status}: ${apiError.statusText}`
-					);
+				if (forbiddenRequests.includes(apiError.status)) {
+					this.navigateForbiddenRequestToHomePage();
 				} else {
-					// TODO Navigate to index on 401 and 403
-					console.log("show error");
+					this.displayErroMessageToUser(apiError);
 				}
 
 				return throwError(() => apiError);
 			})
+		);
+	}
+
+	private navigateForbiddenRequestToHomePage() {
+		this.router.navigate([appRoutes.HOME]);
+	}
+
+	private displayErroMessageToUser(apiError: ApiError) {
+		this.errorService.showError(
+			apiError.message,
+			`${apiError.status}: ${apiError.statusText}`
 		);
 	}
 }

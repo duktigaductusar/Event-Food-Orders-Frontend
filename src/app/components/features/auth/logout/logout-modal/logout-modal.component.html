@@ -1,0 +1,25 @@
+<div class="border border-5 border-info p-3 bg-white">
+	<div class="modal-header">
+		<p>{{ t("logout.logoutQuestion") }}</p>
+		<button
+			type="button"
+			class="btn-close"
+			aria-label="Close"
+			(click)="closeByDismiss()"
+		></button>
+	</div>
+	<div class="modal-body d-flex flex-row justify-content-center gap-2">
+		<app-generic-btn
+			[label]="t('logout.closeLogoutBtn')"
+			[icon]="'none'"
+			[borderColor]="'secondary'"
+			(click)="closeByCancel()"
+		></app-generic-btn>
+		<app-generic-btn
+			[label]="t('logout.logoutBtn')"
+			[icon]="'box-arrow-right'"
+			[borderColor]="'info'"
+			(click)="logout()"
+		></app-generic-btn>
+	</div>
+</div>

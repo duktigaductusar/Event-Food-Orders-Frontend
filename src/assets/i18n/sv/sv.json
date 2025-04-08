@@ -83,14 +83,16 @@
 		"titleNoEvent": "Inga event hittades",
 		"showMyEvents": "Visa event jag äger"
 	},
-	"login": {
-		"title": "Login Sida!"
+	"logout": {
+		"logoutQuestion": "Logga ut från Ductus matbeställnings app?",
+		"closeLogoutBtn": "Stäng",
+		"logoutBtn": "Logga ut"
 	},
 	"navigation": {
 		"title": "Ductus Events",
 		"menu_title": "Meny",
 		"home_link": "Hem",
-		"login_link": "Login",
+		"logout_link": "Logout",
 		"create_event_link": "Skapa Event"
 	}
 }
