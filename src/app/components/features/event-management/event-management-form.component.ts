@@ -147,6 +147,10 @@ export class EventManagementFormComponent
 		return fromDateTimeISOString(this.selectedEventDto()!.date);
 	}
 
+	fromDateTimeISOStringForEventDetailDto() {
+		return fromDateTimeISOString(this.eventDetailDto!.deadline);
+	}
+
 	openDeleteModal(event: IEventDetailDto) {
 		const modalRef = this.modalService.open(
 			EventManagementDeleteModalComponentComponent,

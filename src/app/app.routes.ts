@@ -3,9 +3,7 @@ import {
 	EventCreatePageComponent,
 	EventDetailsPageComponent,
 	HomePageComponent,
-	LoginPageComponent,
 	LogoutPageComponent,
-	ApiTestComponent,
 } from "@app/components";
 import { appRoutes } from "./constants";
 import { MsalGuard } from "@azure/msal-angular";
@@ -34,8 +32,7 @@ export const routes: Routes = [
 			},
 		],
 	},
-	{ path: appRoutes.LOGOUT, component: LogoutPageComponent },
-	{ path: appRoutes.TEST, component: ApiTestComponent },
+	{ path: appRoutes.LOGOUT, component: LogoutPageComponent },	
 	{
 		path: appRoutes.LOGOUT,
 		component: LogoutPageComponent,
