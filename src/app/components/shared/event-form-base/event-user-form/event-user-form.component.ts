@@ -11,7 +11,7 @@ import { FormGroup, FormsModule } from "@angular/forms";
 import { ResponsiveFormComponent } from "../../../html/responsive-form/responsive-form.component";
 import { IInviteForm } from "../interfaces";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
-import { UserService } from "@app/services";
+import { EventStateService, UserService } from "@app/services";
 import { IUserDto } from "@app/models";
 import {
 	Subject,
@@ -43,9 +43,12 @@ export class EventUserFormComponent
 	title = input<string>(null!);
 	derivedTitle = computed<string>(() => `${this.step()}. ${this.title()}`);
 	selectedUsersChange = output<IUserDto>();
-	isPending = signal(false);
+	isPending = signal(false);	
 
-	constructor(private service: UserService) {
+	constructor(
+		private userService: UserService,
+		private eventStateService: EventStateService
+	) {
 		super();
 	}
 
@@ -95,9 +98,13 @@ export class EventUserFormComponent
 			return;
 		}
 
+		const eventId = this.eventStateService.editEvent()
+			? this.eventStateService.selectedEventDto()?.id
+			: undefined
+
 		this.isPending.set(true);
-		this.service
-			.getUsers(query)
+		this.userService
+			.getUsers(query, eventId)
 			.pipe(finalize(() => this.isPending.set(false)))
 			.subscribe({
 				next: u => {
