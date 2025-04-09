@@ -6,11 +6,18 @@ import { EventService } from "@app/services";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
 import { SpinnerComponent } from "@app/components/shared";
 import { finalize } from "rxjs";
+import { NavLinkComponent } from "../../../html/nav-link/nav-link.component";
+import { appRoutes } from "@app/constants";
 
 @Component({
 	selector: "app-event-list",
 	standalone: true,
-	imports: [FormsModule, EventItemComponent, SpinnerComponent],
+	imports: [
+		FormsModule,
+		EventItemComponent,
+		SpinnerComponent,
+		NavLinkComponent,
+	],
 	templateUrl: "./event-list.component.html",
 })
 export class EventListComponent extends AppBaseComponent implements OnInit {
@@ -36,7 +43,7 @@ export class EventListComponent extends AppBaseComponent implements OnInit {
 			.pipe(finalize(() => this.isPending.set(false)))
 			.subscribe({
 				next: events => {
-					this.eventDtos = events;
+				    this.eventDtos = events;
 					this.applyFilter();
 				},
 				error: error => console.error("Test error" + error),
@@ -56,6 +63,10 @@ export class EventListComponent extends AppBaseComponent implements OnInit {
 		} else {
 			this.filteredEventDtos = [...this.eventDtos];
 		}
+	}
+
+	getCreateNewLink() {
+		return appRoutes.EVENT_CREATE;
 	}
 
 	updateEventResponse(

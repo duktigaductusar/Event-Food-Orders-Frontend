@@ -82,18 +82,31 @@
 							}}
 						</h5>
 						<p>
-							{{this.getConfirmedParticipants()}} {{t("event-management.of")}} {{participants.length}} {{t("event-management.participantsHaveResponded")}}
+							{{ this.getConfirmedParticipants() }}
+							{{ t("event-management.of") }}
+							{{ participants.length }}
+							{{
+								t("event-management.participantsHaveResponded")
+							}}
 						</p>
 						<ul class="list-group">
 							@for (user of users; track user.userId) {
 								<li
 									class="list-group-item d-flex flex-column flex-sm-row"
 								>
-									<div class="d-flex gap-3 align-items-center mb-0">
+									<div
+										class="d-flex gap-3 align-items-center mb-0"
+									>
 										<i class="bi bi-person-check"></i>
-										<app-status-label [eventDto]="createLabelTypeFromUserDto(user)"></app-status-label>
+										<app-status-label
+											[eventDto]="
+												createLabelTypeFromUserDto(user)
+											"
+										></app-status-label>
 									</div>
-									<div class="w-100 text-center text-md-start d-flex justify-content-end">
+									<div
+										class="w-100 text-center text-md-start d-flex justify-content-end"
+									>
 										{{ user.email }}
 									</div>
 								</li>
