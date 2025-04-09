@@ -18,7 +18,6 @@ import {
 } from "@azure/msal-angular";
 import { PublicClientApplication, InteractionType } from "@azure/msal-browser";
 import { environment } from "@environments/environment.development";
-import { debuggingInterceptor } from "./components/pages/api-testing-page/debuggingInterceptor";
 import {
 	ApiErrorInterceptor,
 	JsonContentTypeInterceptor,
@@ -79,11 +78,6 @@ export const appConfig: ApplicationConfig = {
 		{
 			provide: HTTP_INTERCEPTORS,
 			useClass: ApiErrorInterceptor,
-			multi: true,
-		},
-		{
-			provide: HTTP_INTERCEPTORS,
-			useClass: debuggingInterceptor,
 			multi: true,
 		},
 		{ provide: HTTP_INTERCEPTORS, useClass: MsalInterceptor, multi: true },

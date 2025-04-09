@@ -1,6 +1,6 @@
 import { Component, Input } from "@angular/core";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
-import { IEventDto } from "@app/models";
+import { ILabelType } from "@app/models";
 
 @Component({
 	selector: "app-status-label",
@@ -9,5 +9,5 @@ import { IEventDto } from "@app/models";
 	styleUrl: "./status-label.component.css",
 })
 export class StatusLabelComponent extends AppBaseComponent {
-	@Input() eventDto!: IEventDto;
+	@Input() eventDto!: ILabelType;
 }

@@ -1,7 +1,7 @@
 import { Component, computed, OnInit, Signal, signal } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
-import { EventService } from "@app/services";
+import { EventService, EventStateService } from "@app/services";
 import { DatetimelabelComponent } from "../../../shared/datetimelabel/datetimelabel.component";
 import { IEventDto, IParticipantForUpdateDto } from "@app/models";
 import { StatusLabelComponent } from "../../../shared/status-label/status-label.component";
@@ -12,11 +12,15 @@ import {
 	ReactiveFormsModule,
 	Validators,
 } from "@angular/forms";
-import { IEventDetailDto } from "@app/models/IEventDetailDto.model";
+import { IEventDetailDto } from "@app/models/eventDtos/IEventDetailDto.model";
 import { IParticipantResponseForm } from "../interfaces";
 import type { ParticipantResponseType } from "@types";
-import { ParticipantService } from "@app/services/participant/participant.service";
+
 import { fromDateTimeISOString } from "@app/utility";
+import { ParticipantService } from "@app/services/api/participant.service";
+import { appRoutes } from "@app/constants";
+import { finalize } from "rxjs";
+import { SpinnerComponent } from "@app/components/shared";
 
 @Component({
 	selector: "app-event-detail-item",
@@ -25,6 +29,7 @@ import { fromDateTimeISOString } from "@app/utility";
 		StatusLabelComponent,
 		ResponsiveFormComponent,
 		ReactiveFormsModule,
+		SpinnerComponent,
 	],
 	templateUrl: "./event-detail-item.component.html",
 	styleUrl: "./event-detail-item.component.css",
@@ -48,20 +53,17 @@ export class EventDetailItemComponent
 
 	isPending = signal(false);
 
-	//todo take this from token. Use MSAL library
-	//todo always check that we use the correct event id for this user id
-	userId = "a84c12d5-9075-42d2-b467-6b345b7d8c9f";
-
 	constructor(
 		private router: Router,
 		private route: ActivatedRoute,
 		public eventService: EventService,
+		public eventStateService: EventStateService,
 		private participantService: ParticipantService,
 		private fb: FormBuilder
 	) {
 		super();
 		this.selectedEventDto = computed(() =>
-			this.eventService.selectedEventDto()
+			this.eventStateService.selectedEventDto()
 		);
 		this.eventForm = this.fb.nonNullable.group({
 			preferences: fb.nonNullable.control("", [
@@ -84,28 +86,33 @@ export class EventDetailItemComponent
 			}
 		});
 
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		this.eventForm.get("responseType")?.valueChanges.subscribe(_ => {
+		this.eventForm.get("responseType")?.valueChanges.subscribe(() => {
 			this.clearFields();
 		});
 	}
 
 	loadEventDetailDto(eventId: string): void {
 		this.isPending.set(true);
-		this.eventService.getDetailEvent(eventId, this.userId).subscribe({
-			next: item => {
-				this.eventDetailDto = item;
-				this.eventService.selectedEventDto.set(item);
-				this.initFields();
-				this.initIsAttendingAtOffice();
-			},
-			error: error => console.error("Test error" + error),
-			complete: () => this.isPending.set(false),
-		});
+		this.eventService
+			.getDetailEvent(eventId)
+			.pipe(finalize(() => this.isPending.set(false)))
+			.subscribe({
+				next: item => {
+					this.eventDetailDto = item;
+					this.eventStateService.selectedEventDto.set(item);
+					this.initFields();
+					this.initIsAttendingAtOffice();
+				},
+				error: error => console.error("Test error" + error),
+			});
 	}
 
 	fromDateTimeISOStringForEventDto() {
 		return fromDateTimeISOString(this.selectedEventDto()!.date);
+	}
+
+	fromDateTimeISOStringForEventDetailDto() {
+		return fromDateTimeISOString(this.eventDetailDto!.deadline);
 	}
 
 	clearFields(): void {
@@ -119,12 +126,9 @@ export class EventDetailItemComponent
 
 	onSubmit = () => {
 		const currentParticipantId = this.eventDetailDto?.participantId;
-		console.log(currentParticipantId);
 		if (currentParticipantId == null) {
 			return;
 		}
-
-		console.log(this.eventForm.valid);
 
 		if (this.eventForm.valid) {
 			const Dto: IParticipantForUpdateDto = {
@@ -133,11 +137,11 @@ export class EventDetailItemComponent
 				allergies: this.eventForm.getRawValue().allergies,
 				preferences: this.eventForm.getRawValue().preferences,
 			};
-			console.log(Dto);
 
 			this.isPending.set(true);
 			this.participantService
 				.respondToEvent(Dto, currentParticipantId)
+				.pipe(finalize(() => this.isPending.set(false)))
 				.subscribe({
 					next: response => {
 						console.log(response);
@@ -145,7 +149,9 @@ export class EventDetailItemComponent
 					error: error => {
 						console.error("Error fetching users:", error);
 					},
-					complete: () => this.isPending.set(false),
+					complete: () => {
+						this.router.navigate([appRoutes.HOME]);
+					},
 				});
 		}
 	};
@@ -163,14 +169,11 @@ export class EventDetailItemComponent
 		this.isAttendingAtOffice = computed(
 			() => this.eventDetailDto?.responseType == "ATTENDING_OFFICE"
 		);
-		console.log("init reponse: ", this.eventDetailDto?.responseType);
 	}
 
 	setIsAttendingAtOffice(): void {
 		this.isAttendingAtOffice = computed(
 			() => this.eventForm.value.responseType === "ATTENDING_OFFICE"
 		);
-		console.log("set reponse: ", this.eventForm.value.responseType);
-		console.log("at office: ", this.isAttendingAtOffice());
 	}
 }

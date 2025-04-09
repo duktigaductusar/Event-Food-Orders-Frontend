@@ -1,0 +1,108 @@
+<div class="mx-auto" [ngStyle]="getContainerStyle()">
+	<div class="m-sm-4">
+		@switch (currentStep) {
+			@case (formSteps.formDetailStep) {
+				<app-event-details-form
+					[changedDeadline]="changedDeadline()"
+					[title]="formTitles.eventDetailTitle"
+					[step]="currentStep"
+					[form]="eventDetailsFormGroup"
+				>
+					<app-event-form-header-container header>
+						<ng-content select="[extra-header-one]"></ng-content>
+						<app-multistep-form-navigation-header
+							[step]="currentStep"
+							[steps]="getSubFormTitles()"
+						></app-multistep-form-navigation-header>
+					</app-event-form-header-container>
+					<app-event-form-footer-container footer>
+						<app-generic-btn
+							[icon]="'arrow-right'"
+							[iconRight]="true"
+							[borderColor]="'primary'"
+							[label]="t('event-create.btnNext')"
+							[customClass]="'mt-3'"
+							(action)="nextStep()"
+						>
+						</app-generic-btn>
+					</app-event-form-footer-container>
+				</app-event-details-form>
+			}
+			@case (formSteps.formUserStep) {
+				<app-event-user-form
+					[title]="formTitles.addUserTitle"
+					[step]="currentStep"
+					[selectedUsers]="getDerivedUsers()"
+					[form]="inviteUsersForm"
+					(selectedUsersChange)="onSelectedUsersChange($event)"
+				>
+					<app-event-form-header-container header>
+						<ng-content select="[extra-header-two]"></ng-content>
+						<app-multistep-form-navigation-header
+							[steps]="getSubFormTitles()"
+							[step]="currentStep"
+						>
+						</app-multistep-form-navigation-header>
+					</app-event-form-header-container>
+					<app-event-form-footer-container footer>
+						<app-generic-btn
+							[icon]="'arrow-left'"
+							[borderColor]="'secondary'"
+							[label]="t('event-create.btnPrev')"
+							[customClass]="'mt-3'"
+							(action)="prevStep()"
+						>
+						</app-generic-btn>
+						<app-generic-btn
+							[icon]="'arrow-right'"
+							[iconRight]="true"
+							[borderColor]="'primary'"
+							[label]="t('event-create.btnNext')"
+							[customClass]="'mt-3'"
+							(action)="nextStep()"
+						>
+						</app-generic-btn>
+					</app-event-form-footer-container>
+				</app-event-user-form>
+			}
+			@case (formSteps.formVerifyStep) {
+				<app-verify-event-form
+					[title]="formTitles.formVerificationTitle"
+					[step]="currentStep"
+					[form]="safeForm()"
+				>
+					<app-event-form-header-container header>
+						<ng-content select="[extra-header-three]"></ng-content>
+						<app-multistep-form-navigation-header
+							[steps]="getSubFormTitles()"
+							[step]="currentStep"
+						>
+						</app-multistep-form-navigation-header>
+					</app-event-form-header-container>
+					<app-event-form-footer-container footer>
+						<app-generic-btn
+							[icon]="'arrow-left'"
+							[borderColor]="'secondary'"
+							[label]="t('event-create.btnPrev')"
+							[customClass]="'mt-3'"
+							(action)="prevStep()"
+						>
+						</app-generic-btn>
+						<app-generic-btn
+							[icon]="'check2-circle'"
+							[iconRight]="true"
+							[borderColor]="'primary'"
+							[label]="t('event-create.btnOk')"
+							[customClass]="'mt-3'"
+							(action)="submit()"
+						>
+						</app-generic-btn>
+					</app-event-form-footer-container>
+				</app-verify-event-form>
+			}
+			@default {
+				<p></p>
+			}
+		}
+	</div>
+</div>

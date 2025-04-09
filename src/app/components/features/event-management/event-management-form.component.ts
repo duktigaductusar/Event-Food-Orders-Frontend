@@ -11,24 +11,29 @@ import { AppBaseComponent } from "@app/components/base/app-base.component";
 import { GenericBtnComponent } from "@app/components/html";
 import {
 	DatetimelabelComponent,
+	SpinnerComponent,
 	StatusLabelComponent,
 } from "@app/components/shared";
 import {
 	IEventDetailOwnerDto,
 	IEventDto,
-	IParticipantForResponseDto,
+	ILabelType,
 	IUserDto,
 } from "@app/models";
-import { IEventDetailDto } from "@app/models/IEventDetailDto.model";
-import { EventService, UserService } from "@app/services";
-import { ParticipantService } from "@app/services/participant/participant.service";
+import { IEventDetailDto } from "@app/models/eventDtos/IEventDetailDto.model";
+import { EventService, EventStateService, UserService } from "@app/services";
+
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { EventManagementDeleteModalComponentComponent } from "./event-management-delete-modal-component/event-management-delete-modal-component.component";
 import { EditEventComponent } from "./edit-event/edit-event.component";
-import { ResponsiveFormComponent } from "../../html/responsive-form/responsive-form.component";
 import { CommonModule } from "@angular/common";
 import { fromDateTimeISOString } from "@app/utility";
 import { appRoutes } from "@app/constants";
+import { ParticipantService } from "@app/services/api/participant.service";
+import { IEventDetailInfoDto } from "@app/models/eventDtos/IEventDetailInfoDto.model";
+import { IParticipantWithUserDto } from "@app/models/participantDtos/IParticipantWithUserDto.model";
+import { finalize } from "rxjs";
+import { ResponsiveDivComponent } from "@app/components/html/responsive-div.component/responsive-div.component";
 
 @Component({
 	selector: "app-event-management-form",
@@ -37,8 +42,9 @@ import { appRoutes } from "@app/constants";
 		StatusLabelComponent,
 		GenericBtnComponent,
 		EditEventComponent,
-		ResponsiveFormComponent,
 		CommonModule,
+		ResponsiveDivComponent,
+		SpinnerComponent,
 	],
 	templateUrl: "./event-management-form.component.html",
 	styleUrl: "./event-management-form.component.css",
@@ -47,97 +53,70 @@ export class EventManagementFormComponent
 	extends AppBaseComponent
 	implements OnInit
 {
-	edit = signal(false);
 	selectedEventDto: Signal<IEventDto | null>;
-	eventDetailDto: IEventDetailDto | null = null;
-	participants: IParticipantForResponseDto[] = [];
+	eventDetailDto: IEventDetailInfoDto | null = null;
+	participants: IParticipantWithUserDto[] = [];
 	users: IUserDto[] = [];
 	isPending = signal(false);
-	//todo fetch this from MSAL library
-	userId = "a84c12d5-9075-42d2-b467-6b345b7d8c9f";
+	even = signal(false);
+
 	private modalService = inject(NgbModal);
 
 	constructor(
 		private router: Router,
 		private route: ActivatedRoute,
 		public eventService: EventService,
+		public eventStateService: EventStateService,
 		public participantService: ParticipantService,
 		public userService: UserService
 	) {
 		super();
 		this.selectedEventDto = computed(() =>
-			this.eventService.selectedEventDto()
+			this.eventStateService.selectedEventDto()
 		);
 	}
 
 	ngOnInit(): void {
-		if (this.selectedEventDto() != null) {
-			this.loadEventDetailDto(this.selectedEventDto()?.id);
-		}
-
 		this.route.paramMap.subscribe(params => {
 			const eventId = params.get("id");
 			if (eventId) {
-				this.loadEventDetailDto(eventId);
+				this.loadEventDetailInfoDto(eventId);
 			}
 		});
 	}
 
-	loadEventDetailDto(currentEventId?: string): void {
+	loadEventDetailInfoDto(currentEventId?: string): void {
 		if (currentEventId == null) {
 			return;
 		}
 
 		this.isPending.set(true);
 		this.eventService
-			.getDetailEvent(currentEventId, this.userId)
+			.getDetailInfoEvent(currentEventId)
+			.pipe(finalize(() => this.isPending.set(false)))
 			.subscribe({
 				next: item => {
 					this.eventDetailDto = item;
-					this.eventService.selectedEventDto.set(item);
-					this.loadParticipantDtos(item);
+					this.eventStateService.selectedEventDto.set(item);
+					this.participants = item.participants;
+					this.setUsers();
 				},
 				error: error => console.error("Test error" + error),
-				complete: () => this.isPending.set(false),
 			});
 	}
 
-	loadParticipantDtos(eventDto: IEventDetailDto): void {
-		const currentEventId = eventDto.id;
-		if (currentEventId == null) {
-			return;
-		}
-		this.isPending.set(true);
-		this.participantService
-			.getParticipantsInEvent(currentEventId, this.userId)
-			.subscribe({
-				next: item => {
-					this.participants = item;
-					this.loadUserDtos(item);
-				},
-				error: error => console.error("Test error" + error),
-				complete: () => this.isPending.set(false),
+	setUsers() {
+		this.participants.forEach(p => {
+			this.users.push({
+				userId: p.userId,
+				username: p.userName,
+				email: p.email,
 			});
-	}
-
-	loadUserDtos(participantDtos: IParticipantForResponseDto[]): void {
-		const currentEventId = this.selectedEventDto()?.id;
-		if (currentEventId == null) {
-			return;
-		}
-		const currentParticipantIds = participantDtos.map(p => p.userId);
-		this.isPending.set(true);
-		this.userService.getUsersFromId(currentParticipantIds).subscribe({
-			next: item => {
-				this.users = item;
-			},
-			error: error => console.error("Test error" + error),
-			complete: () => this.isPending.set(false),
 		});
 	}
 
 	registerToEvent() {
-		this.eventService.setSelectedEvent(this.selectedEventDto()!);
+		this.eventStateService.setSelectedEvent(this.selectedEventDto()!);
 		this.router.navigate([
 			`/${appRoutes.EVENT_DETAILS}`,
 			this.selectedEventDto()!.id,
@@ -152,11 +131,11 @@ export class EventManagementFormComponent
 	}
 
 	toggleEdit() {
-		console.log("created real: ", this.createEventDetailOwnerDto());
-		this.edit.update(prev => !prev);
-		if (!this.edit()) {
-			this.loadEventDetailDto(this.selectedEventDto()?.id);
-		}
+		this.eventStateService.toggleEditEvent(() => {
+			if (!this.eventStateService.editEvent()) {
+				this.loadEventDetailInfoDto(this.selectedEventDto()?.id);
+			}
+		});
 	}
 
 	createEventDetailOwnerDto(): Partial<IEventDetailOwnerDto> {
@@ -171,6 +150,10 @@ export class EventManagementFormComponent
 
 	fromDateTimeISOStringForEventDto() {
 		return fromDateTimeISOString(this.selectedEventDto()!.date);
+	}
+
+	fromDateTimeISOStringForEventDetailDto() {
+		return fromDateTimeISOString(this.eventDetailDto!.deadline);
 	}
 
 	openDeleteModal(event: IEventDetailDto) {
@@ -193,19 +176,46 @@ export class EventManagementFormComponent
 			return;
 		}
 		this.isPending.set(true);
-		this.eventService.deleteEvent(this.eventDetailDto.id).subscribe({
-			next: item => {
-				console.log("Delete item: ", item);
-			},
-			error: error => console.log("Test error ", error),
-			complete: () => {
-				this.navigateToHome();
-				this.isPending.set(false);
-			},
-		});
+		this.eventService
+			.deleteEvent(this.eventDetailDto.id)
+			.pipe(finalize(() => this.isPending.set(false)))
+			.subscribe({
+				next: item => {
+					console.log("Delete item: ", item);
+				},
+				error: error => {
+					console.log("Test error ", error);
+				},
+				complete: () => {
+					this.navigateToHome();
+				},
+			});
 	}
 
 	navigateToHome() {
 		this.router.navigate([`/${appRoutes.HOME}`]);
+	}
+
+	createLabelTypeFromUserDto(userDto: IUserDto): ILabelType {
+		const p = this.participants.find(p => p.userId == userDto.userId);
+
+		if (p == null) {
+			return {
+				responseType: "PENDING",
+				isOwner: false,
+			};
+		}
+
+		return {
+			responseType: p.responseType,
+			isOwner: false,
+		};
+	}
+
+	getConfirmedParticipants(): number {
+		return (
+			this.participants.length -
+			this.participants.filter(p => p.responseType == "PENDING").length
+		);
 	}
 }

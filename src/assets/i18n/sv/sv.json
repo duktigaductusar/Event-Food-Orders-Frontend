@@ -5,8 +5,8 @@
 		"btnOk": "Ok",
 		"detailsForm": {
 			"title": "Event detaljer",
-			"subtitleDate": "Datum och deadline för eventet",
-			"subtitleTime": "Tider och deadline för eventet",
+			"subtitleDateAndTime": "Datum och tid för eventet",
+			"subtitleDeadline": "Deadline för eventet",
 			"nameLabel": "Namn",
 			"descriptionLabel": "Beskrivning",
 			"dateLabel": "Datum för eventet",
@@ -28,7 +28,7 @@
 			"timeDeadlineWarning": "Ange en giltig tid för deadline."
 		},
 		"userForm": {
-			"title": "Ductus deltagare",
+			"title": "Deltagare",
 			"searchUserLabel": "Sök användare",
 			"searchUserPlaceholder": "Namn, mail...",
 			"noUsersFoundInfo": "Inga användare hittades",
@@ -56,7 +56,9 @@
 		"noEventForDeletion": "Något gick fel",
 		"deleteEventPrompt": "Vill du ställa in detta event?",
 		"deleteEventButton": "Ställ in",
-		"abortDeleteButton": "Avbryt"
+		"abortDeleteButton": "Avbryt",
+		"of": "av",
+		"participantsHaveResponded": "deltagare har svarat."
 	},
 	"event-response": {
 		"responseType": "Svarsalternativ",
@@ -81,16 +83,19 @@
 		"regretBtnLabel": "Ångra anmälan",
 		"regretRejectBtnLabel": "Ångra avvisan",
 		"titleNoEvent": "Inga event hittades",
-		"showMyEvents": "Visa event jag äger"
+		"showMyEvents": "Visa event jag äger",
+		"createYourfirstEventLink": "🛠️ Skapa ditt första event"
 	},
-	"login": {
-		"title": "Login Sida!"
+	"logout": {
+		"logoutQuestion": "Logga ut från Ductus matbeställnings app?",
+		"closeLogoutBtn": "Stäng",
+		"logoutBtn": "Logga ut"
 	},
 	"navigation": {
 		"title": "Ductus Events",
 		"menu_title": "Meny",
 		"home_link": "Hem",
-		"login_link": "Login",
+		"logout_link": "Logout",
 		"create_event_link": "Skapa Event"
 	}
 }
