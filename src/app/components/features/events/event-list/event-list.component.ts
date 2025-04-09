@@ -43,7 +43,7 @@ export class EventListComponent extends AppBaseComponent implements OnInit {
 			.pipe(finalize(() => this.isPending.set(false)))
 			.subscribe({
 				next: events => {
-					this.eventDtos = events;
+				    this.eventDtos = events;
 					this.applyFilter();
 				},
 				error: error => console.error("Test error" + error),
