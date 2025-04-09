@@ -1,6 +1,7 @@
 import type { ParticipantResponseType } from "@types";
+import { ILabelType } from "../ILabelType";
 
-export interface IEventDto {
+export interface IEventDto extends ILabelType {
 	id: string;
 	title: string;
 	description: string;
