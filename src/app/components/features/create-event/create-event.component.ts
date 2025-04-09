@@ -87,7 +87,7 @@ export class CreateEventComponent implements OnDestroy, OnInit {
 
 		modalRef.result
 			.then(result => {
-				this.storageService.removeItem(storageKeys.updateEventForm);
+				this.storageService.removeItem(storageKeys.newEventForm);
 				if (result === newEventResultSelection.newEventFormSelection) {
 					this.resetForm();
 				}
