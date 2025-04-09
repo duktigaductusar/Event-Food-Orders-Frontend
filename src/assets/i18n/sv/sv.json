@@ -83,7 +83,8 @@
 		"regretBtnLabel": "Ångra anmälan",
 		"regretRejectBtnLabel": "Ångra avvisan",
 		"titleNoEvent": "Inga event hittades",
-		"showMyEvents": "Visa event jag äger"
+		"showMyEvents": "Visa event jag äger",
+		"createYourfirstEventLink": "🛠️ Skapa ditt första event"
 	},
 	"logout": {
 		"logoutQuestion": "Logga ut från Ductus matbeställnings app?",

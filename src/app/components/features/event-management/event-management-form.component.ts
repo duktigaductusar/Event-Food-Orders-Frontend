@@ -14,7 +14,12 @@ import {
 	SpinnerComponent,
 	StatusLabelComponent,
 } from "@app/components/shared";
-import { IEventDetailOwnerDto, IEventDto, ILabelType, IUserDto } from "@app/models";
+import {
+	IEventDetailOwnerDto,
+	IEventDto,
+	ILabelType,
+	IUserDto,
+} from "@app/models";
 import { IEventDetailDto } from "@app/models/eventDtos/IEventDetailDto.model";
 import { EventService, EventStateService, UserService } from "@app/services";
 
@@ -197,17 +202,20 @@ export class EventManagementFormComponent
 		if (p == null) {
 			return {
 				responseType: "PENDING",
-				isOwner: false
-			}
+				isOwner: false,
+			};
 		}
 
 		return {
 			responseType: p.responseType,
-			isOwner: false
-		}
+			isOwner: false,
+		};
 	}
 
 	getConfirmedParticipants(): number {
-		return this.participants.length - this.participants.filter(p => p.responseType == "PENDING").length;
+		return (
+			this.participants.length -
+			this.participants.filter(p => p.responseType == "PENDING").length
+		);
 	}
 }
