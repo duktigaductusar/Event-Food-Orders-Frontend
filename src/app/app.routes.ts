@@ -34,9 +34,10 @@ export const routes: Routes = [
 	},
 	{ path: appRoutes.LOGOUT, component: LogoutPageComponent },
 	{
+		// ToDo: Move to children?
 		path: appRoutes.LOGOUT,
 		component: LogoutPageComponent,
-		// canActivate: [MsalGuard]
+		canActivate: [MsalGuard]
 	},
 	{ path: "**", redirectTo: "" },
 ];
