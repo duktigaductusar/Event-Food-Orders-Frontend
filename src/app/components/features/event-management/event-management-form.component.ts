@@ -14,7 +14,7 @@ import {
 	SpinnerComponent,
 	StatusLabelComponent,
 } from "@app/components/shared";
-import { IEventDetailOwnerDto, IEventDto, IUserDto } from "@app/models";
+import { IEventDetailOwnerDto, IEventDto, ILabelType, IUserDto } from "@app/models";
 import { IEventDetailDto } from "@app/models/eventDtos/IEventDetailDto.model";
 import { EventService, EventStateService, UserService } from "@app/services";
 
@@ -189,5 +189,25 @@ export class EventManagementFormComponent
 
 	navigateToHome() {
 		this.router.navigate([`/${appRoutes.HOME}`]);
+	}
+
+	createLabelTypeFromUserDto(userDto: IUserDto): ILabelType {
+		const p = this.participants.find(p => p.userId == userDto.userId);
+
+		if (p == null) {
+			return {
+				responseType: "PENDING",
+				isOwner: false
+			}
+		}
+
+		return {
+			responseType: p.responseType,
+			isOwner: false
+		}
+	}
+
+	getConfirmedParticipants(): number {
+		return this.participants.length - this.participants.filter(p => p.responseType == "PENDING").length;
 	}
 }

@@ -56,7 +56,9 @@
 		"noEventForDeletion": "Något gick fel",
 		"deleteEventPrompt": "Vill du ställa in detta event?",
 		"deleteEventButton": "Ställ in",
-		"abortDeleteButton": "Avbryt"
+		"abortDeleteButton": "Avbryt",
+		"of": "av",
+		"participantsHaveResponded": "deltagare har svarat."
 	},
 	"event-response": {
 		"responseType": "Svarsalternativ",
