@@ -11,7 +11,4 @@ export {
 	type StorageType,
 } from "./utility/storage.service";
 
-//todo debug
-// Uncaught TypeError: Class extends value undefined is not a constructor or null
-// at css-class-base.component.ts:5:49
 export { ApiErrorService } from "./utility/api-error.service";

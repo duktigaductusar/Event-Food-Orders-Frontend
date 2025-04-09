@@ -21,11 +21,12 @@ import {
 	takeUntil,
 } from "rxjs";
 import { CommonModule } from "@angular/common";
+import { StatusLabelComponent } from "../../status-label/status-label.component";
 
 @Component({
 	selector: "app-event-user-form",
 	standalone: true,
-	imports: [ResponsiveFormComponent, FormsModule, CommonModule],
+	imports: [ResponsiveFormComponent, FormsModule, CommonModule, StatusLabelComponent],
 	templateUrl: "./event-user-form.component.html",
 	styleUrl: "./event-user-form.component.css",
 })
@@ -43,7 +44,7 @@ export class EventUserFormComponent
 	title = input<string>(null!);
 	derivedTitle = computed<string>(() => `${this.step()}. ${this.title()}`);
 	selectedUsersChange = output<IUserDto>();
-	isPending = signal(false);
+	isPending = signal(false);	
 
 	constructor(
 		private userService: UserService,
@@ -100,7 +101,7 @@ export class EventUserFormComponent
 
 		const eventId = this.eventStateService.editEvent()
 			? this.eventStateService.selectedEventDto()?.id
-			: undefined;
+			: undefined
 
 		this.isPending.set(true);
 		this.userService
