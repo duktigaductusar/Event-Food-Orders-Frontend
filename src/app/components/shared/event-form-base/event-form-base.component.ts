@@ -101,7 +101,6 @@ export class EventFormBaseComponent
 		subscribeDateDeadlineToDateChange(
 			this.eventDetailsFormGroup,
 			this.destroy,
-			// this.eventDetailsForm?.navigateDeadlinePickerToDate,
 			this.changedDeadline
 		);
 		subscribeTimeDeadlineToTimeChange(

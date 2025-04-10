@@ -9,6 +9,32 @@
 		<ng-content select="[header]"></ng-content>
 	</div>
 	<div class="p-4">
+		<app-accordion-list
+			[label]="'Users'"
+			[items]="selectedUsers()"
+			[itemTemplate]="userTemplate"
+		>
+			<ng-template #userTemplate let-user>
+				<li
+					class="list-group-item d-flex justify-content-between align-items-center"
+					(click)="toggleSelect(user)"
+					[class.active]="isSelected(user)"
+					style="cursor: pointer"
+				>
+					<i class="bi bi-person-add"></i>
+					<div class="d-flex flex-column">
+						<span>{{ user.email }}</span>
+						<small
+							[ngClass]="{
+								'text-muted': !isSelected(user),
+							}"
+						>
+							{{ user.username }}
+						</small>
+					</div>
+				</li>
+			</ng-template>
+		</app-accordion-list>
 		<div class="flex-column justify-content-center w-100">
 			<div class="mb-2">
 				<h4 class="text-center text-black">{{ derivedTitle() }}</h4>

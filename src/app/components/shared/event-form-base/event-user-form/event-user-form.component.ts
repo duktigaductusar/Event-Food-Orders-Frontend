@@ -21,12 +21,12 @@ import {
 	takeUntil,
 } from "rxjs";
 import { CommonModule } from "@angular/common";
-import { StatusLabelComponent } from "../../status-label/status-label.component";
+import { AccordionListComponent } from "../../accordion-list/accordion-list.component";
 
 @Component({
 	selector: "app-event-user-form",
 	standalone: true,
-	imports: [ResponsiveFormComponent, FormsModule, CommonModule, StatusLabelComponent],
+	imports: [ResponsiveFormComponent, FormsModule, CommonModule, AccordionListComponent],
 	templateUrl: "./event-user-form.component.html",
 	styleUrl: "./event-user-form.component.css",
 })
