@@ -1,4 +1,3 @@
-<!-- eslint-disable @angular-eslint/template/label-has-associated-control -->
 @if (isPending()) {
 	<app-spinner></app-spinner>
 } @else {
@@ -23,15 +22,13 @@
 				</div>
 				<div class="card-body bg-white p-4">
 					@if (selectedEventDto() !== null) {
-						<!-- <app-datetimelabel
-							[datevalue]="fromDateTimeISOStringForEventDto()"
-						></app-datetimelabel> -->
 						<div class="row mb-3">
 							<div class="col-md-6">
-								<label
+								<p
 									class="form-label fw-semibold text-secondary"
-									>Datum & tid</label
 								>
+									Datum & tid
+								</p>
 								<app-datetimelabel
 									[datevalue]="
 										fromDateTimeISOStringForEventDto()
@@ -39,10 +36,11 @@
 								></app-datetimelabel>
 							</div>
 							<div class="col-md-6">
-								<label
+								<p
 									class="form-label fw-semibold text-secondary"
-									>Svara innan</label
 								>
+									Svara innan
+								</p>
 								<app-datetimelabel
 									[datevalue]="
 										fromDateTimeISOStringForEventDetailDto()

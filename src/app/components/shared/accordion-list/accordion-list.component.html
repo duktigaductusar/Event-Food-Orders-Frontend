@@ -1,1 +1,34 @@
-<p>accordion-list works!</p>
+<div ngbAccordion>
+	<div ngbAccordionItem>
+		<h2 ngbAccordionHeader>
+			<button
+				ngbAccordionButton
+				class="w-100 text-start py-3 d-flex justify-content-between align-items-center"
+			>
+				<span [ngClass]="labelClass"
+					>{{ label }} ({{ items.length }})</span
+				>
+			</button>
+		</h2>
+
+		<div ngbAccordionCollapse>
+			<div ngbAccordionBody class="p-0">
+				<ng-container *ngIf="items.length; else empty">
+					<ng-container *ngFor="let item of items">
+						<ng-container
+							*ngTemplateOutlet="
+								itemTemplate;
+								context: { $implicit: item }
+							"
+						>
+						</ng-container>
+					</ng-container>
+				</ng-container>
+
+				<ng-template #empty>
+					<div class="text-muted">No items to display.</div>
+				</ng-template>
+			</div>
+		</div>
+	</div>
+</div>

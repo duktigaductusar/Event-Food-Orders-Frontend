@@ -29,8 +29,7 @@
 		},
 		"userForm": {
 			"title": "Deltagare",
-			"searchUserLabel": "Sök användare",
-			"searchUserPlaceholder": "Namn, mail...",
+			"searchUserPlaceholder": "Sök efter användare eller grupper...",
 			"noUsersFoundInfo": "Inga användare hittades",
 			"selectedUsers": "Valda användare"
 		},
