@@ -17,20 +17,20 @@
 			</div>
 			<div class="card-body bg-white">
 				@if (selectedEventDto() !== null) {
-					<!-- <app-datetimelabel
-						[datevalue]="fromDateTimeISOStringForEventDto()"
-					></app-datetimelabel>
-					<p>Deadline</p>
-					<app-datetimelabel
-						[datevalue]="fromDateTimeISOStringForEventDetailDto()"
-					></app-datetimelabel> -->
 					<div class="row mb-3">
 						<div class="col-md-6">
 							<label class="form-label fw-semibold text-secondary"
 								>Datum & tid</label
 							>
 							<app-datetimelabel
-								[datevalue]="fromDateTimeISOStringForEventDto()"
+								[datevalue]="
+									getDateFromStringValue(eventDetailDto!.date)
+								"
+								[endDateValue]="
+									getOptionalDateFromStringValue(
+										eventDetailDto!.deadline
+									)
+								"
 							></app-datetimelabel>
 						</div>
 						<div class="col-md-6">
@@ -39,7 +39,9 @@
 							>
 							<app-datetimelabel
 								[datevalue]="
-									fromDateTimeISOStringForEventDetailDto()
+									getDateFromStringValue(
+										eventDetailDto!.deadline
+									)
 								"
 							></app-datetimelabel>
 						</div>

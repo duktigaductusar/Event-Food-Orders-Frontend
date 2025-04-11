@@ -23,7 +23,7 @@ export class EditEventComponent implements OnInit {
 	computedForm = computed(() => this.form);
 	isPending = signal(false);
 	event = input<Partial<IEventDetailOwnerDto>>();
-	eventId = input<string>();
+	eventId = input<string | null>(null);
 	private autoFormSaver: FormAutoSaver<Partial<IEventForCreationDto>> | null =
 		null;
 

@@ -107,12 +107,15 @@ export class EventDetailItemComponent
 			});
 	}
 
-	fromDateTimeISOStringForEventDto() {
-		return fromDateTimeISOString(this.selectedEventDto()!.date);
+	getDateFromStringValue(date: string) {
+		return fromDateTimeISOString(date);
 	}
 
-	fromDateTimeISOStringForEventDetailDto() {
-		return fromDateTimeISOString(this.eventDetailDto!.deadline);
+	getOptionalDateFromStringValue(date?: string) {
+		if (date == null) {
+			return;
+		}
+		return fromDateTimeISOString(date);
 	}
 
 	clearFields(): void {
