@@ -7,7 +7,7 @@
 	<i class="bi bi-clock me-2 text-secondary"></i>
 	<small class="text-muted">{{ datevalue() | date: "HH:mm" }}</small>
 	@if (endDateValue() !== undefined) {
-		<small class="text-muted">to</small>
+		<small class="text-muted">{{ t("shared.datetimelabel.timeTo") }}</small>
 		<small class="text-muted">{{ endDateValue() | date: "HH:mm" }}</small>
 	}
 </div>

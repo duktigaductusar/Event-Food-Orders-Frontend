@@ -5,12 +5,12 @@ import { IEventDetailOwnerDto, IEventForCreationDto } from "@app/models";
 import { FormAutoSaver } from "@app/components/base/form-auto-saver.component";
 import { EventService, EventStateService } from "@app/services";
 import { ApiError } from "@app/interceptors/api-error.interceptor";
+import { GenericBtnComponent } from "../../../html/generic-btn/generic-btn.component";
 import {
-	buildCreateEventForm,
 	EventFormBaseComponent,
 	ICreateEventForm,
-} from "@app/components/shared";
-import { GenericBtnComponent } from "../../../html/generic-btn/generic-btn.component";
+	buildCreateEventForm,
+} from "../event-form-base";
 
 @Component({
 	selector: "app-edit-event",

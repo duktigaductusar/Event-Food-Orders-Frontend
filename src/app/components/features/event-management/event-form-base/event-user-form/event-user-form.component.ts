@@ -8,7 +8,6 @@ import {
 	signal,
 } from "@angular/core";
 import { FormGroup, FormsModule } from "@angular/forms";
-import { ResponsiveFormComponent } from "../../../html/responsive-form/responsive-form.component";
 import { FormStepsTyp, IInviteForm, IUsersDtoWithId } from "../interfaces";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
 import { EventStateService, UserService } from "@app/services";
@@ -21,9 +20,12 @@ import {
 	takeUntil,
 } from "rxjs";
 import { CommonModule } from "@angular/common";
-import { AccordionListComponent } from "../../accordion-list/accordion-list.component";
-import { ButtonWrapperComponent } from "../../../html/button-wrapper/button-wrapper.component";
-import { ResponsiveLiComponent } from "../../../html/responsive-li/responsive-li.component";
+import {
+	ResponsiveFormComponent,
+	ButtonWrapperComponent,
+	ResponsiveLiComponent,
+} from "@app/components/html";
+import { AccordionListComponent } from "@app/components/shared";
 
 @Component({
 	selector: "app-event-user-form",
