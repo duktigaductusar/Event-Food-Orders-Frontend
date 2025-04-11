@@ -8,7 +8,7 @@ import {
 } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
-import { GenericBtnComponent } from "@app/components/html";
+import { GenericBtnComponent, ResponsiveLiComponent } from "@app/components/html";
 import {
 	DatetimelabelComponent,
 	SpinnerComponent,
@@ -24,8 +24,6 @@ import { IEventDetailDto } from "@app/models/eventDtos/IEventDetailDto.model";
 import { EventService, EventStateService, UserService } from "@app/services";
 
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { EventManagementDeleteModalComponentComponent } from "./event-management-delete-modal-component/event-management-delete-modal-component.component";
-import { EditEventComponent } from "./edit-event/edit-event.component";
 import { CommonModule } from "@angular/common";
 import { fromDateTimeISOString } from "@app/utility";
 import { appRoutes } from "@app/constants";
@@ -34,10 +32,11 @@ import { IEventDetailInfoDto } from "@app/models/eventDtos/IEventDetailInfoDto.m
 import { IParticipantWithUserDto } from "@app/models/participantDtos/IParticipantWithUserDto.model";
 import { finalize } from "rxjs";
 import { ResponsiveDivComponent } from "@app/components/html/responsive-div.component/responsive-div.component";
-import { ResponsiveLiComponent } from "../../html/responsive-li/responsive-li.component";
+import { EditEventComponent } from "../edit-event/edit-event.component";
+import { EventManagementDeleteModalComponentComponent } from "../event-management-delete-modal-component/event-management-delete-modal-component.component";
 
 @Component({
-	selector: "app-event-management-form",
+	selector: "app-event-management-hub",
 	imports: [
 		DatetimelabelComponent,
 		StatusLabelComponent,
@@ -48,10 +47,10 @@ import { ResponsiveLiComponent } from "../../html/responsive-li/responsive-li.co
 		SpinnerComponent,
 		ResponsiveLiComponent,
 	],
-	templateUrl: "./event-management-form.component.html",
-	styleUrl: "./event-management-form.component.css",
+	templateUrl: "./event-management-hub.component.html",
+	styleUrl: "./event-management-hub.component.css",
 })
-export class EventManagementFormComponent
+export class EventManagementHubComponent
 	extends AppBaseComponent
 	implements OnInit
 {

@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { MsalService } from "@azure/msal-angular";
 import { environment } from "@environments/environment";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+
 import { logoutSelection } from "./logout-modal/logoutSelection";
 import { LogoutModalComponent } from "./logout-modal/logout-modal.component";
 
