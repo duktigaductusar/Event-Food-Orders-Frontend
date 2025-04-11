@@ -1,9 +1,13 @@
 <div class="d-flex align-items-center mb-2">
 	<i class="bi bi-calendar-event me-2 text-secondary"></i>
-	<small class="text-muted">{{ datevalue | date: "EEEE d/M" }}</small>
+	<small class="text-muted">{{ datevalue() | date: "EEEE d/M" }}</small>
 </div>
 
-<div class="d-flex align-items-center mb-2">
+<div class="d-flex align-items-center mb-2 gap-1">
 	<i class="bi bi-clock me-2 text-secondary"></i>
-	<small class="text-muted">{{ datevalue | date: "HH:mm" }}</small>
+	<small class="text-muted">{{ datevalue() | date: "HH:mm" }}</small>
+	@if (endDateValue() !== undefined) {
+		<small class="text-muted">{{ t("shared.datetimelabel.timeTo") }}</small>
+		<small class="text-muted">{{ endDateValue() | date: "HH:mm" }}</small>
+	}
 </div>

@@ -97,5 +97,10 @@
 		"home_link": "Hem",
 		"logout_link": "Logout",
 		"create_event_link": "Skapa Event"
+	},
+	"shared": {
+		"datetimelabel": {
+			"timeTo": "till"
+		}
 	}
 }

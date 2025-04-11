@@ -15,17 +15,17 @@ import {
 } from "@app/services";
 import { ApiError } from "@app/interceptors/api-error.interceptor";
 import { FormAutoSaver } from "@app/components/base/form-auto-saver.component";
-import {
-	buildCreateEventForm,
-	EventFormBaseComponent,
-	ICreateEventForm,
-	isEventFormData,
-	SpinnerFullScreenComponent,
-} from "@app/components/shared";
+import { SpinnerFullScreenComponent } from "@app/components/shared";
 import { CreateEventResultModalComponent } from "./create-event-result-modal/create-event-result-modal.component";
 import { Router } from "@angular/router";
 import { newEventResultSelection } from "./create-event-result-modal/newEventResultSelection";
 import { appRoutes } from "@app/constants";
+import {
+	EventFormBaseComponent,
+	ICreateEventForm,
+	buildCreateEventForm,
+	isEventFormData,
+} from "../event-form-base";
 
 @Component({
 	selector: "app-create-event",

@@ -31,7 +31,14 @@
 								</p>
 								<app-datetimelabel
 									[datevalue]="
-										fromDateTimeISOStringForEventDto()
+										getDateFromStringValue(
+											eventDetailDto!.date
+										)
+									"
+									[endDateValue]="
+										getOptionalDateFromStringValue(
+											eventDetailDto!.endTime
+										)
 									"
 								></app-datetimelabel>
 							</div>
@@ -43,7 +50,9 @@
 								</p>
 								<app-datetimelabel
 									[datevalue]="
-										fromDateTimeISOStringForEventDetailDto()
+										getDateFromStringValue(
+											eventDetailDto!.deadline
+										)
 									"
 								></app-datetimelabel>
 							</div>

@@ -7,7 +7,7 @@ import {
 } from "@app/services";
 import { Subscription, debounceTime } from "rxjs";
 
-const defaultDebounceTime = 2000;
+const defaultDebounceTime = 1000;
 
 export class FormAutoSaver<T> {
 	private sub?: Subscription;
