@@ -20,6 +20,7 @@ export class GenericBtnComponent extends CSSClassComponent {
 	icon = input("pencil");
 	iconRight = input(false);
 	disabled = input(false);
+	type = input<"submit" | "button">("button");
 	action = output<MouseEvent>();
 
 	protected override getDefaultClass(): string {

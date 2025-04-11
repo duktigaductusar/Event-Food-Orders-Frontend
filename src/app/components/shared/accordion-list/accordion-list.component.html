@@ -1,0 +1,34 @@
+<div ngbAccordion o>
+	<div ngbAccordionItem>
+		<h2 ngbAccordionHeader>
+			<button
+				ngbAccordionButton
+				class="w-100 text-start py-3 d-flex justify-content-between align-items-center"
+			>
+				<span [ngClass]="labelClass">{{ label }}</span>
+			</button>
+		</h2>
+
+		<div ngbAccordionCollapse>
+			<div ngbAccordionBody class="p-0">
+				@for (item of items; track item.id) {
+					<ng-container>
+						<ng-container
+							*ngTemplateOutlet="
+								itemTemplate;
+								context: { $implicit: item }
+							"
+						>
+						</ng-container>
+					</ng-container>
+				} @empty {
+					@if (labelNoItems !== "") {
+						<div>
+							<p>{{ labelNoItems }}</p>
+						</div>
+					}
+				}
+			</div>
+		</div>
+	</div>
+</div>

@@ -6,6 +6,7 @@ import {
 	eventDetailsValidationKeys,
 	formControllers,
 	formGroups,
+	formSteps,
 } from "../constants";
 import { IUserDto } from "@app/models";
 
@@ -38,3 +39,9 @@ export interface ICreateEventForm {
 	[formGroups.eventDetailsForm]: FormGroup<IEventDetailsForm>;
 	[formGroups.inviteUsersForm]: FormGroup<IInviteForm>;
 }
+
+export interface IUsersDtoWithId extends IUserDto {
+	id: string;
+}
+
+export type FormStepsTyp = (typeof formSteps)[keyof typeof formSteps];

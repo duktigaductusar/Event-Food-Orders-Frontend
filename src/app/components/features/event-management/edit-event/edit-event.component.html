@@ -4,6 +4,12 @@
 	[initialEventId]="eventId()"
 	(submitEventForm)="submitEdit($event)"
 >
+	<ng-template #userTemplate let-user>
+		<div class="py-1">
+			<strong>{{ user.name }}</strong> — {{ user.email }}
+		</div>
+	</ng-template>
+
 	<div extra-header-one class="pb-4 d-flex justify-content-center">
 		<app-generic-btn
 			[icon]="'stop-circle'"

@@ -1,0 +1,4 @@
+.btn-focus-outline:focus {
+	outline: 4px solid var(--bs-primary-bg-subtle);
+	border-color: var(--bs-primary-bg-subtle);
+}

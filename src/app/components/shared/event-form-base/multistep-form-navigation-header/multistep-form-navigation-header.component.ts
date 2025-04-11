@@ -1,5 +1,6 @@
 import { NgClass } from "@angular/common";
 import { Component, Input } from "@angular/core";
+import { FormStepsTyp } from "../interfaces";
 
 @Component({
 	selector: "app-multistep-form-navigation-header",
@@ -9,7 +10,7 @@ import { Component, Input } from "@angular/core";
 })
 export class MultiStepFormHeaderComponent {
 	@Input() steps!: string[];
-	@Input() step = 1;
+	@Input() step: FormStepsTyp = 1;
 
 	getStepClassCircles(currentStep: number, index: number): string {
 		const stepNumber = index + 1;

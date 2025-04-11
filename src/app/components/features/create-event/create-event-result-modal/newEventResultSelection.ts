@@ -3,4 +3,6 @@ export const newEventResultSelection = {
 	homeSelection: "home",
 	manageEventSelection: "manageEvent",
 	newEventFormSelection: "createNewEvent",
+	backdrop: 0,
+	esc: 1,
 };

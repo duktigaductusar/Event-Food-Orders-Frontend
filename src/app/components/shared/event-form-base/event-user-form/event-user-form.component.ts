@@ -9,7 +9,7 @@ import {
 } from "@angular/core";
 import { FormGroup, FormsModule } from "@angular/forms";
 import { ResponsiveFormComponent } from "../../../html/responsive-form/responsive-form.component";
-import { IInviteForm } from "../interfaces";
+import { FormStepsTyp, IInviteForm, IUsersDtoWithId } from "../interfaces";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
 import { EventStateService, UserService } from "@app/services";
 import { IUserDto } from "@app/models";
@@ -21,12 +21,22 @@ import {
 	takeUntil,
 } from "rxjs";
 import { CommonModule } from "@angular/common";
-import { StatusLabelComponent } from "../../status-label/status-label.component";
+import { AccordionListComponent } from "../../accordion-list/accordion-list.component";
+import { ButtonWrapperComponent } from "../../../html/button-wrapper/button-wrapper.component";
+import { ResponsiveLiComponent } from "../../../html/responsive-li/responsive-li.component";
 
 @Component({
 	selector: "app-event-user-form",
 	standalone: true,
-	imports: [ResponsiveFormComponent, FormsModule, CommonModule, StatusLabelComponent],
+	imports: [
+		ResponsiveFormComponent,
+		FormsModule,
+		CommonModule,
+		AccordionListComponent,
+		ButtonWrapperComponent,
+		ResponsiveLiComponent,
+		ResponsiveLiComponent,
+	],
 	templateUrl: "./event-user-form.component.html",
 	styleUrl: "./event-user-form.component.css",
 })
@@ -40,11 +50,17 @@ export class EventUserFormComponent
 	private destroySubject = new Subject<void>();
 	form = input<FormGroup<IInviteForm>>(null!);
 	selectedUsers = input<IUserDto[]>([]);
-	step = input<number>(null!);
+	step = input<FormStepsTyp>(null!);
 	title = input<string>(null!);
 	derivedTitle = computed<string>(() => `${this.step()}. ${this.title()}`);
 	selectedUsersChange = output<IUserDto>();
-	isPending = signal(false);	
+	isPending = signal(false);
+	isFocused = false;
+	selectedUsersWithId = computed<IUsersDtoWithId[]>(() => {
+		return this.selectedUsers()
+			.sort((a, b) => a.email.localeCompare(b.email))
+			.map(u => ({ ...u, id: u.userId }));
+	});
 
 	constructor(
 		private userService: UserService,
@@ -53,18 +69,23 @@ export class EventUserFormComponent
 		super();
 	}
 
-	get filteredUsers(): IUserDto[] {
-		return this.users.filter(
-			user =>
-				user.email != null &&
-				user.username != null &&
-				(user.email.endsWith("ductus.se") ||
-					user.email.endsWith("example.com")) && //ToDo: remove for prod
-				(user.email.toLowerCase().includes(this.query.toLowerCase()) ||
-					user.username
+	get filteredAndSortedUsers(): IUsersDtoWithId[] {
+		return this.users
+			.filter(
+				user =>
+					user.email != null &&
+					user.username != null &&
+					(user.email.endsWith("ductus.se") ||
+						user.email.endsWith("example.com")) && //ToDo: remove for prod
+					(user.email
 						.toLowerCase()
-						.includes(this.query.toLowerCase()))
-		);
+						.includes(this.query.toLowerCase()) ||
+						user.username
+							.toLowerCase()
+							.includes(this.query.toLowerCase()))
+			)
+			.sort((a, b) => a.email.localeCompare(b.email))
+			.map(u => ({ ...u, id: u.userId }));
 	}
 
 	ngOnInit() {
@@ -101,7 +122,7 @@ export class EventUserFormComponent
 
 		const eventId = this.eventStateService.editEvent()
 			? this.eventStateService.selectedEventDto()?.id
-			: undefined
+			: undefined;
 
 		this.isPending.set(true);
 		this.userService
@@ -120,6 +141,17 @@ export class EventUserFormComponent
 
 	toggleSelect(user: IUserDto) {
 		this.selectedUsersChange.emit(user);
+	}
+
+	getSelectedStyleForSearchResultItem(user: IUserDto) {
+		const common = `
+			w-100 border-0 p-3 d-flex flex-column
+			align-items-start flex-sm-row justify-content-sm-between
+			overflow-y-auto `;
+
+		return this.isSelected(user)
+			? `${common} bg-primary text-white`
+			: `${common} bg-transparent`;
 	}
 
 	isSelected(user: IUserDto): boolean {

@@ -9,18 +9,18 @@
 		<ng-content select="[header]"></ng-content>
 	</div>
 	<div class="p-4">
-		<div class="flex-column justify-content-center w-100">
+		<div>
 			<div class="mb-2">
 				<h4 class="text-center text-black">{{ derivedTitle() }}</h4>
 			</div>
-			<div class="container my-3">
-				<label for="search" class="form-label">
-					{{ t("event-create.userForm.searchUserLabel") }}
-				</label>
+			<div class="d-flex flex-column gap-3 p-3">
 				<div class="position-relative mb-3">
+					<i
+						class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"
+					></i>
 					<input
 						id="search"
-						class="form-control pe-5"
+						class="form-control pe-5 ps-5 py-4"
 						type="text"
 						[placeholder]="
 							t('event-create.userForm.searchUserPlaceholder')
@@ -30,43 +30,41 @@
 					/>
 
 					@if (query.length > 0) {
-						<i
-							class="bi bi-x-circle-fill position-absolute top-50 end-0 translate-middle-y me-3 text-muted"
-							style="cursor: pointer"
-							(click)="onSearchInputChange('')"
-							title="Rensa sökning"
-						></i>
+						<div
+							class="position-absolute top-50 end-0 translate-middle-y me-3"
+						>
+							<app-button-wrapper
+								[customClass]="'px-1'"
+								(selected)="onSearchInputChange('')"
+							>
+								<i
+									class="bi bi-x-circle-fill text-muted"
+									style="cursor: pointer"
+									title="Rensa sökning"
+								></i>
+							</app-button-wrapper>
+						</div>
 					}
 				</div>
 
-				@if (filteredUsers.length > 0) {
-					<ul class="list-group">
-						@for (user of filteredUsers; track user.userId) {
-							<li
-								class="list-group-item d-flex justify-content-between align-items-center"
-								(click)="toggleSelect(user)"
-								[class.active]="isSelected(user)"
-								style="cursor: pointer"
-							>
-								<i class="bi bi-person-add"></i>
-								<div class="d-flex flex-column">
-									<span>{{ user.email }}</span>
-									<small
-										[ngClass]="{
-											'text-muted': !isSelected(user),
-										}"
-									>
-										{{ user.username }}
-									</small>
-								</div>
-							</li>
-						}
-					</ul>
+				@if (filteredAndSortedUsers.length > 0) {
+					<app-accordion-list
+						[label]="
+							t2('event-create.userForm.searchResult', {
+								items: filteredAndSortedUsers.length,
+							})
+						"
+						[items]="filteredAndSortedUsers"
+						[itemTemplate]="userSearchTemplate"
+						[labelFontSize]="5"
+						[open]="true"
+					>
+					</app-accordion-list>
 				}
 
 				@if (
 					query.length > 0 &&
-					filteredUsers.length === 0 &&
+					filteredAndSortedUsers.length === 0 &&
 					!isPending()
 				) {
 					<div class="alert alert-warning">
@@ -82,26 +80,17 @@
 					</div>
 				}
 
-				@if (selectedUsers().length > 0) {
-					<div class="mt-4">
-						<h5>{{ t("event-create.userForm.selectedUsers") }}</h5>
-						<ul class="list-group">
-							@for (user of selectedUsers(); track user) {
-								<li
-									class="list-group-item d-flex justify-content-between align-items-center"
-								>
-									<i class="bi bi-person-check"></i>
-									<div class="d-flex flex-column">
-										<span>{{ user.email }}</span>
-										<small class="text-muted">{{
-											user.username
-										}}</small>
-									</div>
-								</li>
-							}
-						</ul>
-					</div>
-				}
+				<app-accordion-list
+					[label]="
+						t2('event-create.userForm.selectedUsers', {
+							items: selectedUsersWithId()!.length,
+						})
+					"
+					[items]="selectedUsersWithId()"
+					[itemTemplate]="userTemplate"
+					[labelFontSize]="5"
+				>
+				</app-accordion-list>
 			</div>
 		</div>
 	</div>
@@ -109,3 +98,38 @@
 		<ng-content select="[footer]"></ng-content>
 	</div>
 </app-responsive-form>
+
+<ng-template #userSearchTemplate let-user>
+	@if (user !== undefined) {
+		<li class="list-group-item p-0 m-0">
+			<app-button-wrapper
+				[useClass]="getSelectedStyleForSearchResultItem(user)"
+				(click)="toggleSelect(user)"
+			>
+				<i class="bi bi-person-add"></i>
+				<div class="d-flex flex-column align-items-start align">
+					<span>{{ user.email }}</span>
+					<small
+						[ngClass]="{
+							'text-muted': !isSelected(user),
+						}"
+					>
+						{{ user.username }}
+					</small>
+				</div>
+			</app-button-wrapper>
+		</li>
+	}
+</ng-template>
+
+<ng-template #userTemplate let-user>
+	@if (user !== undefined) {
+		<app-responsive-li>
+			<i class="bi bi-person-check"></i>
+			<div class="d-flex flex-column">
+				<span>{{ user.email }}</span>
+				<small class="text-muted">{{ user.username }}</small>
+			</div>
+		</app-responsive-li>
+	}
+</ng-template>

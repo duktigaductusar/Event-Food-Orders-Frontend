@@ -26,6 +26,7 @@ import {
 	EventDetailsFormControllerNameType,
 	EventDetailsValidationGroupKeysType,
 	EventDetailsValidationKeysType,
+	FormStepsTyp,
 	IEventDetailsForm,
 } from "../interfaces";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
@@ -59,7 +60,7 @@ export class EventDetailsFormComponent
 	readonly formValidationGroupKeys = eventDetailsValidationGroupKeys;
 	readonly eventDetailsControllerNames = eventDetailsControllerNames;
 	form = input<FormGroup<IEventDetailsForm>>(null!);
-	step = input<number>(null!);
+	step = input<FormStepsTyp>(null!);
 	title = input("");
 	changedDeadline = input<NgbDateStruct | null>(null);
 	derivedTitle = computed<string>(() => `${this.step()}. ${this.title()}`);
