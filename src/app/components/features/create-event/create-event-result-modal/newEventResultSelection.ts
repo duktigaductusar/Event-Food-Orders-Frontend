@@ -4,5 +4,5 @@ export const newEventResultSelection = {
 	manageEventSelection: "manageEvent",
 	newEventFormSelection: "createNewEvent",
 	backdrop: 0,
-	esc: 1
+	esc: 1,
 };

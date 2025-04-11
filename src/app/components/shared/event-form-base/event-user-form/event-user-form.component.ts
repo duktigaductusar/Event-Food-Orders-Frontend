@@ -57,8 +57,8 @@ export class EventUserFormComponent
 	isPending = signal(false);
 	isFocused = false;
 	selectedUsersWithId = computed<IUsersDtoWithId[]>(() => {
-		return this.selectedUsers().map(u => ({ ...u, id: u.userId }))
-	})
+		return this.selectedUsers().map(u => ({ ...u, id: u.userId }));
+	});
 
 	constructor(
 		private userService: UserService,
@@ -68,17 +68,21 @@ export class EventUserFormComponent
 	}
 
 	get filteredUsers(): IUsersDtoWithId[] {
-		return this.users.filter(
-			user =>
-				user.email != null &&
-				user.username != null &&
-				(user.email.endsWith("ductus.se") ||
-					user.email.endsWith("example.com")) && //ToDo: remove for prod
-				(user.email.toLowerCase().includes(this.query.toLowerCase()) ||
-					user.username
+		return this.users
+			.filter(
+				user =>
+					user.email != null &&
+					user.username != null &&
+					(user.email.endsWith("ductus.se") ||
+						user.email.endsWith("example.com")) && //ToDo: remove for prod
+					(user.email
 						.toLowerCase()
-						.includes(this.query.toLowerCase()))
-		).map(u => ({...u, id: u.userId }));
+						.includes(this.query.toLowerCase()) ||
+						user.username
+							.toLowerCase()
+							.includes(this.query.toLowerCase()))
+			)
+			.map(u => ({ ...u, id: u.userId }));
 	}
 
 	ngOnInit() {
