@@ -22,6 +22,8 @@ import {
 } from "rxjs";
 import { CommonModule } from "@angular/common";
 import { AccordionListComponent } from "../../accordion-list/accordion-list.component";
+import { ButtonWrapperComponent } from "../../../html/button-wrapper/button-wrapper.component";
+import { ResponsiveLiComponent } from "../../../html/responsive-li/responsive-li.component";
 
 @Component({
 	selector: "app-event-user-form",
@@ -31,6 +33,9 @@ import { AccordionListComponent } from "../../accordion-list/accordion-list.comp
 		FormsModule,
 		CommonModule,
 		AccordionListComponent,
+		ButtonWrapperComponent,
+		ResponsiveLiComponent,
+		ResponsiveLiComponent,
 	],
 	templateUrl: "./event-user-form.component.html",
 	styleUrl: "./event-user-form.component.css",
@@ -50,6 +55,7 @@ export class EventUserFormComponent
 	derivedTitle = computed<string>(() => `${this.step()}. ${this.title()}`);
 	selectedUsersChange = output<IUserDto>();
 	isPending = signal(false);
+	isFocused = false;
 
 	constructor(
 		private userService: UserService,
@@ -125,6 +131,17 @@ export class EventUserFormComponent
 
 	toggleSelect(user: IUserDto) {
 		this.selectedUsersChange.emit(user);
+	}
+
+	getSelectedStyleForSearchResultItem(user: IUserDto) {
+		const common = `
+			w-100 border-0 p-3 d-flex flex-column
+			align-items-start flex-sm-row justify-content-sm-between
+			overflow-y-auto `;
+
+		return this.isSelected(user)
+			? `${common} bg-primary text-white`
+			: `${common} bg-transparent`;
 	}
 
 	isSelected(user: IUserDto): boolean {

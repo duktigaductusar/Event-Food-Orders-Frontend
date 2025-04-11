@@ -9,13 +9,7 @@ type LabelSizeFontSizeType = 1 | 2 | 3 | 4 | 5 | 6;
 	standalone: true,
 	imports: [CommonModule, NgbAccordionModule],
 	templateUrl: "./accordion-list.component.html",
-	styles: [
-		`
-			.cursor-pointer {
-				cursor: pointer;
-			}
-		`,
-	],
+	styleUrl: "accordion-list.component.css",
 })
 export class AccordionListComponent<T> {
 	@Input() label = "Items";
