@@ -61,7 +61,7 @@ export class EventFormBaseComponent
 		formUserStep: 2,
 		formVerifyStep: 3,
 	};
-	currentStep = 2; // this.formSteps.formDetailStep;
+	currentStep = this.formSteps.formDetailStep;
 	selectedUsers = signal<IUserDto[]>([]);
 	changedDeadline = signal<NgbDateStruct | null>(null);
 	form = input<FormGroup<ICreateEventForm>>();

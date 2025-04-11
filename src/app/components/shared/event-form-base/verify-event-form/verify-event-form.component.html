@@ -93,14 +93,28 @@
 					})
 				}}
 			</h5>
-			<ul class="list-group">
-				@for (user of form.value.inviteUsersForm?.users; track user) {
-					<li class="list-group-item">{{ user.email }}</li>
-				}
-			</ul>
+			<app-accordion-list
+				[label]="t('event-create.userForm.selectedUsers')"
+				[items]="selectedUsersWithId()"
+				[itemTemplate]="userTemplate"
+				[labelFontSize]="6"
+			>
+			</app-accordion-list>
 		</div>
 	</div>
 	<div>
 		<ng-content select="[footer]"></ng-content>
 	</div>
 </app-responsive-form>
+
+<ng-template #userTemplate let-user>
+	@if (user !== undefined) {
+		<app-responsive-li>
+			<i class="bi bi-person-check"></i>
+			<div class="d-flex flex-column">
+				<span>{{ user.email }}</span>
+				<small class="text-muted">{{ user.username }}</small>
+			</div>
+		</app-responsive-li>
+	}
+</ng-template>

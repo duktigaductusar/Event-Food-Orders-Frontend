@@ -1,13 +1,12 @@
 import { Component, Input } from "@angular/core";
-import { ResponsiveFormComponent } from "../../../html/responsive-form/responsive-form.component";
 import { FormGroup } from "@angular/forms";
-import { ICreateEventForm } from "../interfaces";
+import { ICreateEventForm, IUsersDtoWithId } from "../interfaces";
 import { formTitles } from "../constants";
-import { AppBaseComponent } from "@app/components/base/app-base.component";
+import { AccordionListComponent, AppBaseComponent, ResponsiveFormComponent, ResponsiveLiComponent } from "@app/components";
 
 @Component({
 	selector: "app-verify-event-form",
-	imports: [ResponsiveFormComponent],
+	imports: [ResponsiveFormComponent, ResponsiveLiComponent, AccordionListComponent],
 	templateUrl: "./verify-event-form.component.html",
 	styleUrl: "./verify-event-form.component.css",
 })
@@ -16,4 +15,11 @@ export class VerifyEventFormComponent extends AppBaseComponent {
 	@Input() form!: FormGroup<ICreateEventForm>;
 	@Input() step!: number;
 	@Input() title = "";
+
+	selectedUsersWithId(): IUsersDtoWithId[] {
+		return this.form.value.inviteUsersForm?.users?.map(u => ({
+			...u,
+			id: u.userId
+		})) ?? []  
+	}	
 }

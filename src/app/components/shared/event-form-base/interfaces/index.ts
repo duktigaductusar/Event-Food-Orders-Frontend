@@ -38,3 +38,7 @@ export interface ICreateEventForm {
 	[formGroups.eventDetailsForm]: FormGroup<IEventDetailsForm>;
 	[formGroups.inviteUsersForm]: FormGroup<IInviteForm>;
 }
+
+export interface IUsersDtoWithId extends IUserDto {
+	id: string;
+}

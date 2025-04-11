@@ -9,7 +9,7 @@ import {
 } from "@angular/core";
 import { FormGroup, FormsModule } from "@angular/forms";
 import { ResponsiveFormComponent } from "../../../html/responsive-form/responsive-form.component";
-import { IInviteForm } from "../interfaces";
+import { IInviteForm, IUsersDtoWithId } from "../interfaces";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
 import { EventStateService, UserService } from "@app/services";
 import { IUserDto } from "@app/models";
@@ -56,6 +56,9 @@ export class EventUserFormComponent
 	selectedUsersChange = output<IUserDto>();
 	isPending = signal(false);
 	isFocused = false;
+	selectedUsersWithId = computed<IUsersDtoWithId[]>(() => {
+		return this.selectedUsers().map(u => ({ ...u, id: u.userId }))
+	})
 
 	constructor(
 		private userService: UserService,
@@ -64,7 +67,7 @@ export class EventUserFormComponent
 		super();
 	}
 
-	get filteredUsers(): IUserDto[] {
+	get filteredUsers(): IUsersDtoWithId[] {
 		return this.users.filter(
 			user =>
 				user.email != null &&
@@ -75,7 +78,7 @@ export class EventUserFormComponent
 					user.username
 						.toLowerCase()
 						.includes(this.query.toLowerCase()))
-		);
+		).map(u => ({...u, id: u.userId }));
 	}
 
 	ngOnInit() {

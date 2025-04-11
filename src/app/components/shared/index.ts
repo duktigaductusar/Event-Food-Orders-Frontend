@@ -5,3 +5,4 @@ export * from "./status-label/status-label.component";
 export * from "./invalid-input-feedback/invalid-input-feedback.component";
 export * from "./event-form-base";
 export * from "./accordion-list/accordion-list.component";
+export * from "./spinner-full-screen/spinner-full-screen.component";

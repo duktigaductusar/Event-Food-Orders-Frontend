@@ -20,14 +20,14 @@ import {
 	EventFormBaseComponent,
 	ICreateEventForm,
 	isEventFormData,
+	SpinnerFullScreenComponent,
 } from "@app/components/shared";
 import { CreateEventResultModalComponent } from "./create-event-result-modal/create-event-result-modal.component";
-import { newEventResultSelection } from "./create-event-result-modal/newEventResultSelection";
 
 @Component({
 	selector: "app-create-event",
 	standalone: true,
-	imports: [EventFormBaseComponent],
+	imports: [EventFormBaseComponent, SpinnerFullScreenComponent],
 	templateUrl: "./create-event.component.html",
 })
 export class CreateEventComponent implements OnDestroy, OnInit {
@@ -62,6 +62,7 @@ export class CreateEventComponent implements OnDestroy, OnInit {
 			.subscribe({
 				next: event => {
 					this.eventStateService.selectedEventDto.set(null);
+					this.resetForm();
 					this.openSuccessModal(event);
 				},
 				error: (error: ApiError) => {
@@ -86,11 +87,8 @@ export class CreateEventComponent implements OnDestroy, OnInit {
 		modalRef.componentInstance.event = event;
 
 		modalRef.result
-			.then(result => {
-				this.storageService.removeItem(storageKeys.newEventForm);
-				if (result === newEventResultSelection.newEventFormSelection) {
-					this.resetForm();
-				}
+			.then(() => {
+				window.location.reload();
 			})
 			.catch(reason => {
 				console.log("Modal dismissed:", reason);
@@ -98,8 +96,6 @@ export class CreateEventComponent implements OnDestroy, OnInit {
 	}
 
 	resetForm() {
-		window.location.reload();
-		this.autoFormSaver.destroy();
 		this.form.reset({
 			eventDetailsForm: {
 				title: "",
@@ -114,6 +110,7 @@ export class CreateEventComponent implements OnDestroy, OnInit {
 				users: [],
 			},
 		});
+		this.autoFormSaver.destroy();
 	}
 
 	ngOnDestroy() {

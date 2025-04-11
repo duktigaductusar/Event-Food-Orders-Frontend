@@ -1,4 +1,4 @@
-<div ngbAccordion>
+<div ngbAccordion o>
 	<div ngbAccordionItem>
 		<h2 ngbAccordionHeader>
 			<button
@@ -13,8 +13,8 @@
 
 		<div ngbAccordionCollapse>
 			<div ngbAccordionBody class="p-0">
-				<ng-container *ngIf="items.length; else empty">
-					<ng-container *ngFor="let item of items">
+				@for (item of items; track item.id) {
+					<ng-container>
 						<ng-container
 							*ngTemplateOutlet="
 								itemTemplate;
@@ -23,11 +23,13 @@
 						>
 						</ng-container>
 					</ng-container>
-				</ng-container>
-
-				<ng-template #empty>
-					<div class="text-muted">No items to display.</div>
-				</ng-template>
+				} @empty {
+					@if (labelNoItems !== "") {
+						<div>
+							<p>{{ labelNoItems }}</p>
+						</div>
+					}
+				}
 			</div>
 		</div>
 	</div>
