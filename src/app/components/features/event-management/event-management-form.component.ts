@@ -146,6 +146,7 @@ export class EventManagementFormComponent
 			description: this.eventDetailDto?.description,
 			date: this.eventDetailDto?.date,
 			deadline: this.eventDetailDto?.deadline,
+			endTime: this.eventDetailDto?.endTime,
 			users: this.users,
 		};
 	}
