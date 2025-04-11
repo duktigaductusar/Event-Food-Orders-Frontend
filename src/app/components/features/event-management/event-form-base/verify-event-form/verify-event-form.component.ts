@@ -1,13 +1,15 @@
 import { Component, Input } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { ICreateEventForm, IUsersDtoWithId } from "../interfaces";
-import { formTitles } from "../constants";
+
+import { AppBaseComponent } from "@app/components/base";
 import {
-	AccordionListComponent,
-	AppBaseComponent,
 	ResponsiveFormComponent,
 	ResponsiveLiComponent,
-} from "@app/components";
+} from "@app/components/html";
+import { AccordionListComponent } from "@app/components/shared";
+
+import { ICreateEventForm, IUsersDtoWithId } from "../interfaces";
+import { formTitles } from "../constants";
 
 @Component({
 	selector: "app-verify-event-form",

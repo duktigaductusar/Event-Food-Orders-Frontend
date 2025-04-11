@@ -1,11 +1,13 @@
 import { Component, OnDestroy, OnInit, signal } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
+import { Router } from "@angular/router";
 import { finalize } from "rxjs";
 import {
 	NgbDateStruct,
 	NgbModal,
 	NgbTimeStruct,
 } from "@ng-bootstrap/ng-bootstrap";
+
 import { IEventDto, IEventForCreationDto } from "@app/models";
 import {
 	EventService,
@@ -13,13 +15,13 @@ import {
 	storageKeys,
 	StorageService,
 } from "@app/services";
-import { ApiError } from "@app/interceptors/api-error.interceptor";
-import { FormAutoSaver } from "@app/components/base/form-auto-saver.component";
+import { FormAutoSaver } from "@app/components/base";
 import { SpinnerFullScreenComponent } from "@app/components/shared";
-import { CreateEventResultModalComponent } from "./create-event-result-modal/create-event-result-modal.component";
-import { Router } from "@angular/router";
-import { newEventResultSelection } from "./create-event-result-modal/newEventResultSelection";
 import { appRoutes } from "@app/constants";
+
+import { ApiError } from "@app/interceptors";
+import { CreateEventResultModalComponent } from "./create-event-result-modal/create-event-result-modal.component";
+import { newEventResultSelection } from "./create-event-result-modal/newEventResultSelection";
 import {
 	EventFormBaseComponent,
 	ICreateEventForm,

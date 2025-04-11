@@ -1,6 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { Component, output } from "@angular/core";
-import { CSSClassComponent } from "@app/components";
+
+import { CSSClassComponent } from "@app/components/base";
 
 @Component({
 	selector: "app-button-wrapper",

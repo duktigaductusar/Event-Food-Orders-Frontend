@@ -1,8 +1,14 @@
+import { WritableSignal } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NgbDateStruct, NgbTimeStruct } from "@ng-bootstrap/ng-bootstrap";
 import { Observable, takeUntil } from "rxjs";
-import { formControllers } from "./constants";
+
 import { environment } from "@environments";
+import {
+	dateToNgbDateStruct,
+	dateToNgbTimeStruct,
+	isLessThanOneDayInFuture,
+} from "@app/utility";
 import { IEventDetailOwnerDto } from "@app/models";
 import {
 	dateValidator,
@@ -13,12 +19,7 @@ import {
 	endTimeValidator,
 	dateValidatorFutureDate,
 } from "./event-form.validators";
-import {
-	dateToNgbDateStruct,
-	dateToNgbTimeStruct,
-	isLessThanOneDayInFuture,
-} from "@app/utility";
-import { WritableSignal } from "@angular/core";
+import { formControllers } from "./constants";
 
 export function buildCreateEventForm(
 	fb: FormBuilder,

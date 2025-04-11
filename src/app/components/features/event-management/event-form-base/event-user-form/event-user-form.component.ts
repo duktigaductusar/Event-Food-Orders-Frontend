@@ -8,10 +8,7 @@ import {
 	signal,
 } from "@angular/core";
 import { FormGroup, FormsModule } from "@angular/forms";
-import { FormStepsTyp, IInviteForm, IUsersDtoWithId } from "../interfaces";
-import { AppBaseComponent } from "@app/components/base/app-base.component";
-import { EventStateService, UserService } from "@app/services";
-import { IUserDto } from "@app/models";
+import { CommonModule } from "@angular/common";
 import {
 	Subject,
 	debounceTime,
@@ -19,13 +16,19 @@ import {
 	finalize,
 	takeUntil,
 } from "rxjs";
-import { CommonModule } from "@angular/common";
+
+import { EventStateService, UserService } from "@app/services";
+import { IUserDto } from "@app/models";
+
 import {
 	ResponsiveFormComponent,
 	ButtonWrapperComponent,
 	ResponsiveLiComponent,
 } from "@app/components/html";
 import { AccordionListComponent } from "@app/components/shared";
+import { AppBaseComponent } from "@app/components/base";
+
+import { FormStepsTyp, IInviteForm, IUsersDtoWithId } from "../interfaces";
 
 @Component({
 	selector: "app-event-user-form",

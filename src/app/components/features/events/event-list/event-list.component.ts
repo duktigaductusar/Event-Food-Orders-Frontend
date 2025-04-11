@@ -1,13 +1,15 @@
 import { Component, signal, type OnInit } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { EventItemComponent } from "../event-item/event-item.component";
+import { finalize } from "rxjs";
+
 import { IEventDto, IParticipantForResponseDto } from "@app/models";
 import { EventService } from "@app/services";
-import { AppBaseComponent } from "@app/components/base/app-base.component";
-import { SpinnerComponent } from "@app/components/shared";
-import { finalize } from "rxjs";
-import { NavLinkComponent } from "../../../html/nav-link/nav-link.component";
 import { appRoutes } from "@app/constants";
+import { AppBaseComponent } from "@app/components/base";
+import { NavLinkComponent } from "@app/components/html";
+import { SpinnerComponent } from "@app/components/shared";
+
+import { EventItemComponent } from "../event-item/event-item.component";
 
 @Component({
 	selector: "app-event-list",
