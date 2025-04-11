@@ -37,9 +37,7 @@ export function dateToNgbDateStruct(
 export function dateToNgbTimeStruct(
 	date: Date | string | undefined | null
 ): NgbTimeStruct {
-	console.log("date: ", date);
 	if (date == null) {
-		console.log("???????????????????");
 		return {} as NgbTimeStruct;
 	}
 

@@ -21,8 +21,6 @@ export class StorageService {
 		value: T,
 		type: StorageType = defaultStorage
 	): void {
-		const jsonValue = JSON.stringify(value);
-		console.log("jsonValue: ", jsonValue);
 		this.getStorage(type).setItem(key, JSON.stringify(value));
 	}
 
