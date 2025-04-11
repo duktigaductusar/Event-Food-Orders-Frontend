@@ -1,5 +1,5 @@
 <button
-	type="button"
+	[attr.type]="type()"
 	[class]="computedClass"
 	[disabled]="disabled()"
 	(click)="onClick($event)"
