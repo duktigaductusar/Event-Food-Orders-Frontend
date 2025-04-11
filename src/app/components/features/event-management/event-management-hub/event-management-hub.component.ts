@@ -8,7 +8,10 @@ import {
 } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
-import { GenericBtnComponent, ResponsiveLiComponent } from "@app/components/html";
+import {
+	GenericBtnComponent,
+	ResponsiveLiComponent,
+} from "@app/components/html";
 import {
 	DatetimelabelComponent,
 	SpinnerComponent,
