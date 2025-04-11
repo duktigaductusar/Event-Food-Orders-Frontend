@@ -47,14 +47,14 @@
 					}
 				</div>
 
-				@if (filteredUsers.length > 0) {
+				@if (filteredAndSortedUsers.length > 0) {
 					<app-accordion-list
 						[label]="
 							t2('event-create.userForm.searchResult', {
-								items: filteredUsers.length,
+								items: filteredAndSortedUsers.length,
 							})
 						"
-						[items]="filteredUsers"
+						[items]="filteredAndSortedUsers"
 						[itemTemplate]="userSearchTemplate"
 						[labelFontSize]="5"
 						[open]="true"
@@ -64,7 +64,7 @@
 
 				@if (
 					query.length > 0 &&
-					filteredUsers.length === 0 &&
+					filteredAndSortedUsers.length === 0 &&
 					!isPending()
 				) {
 					<div class="alert alert-warning">
@@ -81,7 +81,11 @@
 				}
 
 				<app-accordion-list
-					[label]="t('event-create.userForm.selectedUsers')"
+					[label]="
+						t2('event-create.userForm.selectedUsers', {
+							items: selectedUsersWithId()!.length,
+						})
+					"
 					[items]="selectedUsersWithId()"
 					[itemTemplate]="userTemplate"
 					[labelFontSize]="5"

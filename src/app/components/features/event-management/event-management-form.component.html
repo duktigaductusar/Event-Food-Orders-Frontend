@@ -89,9 +89,7 @@
 						</p>
 						<ul class="list-group">
 							@for (user of users; track user.userId) {
-								<li
-									class="list-group-item d-flex flex-column flex-sm-row"
-								>
+								<app-responsive-li>
 									<div
 										class="d-flex gap-3 align-items-center mb-0"
 									>
@@ -102,12 +100,13 @@
 											"
 										></app-status-label>
 									</div>
-									<div
-										class="w-100 text-center text-md-start d-flex justify-content-end"
-									>
-										{{ user.email }}
+									<div class="d-flex flex-column">
+										<span>{{ user.email }}</span>
+										<small class="text-muted">{{
+											user.username
+										}}</small>
 									</div>
-								</li>
+								</app-responsive-li>
 							} @empty {
 								<p>
 									{{

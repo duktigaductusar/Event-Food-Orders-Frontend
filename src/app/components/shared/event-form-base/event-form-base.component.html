@@ -1,17 +1,17 @@
 <div class="mx-auto" [ngStyle]="getContainerStyle()">
 	<div class="m-sm-4">
-		@switch (currentStep) {
+		@switch (currentStep()) {
 			@case (formSteps.formDetailStep) {
 				<app-event-details-form
 					[changedDeadline]="changedDeadline()"
 					[title]="formTitles.eventDetailTitle"
-					[step]="currentStep"
+					[step]="currentStep()"
 					[form]="eventDetailsFormGroup"
 				>
 					<app-event-form-header-container header>
 						<ng-content select="[extra-header-one]"></ng-content>
 						<app-multistep-form-navigation-header
-							[step]="currentStep"
+							[step]="currentStep()"
 							[steps]="getSubFormTitles()"
 						></app-multistep-form-navigation-header>
 					</app-event-form-header-container>
@@ -31,7 +31,7 @@
 			@case (formSteps.formUserStep) {
 				<app-event-user-form
 					[title]="formTitles.addUserTitle"
-					[step]="currentStep"
+					[step]="currentStep()"
 					[selectedUsers]="getDerivedUsers()"
 					[form]="inviteUsersForm"
 					(selectedUsersChange)="onSelectedUsersChange($event)"
@@ -40,7 +40,7 @@
 						<ng-content select="[extra-header-two]"></ng-content>
 						<app-multistep-form-navigation-header
 							[steps]="getSubFormTitles()"
-							[step]="currentStep"
+							[step]="currentStep()"
 						>
 						</app-multistep-form-navigation-header>
 					</app-event-form-header-container>
@@ -68,14 +68,14 @@
 			@case (formSteps.formVerifyStep) {
 				<app-verify-event-form
 					[title]="formTitles.formVerificationTitle"
-					[step]="currentStep"
+					[step]="currentStep()"
 					[form]="safeForm()"
 				>
 					<app-event-form-header-container header>
 						<ng-content select="[extra-header-three]"></ng-content>
 						<app-multistep-form-navigation-header
 							[steps]="getSubFormTitles()"
-							[step]="currentStep"
+							[step]="currentStep()"
 						>
 						</app-multistep-form-navigation-header>
 					</app-event-form-header-container>

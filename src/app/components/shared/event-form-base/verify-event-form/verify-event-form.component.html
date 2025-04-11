@@ -74,7 +74,7 @@
 					}}
 					{{ form.value.eventDetailsForm?.dateDeadline?.year }}
 				</li>
-				<li class="list-group-item">
+				<li class="list-group-item fw-">
 					<strong>{{
 						t("event-create.verifyForm.itemTimeDeadline")
 					}}</strong>
@@ -94,10 +94,15 @@
 				}}
 			</h5>
 			<app-accordion-list
-				[label]="t('event-create.userForm.selectedUsers')"
+				[label]="
+					t2('event-create.userForm.selectedUsers', {
+						items: selectedUsersWithId().length,
+					})
+				"
 				[items]="selectedUsersWithId()"
 				[itemTemplate]="userTemplate"
 				[labelFontSize]="6"
+				[labelFontWeight]="'bolder'"
 			>
 			</app-accordion-list>
 		</div>

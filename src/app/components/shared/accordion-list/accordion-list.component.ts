@@ -11,7 +11,9 @@ import {
 	NgbAccordionModule,
 } from "@ng-bootstrap/ng-bootstrap";
 
-type LabelSizeFontSizeType = 1 | 2 | 3 | 4 | 5 | 6;
+type LabelFontSizeType = 1 | 2 | 3 | 4 | 5 | 6;
+
+type LabelFontWeightType = "light" | "normal" | "medium" | "bold" | "bolder";
 
 @Component({
 	selector: "app-accordion-list",
@@ -25,14 +27,15 @@ export class AccordionListComponent<T extends { id: string }>
 {
 	@Input() label = "Items";
 	@Input() labelNoItems = "";
-	@Input() labelFontSize: LabelSizeFontSizeType = 5;
+	@Input() labelFontSize: LabelFontSizeType = 5;
+	@Input() labelFontWeight: LabelFontWeightType = "normal";
 	@Input() items: T[] = [];
 	@Input() itemTemplate!: TemplateRef<unknown>;
 	@Input() open = false;
 	@ViewChild(NgbAccordionDirective) accordion!: NgbAccordionDirective;
 
 	get labelClass(): string {
-		return `fs-${this.labelFontSize}`;
+		return `fs-${this.labelFontSize} fw-${this.labelFontWeight}`;
 	}
 
 	ngAfterViewInit(): void {

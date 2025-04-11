@@ -23,6 +23,9 @@ import {
 	SpinnerFullScreenComponent,
 } from "@app/components/shared";
 import { CreateEventResultModalComponent } from "./create-event-result-modal/create-event-result-modal.component";
+import { Router } from "@angular/router";
+import { newEventResultSelection } from "./create-event-result-modal/newEventResultSelection";
+import { appRoutes } from "@app/constants";
 
 @Component({
 	selector: "app-create-event",
@@ -40,7 +43,8 @@ export class CreateEventComponent implements OnDestroy, OnInit {
 		private eventService: EventService,
 		private eventStateService: EventStateService,
 		private storageService: StorageService,
-		private modalService: NgbModal
+		private modalService: NgbModal,
+		private readonly router: Router
 	) {}
 
 	ngOnInit(): void {
@@ -62,7 +66,6 @@ export class CreateEventComponent implements OnDestroy, OnInit {
 			.subscribe({
 				next: event => {
 					this.eventStateService.selectedEventDto.set(null);
-					this.resetForm();
 					this.openSuccessModal(event);
 				},
 				error: (error: ApiError) => {
@@ -87,11 +90,24 @@ export class CreateEventComponent implements OnDestroy, OnInit {
 		modalRef.componentInstance.event = event;
 
 		modalRef.result
-			.then(() => {
-				window.location.reload();
+			.then(reason => {
+				this.resetForm();
+				if (reason === newEventResultSelection.newEventFormSelection) {
+					window.location.reload()
+					this.router.navigate([appRoutes.EVENT_CREATE])
+					return
+				}
+
+				if (reason === newEventResultSelection.backdrop ||
+					reason === newEventResultSelection.esc
+				) {
+					this.router.navigate([appRoutes.HOME])
+					return;
+				}
 			})
-			.catch(reason => {
-				console.log("Modal dismissed:", reason);
+			.catch(() => {
+				this.resetForm();
+				this.router.navigate([appRoutes.HOME])
 			});
 	}
 
@@ -110,6 +126,7 @@ export class CreateEventComponent implements OnDestroy, OnInit {
 				users: [],
 			},
 		});
+		this.storageService.removeItem(storageKeys.newEventForm)
 		this.autoFormSaver.destroy();
 	}
 

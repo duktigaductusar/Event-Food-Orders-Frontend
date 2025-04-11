@@ -34,18 +34,20 @@ import { IEventDetailInfoDto } from "@app/models/eventDtos/IEventDetailInfoDto.m
 import { IParticipantWithUserDto } from "@app/models/participantDtos/IParticipantWithUserDto.model";
 import { finalize } from "rxjs";
 import { ResponsiveDivComponent } from "@app/components/html/responsive-div.component/responsive-div.component";
+import { ResponsiveLiComponent } from "../../html/responsive-li/responsive-li.component";
 
 @Component({
 	selector: "app-event-management-form",
 	imports: [
-		DatetimelabelComponent,
-		StatusLabelComponent,
-		GenericBtnComponent,
-		EditEventComponent,
-		CommonModule,
-		ResponsiveDivComponent,
-		SpinnerComponent,
-	],
+    DatetimelabelComponent,
+    StatusLabelComponent,
+    GenericBtnComponent,
+    EditEventComponent,
+    CommonModule,
+    ResponsiveDivComponent,
+    SpinnerComponent,
+    ResponsiveLiComponent
+],
 	templateUrl: "./event-management-form.component.html",
 	styleUrl: "./event-management-form.component.css",
 })

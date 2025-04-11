@@ -9,7 +9,7 @@ import {
 } from "@angular/core";
 import { FormGroup, FormsModule } from "@angular/forms";
 import { ResponsiveFormComponent } from "../../../html/responsive-form/responsive-form.component";
-import { IInviteForm, IUsersDtoWithId } from "../interfaces";
+import { FormStepsTyp, IInviteForm, IUsersDtoWithId } from "../interfaces";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
 import { EventStateService, UserService } from "@app/services";
 import { IUserDto } from "@app/models";
@@ -50,14 +50,16 @@ export class EventUserFormComponent
 	private destroySubject = new Subject<void>();
 	form = input<FormGroup<IInviteForm>>(null!);
 	selectedUsers = input<IUserDto[]>([]);
-	step = input<number>(null!);
+	step = input<FormStepsTyp>(null!);
 	title = input<string>(null!);
 	derivedTitle = computed<string>(() => `${this.step()}. ${this.title()}`);
 	selectedUsersChange = output<IUserDto>();
 	isPending = signal(false);
 	isFocused = false;
 	selectedUsersWithId = computed<IUsersDtoWithId[]>(() => {
-		return this.selectedUsers().map(u => ({ ...u, id: u.userId }));
+		return this.selectedUsers()
+			.sort((a, b) => a.email.localeCompare(b.email))
+			.map(u => ({ ...u, id: u.userId }));
 	});
 
 	constructor(
@@ -67,7 +69,7 @@ export class EventUserFormComponent
 		super();
 	}
 
-	get filteredUsers(): IUsersDtoWithId[] {
+	get filteredAndSortedUsers(): IUsersDtoWithId[] {
 		return this.users
 			.filter(
 				user =>
@@ -82,6 +84,7 @@ export class EventUserFormComponent
 							.toLowerCase()
 							.includes(this.query.toLowerCase()))
 			)
+			.sort((a, b) => a.email.localeCompare(b.email))
 			.map(u => ({ ...u, id: u.userId }));
 	}
 
