@@ -18,10 +18,13 @@ import {
 	NgbDateStruct,
 	NgbTimepickerModule,
 } from "@ng-bootstrap/ng-bootstrap";
+import { AppBaseComponent } from "@app/components/base";
+import { InvalidInputFeedbackComponent } from "@app/components/shared";
 import {
 	RequiredLabelComponent,
 	ResponsiveFormComponent,
 } from "@app/components/html";
+
 import {
 	EventDetailsFormControllerNameType,
 	EventDetailsValidationGroupKeysType,
@@ -29,14 +32,12 @@ import {
 	FormStepsTyp,
 	IEventDetailsForm,
 } from "../interfaces";
-import { AppBaseComponent } from "@app/components/base/app-base.component";
 import {
 	eventDetailsControllerNames,
 	eventDetailsValidationGroupKeys,
 	eventDetailsValidationKeys,
 	formControllers,
 } from "../constants";
-import { InvalidInputFeedbackComponent } from "@app/components/shared/invalid-input-feedback/invalid-input-feedback.component";
 
 @Component({
 	selector: "app-event-details-form",

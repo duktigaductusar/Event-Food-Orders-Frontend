@@ -1,10 +1,12 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject, Input, output } from "@angular/core";
 import { Router } from "@angular/router";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+
 import { GenericBtnComponent } from "@app/components/html";
 import { appRoutes } from "@app/constants";
 import { IEventDto } from "@app/models";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+
 import { newEventResultSelection } from "./newEventResultSelection";
 
 @Component({

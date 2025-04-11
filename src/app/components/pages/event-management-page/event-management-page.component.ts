@@ -1,8 +1,7 @@
 import { Component } from "@angular/core";
-import {
-	EventManagementHubComponent,
-	MainLayoutComponent,
-} from "@app/components";
+
+import { EventManagementHubComponent } from "@app/components/features";
+import { MainLayoutComponent } from "@app/components/layouts";
 
 @Component({
 	selector: "app-event-management-page",

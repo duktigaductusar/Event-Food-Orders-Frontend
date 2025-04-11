@@ -1,20 +1,23 @@
 import { Component, input, output, signal } from "@angular/core";
+import { Router } from "@angular/router";
+import { finalize } from "rxjs";
+
 import type {
 	IEventDto,
 	IParticipantForResponseDto,
 	IParticipantForUpdateDto,
 } from "@app/models";
-import { AppBaseComponent } from "@app/components/base/app-base.component";
-import { DatetimelabelComponent } from "@app/components/shared/datetimelabel/datetimelabel.component";
-import { GenericBtnComponent } from "../../../html/generic-btn/generic-btn.component";
-import { Router } from "@angular/router";
 import { appRoutes } from "@app/constants";
 import { EventService, EventStateService } from "@app/services";
-import { StatusLabelComponent } from "../../../shared";
-import type { ParticipantResponseType } from "@types";
 import { fromDateTimeISOString } from "@app/utility";
-import { ParticipantService } from "@app/services/api/participant.service";
-import { finalize } from "rxjs";
+import { ParticipantService } from "@app/services";
+import { AppBaseComponent } from "@app/components/base";
+import { GenericBtnComponent } from "@app/components/html";
+import {
+	DatetimelabelComponent,
+	StatusLabelComponent,
+} from "@app/components/shared";
+import type { ParticipantResponseType } from "@types";
 
 @Component({
 	selector: "app-event-item",

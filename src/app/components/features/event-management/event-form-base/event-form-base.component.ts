@@ -8,37 +8,38 @@ import {
 	signal,
 	AfterViewInit,
 } from "@angular/core";
+import { CommonModule } from "@angular/common";
 import { EventDetailsFormComponent } from "./event-details-form/event-details-form.component";
 import { FormGroup } from "@angular/forms";
 import { Subject } from "rxjs";
+import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 
-import { FormStepsTyp, ICreateEventForm } from "./interfaces";
-import { MultiStepFormHeaderComponent } from "./multistep-form-navigation-header/multistep-form-navigation-header.component";
-import { GenericBtnComponent } from "@app/components/html";
-import { CommonModule } from "@angular/common";
-import { EventFormFooterContainerComponent } from "./event-form-footer-container/event-form-footer-container.component";
-import { AppBaseComponent } from "@app/components/base/app-base.component";
-import {
-	formControllers,
-	formGroups,
-	formSteps,
-	formTitles,
-} from "./constants";
-import { EventUserFormComponent } from "./event-user-form/event-user-form.component";
-import { VerifyEventFormComponent } from "./verify-event-form/verify-event-form.component";
+import { AppBaseComponent } from "@app/components/base";
 import {
 	IEventDetailOwnerDto,
 	IEventDto,
 	IEventForCreationDto,
 	IUserDto,
 } from "@app/models";
+import { GenericBtnComponent } from "@app/components/html";
+import {
+	formControllers,
+	formGroups,
+	formSteps,
+	formTitles,
+} from "./constants";
+import { EventFormFooterContainerComponent } from "./event-form-footer-container/event-form-footer-container.component";
+import { EventUserFormComponent } from "./event-user-form/event-user-form.component";
+import { VerifyEventFormComponent } from "./verify-event-form/verify-event-form.component";
+
 import {
 	subscribeDateDeadlineToDateChange,
 	subscribeTimeDeadlineToTimeChange,
 } from "./event-form.setup";
 import { createEventDtoFromEventForm } from "./event-form.utility";
 import { EventFormHeaderContainerComponent } from "./event-form-header-container/event-form-header-container.component";
-import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
+import { FormStepsTyp, ICreateEventForm } from "./interfaces";
+import { MultiStepFormHeaderComponent } from "./multistep-form-navigation-header/multistep-form-navigation-header.component";
 
 @Component({
 	selector: "app-event-form-base",

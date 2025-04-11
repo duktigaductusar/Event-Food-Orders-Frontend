@@ -1,3 +1,4 @@
+import { CommonModule } from "@angular/common";
 import {
 	Component,
 	computed,
@@ -7,7 +8,9 @@ import {
 	Signal,
 } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { AppBaseComponent } from "@app/components/base/app-base.component";
+import { finalize } from "rxjs";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+
 import {
 	GenericBtnComponent,
 	ResponsiveLiComponent,
@@ -18,23 +21,26 @@ import {
 	StatusLabelComponent,
 } from "@app/components/shared";
 import {
+	IEventDetailDto,
+	IEventDetailInfoDto,
 	IEventDetailOwnerDto,
 	IEventDto,
 	ILabelType,
+	IParticipantWithUserDto,
 	IUserDto,
 } from "@app/models";
-import { IEventDetailDto } from "@app/models/eventDtos/IEventDetailDto.model";
-import { EventService, EventStateService, UserService } from "@app/services";
+import {
+	EventService,
+	EventStateService,
+	ParticipantService,
+	UserService,
+} from "@app/services";
 
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { CommonModule } from "@angular/common";
 import { fromDateTimeISOString } from "@app/utility";
 import { appRoutes } from "@app/constants";
-import { ParticipantService } from "@app/services/api/participant.service";
-import { IEventDetailInfoDto } from "@app/models/eventDtos/IEventDetailInfoDto.model";
-import { IParticipantWithUserDto } from "@app/models/participantDtos/IParticipantWithUserDto.model";
-import { finalize } from "rxjs";
-import { ResponsiveDivComponent } from "@app/components/html/responsive-div.component/responsive-div.component";
+import { AppBaseComponent } from "@app/components/base";
+import { ResponsiveDivComponent } from "@app/components/html";
+
 import { EditEventComponent } from "../edit-event/edit-event.component";
 import { EventManagementDeleteModalComponentComponent } from "../event-management-delete-modal-component/event-management-delete-modal-component.component";
 

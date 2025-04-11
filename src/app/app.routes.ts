@@ -30,14 +30,8 @@ export const routes: Routes = [
 				path: `${appRoutes.EVENT_MANAGEMENT}/:id`,
 				component: EventManagementPageComponent,
 			},
+			{ path: appRoutes.LOGOUT, component: LogoutPageComponent },
 		],
-	},
-	{ path: appRoutes.LOGOUT, component: LogoutPageComponent },
-	{
-		// ToDo: Move to children?
-		path: appRoutes.LOGOUT,
-		component: LogoutPageComponent,
-		canActivate: [MsalGuard],
 	},
 	{ path: "**", redirectTo: "" },
 ];

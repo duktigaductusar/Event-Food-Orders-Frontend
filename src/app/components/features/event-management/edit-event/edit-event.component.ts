@@ -1,11 +1,13 @@
 import { Component, input, signal, OnInit, computed } from "@angular/core";
-import { finalize } from "rxjs";
 import { FormGroup, FormBuilder } from "@angular/forms";
+import { finalize } from "rxjs";
+
 import { IEventDetailOwnerDto, IEventForCreationDto } from "@app/models";
-import { FormAutoSaver } from "@app/components/base/form-auto-saver.component";
 import { EventService, EventStateService } from "@app/services";
-import { ApiError } from "@app/interceptors/api-error.interceptor";
-import { GenericBtnComponent } from "../../../html/generic-btn/generic-btn.component";
+import { ApiError } from "@app/interceptors";
+import { FormAutoSaver } from "@app/components/base";
+import { GenericBtnComponent } from "@app/components/html";
+
 import {
 	EventFormBaseComponent,
 	ICreateEventForm,
