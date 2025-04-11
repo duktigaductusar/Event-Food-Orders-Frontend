@@ -93,21 +93,22 @@ export class CreateEventComponent implements OnDestroy, OnInit {
 			.then(reason => {
 				this.resetForm();
 				if (reason === newEventResultSelection.newEventFormSelection) {
-					window.location.reload()
-					this.router.navigate([appRoutes.EVENT_CREATE])
-					return
+					window.location.reload();
+					this.router.navigate([appRoutes.EVENT_CREATE]);
+					return;
 				}
 
-				if (reason === newEventResultSelection.backdrop ||
+				if (
+					reason === newEventResultSelection.backdrop ||
 					reason === newEventResultSelection.esc
 				) {
-					this.router.navigate([appRoutes.HOME])
+					this.router.navigate([appRoutes.HOME]);
 					return;
 				}
 			})
 			.catch(() => {
 				this.resetForm();
-				this.router.navigate([appRoutes.HOME])
+				this.router.navigate([appRoutes.HOME]);
 			});
 	}
 
@@ -126,7 +127,7 @@ export class CreateEventComponent implements OnDestroy, OnInit {
 				users: [],
 			},
 		});
-		this.storageService.removeItem(storageKeys.newEventForm)
+		this.storageService.removeItem(storageKeys.newEventForm);
 		this.autoFormSaver.destroy();
 	}
 

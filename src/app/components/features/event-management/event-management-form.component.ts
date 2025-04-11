@@ -39,15 +39,15 @@ import { ResponsiveLiComponent } from "../../html/responsive-li/responsive-li.co
 @Component({
 	selector: "app-event-management-form",
 	imports: [
-    DatetimelabelComponent,
-    StatusLabelComponent,
-    GenericBtnComponent,
-    EditEventComponent,
-    CommonModule,
-    ResponsiveDivComponent,
-    SpinnerComponent,
-    ResponsiveLiComponent
-],
+		DatetimelabelComponent,
+		StatusLabelComponent,
+		GenericBtnComponent,
+		EditEventComponent,
+		CommonModule,
+		ResponsiveDivComponent,
+		SpinnerComponent,
+		ResponsiveLiComponent,
+	],
 	templateUrl: "./event-management-form.component.html",
 	styleUrl: "./event-management-form.component.css",
 })

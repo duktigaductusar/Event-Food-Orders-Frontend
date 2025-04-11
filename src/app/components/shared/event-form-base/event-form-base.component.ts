@@ -18,7 +18,12 @@ import { GenericBtnComponent } from "@app/components/html";
 import { CommonModule } from "@angular/common";
 import { EventFormFooterContainerComponent } from "./event-form-footer-container/event-form-footer-container.component";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
-import { formControllers, formGroups, formSteps, formTitles } from "./constants";
+import {
+	formControllers,
+	formGroups,
+	formSteps,
+	formTitles,
+} from "./constants";
 import { EventUserFormComponent } from "./event-user-form/event-user-form.component";
 import { VerifyEventFormComponent } from "./verify-event-form/verify-event-form.component";
 import {
@@ -127,7 +132,7 @@ export class EventFormBaseComponent
 			if (this.currentStep() === Object.keys(this.formSteps).length) {
 				return prev;
 			}
-			return prev + 1 as FormStepsTyp
+			return (prev + 1) as FormStepsTyp;
 		});
 		this.currentStepChange.emit(this.currentStep());
 	}
@@ -137,7 +142,7 @@ export class EventFormBaseComponent
 			if (this.currentStep() === 1) {
 				return prev;
 			}
-			return prev - 1 as FormStepsTyp
+			return (prev - 1) as FormStepsTyp;
 		});
 		this.currentStepChange.emit(this.currentStep());
 	}

@@ -44,4 +44,4 @@ export interface IUsersDtoWithId extends IUserDto {
 	id: string;
 }
 
-export type FormStepsTyp = typeof formSteps[ keyof typeof formSteps ]
+export type FormStepsTyp = (typeof formSteps)[keyof typeof formSteps];
