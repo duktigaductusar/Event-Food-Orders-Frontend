@@ -5,10 +5,10 @@ import { finalize } from "rxjs";
 import type {
 	IEventDto,
 	IParticipantForResponseDto,
-	IParticipantForUpdateDto,
+	IParticipantForUpdateResponseTypeDto,
 } from "@app/models";
 import { appRoutes } from "@app/constants";
-import { EventService, EventStateService } from "@app/services";
+import { EventStateService } from "@app/services";
 import { fromDateTimeISOString } from "@app/utility";
 import { ParticipantService } from "@app/services";
 import { AppBaseComponent } from "@app/components/base";
@@ -44,7 +44,6 @@ export class EventItemComponent extends AppBaseComponent {
 
 	constructor(
 		private router: Router,
-		private eventService: EventService,
 		public eventStateService: EventStateService,
 		private participantService: ParticipantService
 	) {
@@ -53,7 +52,7 @@ export class EventItemComponent extends AppBaseComponent {
 
 	onAction(event: Event, action: ParticipantResponseType): void {
 		event.stopPropagation();
-		const Dto: Partial<IParticipantForUpdateDto> = {
+		const dto: IParticipantForUpdateResponseTypeDto = {
 			responseType: action,
 		};
 
@@ -63,7 +62,7 @@ export class EventItemComponent extends AppBaseComponent {
 
 		this.isPending.set(true);
 		this.participantService
-			.respondToEvent(Dto, currentParticipantId)
+			.quickRespondToEvent(dto, currentParticipantId)
 			.pipe(finalize(() => this.isPending.set(false)))
 			.subscribe({
 				next: result => {

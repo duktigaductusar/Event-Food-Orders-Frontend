@@ -67,7 +67,11 @@
 		"wantsFood": "Jag vill ha mat",
 		"yes": "Ja",
 		"no": "Nej",
-		"send": "Skicka"
+		"send": "Skicka",
+		"pendingReponseLabel": "Avvaktar",
+		"attendingOnlineReponseLabel": "Online",
+		"attendingOfficeReponseLabel": "På plats",
+		"notAttendingReponseLabel": "Avvisa"
 	},
 	"events": {
 		"title": "Index Sida!",
