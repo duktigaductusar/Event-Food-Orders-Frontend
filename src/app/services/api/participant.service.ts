@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import {
 	IParticipantForResponseDto,
 	IParticipantForUpdateDto,
+	IParticipantForUpdateResponseTypeDto,
 } from "@app/models";
 import { environment } from "@environments/environment";
 import { Observable } from "rxjs";
@@ -18,6 +19,16 @@ export class ParticipantService {
 	respondToEvent(body: Partial<IParticipantForUpdateDto>, id: string) {
 		return this.http.put<IParticipantForResponseDto>(
 			`${this.apiUrl}/${id}`,
+			body
+		);
+	}
+
+	quickRespondToEvent(
+		body: IParticipantForUpdateResponseTypeDto,
+		id: string
+	) {
+		return this.http.put<IParticipantForResponseDto>(
+			`${this.apiUrl}/${id}/response-type`,
 			body
 		);
 	}

@@ -94,13 +94,6 @@ export class EventListComponent extends AppBaseComponent implements OnInit {
 	}
 
 	onActionTriggered(event: { action: string; card: IEventDto }): void {
-		console.log(
-			"Action triggered:",
-			event.action,
-			"for event:",
-			event.card.title
-		);
-
 		switch (event.action) {
 			case "attend_online":
 				this.updateEventResponse(event.card.id, "ATTENDING_ONLINE");

@@ -107,6 +107,7 @@ export class EventManagementHubComponent
 			.subscribe({
 				next: item => {
 					this.eventDetailDto = item;
+					console.log("this.eventDetailDto: ", this.eventDetailDto);
 					this.eventStateService.selectedEventDto.set(item);
 					this.participants = item.participants;
 					this.setUsers();
