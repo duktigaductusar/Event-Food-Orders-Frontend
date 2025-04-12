@@ -19,7 +19,6 @@ export class EventManagementDeleteModalComponentComponent extends AppBaseCompone
 	@Input() manager: EventManagementHubComponent | null = null;
 
 	callDeleteMethod(): void {
-		console.log("Delete method called from modal. Manager: ", this.manager);
 		this.manager?.deleteEvent();
 		this.activeModal.close();
 	}

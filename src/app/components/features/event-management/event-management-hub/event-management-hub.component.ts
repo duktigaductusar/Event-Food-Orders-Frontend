@@ -107,7 +107,6 @@ export class EventManagementHubComponent
 			.subscribe({
 				next: item => {
 					this.eventDetailDto = item;
-					console.log("this.eventDetailDto: ", this.eventDetailDto);
 					this.eventStateService.selectedEventDto.set(item);
 					this.participants = item.participants;
 					this.setUsers();
@@ -186,7 +185,6 @@ export class EventManagementHubComponent
 	}
 
 	deleteEvent(): void {
-		console.log("Delete event in manager triggered");
 		if (this.eventDetailDto === null || this.eventDetailDto === undefined) {
 			return;
 		}

@@ -49,7 +49,7 @@
 		}
 	},
 	"event-management": {
-		"ownerRegister": "Anmäl mig",
+		"ownerRegister": "Uppdatera min anmälan",
 		"cancelEvent": "Ställ in event",
 		"invitedParticipantsHeader": "Inbjudna deltagare",
 		"noParticipantsFound": "Hittade inga deltagare",
