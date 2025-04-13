@@ -71,7 +71,9 @@ export class EventFormBaseComponent
 	initialEvent = input<Partial<IEventDetailOwnerDto>>();
 	submitEventForm = output<IEventForCreationDto>();
 	currentStepChange = output<FormStepsTyp>();
+	initialUsers = computed<IUserDto[]>(() => this.initialEvent()?.users ?? []);
 	currentEvent: Partial<IEventDto> = {};
+	private initializedSelectedUsers = false;
 
 	readonly safeForm = computed(() => {
 		const value = this.form();
@@ -83,7 +85,19 @@ export class EventFormBaseComponent
 
 	constructor() {
 		super();
+		this.initialUserEffect();
 		this.selectedUsersEffect();
+	}
+
+	initialUserEffect() {
+		effect(() => {
+			const initUsers = this.initialEvent()?.users ?? [];
+
+			if (!this.initializedSelectedUsers && initUsers.length > 0) {
+				this.selectedUsers.set([...initUsers]);
+				this.initializedSelectedUsers = true;
+			}
+		});
 	}
 
 	selectedUsersEffect() {
@@ -91,10 +105,10 @@ export class EventFormBaseComponent
 			const form = this.getFormGroupForCurrentStep(
 				this.formSteps.formUserStep
 			);
-			const initUsers = this.initialEvent()?.users ?? [];
+
 			form
 				.get(formControllers.users)
-				?.setValue([...initUsers, ...this.selectedUsers()]);
+				?.setValue([...this.selectedUsers()]);
 			form.get(formControllers.users)?.markAsTouched();
 		});
 	}

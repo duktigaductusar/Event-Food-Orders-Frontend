@@ -8,7 +8,7 @@
 	<div>
 		<ng-content select="[header]"></ng-content>
 	</div>
-	<div class="p-4">
+	<div class="p-0 py-4 p-sm-4">
 		<div>
 			<div class="mb-2">
 				<h4 class="text-center text-black">{{ derivedTitle() }}</h4>
@@ -106,7 +106,7 @@
 				[useClass]="getSelectedStyleForSearchResultItem(user)"
 				(click)="toggleSelect(user)"
 			>
-				<i class="bi bi-person-add"></i>
+				<i class="bi bi-person-add fs-4"></i>
 				<div class="d-flex flex-column align-items-start align">
 					<span>{{ user.email }}</span>
 					<small
@@ -125,10 +125,23 @@
 <ng-template #userTemplate let-user>
 	@if (user !== undefined) {
 		<app-responsive-li>
-			<i class="bi bi-person-check"></i>
-			<div class="d-flex flex-column">
-				<span>{{ user.email }}</span>
-				<small class="text-muted">{{ user.username }}</small>
+			<i class="bi bi-person-check fs-4"></i>
+
+			<div
+				class="d-flex flex-row justify-content-between justify-content-sm-end gap-3 align-items-center w-100"
+			>
+				<div class="d-flex flex-column">
+					<span>{{ user.email }}</span>
+					<small class="text-muted">{{ user.username }}</small>
+				</div>
+
+				<app-button-wrapper (selected)="onRemoveSelectedUser(user)">
+					<i
+						class="bi bi-trash fs-4 text-danger"
+						style="cursor: pointer"
+					>
+					</i>
+				</app-button-wrapper>
 			</div>
 		</app-responsive-li>
 	}

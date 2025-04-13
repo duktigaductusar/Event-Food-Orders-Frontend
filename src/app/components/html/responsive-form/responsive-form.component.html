@@ -1,7 +1,7 @@
 <form
 	[formGroup]="formGroup"
 	[ngClass]="computedClass()"
-	(ngSubmit)="submitHandler()"
+	(ngSubmit)="submitHandler?.()"
 >
 	<ng-content></ng-content>
 </form>

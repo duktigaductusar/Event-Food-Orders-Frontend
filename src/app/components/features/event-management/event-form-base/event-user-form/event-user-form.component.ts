@@ -148,6 +148,10 @@ export class EventUserFormComponent
 		this.selectedUsersChange.emit(user);
 	}
 
+	onRemoveSelectedUser(user: IUserDto) {
+		this.selectedUsersChange.emit(user);
+	}
+
 	getSelectedStyleForSearchResultItem(user: IUserDto) {
 		const common = `
 			w-100 border-0 p-3 d-flex flex-column
