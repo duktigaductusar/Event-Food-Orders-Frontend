@@ -1,31 +1,33 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-	<div class="container-fluid">
-		<a class="navbar-brand" routerLink="/">{{ t("navigation.title") }}</a>
+<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+	<div class="container-fluid text-light">
+		<a class="navbar-brand text-light" routerLink="/">{{
+			t("navigation.title")
+		}}</a>
 
 		<button
 			class="btn border-0"
 			(click)="openSidebar(menuTemplate)"
 			aria-label="Toggle menu"
 		>
-			<i class="bi bi-list fs-3 text-primary"></i>
+			<i class="bi bi-list fs-3 text-light"></i>
 		</button>
 	</div>
 </nav>
 
 <ng-template #menuTemplate let-close="dismiss">
 	<div
-		class="offcanvas-header d-flex justify-content-between align-items-center w-100"
+		class="offcanvas-header d-flex justify-content-between align-items-center w-100 text-secondary bg-primary border-bottom"
 	>
 		<h5 class="offcanvas-title">{{ t("navigation.menu_title") }}</h5>
 		<button
-			class="btn btn-link"
+			class="btn btn-link hover-gray"
 			(click)="close('Closed via button')"
 			aria-label="Close"
 		>
-			<i class="bi bi-x-lg fs-3 text-primary"></i>
+			<i class="bi bi-x-lg fs-3 text-secondary"></i>
 		</button>
 	</div>
-	<div class="offcanvas-body bg-light">
+	<div class="offcanvas-body bg-primary">
 		<ul class="nav flex-column w-100">
 			<li class="nav-item d-flex align-items-center p-2 w-100 hover-gray">
 				<i class="bi bi-house fs-4 text-secondary"></i>
@@ -61,6 +63,6 @@
 	</div>
 </ng-template>
 
-<div class="mt-4">
+<div class="pt-4 bg-light">
 	<ng-content></ng-content>
 </div>

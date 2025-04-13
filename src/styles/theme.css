@@ -1,0 +1,13 @@
+:root {
+	--bs-primary: #455953;
+	--bs-primary-rgb: 69, 89, 83;
+	--bs-secondary: #dae5e1;
+	--bs-secondary-rgb: 218, 229, 225;
+
+	--bs-light: #f5f5f5;
+	--bs-light-rgb: 248, 249, 250;
+}
+
+body {
+	font-family: sans-serif;
+}
