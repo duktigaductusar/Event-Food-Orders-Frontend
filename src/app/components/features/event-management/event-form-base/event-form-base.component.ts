@@ -68,7 +68,6 @@ export class EventFormBaseComponent
 	changedDeadline = signal<NgbDateStruct | null>(null);
 	form = input<FormGroup<ICreateEventForm>>();
 	initialEvent = input<Partial<IEventDetailOwnerDto>>();
-	initialEventId = input<string | null>(null);
 	submitEventForm = output<IEventForCreationDto>();
 	currentStepChange = output<FormStepsTyp>();
 	currentEvent: Partial<IEventDto> = {};

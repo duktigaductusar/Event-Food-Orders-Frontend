@@ -13,10 +13,15 @@ import {
 	ICreateEventForm,
 	buildCreateEventForm,
 } from "../event-form-base";
+import { SpinnerFullScreenComponent } from "@app/components/shared";
 
 @Component({
 	selector: "app-edit-event",
-	imports: [EventFormBaseComponent, GenericBtnComponent],
+	imports: [
+		EventFormBaseComponent,
+		GenericBtnComponent,
+		SpinnerFullScreenComponent,
+	],
 	templateUrl: "./edit-event.component.html",
 	styleUrl: "./edit-event.component.css",
 })
