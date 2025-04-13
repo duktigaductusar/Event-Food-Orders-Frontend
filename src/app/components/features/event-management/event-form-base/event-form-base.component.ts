@@ -63,6 +63,7 @@ export class EventFormBaseComponent
 	formTitles = formTitles;
 	private destroy = new Subject<void>();
 	readonly formSteps = formSteps;
+	isPending = signal<boolean>(false);
 	currentStep = signal<FormStepsTyp>(this.formSteps.formDetailStep);
 	selectedUsers = signal<IUserDto[]>([]);
 	changedDeadline = signal<NgbDateStruct | null>(null);
@@ -181,6 +182,7 @@ export class EventFormBaseComponent
 			return;
 		}
 
+		this.isPending.set(true);
 		this.submitEventForm.emit(eventDto);
 	};
 
