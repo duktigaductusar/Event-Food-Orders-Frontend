@@ -94,6 +94,8 @@
 							[borderColor]="'primary'"
 							[label]="t('event-create.btnOk')"
 							[customClass]="'mt-3'"
+							[type]="'submit'"
+							[disabled]="isPending()"
 							(action)="submit()"
 						>
 						</app-generic-btn>

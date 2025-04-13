@@ -20,7 +20,7 @@ export class ResponsiveFormComponent<
 	@Input() formGroup!: FormGroup<T>;
 	@Input() withParentStyle = "";
 	@Input() useResponsiveDesign = false;
-	@Input() submitHandler!: () => void;
+	@Input() submitHandler?: () => void;
 
 	isSmallScreen = false;
 

@@ -17,7 +17,7 @@ import {
 	takeUntil,
 } from "rxjs";
 
-import { EventStateService, UserService } from "@app/services";
+import { AuthService, EventStateService, UserService } from "@app/services";
 import { IUserDto } from "@app/models";
 
 import {
@@ -68,8 +68,9 @@ export class EventUserFormComponent
 	});
 
 	constructor(
-		private userService: UserService,
-		private eventStateService: EventStateService
+		private readonly userService: UserService,
+		private readonly eventStateService: EventStateService,
+		public readonly authService: AuthService
 	) {
 		super();
 	}
@@ -114,6 +115,17 @@ export class EventUserFormComponent
 			});
 	}
 
+	isDeletableUser(user: IUserDto) {
+		return (
+			this.authService.getActiveAcoountUserId() !== undefined &&
+			this.authService.getActiveAcoountUserId() !== user.userId
+		);
+	}
+
+	isOwner(user: IUserDto) {
+		return this.authService.getActiveAcoountUserId() === user.userId;
+	}
+
 	onSearchInputChange(query: string) {
 		this.query = query;
 		this.querySubject.next(query);
@@ -145,6 +157,10 @@ export class EventUserFormComponent
 	}
 
 	toggleSelect(user: IUserDto) {
+		this.selectedUsersChange.emit(user);
+	}
+
+	onRemoveSelectedUser(user: IUserDto) {
 		this.selectedUsersChange.emit(user);
 	}
 

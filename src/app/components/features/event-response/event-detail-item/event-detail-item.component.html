@@ -50,7 +50,7 @@
 						[eventDto]="selectedEventDto()!"
 					></app-status-label>
 				}
-				<p class="mb-2 text-secondary">
+				<p class="mb-4 mt-1 text-secondary">
 					{{ selectedEventDto()?.description }}
 				</p>
 				<div class="mb-3">
@@ -72,24 +72,28 @@
 				@if (
 					isAttendingAtOffice !== undefined && isAttendingAtOffice()
 				) {
-					<label for="preferences" class="form-label">
-						{{ t("event-response.preferences") }}</label
-					>
-					<textarea
-						id="preferences"
-						class="form-control"
-						formControlName="preferences"
-						placeholder="Skriv dina preferenser"
-					></textarea>
-					<label for="allergies" class="form-label">
-						{{ t("event-response.allergies") }}</label
-					>
-					<textarea
-						id="allergies"
-						class="form-control"
-						formControlName="allergies"
-						placeholder="Skriv dina allergier"
-					></textarea>
+					<div class="mb-3">
+						<label for="preferences" class="form-label">
+							{{ t("event-response.preferences") }}</label
+						>
+						<textarea
+							id="preferences"
+							class="form-control"
+							formControlName="preferences"
+							placeholder="Skriv dina preferenser"
+						></textarea>
+					</div>
+					<div class="mb-3">
+						<label for="allergies" class="form-label">
+							{{ t("event-response.allergies") }}</label
+						>
+						<textarea
+							id="allergies"
+							class="form-control"
+							formControlName="allergies"
+							placeholder="Skriv dina allergier"
+						></textarea>
+					</div>
 					<div class="mb-3">
 						<p class="form-label d-block">
 							{{ t("event-response.wantsFood") }}

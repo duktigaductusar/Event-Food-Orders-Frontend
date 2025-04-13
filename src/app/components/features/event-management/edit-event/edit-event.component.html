@@ -1,14 +1,16 @@
+@if (isPending()) {
+	<app-spinner-full-screen></app-spinner-full-screen>
+}
 <app-event-form-base
 	[form]="computedForm()"
 	[initialEvent]="event()"
-	[initialEventId]="eventId()"
 	(submitEventForm)="submitEdit($event)"
 >
-	<ng-template #userTemplate let-user>
+	<!-- <ng-template #userTemplate let-user>
 		<div class="py-1">
 			<strong>{{ user.name }}</strong> — {{ user.email }}
 		</div>
-	</ng-template>
+	</ng-template> -->
 
 	<div extra-header-one class="pb-4 d-flex justify-content-center">
 		<app-generic-btn
