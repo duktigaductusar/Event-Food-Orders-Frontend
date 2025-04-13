@@ -12,3 +12,4 @@ export {
 } from "./utility/storage.service";
 
 export { ApiErrorService } from "./utility/api-error.service";
+export { AuthService } from "./utility/auth.service";

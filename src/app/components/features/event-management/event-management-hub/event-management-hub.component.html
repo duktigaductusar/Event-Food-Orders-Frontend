@@ -7,15 +7,18 @@
 				[withParentStyle]="'card shadow-sm mb-4 bg-white border-top-0'"
 			>
 				<div
-					class="card-header p-4 d-flex justify-content-between align-items-center"
+					class="card-header p-4 d-flex flex-column flex-sm-row justify-content-between align-items-center"
 				>
 					<h5 class="m-0 fw-bold text-primary">
 						{{ selectedEventDto()!.title }}
 					</h5>
 					<app-generic-btn
 						[icon]="'pencil-square'"
-						[label]="''"
-						[customClass]="'border-0 fs-3'"
+						[label]="t('event-management.editEventButton')"
+						[iconRight]="true"
+						[customClass]="
+							'btn btn-sm border-0 fs-5 fs-sm-3 btn-outline-info'
+						"
 						(click)="toggleEdit()"
 					>
 					</app-generic-btn>
@@ -27,7 +30,11 @@
 								<p
 									class="form-label fw-semibold text-secondary"
 								>
-									Datum & tid
+									{{
+										t(
+											"event-management.dateAndTimeSectionTitle"
+										)
+									}}
 								</p>
 								<app-datetimelabel
 									[datevalue]="
@@ -46,7 +53,11 @@
 								<p
 									class="form-label fw-semibold text-secondary"
 								>
-									Svara innan
+									{{
+										t(
+											"event-management.respondBeforeSectionTitle"
+										)
+									}}
 								</p>
 								<app-datetimelabel
 									[datevalue]="

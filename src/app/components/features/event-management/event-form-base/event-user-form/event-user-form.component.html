@@ -135,13 +135,25 @@
 					<small class="text-muted">{{ user.username }}</small>
 				</div>
 
-				<app-button-wrapper (selected)="onRemoveSelectedUser(user)">
+				@if (isDeletableUser(user)) {
+					<app-button-wrapper (selected)="onRemoveSelectedUser(user)">
+						<i
+							[title]="
+								t(
+									'event-create.userForm.toolTipRemoveParticipantFromEvent'
+								)
+							"
+							class="bi bi-trash fs-4 text-danger"
+							style="cursor: pointer"
+						>
+						</i>
+					</app-button-wrapper>
+				} @else {
 					<i
-						class="bi bi-trash fs-4 text-danger"
-						style="cursor: pointer"
-					>
-					</i>
-				</app-button-wrapper>
+						[title]="t('event-create.userForm.toolTipOwnerOfEvent')"
+						class="bi bi-shield-check fs-4 text-info-emphasis"
+					></i>
+				}
 			</div>
 		</app-responsive-li>
 	}

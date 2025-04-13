@@ -110,7 +110,6 @@ export class EventManagementHubComponent
 					this.eventStateService.selectedEventDto.set(item);
 					this.participants = item.participants;
 					this.setUsers();
-					console.log("this.eventDetailDto: ", this.eventDetailDto);
 				},
 				error: error => console.error("Test error" + error),
 			});
