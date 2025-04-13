@@ -1,0 +1,27 @@
+import { CommonModule } from "@angular/common";
+import { Component, output } from "@angular/core";
+
+import { CSSClassComponent } from "@app/components/base";
+
+@Component({
+	selector: "app-button-wrapper",
+	imports: [CommonModule],
+	templateUrl: "./button-wrapper.component.html",
+	styleUrl: "./button-wrapper.component.css",
+})
+export class ButtonWrapperComponent extends CSSClassComponent {
+	selected = output<MouseEvent>();
+	isFocused = false;
+
+	onSelected(event: MouseEvent) {
+		this.selected.emit(event);
+	}
+
+	protected override getDefaultClass(): string {
+		const common = "bg-transparent btn-focus-outline border-0 p-0 m-0";
+
+		return this.isFocused
+			? `${common} btn-outline-primary`
+			: `${common} bg-transparent`;
+	}
+}

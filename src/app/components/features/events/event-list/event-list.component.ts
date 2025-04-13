@@ -1,13 +1,15 @@
 import { Component, signal, type OnInit } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { EventItemComponent } from "../event-item/event-item.component";
+import { finalize } from "rxjs";
+
 import { IEventDto, IParticipantForResponseDto } from "@app/models";
 import { EventService } from "@app/services";
-import { AppBaseComponent } from "@app/components/base/app-base.component";
-import { SpinnerComponent } from "@app/components/shared";
-import { finalize } from "rxjs";
-import { NavLinkComponent } from "../../../html/nav-link/nav-link.component";
 import { appRoutes } from "@app/constants";
+import { AppBaseComponent } from "@app/components/base";
+import { NavLinkComponent } from "@app/components/html";
+import { SpinnerComponent } from "@app/components/shared";
+
+import { EventItemComponent } from "../event-item/event-item.component";
 
 @Component({
 	selector: "app-event-list",
@@ -43,7 +45,7 @@ export class EventListComponent extends AppBaseComponent implements OnInit {
 			.pipe(finalize(() => this.isPending.set(false)))
 			.subscribe({
 				next: events => {
-				    this.eventDtos = events;
+					this.eventDtos = events;
 					this.applyFilter();
 				},
 				error: error => console.error("Test error" + error),
@@ -92,13 +94,6 @@ export class EventListComponent extends AppBaseComponent implements OnInit {
 	}
 
 	onActionTriggered(event: { action: string; card: IEventDto }): void {
-		console.log(
-			"Action triggered:",
-			event.action,
-			"for event:",
-			event.card.title
-		);
-
 		switch (event.action) {
 			case "attend_online":
 				this.updateEventResponse(event.card.id, "ATTENDING_ONLINE");

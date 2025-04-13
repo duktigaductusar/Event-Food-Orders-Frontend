@@ -29,10 +29,12 @@
 		},
 		"userForm": {
 			"title": "Deltagare",
-			"searchUserLabel": "Sök användare",
-			"searchUserPlaceholder": "Namn, mail...",
+			"searchUserPlaceholder": "Sök efter användare eller grupper...",
 			"noUsersFoundInfo": "Inga användare hittades",
-			"selectedUsers": "Valda användare"
+			"searchResult": "{{items}} användare och grupper hittades",
+			"selectedUsers": "Valda användare och grupper ({{items}})",
+			"toolTipOwnerOfEvent": "Ägare av eventet",
+			"toolTipRemoveParticipantFromEvent": "Ta bort användaren från eventet"
 		},
 		"verifyForm": {
 			"title": "Verifiera",
@@ -49,7 +51,7 @@
 		}
 	},
 	"event-management": {
-		"ownerRegister": "Anmäl mig",
+		"ownerRegister": "Uppdatera min anmälan",
 		"cancelEvent": "Ställ in event",
 		"invitedParticipantsHeader": "Inbjudna deltagare",
 		"noParticipantsFound": "Hittade inga deltagare",
@@ -57,8 +59,11 @@
 		"deleteEventPrompt": "Vill du ställa in detta event?",
 		"deleteEventButton": "Ställ in",
 		"abortDeleteButton": "Avbryt",
+		"editEventButton": "Uppdatera",
 		"of": "av",
-		"participantsHaveResponded": "deltagare har svarat."
+		"participantsHaveResponded": "deltagare har svarat.",
+		"dateAndTimeSectionTitle": "Datum & tid",
+		"respondBeforeSectionTitle": "Svara innan"
 	},
 	"event-response": {
 		"responseType": "Svarsalternativ",
@@ -67,7 +72,11 @@
 		"wantsFood": "Jag vill ha mat",
 		"yes": "Ja",
 		"no": "Nej",
-		"send": "Skicka"
+		"send": "Skicka",
+		"pendingReponseLabel": "Avvaktar",
+		"attendingOnlineReponseLabel": "Online",
+		"attendingOfficeReponseLabel": "På plats",
+		"notAttendingReponseLabel": "Avvisa"
 	},
 	"events": {
 		"title": "Index Sida!",
@@ -97,5 +106,10 @@
 		"home_link": "Hem",
 		"logout_link": "Logout",
 		"create_event_link": "Skapa Event"
+	},
+	"shared": {
+		"datetimelabel": {
+			"timeTo": "till"
+		}
 	}
 }

@@ -4,9 +4,6 @@ export type StorageType = "local" | "session";
 
 export const storageKeys = {
 	newEventForm: "efo.new_event_form",
-	updateEventForm: "efo.update_event_form",
-	updateEventId: "efo.update_event_id",
-	eventResponseForm: "efo.event_response_form",
 } as const;
 
 export type StorageKeyType = (typeof storageKeys)[keyof typeof storageKeys];
@@ -20,7 +17,7 @@ export class StorageService {
 	}
 
 	setItem<T>(
-		key: string,
+		key: StorageKeyType,
 		value: T,
 		type: StorageType = defaultStorage
 	): void {
@@ -28,7 +25,7 @@ export class StorageService {
 	}
 
 	getItem<T>(
-		key: string,
+		key: StorageKeyType,
 		is: (value: unknown) => value is T,
 		type: StorageType = defaultStorage
 	): T | null {

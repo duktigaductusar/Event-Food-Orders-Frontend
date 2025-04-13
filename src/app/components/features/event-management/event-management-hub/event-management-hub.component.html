@@ -1,0 +1,150 @@
+@if (isPending()) {
+	<app-spinner></app-spinner>
+} @else {
+	<div class="mx-auto" [ngStyle]="getContainerStyle()">
+		@if (!eventStateService.editEvent()) {
+			<app-responsive-div
+				[withParentStyle]="'card shadow-sm mb-4 bg-white border-top-0'"
+			>
+				<div
+					class="card-header p-4 d-flex flex-column flex-sm-row justify-content-between align-items-center"
+				>
+					<h5 class="m-0 fw-bold text-primary">
+						{{ selectedEventDto()!.title }}
+					</h5>
+					<app-generic-btn
+						[icon]="'pencil-square'"
+						[label]="t('event-management.editEventButton')"
+						[iconRight]="true"
+						[customClass]="
+							'btn btn-sm border-0 fs-5 fs-sm-3 btn-outline-info'
+						"
+						(click)="toggleEdit()"
+					>
+					</app-generic-btn>
+				</div>
+				<div class="card-body bg-white p-4">
+					@if (selectedEventDto() !== null) {
+						<div class="row mb-3">
+							<div class="col-md-6">
+								<p
+									class="form-label fw-semibold text-secondary"
+								>
+									{{
+										t(
+											"event-management.dateAndTimeSectionTitle"
+										)
+									}}
+								</p>
+								<app-datetimelabel
+									[datevalue]="
+										getDateFromStringValue(
+											eventDetailDto!.date
+										)
+									"
+									[endDateValue]="
+										getOptionalDateFromStringValue(
+											eventDetailDto!.endTime
+										)
+									"
+								></app-datetimelabel>
+							</div>
+							<div class="col-md-6">
+								<p
+									class="form-label fw-semibold text-secondary"
+								>
+									{{
+										t(
+											"event-management.respondBeforeSectionTitle"
+										)
+									}}
+								</p>
+								<app-datetimelabel
+									[datevalue]="
+										getDateFromStringValue(
+											eventDetailDto!.deadline
+										)
+									"
+								></app-datetimelabel>
+							</div>
+						</div>
+						<app-status-label
+							[eventDto]="selectedEventDto()!"
+						></app-status-label>
+					}
+					<p class="mb-2 text-secondary">
+						{{ selectedEventDto()?.description }}
+					</p>
+				</div>
+				<div class="d-flex justify-content-center flex-row gap-3 p-4">
+					<app-generic-btn
+						[borderColor]="'secondary'"
+						[label]="t('event-management.ownerRegister')"
+						(action)="registerToEvent()"
+					/>
+
+					<app-generic-btn
+						[icon]="'trash'"
+						[borderColor]="'danger'"
+						[label]="t('event-management.cancelEvent')"
+						(action)="deleteEventAssert()"
+					/>
+				</div>
+				<div class="card-footer text-center"></div>
+
+				@if (participants.length > 0) {
+					<div class="p-4">
+						<h5>
+							{{
+								t("event-management.invitedParticipantsHeader")
+							}}
+						</h5>
+						<p>
+							{{ this.getConfirmedParticipants() }}
+							{{ t("event-management.of") }}
+							{{ participants.length }}
+							{{
+								t("event-management.participantsHaveResponded")
+							}}
+						</p>
+						<ul class="list-group">
+							@for (user of users; track user.userId) {
+								<app-responsive-li>
+									<div
+										class="d-flex gap-3 align-items-center mb-0"
+									>
+										<i class="bi bi-person-check"></i>
+										<app-status-label
+											[eventDto]="
+												createLabelTypeFromUserDto(user)
+											"
+										></app-status-label>
+									</div>
+									<div class="d-flex flex-column">
+										<span>{{ user.email }}</span>
+										<small class="text-muted">{{
+											user.username
+										}}</small>
+									</div>
+								</app-responsive-li>
+							} @empty {
+								<p>
+									{{
+										t(
+											"event-management.noParticipantsFound"
+										)
+									}}
+								</p>
+							}
+						</ul>
+					</div>
+				}
+			</app-responsive-div>
+		} @else {
+			<app-edit-event
+				[event]="createEventDetailOwnerDto()"
+				[eventId]="eventDetailDto?.id ?? null"
+			></app-edit-event>
+		}
+	</div>
+}

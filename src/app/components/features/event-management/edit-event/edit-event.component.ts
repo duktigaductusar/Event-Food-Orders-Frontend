@@ -1,79 +1,47 @@
-import {
-	Component,
-	input,
-	OnDestroy,
-	signal,
-	OnInit,
-	computed,
-} from "@angular/core";
-import { finalize } from "rxjs";
+import { Component, input, signal, OnInit, computed } from "@angular/core";
 import { FormGroup, FormBuilder } from "@angular/forms";
+import { finalize } from "rxjs";
+
 import { IEventDetailOwnerDto, IEventForCreationDto } from "@app/models";
-import { FormAutoSaver } from "@app/components/base/form-auto-saver.component";
-import { EventService, EventStateService, StorageService } from "@app/services";
-import { ApiError } from "@app/interceptors/api-error.interceptor";
+import { EventService, EventStateService } from "@app/services";
+import { ApiError } from "@app/interceptors";
+import { FormAutoSaver } from "@app/components/base";
+import { GenericBtnComponent } from "@app/components/html";
+
 import {
-	buildCreateEventForm,
 	EventFormBaseComponent,
 	ICreateEventForm,
-	isEventFormData,
-} from "@app/components/shared";
-import { GenericBtnComponent } from "../../../html/generic-btn/generic-btn.component";
-import { storageKeys } from "@app/services/utility/storage.service";
+	buildCreateEventForm,
+} from "../event-form-base";
+import { SpinnerFullScreenComponent } from "@app/components/shared";
 
 @Component({
 	selector: "app-edit-event",
-	imports: [EventFormBaseComponent, GenericBtnComponent],
+	imports: [
+		EventFormBaseComponent,
+		GenericBtnComponent,
+		SpinnerFullScreenComponent,
+	],
 	templateUrl: "./edit-event.component.html",
 	styleUrl: "./edit-event.component.css",
 })
-export class EditEventComponent implements OnDestroy, OnInit {
+export class EditEventComponent implements OnInit {
 	form!: FormGroup<ICreateEventForm>;
 	computedForm = computed(() => this.form);
 	isPending = signal(false);
 	event = input<Partial<IEventDetailOwnerDto>>();
 	eventId = input<string | null>(null);
-	private autoFormSaver!: FormAutoSaver<Partial<IEventForCreationDto>>;
+	private autoFormSaver: FormAutoSaver<Partial<IEventForCreationDto>> | null =
+		null;
 
 	constructor(
 		private fb: FormBuilder,
 		private eventService: EventService,
-		private eventStateService: EventStateService,
-		private storageService: StorageService
-	) {
-		this.synchronizeAutoSaverData =
-			this.synchronizeAutoSaverData.bind(this);
-	}
+		private eventStateService: EventStateService
+	) {}
 
 	ngOnInit(): void {
 		this.form = buildCreateEventForm(this.fb, this.event());
-
-		this.autoFormSaver = new FormAutoSaver(
-			this.form,
-			this.storageService,
-			storageKeys.updateEventForm,
-			isEventFormData,
-			{ setupCallback: this.synchronizeAutoSaverData }
-		);
-		this.autoFormSaver.subscribe();
-	}
-
-	synchronizeAutoSaverData() {
-		const storedEventId = this.storageService.getItem(
-			storageKeys.updateEventId,
-			(value): value is string => typeof value === "string"
-		);
-
-		if (storedEventId == null || storedEventId !== this.eventId()) {
-			this.storageService.setItem(
-				storageKeys.updateEventId,
-				this.eventId()
-			);
-			this.storageService.setItem(
-				storageKeys.updateEventForm,
-				this.form.value
-			);
-		}
 	}
 
 	getTitleForEditingForm() {
@@ -96,19 +64,14 @@ export class EditEventComponent implements OnDestroy, OnInit {
 			.pipe(finalize(() => this.isPending.set(false)))
 			.subscribe({
 				next: () => {
-					this.storageService.removeItem(storageKeys.updateEventForm);
 					window.location.reload();
 				},
 				error: (error: ApiError) => {
 					console.error("Error fetching users:", error.message);
 				},
 				complete: () => {
-					this.autoFormSaver.destroy();
+					this.autoFormSaver?.destroy();
 				},
 			});
-	}
-
-	ngOnDestroy() {
-		this.autoFormSaver.destroy();
 	}
 }

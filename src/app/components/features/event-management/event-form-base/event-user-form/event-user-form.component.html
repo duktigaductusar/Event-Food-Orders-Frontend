@@ -1,0 +1,160 @@
+<app-responsive-form
+	[formGroup]="form()"
+	[withParentStyle]="
+		'bg-white card shadow-sm d-flex justify-content-between mb-4'
+	"
+	[useResponsiveDesign]="true"
+>
+	<div>
+		<ng-content select="[header]"></ng-content>
+	</div>
+	<div class="p-0 py-4 p-sm-4">
+		<div>
+			<div class="mb-2">
+				<h4 class="text-center text-black">{{ derivedTitle() }}</h4>
+			</div>
+			<div class="d-flex flex-column gap-3 p-3">
+				<div class="position-relative mb-3">
+					<i
+						class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"
+					></i>
+					<input
+						id="search"
+						class="form-control pe-5 ps-5 py-4"
+						type="text"
+						[placeholder]="
+							t('event-create.userForm.searchUserPlaceholder')
+						"
+						[ngModel]="query"
+						(ngModelChange)="onSearchInputChange($event)"
+					/>
+
+					@if (query.length > 0) {
+						<div
+							class="position-absolute top-50 end-0 translate-middle-y me-3"
+						>
+							<app-button-wrapper
+								[customClass]="'px-1'"
+								(selected)="onSearchInputChange('')"
+							>
+								<i
+									class="bi bi-x-circle-fill text-muted"
+									style="cursor: pointer"
+									title="Rensa sökning"
+								></i>
+							</app-button-wrapper>
+						</div>
+					}
+				</div>
+
+				@if (filteredAndSortedUsers.length > 0) {
+					<app-accordion-list
+						[label]="
+							t2('event-create.userForm.searchResult', {
+								items: filteredAndSortedUsers.length,
+							})
+						"
+						[items]="filteredAndSortedUsers"
+						[itemTemplate]="userSearchTemplate"
+						[labelFontSize]="5"
+						[open]="true"
+					>
+					</app-accordion-list>
+				}
+
+				@if (
+					query.length > 0 &&
+					filteredAndSortedUsers.length === 0 &&
+					!isPending()
+				) {
+					<div class="alert alert-warning">
+						{{ t("event-create.userForm.noUsersFoundInfo") }}
+					</div>
+				}
+
+				@if (isPending()) {
+					<div class="text-center my-3">
+						<div class="spinner-border text-primary" role="status">
+							<span class="visually-hidden">Loading...</span>
+						</div>
+					</div>
+				}
+
+				<app-accordion-list
+					[label]="
+						t2('event-create.userForm.selectedUsers', {
+							items: selectedUsersWithId()!.length,
+						})
+					"
+					[items]="selectedUsersWithId()"
+					[itemTemplate]="userTemplate"
+					[labelFontSize]="5"
+				>
+				</app-accordion-list>
+			</div>
+		</div>
+	</div>
+	<div>
+		<ng-content select="[footer]"></ng-content>
+	</div>
+</app-responsive-form>
+
+<ng-template #userSearchTemplate let-user>
+	@if (user !== undefined) {
+		<li class="list-group-item p-0 m-0">
+			<app-button-wrapper
+				[useClass]="getSelectedStyleForSearchResultItem(user)"
+				(click)="toggleSelect(user)"
+			>
+				<i class="bi bi-person-add fs-4"></i>
+				<div class="d-flex flex-column align-items-start align">
+					<span>{{ user.email }}</span>
+					<small
+						[ngClass]="{
+							'text-muted': !isSelected(user),
+						}"
+					>
+						{{ user.username }}
+					</small>
+				</div>
+			</app-button-wrapper>
+		</li>
+	}
+</ng-template>
+
+<ng-template #userTemplate let-user>
+	@if (user !== undefined) {
+		<app-responsive-li>
+			<i class="bi bi-person-check fs-4"></i>
+
+			<div
+				class="d-flex flex-row justify-content-between justify-content-sm-end gap-3 align-items-center w-100"
+			>
+				<div class="d-flex flex-column">
+					<span>{{ user.email }}</span>
+					<small class="text-muted">{{ user.username }}</small>
+				</div>
+
+				@if (isDeletableUser(user)) {
+					<app-button-wrapper (selected)="onRemoveSelectedUser(user)">
+						<i
+							[title]="
+								t(
+									'event-create.userForm.toolTipRemoveParticipantFromEvent'
+								)
+							"
+							class="bi bi-trash fs-4 text-danger"
+							style="cursor: pointer"
+						>
+						</i>
+					</app-button-wrapper>
+				} @else {
+					<i
+						[title]="t('event-create.userForm.toolTipOwnerOfEvent')"
+						class="bi bi-shield-check fs-4 text-info-emphasis"
+					></i>
+				}
+			</div>
+		</app-responsive-li>
+	}
+</ng-template>

@@ -1,26 +1,39 @@
-import { Component, computed, OnInit, Signal, signal } from "@angular/core";
+import {
+	Component,
+	computed,
+	OnInit,
+	Signal,
+	signal,
+	OnDestroy,
+} from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { AppBaseComponent } from "@app/components/base/app-base.component";
-import { EventService, EventStateService } from "@app/services";
-import { DatetimelabelComponent } from "../../../shared/datetimelabel/datetimelabel.component";
-import { IEventDto, IParticipantForUpdateDto } from "@app/models";
-import { StatusLabelComponent } from "../../../shared/status-label/status-label.component";
-import { ResponsiveFormComponent } from "../../../html/responsive-form/responsive-form.component";
+import { finalize, Subject, takeUntil } from "rxjs";
 import {
 	FormBuilder,
 	FormGroup,
 	ReactiveFormsModule,
 	Validators,
 } from "@angular/forms";
-import { IEventDetailDto } from "@app/models/eventDtos/IEventDetailDto.model";
-import { IParticipantResponseForm } from "../interfaces";
-import type { ParticipantResponseType } from "@types";
 
+import type { ParticipantResponseType } from "@types";
+import {
+	IEventDetailDto,
+	IEventDto,
+	IParticipantForUpdateDto,
+} from "@app/models";
+import { EventService, EventStateService } from "@app/services";
 import { fromDateTimeISOString } from "@app/utility";
-import { ParticipantService } from "@app/services/api/participant.service";
+import { ParticipantService } from "@app/services";
 import { appRoutes } from "@app/constants";
-import { finalize } from "rxjs";
-import { SpinnerComponent } from "@app/components/shared";
+import {
+	DatetimelabelComponent,
+	SpinnerComponent,
+	StatusLabelComponent,
+} from "@app/components/shared";
+import { AppBaseComponent } from "@app/components/base";
+import { ResponsiveFormComponent } from "@app/components/html";
+
+import { IParticipantResponseForm } from "../interfaces";
 
 @Component({
 	selector: "app-event-detail-item",
@@ -36,21 +49,28 @@ import { SpinnerComponent } from "@app/components/shared";
 })
 export class EventDetailItemComponent
 	extends AppBaseComponent
-	implements OnInit
+	implements OnInit, OnDestroy
 {
+	private destroy = new Subject<void>();
 	eventForm: FormGroup<IParticipantResponseForm>;
 	selectedEventDto: Signal<IEventDto | null>;
 	isAttendingAtOffice: Signal<boolean> | undefined;
-
 	eventDetailDto: IEventDetailDto | null = null;
-
 	responseTypes: { id: ParticipantResponseType; label: string }[] = [
-		{ id: "PENDING", label: "Avvaktar" },
-		{ id: "ATTENDING_ONLINE", label: "Online" },
-		{ id: "ATTENDING_OFFICE", label: "På plats" },
-		{ id: "NOT_ATTENDING", label: "Avvisa" },
+		{ id: "PENDING", label: this.t("event-response.pendingReponseLabel") },
+		{
+			id: "ATTENDING_ONLINE",
+			label: this.t("event-response.attendingOnlineReponseLabel"),
+		},
+		{
+			id: "ATTENDING_OFFICE",
+			label: this.t("event-response.attendingOfficeReponseLabel"),
+		},
+		{
+			id: "NOT_ATTENDING",
+			label: this.t("event-response.notAttendingReponseLabel"),
+		},
 	] as const;
-
 	isPending = signal(false);
 
 	constructor(
@@ -76,6 +96,17 @@ export class EventDetailItemComponent
 				[Validators.required]
 			),
 		});
+
+		this.eventForm.valueChanges
+			.pipe(takeUntil(this.destroy))
+			.subscribe(value => {
+				this.eventForm.patchValue(
+					{
+						wantsMeal: value.responseType === "ATTENDING_OFFICE",
+					},
+					{ emitEvent: false }
+				);
+			});
 	}
 
 	ngOnInit(): void {
@@ -107,12 +138,15 @@ export class EventDetailItemComponent
 			});
 	}
 
-	fromDateTimeISOStringForEventDto() {
-		return fromDateTimeISOString(this.selectedEventDto()!.date);
+	getDateFromStringValue(date: string) {
+		return fromDateTimeISOString(date);
 	}
 
-	fromDateTimeISOStringForEventDetailDto() {
-		return fromDateTimeISOString(this.eventDetailDto!.deadline);
+	getOptionalDateFromStringValue(date?: string) {
+		if (date == null) {
+			return;
+		}
+		return fromDateTimeISOString(date);
 	}
 
 	clearFields(): void {
@@ -131,7 +165,7 @@ export class EventDetailItemComponent
 		}
 
 		if (this.eventForm.valid) {
-			const Dto: IParticipantForUpdateDto = {
+			const dto: IParticipantForUpdateDto = {
 				responseType: this.eventForm.getRawValue().responseType,
 				wantsMeal: this.eventForm.getRawValue().wantsMeal,
 				allergies: this.eventForm.getRawValue().allergies,
@@ -140,7 +174,7 @@ export class EventDetailItemComponent
 
 			this.isPending.set(true);
 			this.participantService
-				.respondToEvent(Dto, currentParticipantId)
+				.respondToEvent(dto, currentParticipantId)
 				.pipe(finalize(() => this.isPending.set(false)))
 				.subscribe({
 					next: response => {
@@ -175,5 +209,10 @@ export class EventDetailItemComponent
 		this.isAttendingAtOffice = computed(
 			() => this.eventForm.value.responseType === "ATTENDING_OFFICE"
 		);
+	}
+
+	ngOnDestroy() {
+		this.destroy.next();
+		this.destroy.complete();
 	}
 }

@@ -1,1 +1,1 @@
-export * from "@app/components/pages";
+export * from "./pages";

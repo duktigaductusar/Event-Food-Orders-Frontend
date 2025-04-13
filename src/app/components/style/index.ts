@@ -1,2 +1,2 @@
-export { breakpoints } from "./breakpoints";
+export * from "./breakpoints";
 export * from "./utility";

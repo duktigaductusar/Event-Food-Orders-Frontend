@@ -1,0 +1,7 @@
+@if (isPending()) {
+	<app-spinner-full-screen></app-spinner-full-screen>
+}
+<app-event-form-base
+	[form]="form"
+	(submitEventForm)="submitCreate($event)"
+></app-event-form-base>

@@ -18,9 +18,9 @@ export class ResponsiveFormComponent<
 	T extends { [K in keyof T]: AbstractControl },
 > {
 	@Input() formGroup!: FormGroup<T>;
-	@Input() submitHandler!: () => void;
 	@Input() withParentStyle = "";
 	@Input() useResponsiveDesign = false;
+	@Input() submitHandler?: () => void;
 
 	isSmallScreen = false;
 
