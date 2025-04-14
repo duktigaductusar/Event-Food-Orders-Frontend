@@ -1,0 +1,14 @@
+.custom-list-bullets li {
+	position: relative;
+	padding-left: 1rem;
+}
+
+.custom-list-bullets li::before {
+	content: "•";
+	position: absolute;
+	top: 0.2rem;
+	left: 0;
+	color: var(--bs-primary);
+	font-size: 1.4rem;
+	line-height: 1;
+}

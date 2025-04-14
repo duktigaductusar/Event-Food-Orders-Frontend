@@ -21,14 +21,18 @@
 	--bs-info-subtle-rgb: rgb(193, 162, 154); /* Accent colors 5 */
 
 	/* Button Colors */
-	--app-btn-danger: var(--bs-danger);
-	--app-btn-danger-rgb: var(--bs-danger-rgb);
-	--app-btn-warning: var(--app-btn-danger);
-	--app-btn-warning-rgb: var(--app-btn-danger-rgb);
-	--app-btn-primary: var(--bs-primary);
-	--app-btn-primary-rgb: var(--bs-primary-rgb);
-	--app-btn-secondary: #978b97;
-	--app-btn-secondary-rgb: 151, 139, 151;
+	--app-btn-primary: #64837a;
+	--app-btn-primary-hover: #577069;
+	--app-btn-primary-active: #4a5f58;
+	--app-btn-primary-focus: #64837a;
+	--app-btn-outline-danger: var(--bs-danger);
+	--app-btn-outline-danger-rgb: var(--bs-danger-rgb);
+	--app-btn-outline-warning: var(--app-btn-outline-danger);
+	--app-btn-outline-warning-rgb: var(--app-btn-outline-danger-rgb);
+	--app-btn-outline-primary: var(--bs-primary);
+	--app-btn-outline-primary-rgb: var(--bs-primary-rgb);
+	--app-btn-outline-secondary: #978b97;
+	--app-btn-outline-secondary-rgb: 151, 139, 151;
 }
 
 /* [data-bs-theme="dark"] {
@@ -46,70 +50,114 @@ body {
 	background-color: var(--bs-light-rgb);
 }
 
-.btn-outline-danger {
-	--bs-btn-color: var(--app-btn-danger);
-	--bs-btn-border-color: var(--app-btn-danger);
+.multip-step-form-navigation-prev {
+	background-color: #64837a;
+	border: 3px solid #64837a;
+}
+
+.multip-step-form-navigation-active {
+	background-color: var(--bs-secondary);
+	border: 3px solid #64837a;
+	font-weight: bolder;
+	color: var(--bs-primary);
+}
+
+.multip-step-form-navigation-next {
+	background-color: #9fc1b9;
+	border: 3px solid #9fc1b9;
+	font-weight: bold;
+	color: var(--bs-white);
+}
+
+.multip-step-form-navigation-prev-line {
+	background-color: #64837a;
+}
+
+.multip-step-form-navigation-next-line {
+	background-color: #9fc1b9;
+}
+
+.btn-primary {
+	--bs-btn-color: #fff;
+	--bs-btn-bg: var(--app-btn-primary);
+	--bs-btn-border-color: var(--app-btn-primary);
 	--bs-btn-hover-color: #fff;
-	--bs-btn-hover-bg: var(--app-btn-danger);
-	--bs-btn-hover-border-color: var(--app-btn-danger);
-	--bs-btn-focus-shadow-rgb: var(--app-btn-danger-rgb);
+	--bs-btn-hover-bg: var(--app-btn-primary-hover);
+	--bs-btn-hover-border-color: var(--app-btn-primary);
+	--bs-btn-focus-shadow-rgb: 49, 132, 253;
 	--bs-btn-active-color: #fff;
-	--bs-btn-active-bg: var(--app-btn-danger);
-	--bs-btn-active-border-color: var(--app-btn-danger);
+	--bs-btn-active-bg: var(--app-btn-primary-active);
+	--bs-btn-active-border-color: var(--app-btn-primary);
 	--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-	--bs-btn-disabled-color: var(--app-btn-danger);
+	--bs-btn-disabled-color: #fff;
+	--bs-btn-disabled-bg: var(--app-btn-primary);
+	--bs-btn-disabled-border-color: var(--app-btn-primary);
+}
+
+.btn-outline-danger {
+	--bs-btn-color: var(--app-btn-outline-danger);
+	--bs-btn-border-color: var(--app-btn-outline-danger);
+	--bs-btn-hover-color: #fff;
+	--bs-btn-hover-bg: var(--app-btn-outline-danger);
+	--bs-btn-hover-border-color: var(--app-btn-outline-danger);
+	--bs-btn-focus-shadow-rgb: var(--app-btn-outline-danger-rgb);
+	--bs-btn-active-color: #fff;
+	--bs-btn-active-bg: var(--app-btn-outline-danger);
+	--bs-btn-active-border-color: var(--app-btn-outline-danger);
+	--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+	--bs-btn-disabled-color: var(--app-btn-outline-danger);
 	--bs-btn-disabled-bg: transparent;
-	--bs-btn-disabled-border-color: var(--app-btn-danger);
+	--bs-btn-disabled-border-color: var(--app-btn-outline-danger);
 	--bs-gradient: none;
 }
 
 .btn-outline-primary {
-	--bs-btn-color: var(--app-btn-primary);
-	--bs-btn-border-color: var(--app-btn-primary);
+	--bs-btn-color: var(--app-btn-outline-primary);
+	--bs-btn-border-color: var(--app-btn-outline-primary);
 	--bs-btn-hover-color: #fff;
-	--bs-btn-hover-bg: var(--app-btn-primary);
-	--bs-btn-hover-border-color: var(--app-btn-primary);
-	--bs-btn-focus-shadow-rgb: var(--app-btn-primary-rgb);
+	--bs-btn-hover-bg: var(--app-btn-outline-primary);
+	--bs-btn-hover-border-color: var(--app-btn-outline-primary);
+	--bs-btn-focus-shadow-rgb: var(--app-btn-outline-primary-rgb);
 	--bs-btn-active-color: #fff;
-	--bs-btn-active-bg: var(--app-btn-primary);
-	--bs-btn-active-border-color: var(--app-btn-primary);
+	--bs-btn-active-bg: var(--app-btn-outline-primary);
+	--bs-btn-active-border-color: var(--app-btn-outline-primary);
 	--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-	--bs-btn-disabled-color: var(--app-btn-primary);
+	--bs-btn-disabled-color: var(--app-btn-outline-primary);
 	--bs-btn-disabled-bg: transparent;
-	--bs-btn-disabled-border-color: var(--app-btn-primary);
+	--bs-btn-disabled-border-color: var(--app-btn-outline-primary);
 	--bs-gradient: none;
 }
 
 .btn-outline-secondary {
-	--bs-btn-color: var(--app-btn-secondary);
-	--bs-btn-border-color: var(--app-btn-secondary);
+	--bs-btn-color: var(--app-btn-outline-secondary);
+	--bs-btn-border-color: var(--app-btn-outline-secondary);
 	--bs-btn-hover-color: #fff;
-	--bs-btn-hover-bg: var(--app-btn-secondary);
-	--bs-btn-hover-border-color: var(--app-btn-secondary);
-	--bs-btn-focus-shadow-rgb: var(--bs-secondary-rgb);
+	--bs-btn-hover-bg: var(--app-btn-outline-secondary);
+	--bs-btn-hover-border-color: var(--app-btn-outline-secondary);
+	--bs-btn-focus-shadow-rgb: var(--app-btn-outline-secondary-rgb);
 	--bs-btn-active-color: #fff;
-	--bs-btn-active-bg: var(--app-btn-secondary);
-	--bs-btn-active-border-color: var(--app-btn-secondary);
+	--bs-btn-active-bg: var(--app-btn-outline-secondary);
+	--bs-btn-active-border-color: var(--app-btn-outline-secondary);
 	--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-	--bs-btn-disabled-color: var(--app-btn-secondary);
+	--bs-btn-disabled-color: var(--app-btn-outline-secondary);
 	--bs-btn-disabled-bg: transparent;
-	--bs-btn-disabled-border-color: var(--app-btn-secondary);
+	--bs-btn-disabled-border-color: var(--app-btn-outline-secondary);
 	--bs-gradient: none;
 }
 
 .btn-outline-warning {
-	--bs-btn-color: var(--app-btn-warning);
-	--bs-btn-border-color: var(--app-btn-warning);
+	--bs-btn-color: var(--app-btn-outline-warning);
+	--bs-btn-border-color: var(--app-btn-outline-warning);
 	--bs-btn-hover-color: #fff;
-	--bs-btn-hover-bg: var(--app-btn-warning);
-	--bs-btn-hover-border-color: var(--app-btn-warning);
-	--bs-btn-focus-shadow-rgb: var(--app-btn-warning-rgb);
+	--bs-btn-hover-bg: var(--app-btn-outline-warning);
+	--bs-btn-hover-border-color: var(--app-btn-outline-warning);
+	--bs-btn-focus-shadow-rgb: var(--app-btn-outline-warning-rgb);
 	--bs-btn-active-color: #fff;
-	--bs-btn-active-bg: var(--app-btn-warning);
-	--bs-btn-active-border-color: var(--app-btn-warning);
+	--bs-btn-active-bg: var(--app-btn-outline-warning);
+	--bs-btn-active-border-color: var(--app-btn-outline-warning);
 	--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-	--bs-btn-disabled-color: var(--app-btn-warning);
+	--bs-btn-disabled-color: var(--app-btn-outline-warning);
 	--bs-btn-disabled-bg: transparent;
-	--bs-btn-disabled-border-color: var(--app-btn-warning);
+	--bs-btn-disabled-border-color: var(--app-btn-outline-warning);
 	--bs-gradient: none;
 }

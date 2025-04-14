@@ -12,6 +12,7 @@ import { finalize } from "rxjs";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 import {
+	CustomUlComponent,
 	GenericBtnComponent,
 	ResponsiveLiComponent,
 } from "@app/components/html";
@@ -55,6 +56,7 @@ import { EventManagementDeleteModalComponentComponent } from "../event-managemen
 		ResponsiveDivComponent,
 		SpinnerComponent,
 		ResponsiveLiComponent,
+		CustomUlComponent,
 	],
 	templateUrl: "./event-management-hub.component.html",
 	styleUrl: "./event-management-hub.component.css",
@@ -69,7 +71,6 @@ export class EventManagementHubComponent
 	users: IUserDto[] = [];
 	isPending = signal(false);
 	even = signal(false);
-
 	private modalService = inject(NgbModal);
 
 	constructor(
@@ -123,6 +124,34 @@ export class EventManagementHubComponent
 				email: p.email,
 			});
 		});
+	}
+
+	get listItems() {
+		return [
+			this.t2("event-management.participantsHaveResponded", {
+				answeredCount: this.getConfirmedParticipants(),
+				totalCount: this.participants.length,
+			}),
+			this.t2("event-management.participantsWantsMealResponded", {
+				wantsMealCount: this.getWithFoodParticipants(),
+			}),
+		];
+	}
+
+	getConfirmedParticipants(): number {
+		return (
+			this.participants.length -
+			this.participants.filter(p => p.responseType === "PENDING").length
+		);
+	}
+
+	getWithFoodParticipants(): number {
+		return (
+			this.participants.length -
+			this.participants.filter(
+				p => p.responseType !== "ATTENDING_OFFICE" || !p.wantsMeal
+			).length
+		);
 	}
 
 	registerToEvent() {
@@ -225,12 +254,5 @@ export class EventManagementHubComponent
 			isOwner: false,
 			wantsMeal: p.wantsMeal,
 		};
-	}
-
-	getConfirmedParticipants(): number {
-		return (
-			this.participants.length -
-			this.participants.filter(p => p.responseType == "PENDING").length
-		);
 	}
 }

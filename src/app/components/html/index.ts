@@ -5,3 +5,4 @@ export * from "./nav-link/nav-link.component";
 export * from "./button-wrapper/button-wrapper.component";
 export * from "./responsive-li/responsive-li.component";
 export * from "./responsive-div/responsive-div.component";
+export * from "./custom-ul/custom-ul.component";
