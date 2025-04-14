@@ -100,15 +100,23 @@ export class EventDetailItemComponent
 		});
 
 		this.eventForm
-			.get("responseType")
+			.get(eventResponseControllerNames.responseType)
 			?.valueChanges.pipe(takeUntil(this.destroy))
 			.subscribe(value => {
+				console.log("value: ", value);
 				this.eventForm.patchValue(
 					{
 						wantsMeal: value === "ATTENDING_OFFICE",
 					},
 					{ emitEvent: false }
 				);
+			});
+
+		this.eventForm
+			.get(eventResponseControllerNames.responseType)
+			?.valueChanges.pipe(takeUntil(this.destroy))
+			.subscribe(() => {
+				this.clearFields();
 			});
 	}
 
@@ -118,10 +126,6 @@ export class EventDetailItemComponent
 			if (eventId) {
 				this.loadEventDetailDto(eventId);
 			}
-		});
-
-		this.eventForm.get("responseType")?.valueChanges.subscribe(() => {
-			this.clearFields();
 		});
 	}
 
@@ -156,7 +160,6 @@ export class EventDetailItemComponent
 		this.eventForm.patchValue({
 			preferences: this.eventDetailDto?.preferences ?? "",
 			allergies: this.eventDetailDto?.allergies ?? "",
-			wantsMeal: this.eventDetailDto?.wantsMeal ?? false,
 		});
 		this.setIsAttendingAtOffice();
 	}
@@ -199,7 +202,7 @@ export class EventDetailItemComponent
 		this.eventForm.setValue({
 			preferences: this.eventDetailDto?.preferences ?? "",
 			allergies: this.eventDetailDto?.allergies ?? "",
-			wantsMeal: this.eventDetailDto?.wantsMeal ?? false,
+			wantsMeal: this.eventDetailDto?.wantsMeal ?? true,
 			responseType: this.eventDetailDto?.responseType ?? "PENDING",
 		});
 	}
