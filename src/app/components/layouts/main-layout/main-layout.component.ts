@@ -29,4 +29,14 @@ export class MainLayoutComponent extends AppBaseComponent {
 		this.offcanvasService.dismiss();
 		this.cdRef.detectChanges();
 	}
+
+	toggleTheme() {
+		const html = document.documentElement;
+		const current = html.getAttribute("data-bs-theme");
+
+		html.setAttribute(
+			"data-bs-theme",
+			current === "dark" ? "light" : "dark"
+		);
+	}
 }

@@ -1,7 +1,7 @@
 <div class="d-flex flex-column min-vh-100">
 	<nav class="navbar navbar-expand-lg navbar-light bg-primary">
-		<div class="container-fluid text-light">
-			<a class="navbar-brand text-light" [routerLink]="appRoutes.HOME">
+		<div class="container-fluid text-white">
+			<a class="navbar-brand text-white" [routerLink]="appRoutes.HOME">
 				<img
 					[src]="'/logo/ductus-white.png'"
 					alt="Ductus"
@@ -10,31 +10,36 @@
 				/>
 				<span
 					class="badge rounded-pill text-bg-info py-1 fs-6 text-uppercase"
-					>Events Luleå</span
 				>
+					{{ t("navigation.subTitle") }}
+				</span>
 			</a>
+
+			<button (click)="toggleTheme()">Toggle</button>
 
 			<button
 				class="btn border-0"
-				(click)="openSidebar(menuTemplate)"
 				aria-label="Toggle menu"
+				(click)="openSidebar(menuTemplate)"
 			>
-				<i class="bi bi-list fs-1 text-light"></i>
+				<i class="bi bi-list fs-1 text-white"></i>
 			</button>
 		</div>
 	</nav>
 
 	<ng-template #menuTemplate let-close="dismiss">
 		<div
-			class="offcanvas-header d-flex justify-content-between align-items-center w-100 text-secondary bg-primary border-bottom"
+			class="offcanvas-header d-flex justify-content-between align-items-center w-100 text-light bg-primary border-bottom"
 		>
-			<h5 class="offcanvas-title">{{ t("navigation.menu_title") }}</h5>
+			<h5 class="offcanvas-title text-white">
+				{{ t("navigation.menu_title") }}
+			</h5>
 			<button
 				class="btn btn-link hover-gray"
-				(click)="close('Closed via button')"
 				aria-label="Close"
+				(click)="close('Closed via button')"
 			>
-				<i class="bi bi-x-lg fs-3 text-secondary"></i>
+				<i class="bi bi-x-lg fs-3 text-white"></i>
 			</button>
 		</div>
 		<div class="offcanvas-body bg-primary">
@@ -42,11 +47,11 @@
 				<li
 					class="nav-item d-flex align-items-center p-2 w-100 hover-gray"
 				>
-					<i class="bi bi-house fs-4 text-secondary"></i>
+					<i class="bi bi-house fs-4 text-white"></i>
 					<a
-						class="nav-link text-secondary flex-grow-1"
-						[routerLink]="appRoutes.HOME"
+						class="nav-link text-white flex-grow-1"
 						routerLinkActive="active"
+						[routerLink]="appRoutes.HOME"
 						(click)="closeSidebar()"
 						>{{ t("navigation.home_link") }}</a
 					>
@@ -54,11 +59,11 @@
 				<li
 					class="nav-item d-flex align-items-center p-2 w-100 hover-gray"
 				>
-					<i class="bi bi-plus-circle fs-4 text-secondary"></i>
+					<i class="bi bi-plus-circle fs-4 text-white"></i>
 					<a
-						class="nav-link text-secondary flex-grow-1"
-						[routerLink]="'/' + appRoutes.EVENT_CREATE"
+						class="nav-link text-white flex-grow-1"
 						routerLinkActive="active"
+						[routerLink]="'/' + appRoutes.EVENT_CREATE"
 						(click)="closeSidebar()"
 						>{{ t("navigation.create_event_link") }}</a
 					>
@@ -66,11 +71,13 @@
 				<li
 					class="nav-item d-flex align-items-center p-2 w-100 hover-gray"
 				>
-					<i class="bi bi-box-arrow-right fs-4 text-secondary"></i>
+					<i
+						class="bi bi-box-arrow-right fs-4 text-secondary text-white"
+					></i>
 					<a
-						class="nav-link text-secondary flex-grow-1"
-						[routerLink]="'/' + appRoutes.LOGOUT"
+						class="nav-link text-white flex-grow-1"
 						routerLinkActive="active"
+						[routerLink]="'/' + appRoutes.LOGOUT"
 						(click)="closeSidebar()"
 						>{{ t("navigation.logout_link") }}</a
 					>

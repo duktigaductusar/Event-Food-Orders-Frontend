@@ -6,3 +6,4 @@ export * from "./button-wrapper/button-wrapper.component";
 export * from "./responsive-li/responsive-li.component";
 export * from "./responsive-div/responsive-div.component";
 export * from "./custom-ul/custom-ul.component";
+export * from "./icon-button/icon-button.component";
