@@ -17,8 +17,8 @@
 	--bs-warning-rgb: 230, 230, 78; /* Accent colors 3 */
 	--bs-info: #7d9eb1; /* Accent colors 4*/
 	--bs-info-rgb: 125, 158, 177; /* Accent colors 4 */
-	--bs-info-subtle: #c1a29a; /* Accent colors 4*/
-	--bs-info-subtle-rgb: rgb(193, 162, 154); /* Accent colors 4 */
+	--bs-info-subtle: #c1a29a; /* Accent colors 5*/
+	--bs-info-subtle-rgb: rgb(193, 162, 154); /* Accent colors 5 */
 
 	/* Button Colors */
 	--app-btn-danger: var(--bs-danger);

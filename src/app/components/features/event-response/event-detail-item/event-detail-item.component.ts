@@ -34,11 +34,8 @@ import { AppBaseComponent } from "@app/components/base";
 import { ResponsiveFormComponent } from "@app/components/html";
 
 import { IParticipantResponseForm } from "../interfaces";
+import { eventResponseControllerNames } from "../constants";
 
-/**
- * TODO! Fix hard coded formCOntrollerNames
- * Use same design as create form
- */
 @Component({
 	selector: "app-event-detail-item",
 	imports: [
@@ -56,6 +53,7 @@ export class EventDetailItemComponent
 	implements OnInit, OnDestroy
 {
 	private destroy = new Subject<void>();
+	eventResponseControllerNames = eventResponseControllerNames;
 	eventForm: FormGroup<IParticipantResponseForm>;
 	selectedEventDto: Signal<IEventDto | null>;
 	isAttendingAtOffice: Signal<boolean> | undefined;

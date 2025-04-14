@@ -76,7 +76,9 @@
 		"pendingReponseLabel": "Avvaktar",
 		"attendingOnlineReponseLabel": "Online",
 		"attendingOfficeReponseLabel": "På plats",
-		"notAttendingReponseLabel": "Avvisa"
+		"notAttendingReponseLabel": "Avvisa",
+		"dateAndTimeSectionTitle": "Datum & tid",
+		"respondBeforeSectionTitle": "Svara innan"
 	},
 	"events": {
 		"title": "Index Sida!",

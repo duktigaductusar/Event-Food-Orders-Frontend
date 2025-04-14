@@ -1,6 +1,10 @@
 <div
 	class="card shadow-sm border-0 rounded-4 h-100 d-flex flex-column"
+	tabindex="0"
+	role="button"
 	(click)="selectedEvent()"
+	(keydown.enter)="selectedEvent()"
+	(keydown.space)="selectedEvent()"
 >
 	<div
 		class="card-header py-3 d-flex justify-content-between align-items-center bg-secondary"
