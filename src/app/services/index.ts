@@ -13,3 +13,4 @@ export {
 
 export { ApiErrorService } from "./utility/api-error.service";
 export { AuthService } from "./utility/auth.service";
+export { ThemeService } from "./utility/theme.service";

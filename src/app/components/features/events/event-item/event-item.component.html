@@ -33,7 +33,7 @@
 		@if (eventDto()?.responseType === "PENDING") {
 			<div class="d-grid gap-2">
 				<button
-					class="btn btn-sm btn-outline-primary"
+					class="btn btn-sm btn-outline-primary my-1"
 					[disabled]="isPending()"
 					(click)="onAction($event, 'ATTENDING_ONLINE')"
 				>
@@ -41,7 +41,7 @@
 					{{ t("events.onlineBtnLabel") }}
 				</button>
 				<button
-					class="btn btn-sm btn-outline-primary"
+					class="btn btn-sm btn-outline-primary my-1"
 					[disabled]="isPending()"
 					(click)="onAction($event, 'ATTENDING_OFFICE')"
 				>
@@ -49,7 +49,7 @@
 					{{ t("events.officeBtnLabel") }}
 				</button>
 				<button
-					class="btn btn-sm btn-outline-danger"
+					class="btn btn-sm btn-outline-danger my-1"
 					[disabled]="isPending()"
 					(click)="onAction($event, 'NOT_ATTENDING')"
 				>
@@ -80,16 +80,4 @@
 			</button>
 		}
 	</div>
-	<!-- @if (eventDto()?.isOwner) {
-		<div class="card-footer text-center bg-secondary">
-			<app-generic-btn
-				[borderColor]="'primary'"
-				[label]="t('events.updateBtnLabel')"
-				[icon]="'pencil'"
-				[disabled]="isPending()"
-				(action)="editEvent()"
-			>
-			</app-generic-btn>
-		</div>
-	} -->
 </div>

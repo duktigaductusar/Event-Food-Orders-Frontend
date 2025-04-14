@@ -1,4 +1,6 @@
-<div class="d-flex gap-2">
+<div
+	class="d-flex flex-column align-items-start flex-sm-row gap-2 overflow-auto"
+>
 	@if (eventDto.isOwner) {
 		<span class="badge bg-info-subtle text-primary-emphasis">
 			{{ t("events.labelEventOwner") }}

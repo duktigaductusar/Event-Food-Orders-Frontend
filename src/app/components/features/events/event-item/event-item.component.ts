@@ -98,18 +98,7 @@ export class EventItemComponent extends AppBaseComponent {
 
 	getNavigationTitle(): string {
 		return this.eventDto()?.isOwner
-			? "Hantera ditt event"
-			: "Svara på eventet samt ange dina preferenser och allergier";
+			? this.t("events.handleYourEventTooltip")
+			: this.t("events.respondToEventTooltip");
 	}
-
-	// editEvent() {
-	// 	if (this.isPending() || this.eventDto() == null) {
-	// 		return;
-	// 	}
-	// 	this.eventStateService.setSelectedEvent(this.eventDto()!);
-	// 	this.router.navigate([
-	// 		`/${appRoutes.EVENT_MANAGEMENT}`,
-	// 		this.eventDto()!.id,
-	// 	]);
-	// }
 }

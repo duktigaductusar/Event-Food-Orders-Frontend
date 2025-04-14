@@ -95,7 +95,9 @@
 		"regretRejectBtnLabel": "Ångra avvisan",
 		"titleNoEvent": "Inga event hittades",
 		"showMyEvents": "Visa event jag äger",
-		"createYourfirstEventLink": "🛠️ Skapa ditt första event"
+		"createYourfirstEventLink": "🛠️ Skapa ditt första event",
+		"handleYourEventTooltip": "Hantera ditt event",
+		"respondToEventTooltip": "Ange dina preferenser och allergier"
 	},
 	"logout": {
 		"logoutQuestion": "Logga ut från Ductus matbeställnings app?",

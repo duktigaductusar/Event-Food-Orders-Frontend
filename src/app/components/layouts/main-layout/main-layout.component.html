@@ -15,15 +15,17 @@
 				</span>
 			</a>
 
-			<button (click)="toggleTheme()">Toggle</button>
+			<div class="d-flex justify-content-center align-items-center gap-2">
+				<app-theme-button></app-theme-button>
 
-			<button
-				class="btn border-0"
-				aria-label="Toggle menu"
-				(click)="openSidebar(menuTemplate)"
-			>
-				<i class="bi bi-list fs-1 text-white"></i>
-			</button>
+				<button
+					class="btn border-0"
+					aria-label="Toggle menu"
+					(click)="openSidebar(menuTemplate)"
+				>
+					<i class="bi bi-list fs-1 text-white"></i>
+				</button>
+			</div>
 		</div>
 	</nav>
 

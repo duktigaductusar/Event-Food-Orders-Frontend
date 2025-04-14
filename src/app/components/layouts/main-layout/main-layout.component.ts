@@ -1,13 +1,15 @@
 import { ChangeDetectorRef, Component } from "@angular/core";
-import { NgbOffcanvas } from "@ng-bootstrap/ng-bootstrap";
 import { RouterModule } from "@angular/router";
+import { NgbOffcanvas } from "@ng-bootstrap/ng-bootstrap";
+
 import { appRoutes } from "@app/constants";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
+import { ThemeButtonComponent } from "@app/components/shared";
 
 @Component({
 	selector: "app-main-layout",
 	standalone: true,
-	imports: [RouterModule],
+	imports: [RouterModule, ThemeButtonComponent],
 	templateUrl: "./main-layout.component.html",
 	styleUrl: "./main-layout.component.css",
 })
@@ -28,15 +30,5 @@ export class MainLayoutComponent extends AppBaseComponent {
 	closeSidebar() {
 		this.offcanvasService.dismiss();
 		this.cdRef.detectChanges();
-	}
-
-	toggleTheme() {
-		const html = document.documentElement;
-		const current = html.getAttribute("data-bs-theme");
-
-		html.setAttribute(
-			"data-bs-theme",
-			current === "dark" ? "light" : "dark"
-		);
 	}
 }
