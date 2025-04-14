@@ -27,9 +27,9 @@
 			@for (item of getCurrentPageItems(); track item.id) {
 				<div class="col">
 					<app-event-item
+						class="h-100"
 						[eventDto]="item"
 						[participantId]="item.participantId"
-						class="h-100"
 						(participantResult)="handleResponseType($event)"
 					></app-event-item>
 				</div>

@@ -10,4 +10,5 @@ export interface IEventDto extends ILabelType {
 	isOwner: boolean;
 	responseType: ParticipantResponseType;
 	participantId: string;
+	wantsMeal: boolean;
 }

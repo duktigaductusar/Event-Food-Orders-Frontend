@@ -109,6 +109,7 @@ export class EventManagementHubComponent
 					this.eventDetailDto = item;
 					this.eventStateService.selectedEventDto.set(item);
 					this.participants = item.participants;
+					console.log("particpants", this.participants);
 					this.setUsers();
 				},
 				error: error => console.error("Test error" + error),
@@ -216,12 +217,14 @@ export class EventManagementHubComponent
 			return {
 				responseType: "PENDING",
 				isOwner: false,
+				wantsMeal: false,
 			};
 		}
 
 		return {
 			responseType: p.responseType,
 			isOwner: false,
+			wantsMeal: p.wantsMeal,
 		};
 	}
 

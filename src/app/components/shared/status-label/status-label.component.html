@@ -12,9 +12,15 @@
 		<span class="badge bg-success">
 			{{ t("events.labelOffice") }}
 		</span>
-		<span class="badge bg-info">
-			{{ "Med mat" }}
-		</span>
+		@if (eventDto.wantsMeal) {
+			<span class="badge bg-info">
+				{{ "Med mat" }}
+			</span>
+		} @else {
+			<span class="badge bg-danger">
+				{{ "Utan mat" }}
+			</span>
+		}
 	} @else if (eventDto.responseType === "NOT_ATTENDING") {
 		<span class="badge bg-danger">
 			{{ t("events.labelReject") }}

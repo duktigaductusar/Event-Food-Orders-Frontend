@@ -27,9 +27,7 @@
 					@if (selectedEventDto() !== null) {
 						<div class="row mb-3">
 							<div class="col-md-6">
-								<p
-									class="form-label fw-semibold text-secondary"
-								>
+								<p class="form-label fw-semibold text-dark">
 									{{
 										t(
 											"event-management.dateAndTimeSectionTitle"
@@ -50,9 +48,7 @@
 								></app-datetimelabel>
 							</div>
 							<div class="col-md-6">
-								<p
-									class="form-label fw-semibold text-secondary"
-								>
+								<p class="form-label fw-semibold text-dark">
 									{{
 										t(
 											"event-management.respondBeforeSectionTitle"
@@ -72,7 +68,7 @@
 							[eventDto]="selectedEventDto()!"
 						></app-status-label>
 					}
-					<p class="mb-2 text-secondary">
+					<p class="my-2 text-primary">
 						{{ selectedEventDto()?.description }}
 					</p>
 				</div>
@@ -113,7 +109,7 @@
 									<div
 										class="d-flex gap-3 align-items-center mb-0"
 									>
-										<i class="bi bi-person-check"></i>
+										<i class="bi bi-person-check fs-4"></i>
 										<app-status-label
 											[eventDto]="
 												createLabelTypeFromUserDto(user)
