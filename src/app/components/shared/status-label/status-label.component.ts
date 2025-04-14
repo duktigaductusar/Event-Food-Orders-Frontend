@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
 import { ILabelType } from "@app/models";
 
@@ -8,6 +8,10 @@ import { ILabelType } from "@app/models";
 	templateUrl: "./status-label.component.html",
 	styleUrl: "./status-label.component.css",
 })
-export class StatusLabelComponent extends AppBaseComponent {
+export class StatusLabelComponent extends AppBaseComponent implements OnInit {
 	@Input() eventDto!: ILabelType;
+
+	ngOnInit() {
+		console.log("this.eventDto:", this.eventDto);
+	}
 }

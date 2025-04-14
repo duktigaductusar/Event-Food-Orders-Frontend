@@ -1,13 +1,115 @@
-:root {
-	--bs-primary: #455953;
-	--bs-primary-rgb: 69, 89, 83;
-	--bs-secondary: #dae5e1;
-	--bs-secondary-rgb: 218, 229, 225;
+:root,
+[data-bs-theme="light"] {
+	/* Main Colors */
+	--bs-light: #f5f5f5; /* Background color */
+	--bs-light-rgb: 248, 249, 250; /* Background color */
+	--bs-primary: #455953; /* Main header color */
+	--bs-primary-rgb: 69, 89, 83; /* Main header color */
+	--bs-secondary: #dae5e1; /* Header color boxes */
+	--bs-secondary-rgb: 218, 229, 225; /* Header color boxes */
 
-	--bs-light: #f5f5f5;
-	--bs-light-rgb: 248, 249, 250;
+	/* Accent colors */
+	--bs-danger: #c27763; /* Accent colors 2*/
+	--bs-danger-rgb: 194, 119, 99; /* Accent colors 2*/
+	--bs-success: #9fc1b9; /* Accent colors 1 */
+	--bs-success-rgb: 159, 193, 185; /* Accent colors 1 */
+	--bs-warning: #e6e64e; /* Accent colors 3*/
+	--bs-warning-rgb: 230, 230, 78; /* Accent colors 3 */
+	--bs-info: #7d9eb1; /* Accent colors 4*/
+	--bs-info-rgb: 125, 158, 177; /* Accent colors 4 */
+	--bs-info-subtle: #c1a29a; /* Accent colors 4*/
+	--bs-info-subtle-rgb: rgb(193, 162, 154); /* Accent colors 4 */
+
+	/* Button Colors */
+	--app-btn-danger: var(--bs-danger);
+	--app-btn-danger-rgb: var(--bs-danger-rgb);
+	--app-btn-warning: var(--app-btn-danger);
+	--app-btn-warning-rgb: var(--app-btn-danger-rgb);
+	--app-btn-primary: var(--bs-primary);
+	--app-btn-primary-rgb: var(--bs-primary-rgb);
+	--app-btn-secondary: #978b97;
+	--app-btn-secondary-rgb: 151, 139, 151;
 }
+
+/* [data-bs-theme="dark"] {
+  --bs-primary: #455953;
+  --bs-primary-rgb: 69, 89, 83;
+  --bs-secondary: #5d6b68;
+  --bs-secondary-rgb: 93, 107, 104;
+
+  --bs-light: rgb(8, 0, 22);
+  --bs-light-rgb: 8, 0, 22;
+} */
 
 body {
 	font-family: sans-serif;
+	background-color: var(--bs-light-rgb);
+}
+
+.btn-outline-danger {
+	--bs-btn-color: var(--app-btn-danger);
+	--bs-btn-border-color: var(--app-btn-danger);
+	--bs-btn-hover-color: #fff;
+	--bs-btn-hover-bg: var(--app-btn-danger);
+	--bs-btn-hover-border-color: var(--app-btn-danger);
+	--bs-btn-focus-shadow-rgb: var(--app-btn-danger-rgb);
+	--bs-btn-active-color: #fff;
+	--bs-btn-active-bg: var(--app-btn-danger);
+	--bs-btn-active-border-color: var(--app-btn-danger);
+	--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+	--bs-btn-disabled-color: var(--app-btn-danger);
+	--bs-btn-disabled-bg: transparent;
+	--bs-btn-disabled-border-color: var(--app-btn-danger);
+	--bs-gradient: none;
+}
+
+.btn-outline-primary {
+	--bs-btn-color: var(--app-btn-primary);
+	--bs-btn-border-color: var(--app-btn-primary);
+	--bs-btn-hover-color: #fff;
+	--bs-btn-hover-bg: var(--app-btn-primary);
+	--bs-btn-hover-border-color: var(--app-btn-primary);
+	--bs-btn-focus-shadow-rgb: var(--app-btn-primary-rgb);
+	--bs-btn-active-color: #fff;
+	--bs-btn-active-bg: var(--app-btn-primary);
+	--bs-btn-active-border-color: var(--app-btn-primary);
+	--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+	--bs-btn-disabled-color: var(--app-btn-primary);
+	--bs-btn-disabled-bg: transparent;
+	--bs-btn-disabled-border-color: var(--app-btn-primary);
+	--bs-gradient: none;
+}
+
+.btn-outline-secondary {
+	--bs-btn-color: var(--app-btn-secondary);
+	--bs-btn-border-color: var(--app-btn-secondary);
+	--bs-btn-hover-color: #fff;
+	--bs-btn-hover-bg: var(--app-btn-secondary);
+	--bs-btn-hover-border-color: var(--app-btn-secondary);
+	--bs-btn-focus-shadow-rgb: var(--bs-secondary-rgb);
+	--bs-btn-active-color: #fff;
+	--bs-btn-active-bg: var(--app-btn-secondary);
+	--bs-btn-active-border-color: var(--app-btn-secondary);
+	--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+	--bs-btn-disabled-color: var(--app-btn-secondary);
+	--bs-btn-disabled-bg: transparent;
+	--bs-btn-disabled-border-color: var(--app-btn-secondary);
+	--bs-gradient: none;
+}
+
+.btn-outline-warning {
+	--bs-btn-color: var(--app-btn-warning);
+	--bs-btn-border-color: var(--app-btn-warning);
+	--bs-btn-hover-color: #fff;
+	--bs-btn-hover-bg: var(--app-btn-warning);
+	--bs-btn-hover-border-color: var(--app-btn-warning);
+	--bs-btn-focus-shadow-rgb: var(--app-btn-warning-rgb);
+	--bs-btn-active-color: #fff;
+	--bs-btn-active-bg: var(--app-btn-warning);
+	--bs-btn-active-border-color: var(--app-btn-warning);
+	--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+	--bs-btn-disabled-color: var(--app-btn-warning);
+	--bs-btn-disabled-bg: transparent;
+	--bs-btn-disabled-border-color: var(--app-btn-warning);
+	--bs-gradient: none;
 }
