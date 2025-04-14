@@ -53,19 +53,19 @@ export class EventUserFormComponent
 	query = "";
 	private querySubject = new Subject<string>();
 	private destroySubject = new Subject<void>();
+	isPending = signal(false);
 	form = input<FormGroup<IInviteForm>>(null!);
 	selectedUsers = input<IUserDto[]>([]);
 	step = input<FormStepsTyp>(null!);
 	title = input<string>(null!);
 	derivedTitle = computed<string>(() => `${this.step()}. ${this.title()}`);
-	selectedUsersChange = output<IUserDto>();
-	isPending = signal(false);
 	isFocused = false;
 	selectedUsersWithId = computed<IUsersDtoWithId[]>(() => {
 		return this.selectedUsers()
 			.sort((a, b) => a.email.localeCompare(b.email))
 			.map(u => ({ ...u, id: u.userId }));
 	});
+	selectedUsersChange = output<IUserDto>();
 
 	constructor(
 		private readonly userService: UserService,

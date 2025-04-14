@@ -27,13 +27,11 @@
 						"styles": [
 							"node_modules/bootstrap/dist/css/bootstrap.min.css",
 							"src/styles.css",
-							"src/assets/theme/sb-admin-2.css",
-							"src/assets/theme/sb-admin-2.min.css",
+							"src/styles/theme.css",
 							"node_modules/bootstrap-icons/font/bootstrap-icons.css"
 						],
 						"scripts": [
-							"node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
-							"src/assets/theme/sb-admin-2.min.js"
+							"node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
 						]
 					},
 					"configurations": {

@@ -34,6 +34,7 @@ import { AppBaseComponent } from "@app/components/base";
 import { ResponsiveFormComponent } from "@app/components/html";
 
 import { IParticipantResponseForm } from "../interfaces";
+import { eventResponseControllerNames } from "../constants";
 
 @Component({
 	selector: "app-event-detail-item",
@@ -52,6 +53,7 @@ export class EventDetailItemComponent
 	implements OnInit, OnDestroy
 {
 	private destroy = new Subject<void>();
+	eventResponseControllerNames = eventResponseControllerNames;
 	eventForm: FormGroup<IParticipantResponseForm>;
 	selectedEventDto: Signal<IEventDto | null>;
 	isAttendingAtOffice: Signal<boolean> | undefined;
@@ -97,15 +99,24 @@ export class EventDetailItemComponent
 			),
 		});
 
-		this.eventForm.valueChanges
-			.pipe(takeUntil(this.destroy))
+		this.eventForm
+			.get(eventResponseControllerNames.responseType)
+			?.valueChanges.pipe(takeUntil(this.destroy))
 			.subscribe(value => {
+				console.log("value: ", value);
 				this.eventForm.patchValue(
 					{
-						wantsMeal: value.responseType === "ATTENDING_OFFICE",
+						wantsMeal: value === "ATTENDING_OFFICE",
 					},
 					{ emitEvent: false }
 				);
+			});
+
+		this.eventForm
+			.get(eventResponseControllerNames.responseType)
+			?.valueChanges.pipe(takeUntil(this.destroy))
+			.subscribe(() => {
+				this.clearFields();
 			});
 	}
 
@@ -115,10 +126,6 @@ export class EventDetailItemComponent
 			if (eventId) {
 				this.loadEventDetailDto(eventId);
 			}
-		});
-
-		this.eventForm.get("responseType")?.valueChanges.subscribe(() => {
-			this.clearFields();
 		});
 	}
 
@@ -153,7 +160,6 @@ export class EventDetailItemComponent
 		this.eventForm.patchValue({
 			preferences: this.eventDetailDto?.preferences ?? "",
 			allergies: this.eventDetailDto?.allergies ?? "",
-			wantsMeal: this.eventDetailDto?.wantsMeal ?? false,
 		});
 		this.setIsAttendingAtOffice();
 	}
@@ -171,6 +177,8 @@ export class EventDetailItemComponent
 				allergies: this.eventForm.getRawValue().allergies,
 				preferences: this.eventForm.getRawValue().preferences,
 			};
+
+			console.log("dto: ", dto);
 
 			this.isPending.set(true);
 			this.participantService
@@ -194,7 +202,7 @@ export class EventDetailItemComponent
 		this.eventForm.setValue({
 			preferences: this.eventDetailDto?.preferences ?? "",
 			allergies: this.eventDetailDto?.allergies ?? "",
-			wantsMeal: this.eventDetailDto?.wantsMeal ?? false,
+			wantsMeal: this.eventDetailDto?.wantsMeal ?? true,
 			responseType: this.eventDetailDto?.responseType ?? "PENDING",
 		});
 	}

@@ -16,11 +16,11 @@
 			<div class="d-flex flex-column gap-3 p-3">
 				<div class="position-relative mb-3">
 					<i
-						class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"
+						class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted fs-4"
 					></i>
 					<input
 						id="search"
-						class="form-control pe-5 ps-5 py-4"
+						class="form-control pe-5 ps-5 py-3 fs-5"
 						type="text"
 						[placeholder]="
 							t('event-create.userForm.searchUserPlaceholder')
@@ -38,7 +38,7 @@
 								(selected)="onSearchInputChange('')"
 							>
 								<i
-									class="bi bi-x-circle-fill text-muted"
+									class="bi bi-x-circle-fill text-muted fs-4"
 									style="cursor: pointer"
 									title="Rensa sökning"
 								></i>
@@ -101,7 +101,7 @@
 
 <ng-template #userSearchTemplate let-user>
 	@if (user !== undefined) {
-		<li class="list-group-item p-0 m-0">
+		<li class="list-group-item p-0 m-0 border-top">
 			<app-button-wrapper
 				[useClass]="getSelectedStyleForSearchResultItem(user)"
 				(click)="toggleSelect(user)"
@@ -124,7 +124,7 @@
 
 <ng-template #userTemplate let-user>
 	@if (user !== undefined) {
-		<app-responsive-li>
+		<app-responsive-li [customClass]="'p-3 border-top'">
 			<i class="bi bi-person-check fs-4"></i>
 
 			<div

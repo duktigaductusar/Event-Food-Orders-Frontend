@@ -3,11 +3,9 @@
 } @else {
 	<div class="mx-auto" [ngStyle]="getContainerStyle()">
 		@if (!eventStateService.editEvent()) {
-			<app-responsive-div
-				[withParentStyle]="'card shadow-sm mb-4 bg-white border-top-0'"
-			>
+			<app-responsive-div [withParentStyle]="'card shadow-sm mb-4'">
 				<div
-					class="card-header p-4 d-flex flex-column flex-sm-row justify-content-between align-items-center"
+					class="card-header p-4 d-flex flex-column flex-sm-row justify-content-between align-items-center bg-secondary"
 				>
 					<h5 class="m-0 fw-bold text-primary">
 						{{ selectedEventDto()!.title }}
@@ -27,9 +25,7 @@
 					@if (selectedEventDto() !== null) {
 						<div class="row mb-3">
 							<div class="col-md-6">
-								<p
-									class="form-label fw-semibold text-secondary"
-								>
+								<p class="form-label fw-semibold text-dark">
 									{{
 										t(
 											"event-management.dateAndTimeSectionTitle"
@@ -50,9 +46,7 @@
 								></app-datetimelabel>
 							</div>
 							<div class="col-md-6">
-								<p
-									class="form-label fw-semibold text-secondary"
-								>
+								<p class="form-label fw-semibold text-dark">
 									{{
 										t(
 											"event-management.respondBeforeSectionTitle"
@@ -72,7 +66,7 @@
 							[eventDto]="selectedEventDto()!"
 						></app-status-label>
 					}
-					<p class="mb-2 text-secondary">
+					<p class="my-2 text-primary">
 						{{ selectedEventDto()?.description }}
 					</p>
 				</div>
@@ -90,30 +84,22 @@
 						(action)="deleteEventAssert()"
 					/>
 				</div>
-				<div class="card-footer text-center"></div>
 
 				@if (participants.length > 0) {
-					<div class="p-4">
-						<h5>
-							{{
-								t("event-management.invitedParticipantsHeader")
-							}}
-						</h5>
-						<p>
-							{{ this.getConfirmedParticipants() }}
-							{{ t("event-management.of") }}
-							{{ participants.length }}
-							{{
-								t("event-management.participantsHaveResponded")
-							}}
-						</p>
-						<ul class="list-group">
+					<div class="p-4 border-top">
+						<app-custom-ul
+							[title]="
+								t('event-management.invitedParticipantsHeader')
+							"
+							[listItems]="listItems"
+						></app-custom-ul>
+						<ul class="list-group pt-2">
 							@for (user of users; track user.userId) {
 								<app-responsive-li>
 									<div
 										class="d-flex gap-3 align-items-center mb-0"
 									>
-										<i class="bi bi-person-check"></i>
+										<i class="bi bi-person-check fs-4"></i>
 										<app-status-label
 											[eventDto]="
 												createLabelTypeFromUserDto(user)
