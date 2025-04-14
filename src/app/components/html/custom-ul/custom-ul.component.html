@@ -1,0 +1,16 @@
+<div class="py-2 text-primary-emphasis">
+	<h5>
+		<i class="bi bi-list-ul"></i>
+		{{ title() }}
+	</h5>
+
+	<ul
+		class="list-unstyled ps-3 mb-0 text-primary-emphasis custom-list-bullets"
+	>
+		@for (listItem of listItems(); track $index) {
+			<li>
+				{{ listItem }}
+			</li>
+		}
+	</ul>
+</div>

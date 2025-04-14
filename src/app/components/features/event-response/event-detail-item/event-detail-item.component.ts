@@ -34,6 +34,7 @@ import { AppBaseComponent } from "@app/components/base";
 import { ResponsiveFormComponent } from "@app/components/html";
 
 import { IParticipantResponseForm } from "../interfaces";
+import { eventResponseControllerNames } from "../constants";
 
 @Component({
 	selector: "app-event-detail-item",
@@ -52,6 +53,7 @@ export class EventDetailItemComponent
 	implements OnInit, OnDestroy
 {
 	private destroy = new Subject<void>();
+	eventResponseControllerNames = eventResponseControllerNames;
 	eventForm: FormGroup<IParticipantResponseForm>;
 	selectedEventDto: Signal<IEventDto | null>;
 	isAttendingAtOffice: Signal<boolean> | undefined;
@@ -97,12 +99,13 @@ export class EventDetailItemComponent
 			),
 		});
 
-		this.eventForm.valueChanges
-			.pipe(takeUntil(this.destroy))
+		this.eventForm
+			.get("responseType")
+			?.valueChanges.pipe(takeUntil(this.destroy))
 			.subscribe(value => {
 				this.eventForm.patchValue(
 					{
-						wantsMeal: value.responseType === "ATTENDING_OFFICE",
+						wantsMeal: value === "ATTENDING_OFFICE",
 					},
 					{ emitEvent: false }
 				);
@@ -171,6 +174,8 @@ export class EventDetailItemComponent
 				allergies: this.eventForm.getRawValue().allergies,
 				preferences: this.eventForm.getRawValue().preferences,
 			};
+
+			console.log("dto: ", dto);
 
 			this.isPending.set(true);
 			this.participantService

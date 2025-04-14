@@ -17,23 +17,23 @@ export class MultiStepFormHeaderComponent {
 		const stepNumber = index + 1;
 
 		if (currentStep > stepNumber) {
-			return "text-white bg-primary border-primary";
+			return "text-white multip-step-form-navigation-prev";
 		}
 
 		if (currentStep === stepNumber) {
-			return "bg-white border border-primary text-primary fw-bold";
+			return "multip-step-form-navigation-active";
 		}
 
-		return "bg-secondary text-white";
+		return "multip-step-form-navigation-next";
 	}
 
 	getStepClassLines(currentStep: number, index: number): string {
 		const stepNumber = index + 1;
 
 		if (currentStep >= stepNumber) {
-			return "flex-grow-1 bg-primary";
+			return "flex-grow-1 multip-step-form-navigation-prev-line";
 		}
 
-		return "flex-grow-1 bg-secondary";
+		return "flex-grow-1 multip-step-form-navigation-next-line";
 	}
 }
