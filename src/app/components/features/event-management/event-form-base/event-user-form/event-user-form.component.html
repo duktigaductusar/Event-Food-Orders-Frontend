@@ -101,7 +101,7 @@
 
 <ng-template #userSearchTemplate let-user>
 	@if (user !== undefined) {
-		<li class="list-group-item p-0 m-0">
+		<li class="list-group-item p-0 m-0 border-top">
 			<app-button-wrapper
 				[useClass]="getSelectedStyleForSearchResultItem(user)"
 				(click)="toggleSelect(user)"

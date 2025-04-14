@@ -35,6 +35,23 @@
 	--app-btn-outline-secondary-rgb: 151, 139, 151;
 }
 
+.form-select:focus,
+.form-control:focus {
+	border-color: var(--bs-secondary);
+	outline: 0;
+	box-shadow: 0 0 0 0.25rem rgba(1, 66, 28, 0.25);
+}
+
+.accordion-button:not(.collapsed) {
+	background-color: var(--bs-secondary);
+}
+
+.accordion-button:focus {
+	z-index: 3;
+	outline: 0;
+	box-shadow: 0 0 0 0.25rem rgba(1, 66, 28, 0.25);
+}
+
 /* [data-bs-theme="dark"] {
   --bs-primary: #455953;
   --bs-primary-rgb: 69, 89, 83;
