@@ -1,4 +1,8 @@
-import { ApplicationConfig, provideZoneChangeDetection } from "@angular/core";
+import {
+	ApplicationConfig,
+	LOCALE_ID,
+	provideZoneChangeDetection,
+} from "@angular/core";
 import { provideRouter } from "@angular/router";
 import {
 	HTTP_INTERCEPTORS,
@@ -23,6 +27,7 @@ import { msalInstance, msalGuardConfig, msalInterceptor } from "./auth.config";
 
 export const appConfig: ApplicationConfig = {
 	providers: [
+		{ provide: LOCALE_ID, useValue: "sv-SE" },
 		{ provide: MSAL_INSTANCE, useValue: msalInstance },
 		{ provide: MSAL_GUARD_CONFIG, useValue: msalGuardConfig },
 		{ provide: MSAL_INTERCEPTOR_CONFIG, useValue: msalInterceptor },

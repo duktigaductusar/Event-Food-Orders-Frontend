@@ -1,10 +1,15 @@
 /// <reference types="@angular/localize" />
 
 import { bootstrapApplication } from "@angular/platform-browser";
+import localeSv from "@angular/common/locales/sv";
+import { registerLocaleData } from "@angular/common";
+
 import { appConfig } from "./app/app.config";
 import { AppComponent } from "./app/app.component";
 import { appRoutes } from "@app/constants";
 import { msalInstance } from "@app/auth.config";
+
+registerLocaleData(localeSv);
 
 bootstrapApplicationWithMSAL();
 

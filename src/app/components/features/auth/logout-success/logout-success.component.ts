@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { RouterLink } from "@angular/router";
+import { AppBaseComponent } from "@app/components/base";
 
 import { appRoutes } from "@app/constants";
 
@@ -10,6 +11,6 @@ import { appRoutes } from "@app/constants";
 	templateUrl: "./logout-success.component.html",
 	styleUrls: ["./logout-success.component.css"],
 })
-export class LogoutSuccessComponent {
+export class LogoutSuccessComponent extends AppBaseComponent {
 	readonly appRoutes = appRoutes;
 }
