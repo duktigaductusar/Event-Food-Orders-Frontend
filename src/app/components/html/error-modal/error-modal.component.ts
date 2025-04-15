@@ -11,6 +11,7 @@ import { GenericBtnComponent } from "../generic-btn/generic-btn.component";
 export class ErrorModalComponent {
 	@Input() title = "";
 	@Input() message = "";
+	@Input() closeBtnLabel = "close";
 
 	constructor(public activeModal: NgbActiveModal) {}
 

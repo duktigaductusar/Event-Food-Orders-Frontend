@@ -1,4 +1,11 @@
 .btn-focus-outline:focus {
-	outline: 4px solid var(--bs-primary-bg-subtle);
-	border-color: var(--bs-primary-bg-subtle);
+	outline: 4px solid var(--bs-primary-text-emphasis);
+	border-color: var(--bs-primary-text-emphasisbg);
+	border-radius: 0.375rem;
+}
+
+.btn-focus-outline:focus-visible {
+	outline: none;
+	box-shadow: 0 0 0 0.25rem var(--bs-primary-text-emphasis);
+	border-radius: 0.375rem;
 }

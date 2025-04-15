@@ -15,16 +15,12 @@
 				</span>
 			</a>
 
-			<div class="d-flex justify-content-center align-items-center gap-2">
+			<div class="d-flex justify-content-center align-items-center gap-4">
 				<app-theme-button></app-theme-button>
 
-				<button
-					class="btn border-0"
-					aria-label="Toggle menu"
-					(click)="openSidebar(menuTemplate)"
-				>
+				<app-button-wrapper (selected)="openSidebar(menuTemplate)">
 					<i class="bi bi-list fs-1 text-white"></i>
-				</button>
+				</app-button-wrapper>
 			</div>
 		</div>
 	</nav>

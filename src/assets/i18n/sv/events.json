@@ -1,0 +1,21 @@
+{
+	"events": {
+		"title": "Index Sida!",
+		"labelEventOwner": "Värd",
+		"labelOnline": "Anmäld Online",
+		"labelOffice": "Anmäld på plats",
+		"labelReject": "Avvisat",
+		"labelPending": "Inväntar svar",
+		"updateBtnLabel": "Hantera",
+		"onlineBtnLabel": "Delta online",
+		"officeBtnLabel": "Delta på plats",
+		"rejectBtnLabel": "Avvisa inbjudan",
+		"regretBtnLabel": "Ångra anmälan",
+		"regretRejectBtnLabel": "Ångra avvisan",
+		"titleNoEvent": "Inga event hittades",
+		"showMyEvents": "Visa event jag äger",
+		"createYourfirstEventLink": "🛠️ Skapa ditt första event",
+		"handleYourEventTooltip": "Hantera ditt event",
+		"respondToEventTooltip": "Ange dina preferenser och allergier"
+	}
+}

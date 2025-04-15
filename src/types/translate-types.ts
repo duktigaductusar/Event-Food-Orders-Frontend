@@ -1,4 +1,4 @@
-import en from "@assets/i18n/sv/sv.json";
+import en from "@assets/i18n/sv";
 
 type TranslationKeys = typeof en;
 

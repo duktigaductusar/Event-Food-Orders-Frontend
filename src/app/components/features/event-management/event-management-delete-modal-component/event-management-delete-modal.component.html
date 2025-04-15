@@ -26,11 +26,19 @@
 			></button>
 		</div>
 		<div class="modal-body">
-			<p class="text-primary-emphasis">Titel: {{ event.title }}</p>
 			<p class="text-primary-emphasis">
-				Description: {{ event.description }}
+				{{ t2("event-create.modal.titel", { title: event.title }) }}
 			</p>
-			<p class="text-primary-emphasis">Date: {{ event.date }}</p>
+			<p class="text-primary-emphasis">
+				{{ t2("event-create.modal.date", { date: event.date }) }}
+			</p>
+			<p class="text-primary-emphasis">
+				{{
+					t2("event-create.modal.description", {
+						description: event.description,
+					})
+				}}
+			</p>
 		</div>
 		<div class="modal-footer d-flex justify-content-between">
 			<app-generic-btn
