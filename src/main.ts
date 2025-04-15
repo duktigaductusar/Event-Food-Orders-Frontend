@@ -3,11 +3,14 @@
 import { bootstrapApplication } from "@angular/platform-browser";
 import { appConfig } from "./app/app.config";
 import { AppComponent } from "./app/app.component";
-import { msalInstance } from "@app/auth";
+import { appRoutes } from "@app/constants";
+import { msalInstance } from "@app/auth.config";
 
 bootstrapApplicationWithMSAL();
 
 function bootstrapApplicationWithMSAL() {
+	clearMsalInteractionStatus();
+
 	msalInstance
 		.initialize()
 		.then(() => msalInstance.handleRedirectPromise())
@@ -20,9 +23,25 @@ function bootstrapApplicationWithMSAL() {
 					msalInstance.setActiveAccount(accounts[0]);
 				}
 			}
+
+			if (response?.state) {
+				console.log("Redirecting to dynamic state:", response.state);
+				window.location.href = response.state;
+				return;
+			}
+
 			return bootstrapApplication(AppComponent, appConfig);
 		})
 		.catch(error => {
 			console.error("MSAL Initialization error: ", error);
 		});
+}
+
+function clearMsalInteractionStatus(): void {
+	if (window.location.pathname.includes(appRoutes.LOGOUT_SUCCESS)) {
+		console.log(
+			"Detected logout success page → Clearing msal.interaction.status"
+		);
+		sessionStorage.removeItem("msal.interaction.status");
+	}
 }

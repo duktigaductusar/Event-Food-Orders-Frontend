@@ -1,6 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { RouterLink } from "@angular/router";
-import { MsalService } from "@azure/msal-angular";
+
+import { appRoutes } from "@app/constants";
 
 @Component({
 	selector: "app-logout-success",
@@ -9,11 +10,6 @@ import { MsalService } from "@azure/msal-angular";
 	templateUrl: "./logout-success.component.html",
 	styleUrls: ["./logout-success.component.css"],
 })
-export class LogoutSuccessComponent implements OnInit {
-	constructor(private readonly msalService: MsalService) {}
-
-	ngOnInit(): void {
-		sessionStorage.removeItem("msal.interaction.status");
-		this.msalService.instance.clearCache();
-	}
+export class LogoutSuccessComponent {
+	readonly appRoutes = appRoutes;
 }

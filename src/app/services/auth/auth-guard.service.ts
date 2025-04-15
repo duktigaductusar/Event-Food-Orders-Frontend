@@ -17,9 +17,10 @@ export class AuthGuard implements CanActivate {
 	): boolean {
 		const targetUrl = state.url;
 
-		const account = this.authService.getActiveAcoountUserId();
+		const account = this.authService.getActiveAccountUserId();
+		const accounts = this.authService.getAllAccounts();
 
-		if (account != null) {
+		if (account != null && accounts.length > 0) {
 			return true;
 		}
 

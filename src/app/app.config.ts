@@ -19,7 +19,7 @@ import {
 	ApiErrorInterceptor,
 	JsonContentTypeInterceptor,
 } from "./interceptors";
-import { msalInstance, msalGuardConfig, msalInterceptor } from "./auth";
+import { msalInstance, msalGuardConfig, msalInterceptor } from "./auth.config";
 
 export const appConfig: ApplicationConfig = {
 	providers: [
