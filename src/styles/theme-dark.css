@@ -35,11 +35,11 @@
 	--app-btn-outline-secondary: #978b97;
 	--app-btn-outline-secondary-rgb: 151, 139, 151;
 
-	/* Card item */
+	/* Card items and forms */
 	--bs-body-bg: #121212;
 
 	/* Text */
-	--bs-primary-text-emphasis: #fff;
+	--bs-primary-text-emphasis: rgba(255, 255, 255, 0.87);
 	--bs-white-rgb: 248, 249, 250;
 
 	--app-xxxx: #f7cb4d;

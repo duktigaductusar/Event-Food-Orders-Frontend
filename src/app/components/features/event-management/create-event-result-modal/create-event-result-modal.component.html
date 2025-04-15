@@ -1,5 +1,5 @@
 @if (event !== null) {
-	<div class="border border-5 border-info p-3 bg-white">
+	<div class="border border-info p-3">
 		<div class="modal-header">
 			<h4 class="text-success">Event created</h4>
 			<button
@@ -9,10 +9,12 @@
 				(click)="navigateHomeByDismiss()"
 			></button>
 		</div>
-		<div class="modal-body">
-			<p>Titel: {{ event.title }}</p>
-			<p>Description: {{ event.description }}</p>
-			<p>Date: {{ event.date }}</p>
+		<div class="modal-body primary-emphasis">
+			<p class="text-primary-emphasis">Titel: {{ event.title }}</p>
+			<p class="text-primary-emphasis">
+				Description: {{ event.description }}
+			</p>
+			<p class="text-primary-emphasis">Date: {{ event.date }}</p>
 			<div
 				class="modal-footer d-flex flex-row justify-content-center gap-2"
 			>

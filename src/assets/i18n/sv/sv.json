@@ -63,7 +63,8 @@
 		"participantsHaveResponded": "{{answeredCount}} av {{totalCount}} deltagare har svarat.",
 		"participantsWantsMealResponded": "{{wantsMealCount}} deltagare vill ha mat.",
 		"dateAndTimeSectionTitle": "Datum & tid",
-		"respondBeforeSectionTitle": "Svara innan"
+		"respondBeforeSectionTitle": "Svara innan",
+		"toolTipOwnerOfEvent": "Ägare av eventet"
 	},
 	"event-response": {
 		"responseType": "Svarsalternativ",

@@ -1,7 +1,7 @@
 import { Component, input, output } from "@angular/core";
 import { NgbPopoverModule } from "@ng-bootstrap/ng-bootstrap";
 
-import { CSSClassComponent } from "@app/components/base";
+import { AppCSSClassComponent } from "@app/components/base/app-css-class.component";
 import { ButtonWrapperComponent } from "..";
 
 @Component({
@@ -10,7 +10,7 @@ import { ButtonWrapperComponent } from "..";
 	templateUrl: "./icon-button.component.html",
 	styleUrl: "./icon-button.component.css",
 })
-export class IconButtonComponent extends CSSClassComponent {
+export class IconButtonComponent extends AppCSSClassComponent {
 	title = input("");
 	icon = input("pencil");
 	disabled = input(false);

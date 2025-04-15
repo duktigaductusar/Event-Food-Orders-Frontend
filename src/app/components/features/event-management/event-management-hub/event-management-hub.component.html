@@ -7,7 +7,7 @@
 				<div
 					class="card-header p-4 d-flex flex-column flex-sm-row justify-content-between align-items-center bg-secondary"
 				>
-					<h5 class="m-0 fw-bold text-primary">
+					<h5 class="m-0 fw-bold text-primary-emphasis">
 						{{ selectedEventDto()!.title }}
 					</h5>
 					<app-generic-btn
@@ -21,11 +21,13 @@
 					>
 					</app-generic-btn>
 				</div>
-				<div class="text-primary-emphasis card-body bg-white p-4">
+				<div class="text-primary-emphasis card-body p-4">
 					@if (selectedEventDto() !== null) {
 						<div class="row mb-3">
 							<div class="col-md-6">
-								<p class="form-label fw-semibold text-dark">
+								<p
+									class="form-label fw-semibold text-primary-emphasis"
+								>
 									{{
 										t(
 											"event-management.dateAndTimeSectionTitle"
@@ -46,7 +48,9 @@
 								></app-datetimelabel>
 							</div>
 							<div class="col-md-6">
-								<p class="form-label fw-semibold text-dark">
+								<p
+									class="form-label fw-semibold text-primary-emphasis"
+								>
 									{{
 										t(
 											"event-management.respondBeforeSectionTitle"
@@ -66,7 +70,7 @@
 							[eventDto]="selectedEventDto()!"
 						></app-status-label>
 					}
-					<p class="my-2 text-primary">
+					<p class="my-2 text-primary-emphasis">
 						{{ selectedEventDto()?.description }}
 					</p>
 				</div>
@@ -88,6 +92,7 @@
 				@if (participants.length > 0) {
 					<div class="p-4 border-top">
 						<app-custom-ul
+							[customClass]="'ms-2'"
 							[title]="
 								t('event-management.invitedParticipantsHeader')
 							"
@@ -99,7 +104,20 @@
 									<div
 										class="d-flex gap-3 align-items-center mb-0"
 									>
-										<i class="bi bi-person-check fs-4"></i>
+										@if (isOwnerByUserDto(user)) {
+											<i
+												[title]="
+													t(
+														'event-management.toolTipOwnerOfEvent'
+													)
+												"
+												class="bi bi-shield-check fs-4"
+											></i>
+										} @else {
+											<i
+												class="bi bi-person-check fs-4"
+											></i>
+										}
 										<app-status-label
 											[eventDto]="
 												createLabelTypeFromUserDto(user)
