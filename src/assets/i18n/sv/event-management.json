@@ -8,7 +8,7 @@
 		"deleteEventPrompt": "Vill du ställa in detta event?",
 		"deleteEventButton": "Ställ in",
 		"abortDeleteButton": "Avbryt",
-		"editEventButton": "Uppdatera",
+		"editEventButton": "Uppdatera eventet",
 		"participantsHaveResponded": "{{answeredCount}} av {{totalCount}} deltagare har svarat.",
 		"participantsWantsMealResponded": "{{wantsMealCount}} deltagare vill ha mat.",
 		"dateAndTimeSectionTitle": "Datum & tid",

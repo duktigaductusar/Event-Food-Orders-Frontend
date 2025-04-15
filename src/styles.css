@@ -2,3 +2,19 @@
 .app-modal-custom {
 	z-index: 1000 !important;
 }
+
+.modal-body,
+.modal-body p,
+.modal-body h1,
+.modal-body h2,
+.modal-body h3,
+.modal-body h4,
+.modal-body h5,
+.modal-body h6,
+.modal-body span,
+.modal-body div {
+	white-space: normal;
+	word-break: break-word;
+	overflow-wrap: anywhere;
+	hyphens: auto;
+}
