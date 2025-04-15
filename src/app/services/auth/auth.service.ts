@@ -24,6 +24,8 @@ export class AuthService implements OnDestroy {
 			.then(result => {
 				console.log("MSAL Result", result);
 
+				sessionStorage.removeItem("msal.interaction.status");
+
 				if (result !== null && result.state) {
 					console.log("Redirecting to state:", result.state);
 					this.router.navigateByUrl(result.state);

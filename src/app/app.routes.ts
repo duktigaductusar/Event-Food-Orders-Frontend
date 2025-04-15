@@ -5,6 +5,7 @@ import {
 	EventManagementPageComponent,
 	HomePageComponent,
 	LogoutPageComponent,
+	LogoutSuccessPageComponent,
 } from "@app/components";
 import { appRoutes } from "./constants";
 import { AuthGuard } from "./services";
@@ -33,5 +34,6 @@ export const routes: Routes = [
 			{ path: appRoutes.LOGOUT, component: LogoutPageComponent },
 		],
 	},
+	{ path: appRoutes.LOGOUT_SUCCESS, component: LogoutSuccessPageComponent },
 	{ path: "**", redirectTo: "" },
 ];
