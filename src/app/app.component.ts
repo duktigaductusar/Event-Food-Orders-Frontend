@@ -10,5 +10,6 @@ import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
 	styleUrl: "./app.component.css",
 })
 export class AppComponent {
-	title = "dd-frontend";
+	// Todo! Take title from env
+	title = "Ductus | Events Luleå";
 }

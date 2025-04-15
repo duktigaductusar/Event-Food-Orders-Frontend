@@ -117,13 +117,13 @@ export class EventUserFormComponent
 
 	isDeletableUser(user: IUserDto) {
 		return (
-			this.authService.getActiveAcoountUserId() !== undefined &&
-			this.authService.getActiveAcoountUserId() !== user.userId
+			this.authService.getActiveAccountUserId() !== undefined &&
+			this.authService.getActiveAccountUserId() !== user.userId
 		);
 	}
 
 	isOwner(user: IUserDto) {
-		return this.authService.getActiveAcoountUserId() === user.userId;
+		return this.authService.getActiveAccountUserId() === user.userId;
 	}
 
 	onSearchInputChange(query: string) {

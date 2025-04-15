@@ -259,10 +259,10 @@ export class EventManagementHubComponent
 	}
 
 	isOwnerByParticipantDto(p: IParticipantWithUserDto | undefined) {
-		return p?.userId === this.authService.getActiveAcoountUserId();
+		return p?.userId === this.authService.getActiveAccountUserId();
 	}
 
 	isOwnerByUserDto(u: IUserDto) {
-		return u.userId === this.authService.getActiveAcoountUserId();
+		return u.userId === this.authService.getActiveAccountUserId();
 	}
 }

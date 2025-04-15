@@ -1,0 +1,15 @@
+import { Component } from "@angular/core";
+import { RouterLink } from "@angular/router";
+
+import { appRoutes } from "@app/constants";
+
+@Component({
+	selector: "app-logout-success",
+	standalone: true,
+	imports: [RouterLink],
+	templateUrl: "./logout-success.component.html",
+	styleUrls: ["./logout-success.component.css"],
+})
+export class LogoutSuccessComponent {
+	readonly appRoutes = appRoutes;
+}
