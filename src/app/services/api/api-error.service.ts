@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { ErrorModalComponent } from "@app/components/html/error-modal/error-modal.component";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { TranslateService } from "./translate.service";
+import { TranslateService } from "..";
 
 @Injectable({ providedIn: "root" })
 export class ApiErrorService {

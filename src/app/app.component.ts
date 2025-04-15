@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
-import { Router, RouterOutlet } from "@angular/router";
-import { MsalService } from "@azure/msal-angular";
+import { RouterOutlet } from "@angular/router";
 import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
+
 import { AuthService } from "./services";
 
 @Component({

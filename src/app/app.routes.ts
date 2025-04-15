@@ -2,14 +2,12 @@ import { Routes } from "@angular/router";
 import {
 	EventCreatePageComponent,
 	EventDetailsPageComponent,
+	EventManagementPageComponent,
 	HomePageComponent,
 	LogoutPageComponent,
 } from "@app/components";
 import { appRoutes } from "./constants";
-// import { MsalGuard } from "@azure/msal-angular";
-import { EventManagementPageComponent } from "./components/pages/event-management-page/event-management-page.component";
-// import { LoginTestPageComponent } from "./components/pages/login-test-page/LoginTestPageComponent";
-import { AuthGuard } from "./services/utility/auth-guard.service";
+import { AuthGuard } from "./services";
 
 export const routes: Routes = [
 	{
@@ -35,9 +33,5 @@ export const routes: Routes = [
 			{ path: appRoutes.LOGOUT, component: LogoutPageComponent },
 		],
 	},
-	// {
-	// 	path: "login",
-	// 	component: LoginTestPageComponent,
-	// },
 	{ path: "**", redirectTo: "" },
 ];

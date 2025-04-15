@@ -1,8 +1,14 @@
+export { ApiErrorService } from "./api/api-error.service";
 export { EventService } from "./api/event.service";
 export { ParticipantService } from "./api/participant.service";
 export { UserService } from "./api/user.service";
-export { TranslateService } from "./utility/translate.service";
+
+export { AuthService } from "./auth/auth.service";
+export { AuthGuard } from "./auth/auth-guard.service";
+
 export { EventStateService } from "./state/event-state.service";
+
+export { TranslateService } from "./utility/translate.service";
 export {
 	StorageService,
 	defaultStorage,
@@ -10,7 +16,4 @@ export {
 	type StorageKeyType,
 	type StorageType,
 } from "./utility/storage.service";
-
-export { ApiErrorService } from "./utility/api-error.service";
-export { AuthService } from "./utility/auth.service";
 export { ThemeService } from "./utility/theme.service";
