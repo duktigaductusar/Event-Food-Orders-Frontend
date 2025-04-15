@@ -1,15 +1,19 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { Router } from "@angular/router";
-import { GenericBtnComponent } from "@app/components/html";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { logoutSelection } from "./logoutSelection";
+
+import {
+	ButtonWrapperComponent,
+	GenericBtnComponent,
+} from "@app/components/html";
 import { appRoutes } from "@app/constants";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
+import { logoutSelection } from "./logoutSelection";
 
 @Component({
 	selector: "app-logout-modal",
-	imports: [CommonModule, GenericBtnComponent],
+	imports: [CommonModule, GenericBtnComponent, ButtonWrapperComponent],
 	templateUrl: "./logout-modal.component.html",
 	styleUrl: "./logout-modal.component.css",
 })

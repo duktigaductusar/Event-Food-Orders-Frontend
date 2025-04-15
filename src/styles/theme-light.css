@@ -1,0 +1,50 @@
+:root,
+[data-bs-theme="light"] {
+	/* Main Colors */
+	--bs-light: #f5f5f5; /* Background color */
+	--bs-light-rgb: 248, 249, 250; /* Background color */
+	--bs-primary: #455953; /* Main header color */
+	--bs-primary-rgb: 69, 89, 83; /* Main header color */
+	--bs-secondary: #dae5e1; /* Header color boxes */
+	--bs-secondary-rgb: 218, 229, 225; /* Header color boxes */
+	--bs-primary-bg-subtle: #455953; /* Focused Icon button border */
+	--bs-btn-active-color: #455953; /*Focused visble button border */
+
+	/* Accent colors */
+	--bs-danger: #c27763; /* Accent colors 2*/
+	--bs-danger-rgb: 194, 119, 99; /* Accent colors 2*/
+	--bs-success: #9fc1b9; /* Accent colors 1 */
+	--bs-success-rgb: 159, 193, 185; /* Accent colors 1 */
+	--bs-warning: #e6e64e; /* Accent colors 3*/
+	--bs-warning-rgb: 230, 230, 78; /* Accent colors 3 */
+	--bs-info: #7d9eb1; /* Accent colors 4*/
+	--bs-info-rgb: 125, 158, 177; /* Accent colors 4 */
+	--bs-info-subtle: #c1a29a; /* Accent colors 5*/
+	--app-theme-toggler: #f7cb4d; /* Accent colors 6 */
+
+	/* Button Colors */
+	--app-btn-primary: #64837a;
+	--app-btn-primary-hover: #577069;
+	--app-btn-primary-active: #4a5f58;
+	--app-btn-primary-focus: #64837a;
+	--app-btn-outline-danger: var(--bs-danger);
+	--app-btn-outline-danger-rgb: var(--bs-danger-rgb);
+	--app-btn-outline-warning: var(--app-btn-outline-danger);
+	--app-btn-outline-warning-rgb: var(--app-btn-outline-danger-rgb);
+	--app-btn-outline-primary: var(--bs-primary);
+	--app-btn-outline-primary-rgb: var(--bs-primary-rgb);
+	--app-btn-outline-secondary: #978b97;
+	--app-btn-outline-secondary-rgb: 151, 139, 151;
+	--app-btn-outline-color-hover: #fff;
+	--app-btn-outline-color-active: #fff;
+
+	/* Card items and forms */
+	--bs-body-bg: #fff;
+
+	/* Text */
+	--bs-primary-text-emphasis: #000;
+	--bs-white-rgb: 248, 249, 250;
+
+	/* Focus and focus-visible */
+	--app-focus-visible: #9fc1b9;
+}

@@ -1,0 +1,12 @@
+{
+	"shared": {
+		"datetimelabel": {
+			"timeTo": "till"
+		},
+		"erroModal": {
+			"closeBtn": "stäng",
+			"defaultStatusText": "Okänd feltyp",
+			"defaultMessage": "Okänt serverfel, försök igen senare"
+		}
+	}
+}

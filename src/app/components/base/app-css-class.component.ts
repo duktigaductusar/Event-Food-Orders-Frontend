@@ -1,7 +1,7 @@
 import { Directive, input } from "@angular/core";
 
 @Directive()
-export abstract class CSSClassComponent {
+export abstract class AppCSSClassComponent {
 	customClass = input<string>("");
 	useClass = input<string>("");
 

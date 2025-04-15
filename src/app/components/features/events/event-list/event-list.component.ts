@@ -67,6 +67,10 @@ export class EventListComponent extends AppBaseComponent implements OnInit {
 		}
 	}
 
+	hasOwnedEvents() {
+		return this.eventDtos.filter(event => event.isOwner).length > 0;
+	}
+
 	getCreateNewLink() {
 		return appRoutes.EVENT_CREATE;
 	}

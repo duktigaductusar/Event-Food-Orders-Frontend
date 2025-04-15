@@ -5,20 +5,22 @@
 		<app-responsive-form
 			[formGroup]="eventForm"
 			[submitHandler]="onSubmit"
-			[withParentStyle]="'card shadow-sm mb-4 bg-white border-top-0'"
+			[withParentStyle]="'card shadow-sm mb-4 border-top-0'"
 		>
 			<div
 				class="card-header py-3 d-flex justify-content-between align-items-center bg-secondary"
 			>
-				<h5 class="m-0 fw-bold text-primary">
+				<h5 class="m-0 fw-bold text-primary-emphasis">
 					{{ selectedEventDto()?.title }}
 				</h5>
 			</div>
-			<div class="card-body bg-white">
+			<div class="card-body">
 				@if (selectedEventDto() !== null) {
 					<div class="row mb-3">
 						<div class="col-md-6">
-							<p class="form-label fw-semibold text-primary">
+							<p
+								class="form-label fw-semibold text-primary-emphasis"
+							>
 								{{
 									t("event-response.dateAndTimeSectionTitle")
 								}}
@@ -35,7 +37,9 @@
 							></app-datetimelabel>
 						</div>
 						<div class="col-md-6">
-							<p class="form-label fw-semibold text-primary">
+							<p
+								class="form-label fw-semibold text-primary-emphasis"
+							>
 								{{
 									t(
 										"event-response.respondBeforeSectionTitle"
@@ -55,7 +59,7 @@
 						[eventDto]="selectedEventDto()!"
 					></app-status-label>
 				}
-				<p class="mb-4 mt-2 text-primary">
+				<p class="mb-4 mt-2 text-primary-emphasis">
 					{{ selectedEventDto()?.description }}
 				</p>
 				<div class="mb-3">

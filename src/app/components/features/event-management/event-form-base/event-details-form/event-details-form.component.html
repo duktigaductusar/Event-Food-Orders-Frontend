@@ -1,8 +1,6 @@
 <app-responsive-form
 	[formGroup]="form()"
-	[withParentStyle]="
-		'bg-white card shadow-sm d-flex justify-content-between mb-4'
-	"
+	[withParentStyle]="'card shadow-sm d-flex justify-content-between mb-4'"
 	[useResponsiveDesign]="true"
 >
 	<div>
@@ -10,7 +8,9 @@
 	</div>
 	<div class="p-4">
 		<div class="m-3">
-			<h4 class="text-center text-black">{{ derivedTitle() }}</h4>
+			<h4 class="text-center text-primary-emphasis">
+				{{ derivedTitle() }}
+			</h4>
 		</div>
 		<div class="mb-3">
 			<app-required-label
@@ -65,7 +65,7 @@
 		</div>
 
 		<div class="mt-5 mb-3">
-			<h4 class="text-black">
+			<h4 class="text-primary-emphasis">
 				{{ t("event-create.detailsForm.subtitleDateAndTime") }}
 			</h4>
 		</div>
@@ -172,7 +172,7 @@
 		</div>
 
 		<div class="mt-5 mb-3">
-			<h4 class="text-black">
+			<h4 class="text-primary-emphasis">
 				{{ t("event-create.detailsForm.subtitleDeadline") }}
 			</h4>
 		</div>

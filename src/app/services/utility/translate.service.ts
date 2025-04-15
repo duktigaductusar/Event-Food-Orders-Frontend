@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { language } from "@app/constants/language";
 import i18next, { type TOptions } from "i18next";
-import sv from "@assets/i18n/sv/sv.json";
+import sv from "@assets/i18n/sv/index";
 import { TranslationKeyPaths } from "@types";
 
 const defaultNS = "translation";
