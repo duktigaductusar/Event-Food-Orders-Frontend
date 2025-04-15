@@ -18,10 +18,10 @@ import {
 import { FormAutoSaver } from "@app/components/base";
 import { SpinnerFullScreenComponent } from "@app/components/shared";
 import { appRoutes } from "@app/constants";
-
 import { ApiError } from "@app/interceptors";
-import { CreateEventResultModalComponent } from "./create-event-result-modal/create-event-result-modal.component";
-import { newEventResultSelection } from "./create-event-result-modal/newEventResultSelection";
+
+import { CreateEventResultModalComponent } from "../create-event-result-modal/create-event-result-modal.component";
+import { newEventResultSelection } from "../create-event-result-modal/newEventResultSelection";
 import {
 	EventFormBaseComponent,
 	ICreateEventForm,

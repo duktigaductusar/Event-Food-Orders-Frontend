@@ -1,11 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import { MsalService } from "@azure/msal-angular";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { Router } from "@angular/router";
 
 import { environment } from "@environments/environment";
 
 import { logoutSelection } from "./logout-modal/logoutSelection";
 import { LogoutModalComponent } from "./logout-modal/logout-modal.component";
+import { appRoutes } from "@app/constants";
 
 @Component({
 	selector: "app-logout",
@@ -14,8 +16,9 @@ import { LogoutModalComponent } from "./logout-modal/logout-modal.component";
 })
 export class LogoutComponent implements OnInit {
 	constructor(
-		private modalService: NgbModal,
-		private msalService: MsalService
+		private readonly modalService: NgbModal,
+		private readonly msalService: MsalService,
+		private readonly router: Router
 	) {}
 
 	ngOnInit(): void {
@@ -32,16 +35,27 @@ export class LogoutComponent implements OnInit {
 		modalRef.componentInstance.event = event;
 
 		modalRef.result
-			.then(result => {
-				if (result === logoutSelection.logout) {
+			.then(reason => {
+				console.log("reason: ", reason);
+				if (reason === logoutSelection.logout) {
+					console.log("reason: ", reason);
 					this.msalService.logoutRedirect({
 						postLogoutRedirectUri:
 							environment.azureAd.logoutRedirectUri,
 					});
+					return;
+				}
+
+				if (
+					reason === logoutSelection.backdrop ||
+					reason === logoutSelection.esc
+				) {
+					this.router.navigate([appRoutes.HOME]);
+					return;
 				}
 			})
-			.catch(reason => {
-				console.log("Modal dismissed:", reason);
+			.catch(() => {
+				this.router.navigate([appRoutes.HOME]);
 			});
 	}
 }

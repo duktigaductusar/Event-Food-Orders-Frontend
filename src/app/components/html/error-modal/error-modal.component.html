@@ -1,4 +1,4 @@
-<div class="border border-5 border-danger p-3 bg-white">
+<div class="border border-danger p-3">
 	<div class="modal-header">
 		<h5 class="modal-title">{{ title }}</h5>
 		<button
@@ -9,11 +9,11 @@
 		></button>
 	</div>
 	<div class="modal-body">
-		<p>{{ message }}</p>
+		<p class="text-primary-emphasis">{{ message }}</p>
 	</div>
 	<div class="modal-footer d-flex justify-content-center">
 		<app-generic-btn
-			[label]="'close'"
+			[label]="closeBtnLabel"
 			[icon]="'check-circle'"
 			[borderColor]="'danger'"
 			(click)="activeModal.close('Close click')"

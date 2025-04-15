@@ -10,8 +10,8 @@ import { EventManagementHubComponent } from "../event-management-hub/event-manag
 @Component({
 	selector: "app-event-management-delete-modal-component",
 	imports: [GenericBtnComponent],
-	templateUrl: "./event-management-delete-modal-component.component.html",
-	styleUrl: "./event-management-delete-modal-component.component.css",
+	templateUrl: "./event-management-delete-modal.component.html",
+	styleUrl: "./event-management-delete-modal.component.css",
 })
 export class EventManagementDeleteModalComponentComponent extends AppBaseComponent {
 	activeModal = inject(NgbActiveModal);

@@ -8,6 +8,7 @@ import { appRoutes } from "@app/constants";
 import { IEventDto } from "@app/models";
 
 import { newEventResultSelection } from "./newEventResultSelection";
+import { AppBaseComponent } from "@app/components/base";
 
 @Component({
 	selector: "app-create-event-result-modal",
@@ -15,12 +16,14 @@ import { newEventResultSelection } from "./newEventResultSelection";
 	standalone: true,
 	templateUrl: "./create-event-result-modal.component.html",
 })
-export class CreateEventResultModalComponent {
+export class CreateEventResultModalComponent extends AppBaseComponent {
 	activeModal = inject(NgbActiveModal);
 	@Input() event: IEventDto | null = null;
 	createNewEvent = output();
 
-	constructor(private readonly router: Router) {}
+	constructor(private readonly router: Router) {
+		super();
+	}
 
 	navigateHomeByDismiss() {
 		this.activeModal.dismiss(newEventResultSelection.crossSelection);

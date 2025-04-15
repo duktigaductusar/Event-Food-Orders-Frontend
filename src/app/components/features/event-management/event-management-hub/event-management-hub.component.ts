@@ -31,6 +31,7 @@ import {
 	IUserDto,
 } from "@app/models";
 import {
+	AuthService,
 	EventService,
 	EventStateService,
 	ParticipantService,
@@ -43,7 +44,7 @@ import { AppBaseComponent } from "@app/components/base";
 import { ResponsiveDivComponent } from "@app/components/html";
 
 import { EditEventComponent } from "../edit-event/edit-event.component";
-import { EventManagementDeleteModalComponentComponent } from "../event-management-delete-modal-component/event-management-delete-modal-component.component";
+import { EventManagementDeleteModalComponentComponent } from "../event-management-delete-modal-component/event-management-delete-modal.component";
 
 @Component({
 	selector: "app-event-management-hub",
@@ -74,12 +75,13 @@ export class EventManagementHubComponent
 	private modalService = inject(NgbModal);
 
 	constructor(
-		private router: Router,
-		private route: ActivatedRoute,
-		public eventService: EventService,
-		public eventStateService: EventStateService,
-		public participantService: ParticipantService,
-		public userService: UserService
+		private readonly router: Router,
+		private readonly route: ActivatedRoute,
+		private readonly authService: AuthService,
+		public readonly eventService: EventService,
+		public readonly eventStateService: EventStateService,
+		public readonly participantService: ParticipantService,
+		public readonly userService: UserService
 	) {
 		super();
 		this.selectedEventDto = computed(() =>
@@ -251,8 +253,16 @@ export class EventManagementHubComponent
 
 		return {
 			responseType: p.responseType,
-			isOwner: false,
+			isOwner: this.isOwnerByParticipantDto(p),
 			wantsMeal: p.wantsMeal,
 		};
+	}
+
+	isOwnerByParticipantDto(p: IParticipantWithUserDto | undefined) {
+		return p?.userId === this.authService.getActiveAcoountUserId();
+	}
+
+	isOwnerByUserDto(u: IUserDto) {
+		return u.userId === this.authService.getActiveAcoountUserId();
 	}
 }

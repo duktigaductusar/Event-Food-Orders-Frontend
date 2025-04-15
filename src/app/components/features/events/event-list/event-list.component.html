@@ -1,16 +1,16 @@
 @if (isPending()) {
 	<app-spinner></app-spinner>
 } @else {
-	@if (eventDtos.length !== 0) {
+	@if (eventDtos.length !== 0 && hasOwnedEvents()) {
 		<div
-			class="d-flex justify-content-center align-items-center mb-3"
+			class="d-flex justify-content-center align-items-center py-3"
 			style="gap: 10px"
 		>
 			<label
-				class="form-check-label fw-bold text-dark"
+				class="form-check-label fw-bold text-primary-emphasis"
 				for="filterOwnedEvents"
 			>
-				<i class="bi bi-funnel me-1 text-dark"></i>
+				<i class="bi bi-funnel me-1 text-primary-emphasis"></i>
 				{{ t("events.showMyEvents") }}
 			</label>
 			<input

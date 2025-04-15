@@ -1,0 +1,17 @@
+{
+	"event-response": {
+		"responseType": "Svarsalternativ",
+		"preferences": "Preferenser",
+		"allergies": "Allergier",
+		"wantsFood": "Jag vill ha mat",
+		"yes": "Ja",
+		"no": "Nej",
+		"send": "Skicka",
+		"pendingReponseLabel": "Avvaktar",
+		"attendingOnlineReponseLabel": "Online",
+		"attendingOfficeReponseLabel": "På plats",
+		"notAttendingReponseLabel": "Avvisa",
+		"dateAndTimeSectionTitle": "Datum & tid",
+		"respondBeforeSectionTitle": "Svara innan"
+	}
+}

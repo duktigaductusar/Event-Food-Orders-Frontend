@@ -1,12 +1,17 @@
 import { Injectable } from "@angular/core";
 import { ErrorModalComponent } from "@app/components/html/error-modal/error-modal.component";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { TranslateService } from "./translate.service";
 
 @Injectable({ providedIn: "root" })
 export class ApiErrorService {
 	private modalIsOpen = false;
+	private modalDuration = 20000;
 
-	constructor(private modalService: NgbModal) {}
+	constructor(
+		private readonly modalService: NgbModal,
+		private readonly translateService: TranslateService
+	) {}
 
 	showError(message: string, title = "An error occurred") {
 		if (this.modalIsOpen) return;
@@ -19,14 +24,18 @@ export class ApiErrorService {
 			backdropClass: "app-modal-custom",
 			keyboard: true,
 		});
+
 		modalRef.componentInstance.title = title;
 		modalRef.componentInstance.message = message;
+		modalRef.componentInstance.closeBtnLabel = this.translateService.t(
+			"shared.erroModal.closeBtn"
+		);
 
 		const autoCloseTimeout = setTimeout(() => {
 			if (this.modalIsOpen) {
 				modalRef.close();
 			}
-		}, 10000);
+		}, this.modalDuration);
 
 		modalRef.result.finally(() => {
 			this.modalIsOpen = false;

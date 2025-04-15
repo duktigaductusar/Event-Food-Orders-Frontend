@@ -1,0 +1,10 @@
+<app-button-wrapper>
+	<div
+		popoverClass="popover-sm"
+		triggers="mouseenter:mouseleave"
+		[class]="computedClass"
+		[ngbPopover]="title()"
+	>
+		<i [class]="'bi bi-' + icon()"></i>
+	</div>
+</app-button-wrapper>

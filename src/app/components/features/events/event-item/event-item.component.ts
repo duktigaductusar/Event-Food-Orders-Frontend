@@ -12,20 +12,20 @@ import { EventStateService } from "@app/services";
 import { fromDateTimeISOString } from "@app/utility";
 import { ParticipantService } from "@app/services";
 import { AppBaseComponent } from "@app/components/base";
-import { GenericBtnComponent } from "@app/components/html";
 import {
 	DatetimelabelComponent,
 	StatusLabelComponent,
 } from "@app/components/shared";
 import type { ParticipantResponseType } from "@types";
+import { IconButtonComponent } from "@app/components/html";
 
 @Component({
 	selector: "app-event-item",
 	standalone: true,
 	imports: [
 		DatetimelabelComponent,
-		GenericBtnComponent,
 		StatusLabelComponent,
+		IconButtonComponent,
 	],
 	templateUrl: "event-item.component.html",
 	styleUrl: "event-item.component.css",
@@ -76,25 +76,29 @@ export class EventItemComponent extends AppBaseComponent {
 		if (this.isPending() || this.eventDto() == null) {
 			return;
 		}
-		this.eventStateService.setSelectedEvent(this.eventDto()!);
-		this.router.navigate([
-			`/${appRoutes.EVENT_DETAILS}`,
-			this.eventDto()!.id,
-		]);
+
+		if (this.eventDto()?.isOwner) {
+			this.eventStateService.setSelectedEvent(this.eventDto()!);
+			this.router.navigate([
+				`/${appRoutes.EVENT_MANAGEMENT}`,
+				this.eventDto()!.id,
+			]);
+		} else {
+			this.eventStateService.setSelectedEvent(this.eventDto()!);
+			this.router.navigate([
+				`/${appRoutes.EVENT_DETAILS}`,
+				this.eventDto()!.id,
+			]);
+		}
 	}
 
 	getDateFromStringValue(date: string) {
 		return fromDateTimeISOString(date);
 	}
 
-	editEvent() {
-		if (this.isPending() || this.eventDto() == null) {
-			return;
-		}
-		this.eventStateService.setSelectedEvent(this.eventDto()!);
-		this.router.navigate([
-			`/${appRoutes.EVENT_MANAGEMENT}`,
-			this.eventDto()!.id,
-		]);
+	getNavigationTitle(): string {
+		return this.eventDto()?.isOwner
+			? this.t("events.handleYourEventTooltip")
+			: this.t("events.respondToEventTooltip");
 	}
 }
