@@ -5,7 +5,7 @@
 		},
 		"erroModal": {
 			"closeBtn": "stäng",
-			"defaultStatusText": "Okänd feltyp",
+			"defaultStatusText": "Okänt feltyp",
 			"defaultMessage": "Okänt serverfel, försök igen senare"
 		}
 	}

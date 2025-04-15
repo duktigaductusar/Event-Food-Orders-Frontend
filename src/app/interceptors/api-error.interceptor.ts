@@ -65,9 +65,7 @@ export class ApiErrorInterceptor implements HttpInterceptor {
 			statusText: this.translateService.t(
 				"shared.erroModal.defaultStatusText"
 			),
-			message: this.translateService.t(
-				"shared.erroModal.defaultStatusText"
-			),
+			message: this.translateService.t("shared.erroModal.defaultMessage"),
 		};
 	}
 
@@ -86,7 +84,7 @@ export class ApiErrorInterceptor implements HttpInterceptor {
 				if (forbiddenRequests.includes(apiError.status)) {
 					this.navigateForbiddenRequestToHomePage();
 				} else {
-					this.displayErroMessageToUser(apiError);
+					this.displayErrorMessageToUser(apiError);
 				}
 
 				return throwError(() => apiError);
@@ -98,7 +96,7 @@ export class ApiErrorInterceptor implements HttpInterceptor {
 		this.router.navigate([appRoutes.HOME]);
 	}
 
-	private displayErroMessageToUser(apiError: ApiError) {
+	private displayErrorMessageToUser(apiError: ApiError) {
 		this.errorService.showError(
 			apiError.message,
 			`${apiError.status}: ${apiError.statusText}`
