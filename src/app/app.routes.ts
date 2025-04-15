@@ -2,17 +2,18 @@ import { Routes } from "@angular/router";
 import {
 	EventCreatePageComponent,
 	EventDetailsPageComponent,
+	EventManagementPageComponent,
 	HomePageComponent,
 	LogoutPageComponent,
+	LogoutSuccessPageComponent,
 } from "@app/components";
 import { appRoutes } from "./constants";
-import { MsalGuard } from "@azure/msal-angular";
-import { EventManagementPageComponent } from "./components/pages/event-management-page/event-management-page.component";
+import { AuthGuard } from "./services";
 
 export const routes: Routes = [
 	{
 		path: "",
-		canActivate: [MsalGuard],
+		canActivate: [AuthGuard],
 		children: [
 			{
 				path: appRoutes.HOME,
@@ -33,5 +34,6 @@ export const routes: Routes = [
 			{ path: appRoutes.LOGOUT, component: LogoutPageComponent },
 		],
 	},
+	{ path: appRoutes.LOGOUT_SUCCESS, component: LogoutSuccessPageComponent },
 	{ path: "**", redirectTo: "" },
 ];

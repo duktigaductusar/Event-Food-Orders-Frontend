@@ -8,10 +8,9 @@ import {
 } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
-import { ApiErrorService } from "@app/services/utility/api-error.service";
 import { Router } from "@angular/router";
 import { appRoutes } from "@app/constants";
-import { TranslateService } from "@app/services";
+import { ApiErrorService, TranslateService } from "@app/services";
 
 interface IDefaultErrorMessage {
 	status: number;

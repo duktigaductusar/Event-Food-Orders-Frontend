@@ -1,0 +1,19 @@
+<div
+	class="d-flex flex-column justify-content-center align-items-center vh-100 bg-light text-center p-4"
+>
+	<div
+		class="card shadow p-4 rounded-4 bg-secondary"
+		style="max-width: 420px"
+	>
+		<h1 class="mb-3 text-primary-emphasis">
+			{{ t("logoutSuccess.tile") }}
+		</h1>
+		<p class="text-muted mb-4">
+			{{ t("logoutSuccess.text") }}
+		</p>
+
+		<a [routerLink]="appRoutes.HOME" class="btn btn-primary w-100">
+			{{ t("logoutSuccess.btn") }}</a
+		>
+	</div>
+</div>
