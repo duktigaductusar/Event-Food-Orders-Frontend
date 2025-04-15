@@ -1,6 +1,8 @@
 import { Component } from "@angular/core";
-import { RouterOutlet } from "@angular/router";
+import { Router, RouterOutlet } from "@angular/router";
+import { MsalService } from "@azure/msal-angular";
 import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
+import { AuthService } from "./services";
 
 @Component({
 	selector: "app-root",
@@ -10,5 +12,9 @@ import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
 	styleUrl: "./app.component.css",
 })
 export class AppComponent {
-	title = "dd-frontend";
+	title = "Ductus | Events Luleå";
+
+	constructor(private authService: AuthService) {
+		this.authService.initHandleRedirect();
+	}
 }

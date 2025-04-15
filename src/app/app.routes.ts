@@ -6,13 +6,15 @@ import {
 	LogoutPageComponent,
 } from "@app/components";
 import { appRoutes } from "./constants";
-import { MsalGuard } from "@azure/msal-angular";
+// import { MsalGuard } from "@azure/msal-angular";
 import { EventManagementPageComponent } from "./components/pages/event-management-page/event-management-page.component";
+// import { LoginTestPageComponent } from "./components/pages/login-test-page/LoginTestPageComponent";
+import { AuthGuard } from "./services/utility/auth-guard.service";
 
 export const routes: Routes = [
 	{
 		path: "",
-		canActivate: [MsalGuard],
+		canActivate: [AuthGuard],
 		children: [
 			{
 				path: appRoutes.HOME,
@@ -33,5 +35,9 @@ export const routes: Routes = [
 			{ path: appRoutes.LOGOUT, component: LogoutPageComponent },
 		],
 	},
+	// {
+	// 	path: "login",
+	// 	component: LoginTestPageComponent,
+	// },
 	{ path: "**", redirectTo: "" },
 ];
