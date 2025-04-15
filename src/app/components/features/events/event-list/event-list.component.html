@@ -1,9 +1,9 @@
 @if (isPending()) {
 	<app-spinner></app-spinner>
 } @else {
-	@if (eventDtos.length !== 0) {
+	@if (eventDtos.length !== 0 && hasOwnedEvents()) {
 		<div
-			class="d-flex justify-content-center align-items-center mb-3"
+			class="d-flex justify-content-center align-items-center py-3"
 			style="gap: 10px"
 		>
 			<label

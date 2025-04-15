@@ -82,7 +82,14 @@
 		</div>
 	</ng-template>
 
-	<main class="flex-grow-1 overflow-auto bg-light pt-4">
+	<main class="flex-grow-1 overflow-auto bg-light">
+		<div class="m-0 pt-2 pb-1 ps-3">
+			@if (!isHomePage()) {
+				<app-button-wrapper (click)="goBack()">
+					<i class="bi bi-chevron-left fs-2"></i>
+				</app-button-wrapper>
+			}
+		</div>
 		<ng-content></ng-content>
 	</main>
 </div>
