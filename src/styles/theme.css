@@ -44,33 +44,6 @@ body {
 	background-color: var(--bs-light-rgb);
 }
 
-.multip-step-form-navigation-prev {
-	background-color: #64837a;
-	border: 3px solid #64837a;
-}
-
-.multip-step-form-navigation-active {
-	background-color: var(--bs-secondary);
-	border: 3px solid #64837a;
-	font-weight: bolder;
-	color: var(--bs-primary);
-}
-
-.multip-step-form-navigation-next {
-	background-color: #9fc1b9;
-	border: 3px solid #9fc1b9;
-	font-weight: bold;
-	color: var(--bs-white);
-}
-
-.multip-step-form-navigation-prev-line {
-	background-color: #64837a;
-}
-
-.multip-step-form-navigation-next-line {
-	background-color: #9fc1b9;
-}
-
 .btn-primary {
 	--bs-btn-color: #fff;
 	--bs-btn-bg: var(--app-btn-primary);
@@ -91,11 +64,11 @@ body {
 .btn-outline-danger {
 	--bs-btn-color: var(--app-btn-outline-danger);
 	--bs-btn-border-color: var(--app-btn-outline-danger);
-	--bs-btn-hover-color: #fff;
+	--bs-btn-hover-color: var(--app-btn-outline-color-hover);
 	--bs-btn-hover-bg: var(--app-btn-outline-danger);
 	--bs-btn-hover-border-color: var(--app-btn-outline-danger);
 	--bs-btn-focus-shadow-rgb: var(--app-btn-outline-danger-rgb);
-	--bs-btn-active-color: #fff;
+	--bs-btn-active-color: var(--app-btn-outline-color-active);
 	--bs-btn-active-bg: var(--app-btn-outline-danger);
 	--bs-btn-active-border-color: var(--app-btn-outline-danger);
 	--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
@@ -108,11 +81,11 @@ body {
 .btn-outline-primary {
 	--bs-btn-color: var(--app-btn-outline-primary);
 	--bs-btn-border-color: var(--app-btn-outline-primary);
-	--bs-btn-hover-color: #fff;
+	--bs-btn-hover-color: var(--app-btn-outline-color-hover);
 	--bs-btn-hover-bg: var(--app-btn-outline-primary);
 	--bs-btn-hover-border-color: var(--app-btn-outline-primary);
 	--bs-btn-focus-shadow-rgb: var(--app-btn-outline-primary-rgb);
-	--bs-btn-active-color: #fff;
+	--bs-btn-active-color: var(--app-btn-outline-color-active);
 	--bs-btn-active-bg: var(--app-btn-outline-primary);
 	--bs-btn-active-border-color: var(--app-btn-outline-primary);
 	--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
@@ -125,11 +98,11 @@ body {
 .btn-outline-secondary {
 	--bs-btn-color: var(--app-btn-outline-secondary);
 	--bs-btn-border-color: var(--app-btn-outline-secondary);
-	--bs-btn-hover-color: #fff;
+	--bs-btn-hover-color: var(--app-btn-outline-color-hover);
 	--bs-btn-hover-bg: var(--app-btn-outline-secondary);
 	--bs-btn-hover-border-color: var(--app-btn-outline-secondary);
 	--bs-btn-focus-shadow-rgb: var(--app-btn-outline-secondary-rgb);
-	--bs-btn-active-color: #fff;
+	--bs-btn-active-color: var(--app-btn-outline-color-active);
 	--bs-btn-active-bg: var(--app-btn-outline-secondary);
 	--bs-btn-active-border-color: var(--app-btn-outline-secondary);
 	--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
@@ -142,11 +115,11 @@ body {
 .btn-outline-warning {
 	--bs-btn-color: var(--app-btn-outline-warning);
 	--bs-btn-border-color: var(--app-btn-outline-warning);
-	--bs-btn-hover-color: #fff;
+	--bs-btn-hover-color: var(--app-btn-outline-color-hover);
 	--bs-btn-hover-bg: var(--app-btn-outline-warning);
 	--bs-btn-hover-border-color: var(--app-btn-outline-warning);
 	--bs-btn-focus-shadow-rgb: var(--app-btn-outline-warning-rgb);
-	--bs-btn-active-color: #fff;
+	--bs-btn-active-color: var(--app-btn-outline-color-active);
 	--bs-btn-active-bg: var(--app-btn-outline-warning);
 	--bs-btn-active-border-color: var(--app-btn-outline-warning);
 	--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);

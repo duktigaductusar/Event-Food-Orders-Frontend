@@ -35,6 +35,8 @@
 	--app-btn-outline-primary-rgb: var(--bs-primary-rgb);
 	--app-btn-outline-secondary: #978b97;
 	--app-btn-outline-secondary-rgb: 151, 139, 151;
+	--app-btn-outline-color-hover: #fff;
+	--app-btn-outline-color-active: #fff;
 
 	/* Card items and forms */
 	--bs-body-bg: #fff;

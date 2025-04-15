@@ -1,0 +1,26 @@
+.multip-step-form-navigation-prev {
+	background-color: #64837a;
+	border: 3px solid #64837a;
+}
+
+.multip-step-form-navigation-active {
+	background-color: var(--bs-secondary);
+	border: 3px solid #64837a;
+	font-weight: bolder;
+	color: var(--bs-primary-emphasis);
+}
+
+.multip-step-form-navigation-next {
+	background-color: #9fc1b9;
+	border: 3px solid #9fc1b9;
+	font-weight: bold;
+	color: var(--bs-light);
+}
+
+.multip-step-form-navigation-prev-line {
+	background-color: #64837a;
+}
+
+.multip-step-form-navigation-next-line {
+	background-color: #9fc1b9;
+}
