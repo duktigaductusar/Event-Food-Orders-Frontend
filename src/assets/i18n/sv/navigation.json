@@ -1,9 +1,10 @@
 {
 	"navigation": {
 		"subTitle": "Events Luleå",
-		"menu_title": "Meny",
-		"home_link": "Hem",
-		"logout_link": "Logout",
-		"create_event_link": "Skapa Event"
+		"menuTitle": "Meny",
+		"homeLink": "Hem",
+		"logoutLink": "Logout",
+		"createEventLink": "Skapa Event",
+		"toggleThemeTooltip": "Växla mellan mörka och ljusa teman"
 	}
 }

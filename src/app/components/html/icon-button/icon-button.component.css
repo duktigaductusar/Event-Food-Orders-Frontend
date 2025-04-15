@@ -13,15 +13,3 @@
 	background-color: rgba(0, 0, 0, 0.25);
 	cursor: pointer;
 }
-
-::ng-deep .popover-sm {
-	font-size: 1rem;
-	font-weight: bolder;
-	background-color: var(--bs-light);
-	border: 3px solid var(--bs-primary);
-	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.55);
-}
-
-::ng-deep .popover-sm .popover-body {
-	z-index: 1560 !important; /*do not solve minor hidden issue*/
-}

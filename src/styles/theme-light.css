@@ -44,4 +44,7 @@
 	/* Text */
 	--bs-primary-text-emphasis: #000;
 	--bs-white-rgb: 248, 249, 250;
+
+	/* Focus and focus-visible */
+	--app-focus-visible: #9fc1b9;
 }

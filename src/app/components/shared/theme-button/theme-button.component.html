@@ -1,11 +1,17 @@
 <app-button-wrapper (click)="toggle()" placement="bottom">
-	<i
-		class="bi fs-3"
-		[style.color]="'var(--app-theme-toggler)'"
-		[ngClass]="{
-			'bi-sun': themeService.currentTheme() === 'dark',
-			'bi-moon': themeService.currentTheme() === 'light',
-			'bi-circle-half': themeService.currentTheme() === 'auto',
-		}"
-	></i>
+	<div
+		popoverClass="popover-sm"
+		triggers="mouseenter:mouseleave"
+		[ngbPopover]="title()"
+	>
+		<i
+			class="bi fs-3"
+			[style.color]="'var(--app-theme-toggler)'"
+			[ngClass]="{
+				'bi-sun': themeService.currentTheme() === 'dark',
+				'bi-moon': themeService.currentTheme() === 'light',
+				'bi-circle-half': themeService.currentTheme() === 'auto',
+			}"
+		></i>
+	</div>
 </app-button-wrapper>

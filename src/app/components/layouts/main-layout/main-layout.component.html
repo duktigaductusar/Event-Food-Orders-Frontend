@@ -16,7 +16,9 @@
 			</a>
 
 			<div class="d-flex justify-content-center align-items-center gap-4">
-				<app-theme-button></app-theme-button>
+				<app-theme-button
+					[title]="t('navigation.toggleThemeTooltip')"
+				></app-theme-button>
 
 				<app-button-wrapper (selected)="openSidebar(menuTemplate)">
 					<i class="bi bi-list fs-1 text-white"></i>
@@ -30,15 +32,11 @@
 			class="offcanvas-header d-flex justify-content-between align-items-center w-100 text-light bg-primary border-bottom"
 		>
 			<h5 class="offcanvas-title text-white">
-				{{ t("navigation.menu_title") }}
+				{{ t("navigation.menuTitle") }}
 			</h5>
-			<button
-				class="btn btn-link hover-gray"
-				aria-label="Close"
-				(click)="close('Closed via button')"
-			>
+			<app-button-wrapper (selected)="close('Closed via button')">
 				<i class="bi bi-x-lg fs-3 text-white"></i>
-			</button>
+			</app-button-wrapper>
 		</div>
 		<div class="offcanvas-body bg-primary">
 			<ul class="nav flex-column w-100">
@@ -51,7 +49,7 @@
 						routerLinkActive="active"
 						[routerLink]="appRoutes.HOME"
 						(click)="closeSidebar()"
-						>{{ t("navigation.home_link") }}</a
+						>{{ t("navigation.homeLink") }}</a
 					>
 				</li>
 				<li
@@ -63,7 +61,7 @@
 						routerLinkActive="active"
 						[routerLink]="'/' + appRoutes.EVENT_CREATE"
 						(click)="closeSidebar()"
-						>{{ t("navigation.create_event_link") }}</a
+						>{{ t("navigation.createEventLink") }}</a
 					>
 				</li>
 				<li
@@ -77,7 +75,7 @@
 						routerLinkActive="active"
 						[routerLink]="'/' + appRoutes.LOGOUT"
 						(click)="closeSidebar()"
-						>{{ t("navigation.logout_link") }}</a
+						>{{ t("navigation.logoutLink") }}</a
 					>
 				</li>
 			</ul>
