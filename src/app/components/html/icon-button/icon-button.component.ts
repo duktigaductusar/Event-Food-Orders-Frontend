@@ -1,7 +1,7 @@
 import { Component, input, output } from "@angular/core";
 import { NgbPopoverModule } from "@ng-bootstrap/ng-bootstrap";
 
-import { AppCSSClassComponent } from "@app/components/base";
+import { AppCSSClassComponent } from "../base/app-css-class.component";
 import { ButtonWrapperComponent } from "..";
 
 @Component({

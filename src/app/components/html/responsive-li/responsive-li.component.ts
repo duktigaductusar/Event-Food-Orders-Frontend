@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { Component, input } from "@angular/core";
 
-import { AppCSSClassComponent } from "@app/components/base";
+import { AppCSSClassComponent } from "../base/app-css-class.component";
 
 @Component({
 	selector: "app-responsive-li",

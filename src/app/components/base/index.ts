@@ -1,6 +1,5 @@
 export * from "./app-base.component";
 export * from "./form-auto-saver.component";
-export * from "./app-css-class.component";
 
 // OBS! Do not export AppCSSClassComponent here, this will cause
 // null-pointer injection issue when angular build the project.
