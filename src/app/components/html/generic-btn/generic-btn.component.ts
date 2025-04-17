@@ -1,6 +1,6 @@
 import { Component, input, output } from "@angular/core";
 
-import { AppCSSClassComponent } from "@app/components/base/app-css-class.component";
+import { AppCSSClassComponent } from "../base/app-css-class.component";
 
 export type GenericBtnCompClrType =
 	| "secondary"
@@ -16,6 +16,8 @@ export type GenericBtnCompClrType =
 	templateUrl: "generic-btn.component.html",
 })
 export class GenericBtnComponent extends AppCSSClassComponent {
+	override customClass = input("");
+	override useClass = input("");
 	borderColor = input<GenericBtnCompClrType>("secondary");
 	label = input("Click Me");
 	icon = input("pencil");

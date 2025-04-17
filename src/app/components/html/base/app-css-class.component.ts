@@ -1,9 +1,8 @@
-import { Directive, input } from "@angular/core";
+import { InputSignal } from "@angular/core";
 
-@Directive()
 export abstract class AppCSSClassComponent {
-	customClass = input<string>("");
-	useClass = input<string>("");
+	abstract customClass: InputSignal<string>;
+	abstract useClass: InputSignal<string>;
 
 	protected abstract getDefaultClass(): string;
 

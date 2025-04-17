@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, input } from "@angular/core";
 
-import { AppCSSClassComponent } from "@app/components/base/app-css-class.component";
+import { AppCSSClassComponent } from "../base/app-css-class.component";
 
 @Component({
 	selector: "app-responsive-li",
@@ -10,6 +10,8 @@ import { AppCSSClassComponent } from "@app/components/base/app-css-class.compone
 	styleUrl: "./responsive-li.component.css",
 })
 export class ResponsiveLiComponent extends AppCSSClassComponent {
+	override customClass = input("");
+	override useClass = input("");
 	protected override getDefaultClass(): string {
 		return "list-group-item d-flex flex-column align-items-start flex-sm-row justify-content-sm-between overflow-y-auto";
 	}
