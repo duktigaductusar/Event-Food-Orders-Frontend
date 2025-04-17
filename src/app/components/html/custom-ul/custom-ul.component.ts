@@ -1,5 +1,6 @@
 import { Component, input } from "@angular/core";
-import { AppCSSClassComponent } from "@app/components/base/app-css-class.component";
+
+import { AppCSSClassComponent } from "@app/components/base";
 
 @Component({
 	selector: "app-custom-ul",
@@ -8,6 +9,8 @@ import { AppCSSClassComponent } from "@app/components/base/app-css-class.compone
 	styleUrl: "./custom-ul.component.css",
 })
 export class CustomUlComponent extends AppCSSClassComponent {
+	override customClass = input("");
+	override useClass = input("");
 	title = input("");
 	listItems = input<string[]>([]);
 
