@@ -7,7 +7,7 @@ import {
 	LogoutPageComponent,
 	LogoutSuccessPageComponent,
 } from "@app/components";
-import { appRoutes } from "./constants";
+import { appRoutes, appRoutesPara } from "./constants";
 import { AuthGuard } from "./services";
 
 export const routes: Routes = [
@@ -24,11 +24,11 @@ export const routes: Routes = [
 				component: EventCreatePageComponent,
 			},
 			{
-				path: `${appRoutes.EVENT_DETAILS}/:id`,
+				path: `${appRoutes.EVENT_DETAILS}/:${appRoutesPara.eventId}`,
 				component: EventDetailsPageComponent,
 			},
 			{
-				path: `${appRoutes.EVENT_MANAGEMENT}/:id`,
+				path: `${appRoutes.EVENT_MANAGEMENT}/:${appRoutesPara.eventId}`,
 				component: EventManagementPageComponent,
 			},
 			{ path: appRoutes.LOGOUT, component: LogoutPageComponent },
