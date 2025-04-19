@@ -27,6 +27,7 @@ import {
 } from "@app/components/html";
 import { AccordionListComponent } from "@app/components/shared";
 import { AppBaseComponent } from "@app/components/base";
+import { environment } from "@environments/environment";
 
 import { FormStepsTyp, IInviteForm, IUsersDtoWithId } from "../interfaces";
 
@@ -75,14 +76,22 @@ export class EventUserFormComponent
 		super();
 	}
 
+	ngOnInit() {
+		this.setupSearchListener();
+	}
+
+	ngOnDestroy() {
+		this.destroySubject.next();
+		this.destroySubject.complete();
+	}
+
 	get filteredAndSortedUsers(): IUsersDtoWithId[] {
 		return this.users
 			.filter(
 				user =>
 					user.email != null &&
 					user.username != null &&
-					(user.email.endsWith("ductus.se") ||
-						user.email.endsWith("example.com")) && //ToDo: remove for prod
+					this.isValidEmailsDomains(user.email) &&
 					(user.email
 						.toLowerCase()
 						.includes(this.query.toLowerCase()) ||
@@ -94,13 +103,9 @@ export class EventUserFormComponent
 			.map(u => ({ ...u, id: u.userId }));
 	}
 
-	ngOnInit() {
-		this.setupSearchListener();
-	}
-
-	ngOnDestroy() {
-		this.destroySubject.next();
-		this.destroySubject.complete();
+	private isValidEmailsDomains(email: string) {
+		const allowedDomains = environment.allowedEmailDomains;
+		return allowedDomains.some(domain => email.endsWith(domain));
 	}
 
 	private setupSearchListener() {
