@@ -24,7 +24,7 @@ import {
 import { EventService, EventStateService } from "@app/services";
 import { fromDateTimeISOString } from "@app/utility";
 import { ParticipantService } from "@app/services";
-import { appRoutes } from "@app/constants";
+import { appRoutes, appRoutesPara } from "@app/constants";
 import {
 	DatetimelabelComponent,
 	SpinnerComponent,
@@ -103,7 +103,6 @@ export class EventDetailItemComponent
 			.get(eventResponseControllerNames.responseType)
 			?.valueChanges.pipe(takeUntil(this.destroy))
 			.subscribe(value => {
-				console.log("value: ", value);
 				this.eventForm.patchValue(
 					{
 						wantsMeal: value === "ATTENDING_OFFICE",
@@ -122,7 +121,7 @@ export class EventDetailItemComponent
 
 	ngOnInit(): void {
 		this.route.paramMap.subscribe(params => {
-			const eventId = params.get("id");
+			const eventId = params.get(appRoutesPara.eventId);
 			if (eventId) {
 				this.loadEventDetailDto(eventId);
 			}

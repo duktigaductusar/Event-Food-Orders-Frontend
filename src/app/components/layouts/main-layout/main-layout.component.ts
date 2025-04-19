@@ -1,12 +1,12 @@
-import { ChangeDetectorRef, Component } from "@angular/core";
-import { Router, RouterModule } from "@angular/router";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { ActivatedRoute, RouterModule } from "@angular/router";
 import { NgbOffcanvas } from "@ng-bootstrap/ng-bootstrap";
 
-import { appRoutes } from "@app/constants";
+import { appRoutes, appRoutesPara } from "@app/constants";
 import { AppBaseComponent } from "@app/components/base/app-base.component";
 import { ThemeButtonComponent } from "@app/components/shared";
 import { ButtonWrapperComponent } from "@app/components/html";
-import { Location } from "@angular/common";
+import { RouterService } from "@app/services";
 
 @Component({
 	selector: "app-main-layout",
@@ -15,16 +15,27 @@ import { Location } from "@angular/common";
 	templateUrl: "./main-layout.component.html",
 	styleUrl: "./main-layout.component.css",
 })
-export class MainLayoutComponent extends AppBaseComponent {
+export class MainLayoutComponent extends AppBaseComponent implements OnInit {
 	readonly appRoutes = appRoutes;
+	eventId: string | undefined;
 
 	constructor(
 		private readonly offcanvasService: NgbOffcanvas,
 		private readonly cdRef: ChangeDetectorRef,
-		private readonly location: Location,
-		private readonly router: Router
+		private readonly route: ActivatedRoute,
+		readonly routerService: RouterService
 	) {
 		super();
+	}
+
+	ngOnInit(): void {
+		this.route.paramMap.subscribe(params => {
+			console.log(params);
+			const eventId = params.get(appRoutesPara.eventId);
+			if (eventId != null) {
+				this.eventId = eventId;
+			}
+		});
 	}
 
 	openSidebar(content: unknown) {
@@ -34,13 +45,5 @@ export class MainLayoutComponent extends AppBaseComponent {
 	closeSidebar() {
 		this.offcanvasService.dismiss();
 		this.cdRef.detectChanges();
-	}
-
-	goBack() {
-		this.location.back();
-	}
-
-	isHomePage(): boolean {
-		return this.router.url === `${appRoutes.HOME}/`;
 	}
 }

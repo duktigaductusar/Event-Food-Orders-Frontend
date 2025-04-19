@@ -39,7 +39,7 @@ import {
 } from "@app/services";
 
 import { fromDateTimeISOString } from "@app/utility";
-import { appRoutes } from "@app/constants";
+import { appRoutes, appRoutesPara } from "@app/constants";
 import { AppBaseComponent } from "@app/components/base";
 import { ResponsiveDivComponent } from "@app/components/html";
 
@@ -91,7 +91,7 @@ export class EventManagementHubComponent
 
 	ngOnInit(): void {
 		this.route.paramMap.subscribe(params => {
-			const eventId = params.get("id");
+			const eventId = params.get(appRoutesPara.eventId);
 			if (eventId) {
 				this.loadEventDetailInfoDto(eventId);
 			}
