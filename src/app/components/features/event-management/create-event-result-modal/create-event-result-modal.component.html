@@ -27,19 +27,19 @@
 				class="modal-footer d-flex flex-row justify-content-center gap-2"
 			>
 				<app-generic-btn
-					[label]="'Nytt event'"
+					[label]="t('event-create.modal.navigateNewEventBtn')"
 					[icon]="'plus-square'"
 					[borderColor]="'primary'"
 					(click)="navigateCreateNewevent()"
 				></app-generic-btn>
 				<app-generic-btn
-					[label]="'Hantera eventet'"
+					[label]="t('event-create.modal.navigateManageEventBtn')"
 					[icon]="'pencil'"
 					[borderColor]="'primary'"
 					(click)="navigateManageEvent(event.id)"
 				></app-generic-btn>
 				<app-generic-btn
-					[label]="'Hem'"
+					[label]="t('event-create.modal.navigateHomeBtn')"
 					[icon]="'house'"
 					[borderColor]="'primary'"
 					(click)="navigateHomeByCancel()"
