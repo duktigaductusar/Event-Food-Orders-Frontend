@@ -14,10 +14,14 @@
 		"dateAndTimeSectionTitle": "Datum & tid",
 		"respondBeforeSectionTitle": "Svara innan",
 		"toolTipOwnerOfEvent": "Ägare av eventet",
+
 		"deleteModal": {
 			"titel": "Titel: {{title}}",
 			"description": "Description: {{description}}",
 			"date": " Date: {{date}}"
+		},
+		"editEvent": {
+			"closeEditing": "Stäng uppdatering av '{{eventTitle}}'"
 		}
 	},
 	"event-create": {
@@ -73,7 +77,10 @@
 		"modal": {
 			"titel": "Titel: {{title}}",
 			"description": "Description: {{description}}",
-			"date": " Date: {{date}}"
+			"date": " Date: {{date}}",
+			"navigateNewEventBtn": "Nytt event",
+			"navigateManageEventBtn": "Hantera eventet",
+			"navigateHomeBtn": "Hem"
 		}
 	}
 }

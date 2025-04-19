@@ -14,11 +14,11 @@
 		</span>
 		@if (eventDto.wantsMeal) {
 			<span class="badge bg-info text-light">
-				{{ "Med mat" }}
+				{{ t("shared.statusLabel.withFood") }}
 			</span>
 		} @else {
 			<span class="badge bg-danger text-light">
-				{{ "Utan mat" }}
+				{{ t("shared.statusLabel.noFood") }}
 			</span>
 		}
 	} @else if (eventDto.responseType === "NOT_ATTENDING") {

@@ -5,7 +5,7 @@ import { finalize } from "rxjs";
 import { IEventDetailOwnerDto, IEventForCreationDto } from "@app/models";
 import { EventService, EventStateService } from "@app/services";
 import { ApiError } from "@app/interceptors";
-import { FormAutoSaver } from "@app/components/base";
+import { AppBaseComponent, FormAutoSaver } from "@app/components/base";
 import { GenericBtnComponent } from "@app/components/html";
 
 import {
@@ -25,7 +25,7 @@ import { SpinnerFullScreenComponent } from "@app/components/shared";
 	templateUrl: "./edit-event.component.html",
 	styleUrl: "./edit-event.component.css",
 })
-export class EditEventComponent implements OnInit {
+export class EditEventComponent extends AppBaseComponent implements OnInit {
 	form!: FormGroup<ICreateEventForm>;
 	computedForm = computed(() => this.form);
 	isPending = signal(false);
@@ -38,14 +38,18 @@ export class EditEventComponent implements OnInit {
 		private fb: FormBuilder,
 		private eventService: EventService,
 		private eventStateService: EventStateService
-	) {}
+	) {
+		super();
+	}
 
 	ngOnInit(): void {
 		this.form = buildCreateEventForm(this.fb, this.event());
 	}
 
 	getTitleForEditingForm() {
-		return `Stop editing '${this.event()?.title}'`;
+		return this.t2("event-management.editEvent.closeEditing", {
+			eventTitle: this.event()?.title,
+		});
 	}
 
 	toggleEdit() {
