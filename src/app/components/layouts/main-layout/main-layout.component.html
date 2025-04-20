@@ -1,7 +1,7 @@
 <div class="d-flex flex-column min-vh-100">
 	<nav class="navbar navbar-expand-lg navbar-light bg-primary">
 		<div class="container-fluid text-white">
-			<a class="navbar-brand text-white" [routerLink]="appRoutes.HOME">
+			<a class="text-white" [routerLink]="appRoutes.HOME">
 				<img
 					[src]="'/logo/ductus-white.png'"
 					alt="Ductus"
@@ -15,7 +15,9 @@
 				</span>
 			</a>
 
-			<div class="d-flex justify-content-center align-items-center gap-4">
+			<div
+				class="pe-2 d-flex justify-content-center align-items-center gap-4"
+			>
 				<app-theme-button
 					[title]="t('navigation.toggleThemeTooltip')"
 				></app-theme-button>

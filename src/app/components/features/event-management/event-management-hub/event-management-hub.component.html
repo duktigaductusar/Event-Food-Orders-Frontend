@@ -5,7 +5,7 @@
 		@if (!eventStateService.editEvent()) {
 			<app-responsive-div [withParentStyle]="'card shadow-sm mb-4'">
 				<div
-					class="card-header p-4 d-flex flex-column flex-sm-row justify-content-between align-items-center bg-secondary"
+					class="border-bottom card-header p-4 d-flex flex-column flex-sm-row justify-content-between align-items-center bg-secondary"
 				>
 					<h5 class="m-0 fw-bold text-primary-emphasis">
 						{{ selectedEventDto()!.title }}
@@ -15,7 +15,7 @@
 						[label]="t('event-management.editEventButton')"
 						[iconRight]="true"
 						[customClass]="
-							'btn btn-sm border-0 fs-5 fs-sm-3 btn-outline-info'
+							'btn btn-sm border-0 fs-5 fs-sm-3 btn-outline-info border-bottom pb-0 border-primary rounded-0'
 						"
 						(click)="toggleEdit()"
 					>
@@ -99,7 +99,7 @@
 							[listItems]="listItems"
 						></app-custom-ul>
 						<ul class="list-group pt-2">
-							@for (user of users; track user.userId) {
+							@for (user of sortedUsers; track user.userId) {
 								<app-responsive-li>
 									<div
 										class="d-flex gap-3 align-items-center mb-0"

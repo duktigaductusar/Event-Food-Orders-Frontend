@@ -128,6 +128,10 @@ export class EventManagementHubComponent
 		});
 	}
 
+	get sortedUsers() {
+		return this.users.sort((a, b) => a.email.localeCompare(b.email));
+	}
+
 	get listItems() {
 		return [
 			this.t2("event-management.participantsHaveResponded", {
