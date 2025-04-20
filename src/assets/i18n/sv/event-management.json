@@ -10,6 +10,8 @@
 		"abortDeleteButton": "Avbryt",
 		"editEventButton": "Uppdatera eventet",
 		"participantsHaveResponded": "{{answeredCount}} av {{totalCount}} deltagare har svarat.",
+		"participantsOnline": "{{onlineCount}} deltagare deltar online.",
+		"participantsOffice": "{{officeCount}} deltagare deltar på plats.",
 		"participantsWantsMealResponded": "{{wantsMealCount}} deltagare vill ha mat.",
 		"dateAndTimeSectionTitle": "Datum & tid",
 		"respondBeforeSectionTitle": "Svara innan",

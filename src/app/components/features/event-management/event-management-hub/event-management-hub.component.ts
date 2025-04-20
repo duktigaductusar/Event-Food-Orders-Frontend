@@ -138,6 +138,12 @@ export class EventManagementHubComponent
 				answeredCount: this.getConfirmedParticipants(),
 				totalCount: this.participants.length,
 			}),
+			this.t2("event-management.participantsOnline", {
+				onlineCount: this.getOnlineParticipants(),
+			}),
+			this.t2("event-management.participantsOffice", {
+				officeCount: this.getOfficeParticipants(),
+			}),
 			this.t2("event-management.participantsWantsMealResponded", {
 				wantsMealCount: this.getWithFoodParticipants(),
 			}),
@@ -149,6 +155,18 @@ export class EventManagementHubComponent
 			this.participants.length -
 			this.participants.filter(p => p.responseType === "PENDING").length
 		);
+	}
+
+	getOnlineParticipants(): number {
+		return this.participants.filter(
+			p => p.responseType === "ATTENDING_ONLINE"
+		).length;
+	}
+
+	getOfficeParticipants(): number {
+		return this.participants.filter(
+			p => p.responseType === "ATTENDING_OFFICE"
+		).length;
 	}
 
 	getWithFoodParticipants(): number {
