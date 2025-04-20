@@ -4,6 +4,7 @@ export type StorageType = "local" | "session";
 
 export const storageKeys = {
 	newEventForm: "efo.new_event_form",
+	preferredTheme: "efo.preferred_theme",
 } as const;
 
 export type StorageKeyType = (typeof storageKeys)[keyof typeof storageKeys];

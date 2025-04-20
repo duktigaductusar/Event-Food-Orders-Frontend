@@ -1,11 +1,6 @@
 {
 	"events": {
 		"title": "Index Sida!",
-		"labelEventOwner": "Värd",
-		"labelOnline": "Anmäld Online",
-		"labelOffice": "Anmäld på plats",
-		"labelReject": "Avvisat",
-		"labelPending": "Inväntar svar",
 		"updateBtnLabel": "Hantera",
 		"onlineBtnLabel": "Delta online",
 		"officeBtnLabel": "Delta på plats",

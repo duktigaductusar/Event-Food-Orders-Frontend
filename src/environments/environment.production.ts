@@ -1,5 +1,6 @@
 export const environment = {
-	production: false,
+	production: true,
+	allowedEmailDomains: ["ductus.se"],
 	defaultDeadline: 1,
 	apiUrl: "http://localhost:8080/api",
 	azureAd: {

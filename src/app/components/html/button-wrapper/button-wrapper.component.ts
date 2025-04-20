@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
-import { Component, output } from "@angular/core";
+import { Component, input, output } from "@angular/core";
 
-import { AppCSSClassComponent } from "@app/components/base/app-css-class.component";
+import { AppCSSClassComponent } from "../base/app-css-class.component";
 
 @Component({
 	selector: "app-button-wrapper",
@@ -10,6 +10,8 @@ import { AppCSSClassComponent } from "@app/components/base/app-css-class.compone
 	styleUrl: "./button-wrapper.component.css",
 })
 export class ButtonWrapperComponent extends AppCSSClassComponent {
+	override customClass = input("");
+	override useClass = input("");
 	selected = output<MouseEvent>();
 	isFocused = false;
 

@@ -17,3 +17,4 @@ export {
 	type StorageType,
 } from "./utility/storage.service";
 export { ThemeService } from "./utility/theme.service";
+export { RouterService } from "./utility/router.service";

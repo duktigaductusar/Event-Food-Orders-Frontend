@@ -1,7 +1,7 @@
 import { Component, input, output } from "@angular/core";
 import { NgbPopoverModule } from "@ng-bootstrap/ng-bootstrap";
 
-import { AppCSSClassComponent } from "@app/components/base/app-css-class.component";
+import { AppCSSClassComponent } from "../base/app-css-class.component";
 import { ButtonWrapperComponent } from "..";
 
 @Component({
@@ -11,6 +11,8 @@ import { ButtonWrapperComponent } from "..";
 	styleUrl: "./icon-button.component.css",
 })
 export class IconButtonComponent extends AppCSSClassComponent {
+	override customClass = input("");
+	override useClass = input("");
 	title = input("");
 	icon = input("pencil");
 	disabled = input(false);

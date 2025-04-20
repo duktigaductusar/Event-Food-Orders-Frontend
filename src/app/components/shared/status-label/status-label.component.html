@@ -1,33 +1,33 @@
 <div class="d-flex flex-wrap align-items-start gap-2">
 	@if (eventDto.isOwner) {
 		<span class="badge bg-info-subtle text-primary-emphasis">
-			{{ t("events.labelEventOwner") }}
+			{{ t("shared.statusLabel.labelEventOwner") }}
 		</span>
 	}
 	@if (eventDto.responseType === "ATTENDING_ONLINE") {
 		<span class="badge bg-success text-light">
-			{{ t("events.labelOnline") }}
+			{{ t("shared.statusLabel.labelOnline") }}
 		</span>
 	} @else if (eventDto.responseType === "ATTENDING_OFFICE") {
 		<span class="badge bg-success text-light">
-			{{ t("events.labelOffice") }}
+			{{ t("shared.statusLabel.labelOffice") }}
 		</span>
 		@if (eventDto.wantsMeal) {
 			<span class="badge bg-info text-light">
-				{{ "Med mat" }}
+				{{ t("shared.statusLabel.labelWithFood") }}
 			</span>
 		} @else {
 			<span class="badge bg-danger text-light">
-				{{ "Utan mat" }}
+				{{ t("shared.statusLabel.labelNoFood") }}
 			</span>
 		}
 	} @else if (eventDto.responseType === "NOT_ATTENDING") {
 		<span class="badge bg-danger text-light">
-			{{ t("events.labelReject") }}
+			{{ t("shared.statusLabel.labelReject") }}
 		</span>
 	} @else if (eventDto.responseType === "PENDING") {
 		<span class="badge bg-warning text-dark">
-			{{ t("events.labelPending") }}
+			{{ t("shared.statusLabel.labelPending") }}
 		</span>
 	}
 </div>

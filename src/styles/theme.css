@@ -10,7 +10,7 @@
 }
 
 ::ng-deep .popover-sm .popover-body {
-	z-index: 1560 !important; /*TODO! This class do NOT solve minor hidden issue*/
+	z-index: 1560 !important; /*TODO! This class do NOT solve minor hidden issue for popover*/
 }
 
 .nav-link:focus-visible {

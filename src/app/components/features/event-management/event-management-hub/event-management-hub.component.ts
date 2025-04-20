@@ -39,7 +39,7 @@ import {
 } from "@app/services";
 
 import { fromDateTimeISOString } from "@app/utility";
-import { appRoutes } from "@app/constants";
+import { appRoutes, appRoutesPara } from "@app/constants";
 import { AppBaseComponent } from "@app/components/base";
 import { ResponsiveDivComponent } from "@app/components/html";
 
@@ -91,7 +91,7 @@ export class EventManagementHubComponent
 
 	ngOnInit(): void {
 		this.route.paramMap.subscribe(params => {
-			const eventId = params.get("id");
+			const eventId = params.get(appRoutesPara.eventId);
 			if (eventId) {
 				this.loadEventDetailInfoDto(eventId);
 			}
@@ -128,11 +128,21 @@ export class EventManagementHubComponent
 		});
 	}
 
+	get sortedUsers() {
+		return this.users.sort((a, b) => a.email.localeCompare(b.email));
+	}
+
 	get listItems() {
 		return [
 			this.t2("event-management.participantsHaveResponded", {
 				answeredCount: this.getConfirmedParticipants(),
 				totalCount: this.participants.length,
+			}),
+			this.t2("event-management.participantsOnline", {
+				onlineCount: this.getOnlineParticipants(),
+			}),
+			this.t2("event-management.participantsOffice", {
+				officeCount: this.getOfficeParticipants(),
 			}),
 			this.t2("event-management.participantsWantsMealResponded", {
 				wantsMealCount: this.getWithFoodParticipants(),
@@ -145,6 +155,18 @@ export class EventManagementHubComponent
 			this.participants.length -
 			this.participants.filter(p => p.responseType === "PENDING").length
 		);
+	}
+
+	getOnlineParticipants(): number {
+		return this.participants.filter(
+			p => p.responseType === "ATTENDING_ONLINE"
+		).length;
+	}
+
+	getOfficeParticipants(): number {
+		return this.participants.filter(
+			p => p.responseType === "ATTENDING_OFFICE"
+		).length;
 	}
 
 	getWithFoodParticipants(): number {

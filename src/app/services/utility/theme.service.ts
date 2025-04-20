@@ -1,39 +1,54 @@
 import { Injectable, signal } from "@angular/core";
+import { storageKeys, StorageService } from "./storage.service";
 
-const STORAGE_KEY = "efo.preferred_theme";
+type ThemeType = "light" | "dark" | "auto";
+
+type ThemeStorageType = ThemeType | null;
 
 @Injectable({ providedIn: "root" })
 export class ThemeService {
+	private readonly storageType = "local";
 	currentTheme = signal<"light" | "dark" | "auto">("auto");
 
-	constructor() {
-		const savedTheme = localStorage.getItem(STORAGE_KEY) as
-			| "light"
-			| "dark"
-			| "auto"
-			| null;
+	constructor(private readonly storageService: StorageService) {
+		const savedTheme = this.storageService.getItem(
+			storageKeys.preferredTheme,
+			this.isTheme,
+			this.storageType
+		);
 		this.setTheme(savedTheme ?? "auto");
 	}
 
+	isTheme(value: unknown): value is ThemeStorageType {
+		return (
+			value === "light" ||
+			value === "dark" ||
+			value === "auton" ||
+			value === "null"
+		);
+	}
+
 	toggleTheme() {
-		const next = this.currentTheme() === "light" ? "dark" : "light";
+		const next =
+			this.currentTheme() === "light" || this.currentTheme() === "auto"
+				? "dark"
+				: "light";
 		this.setTheme(next);
 	}
 
-	setTheme(theme: "light" | "dark" | "auto") {
+	setTheme(theme: ThemeType) {
 		this.currentTheme.set(theme);
-		localStorage.setItem(STORAGE_KEY, theme);
+		this.storageService.setItem(
+			storageKeys.preferredTheme,
+			theme,
+			this.storageType
+		);
 
 		const html = document.documentElement;
 		html.removeAttribute("data-bs-theme");
 
 		if (theme === "auto") {
-			html.setAttribute(
-				"data-bs-theme",
-				window.matchMedia("(prefers-color-scheme: dark)").matches
-					? "dark"
-					: "light"
-			);
+			html.setAttribute("data-bs-theme", "light");
 		} else {
 			html.setAttribute("data-bs-theme", theme);
 		}
