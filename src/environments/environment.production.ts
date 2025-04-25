@@ -24,6 +24,6 @@ export const environment = {
 // 		authority:
 // 			"https://login.microsoftonline.com/f84f6fe6-b0e4-4db1-b7d6-b7c280fb507f",
 // 		loginRedirectUri: "https://efo.lulea.ducteas.se/",
-// 		logoutRedirectUri: "http://efo.lulea.ducteas.se/logout-success",
+// 		logoutRedirectUri: "https://efo.lulea.ducteas.se/logout-success",
 // 	},
 // };

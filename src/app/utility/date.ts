@@ -76,5 +76,5 @@ export function toDateTimeISOStrig(date: NgbDateStruct, time: NgbTimeStruct) {
 export function isLessThanOneDayInFuture(date: Date): boolean {
 	const now = new Date();
 	const oneDayLater = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-	return date > now && date < oneDayLater;
+	return date < oneDayLater;
 }
