@@ -30,9 +30,6 @@ export function dateValidatorFutureDate(
 	const today = new Date();
 	today.setHours(0, 0, 0, 0);
 
-	// const tomorrow = new Date(today);
-	// tomorrow.setDate(today.getDate() + 1);
-
 	if (selectedDate < today) {
 		return { [eventDetailsValidationKeys.invalidDateFutureDate]: true };
 	}
@@ -135,7 +132,7 @@ export function deadlineBeforeEventValidator(
 		deadlineTime.minute
 	);
 
-	if (deadline > event) {
+	if (deadline < event) {
 		return { [eventDetailsValidationGroupKeys.deadlineAfterEvent]: true };
 	}
 
