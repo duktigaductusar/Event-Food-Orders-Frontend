@@ -10,4 +10,5 @@ export const eventDetailsValidationKeys = {
 export const eventDetailsValidationGroupKeys = {
 	eventEndBeforeStart: "eventEndBeforeStart",
 	deadlineAfterEvent: "deadlineAfterEvent",
+	eventInThePast: "eventInThePast",
 } as const;

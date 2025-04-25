@@ -18,6 +18,7 @@ import {
 	deadlineBeforeEventValidator,
 	endTimeValidator,
 	dateValidatorFutureDate,
+	dateTimevalidator,
 } from "./event-form.validators";
 import { formControllers } from "./constants";
 
@@ -68,7 +69,11 @@ export function buildCreateEventForm(
 				),
 			},
 			{
-				validators: [deadlineBeforeEventValidator, endTimeValidator],
+				validators: [
+					deadlineBeforeEventValidator,
+					endTimeValidator,
+					dateTimevalidator,
+				],
 			}
 		),
 

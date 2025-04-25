@@ -30,10 +30,10 @@ export function dateValidatorFutureDate(
 	const today = new Date();
 	today.setHours(0, 0, 0, 0);
 
-	const tomorrow = new Date(today);
-	tomorrow.setDate(today.getDate() + 1);
+	// const tomorrow = new Date(today);
+	// tomorrow.setDate(today.getDate() + 1);
 
-	if (selectedDate < tomorrow) {
+	if (selectedDate < today) {
 		return { [eventDetailsValidationKeys.invalidDateFutureDate]: true };
 	}
 
@@ -137,6 +137,31 @@ export function deadlineBeforeEventValidator(
 
 	if (deadline > event) {
 		return { [eventDetailsValidationGroupKeys.deadlineAfterEvent]: true };
+	}
+
+	return null;
+}
+
+export function dateTimevalidator(group: AbstractControl) {
+	const date = group.get(eventDetailsControllerNames.date)?.value;
+	const time = group.get(eventDetailsControllerNames.time)?.value;
+
+	if (!date || !time) {
+		return null;
+	}
+
+	const now = new Date();
+
+	const event = new Date(
+		date.year,
+		date.month - 1,
+		date.day,
+		time.hour,
+		time.minute
+	);
+	console.log();
+	if (event < now) {
+		return { [eventDetailsValidationGroupKeys.eventInThePast]: true };
 	}
 
 	return null;
