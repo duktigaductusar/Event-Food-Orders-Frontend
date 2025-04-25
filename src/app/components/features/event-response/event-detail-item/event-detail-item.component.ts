@@ -140,7 +140,10 @@ export class EventDetailItemComponent
 					this.initFields();
 					this.initIsAttendingAtOffice();
 				},
-				error: error => console.error("Test error" + error),
+				error: error => {
+					console.error("Test error" + error);
+					this.router.navigate([appRoutes.HOME]);
+				},
 			});
 	}
 
