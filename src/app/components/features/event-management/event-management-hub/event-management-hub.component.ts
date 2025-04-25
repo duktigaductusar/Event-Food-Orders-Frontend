@@ -114,7 +114,10 @@ export class EventManagementHubComponent
 					this.participants = item.participants;
 					this.setUsers();
 				},
-				error: error => console.error("Test error" + error),
+				error: error => {
+					console.error("Test error" + error);
+					this.router.navigate([appRoutes.HOME]);
+				},
 			});
 	}
 
