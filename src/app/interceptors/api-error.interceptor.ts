@@ -30,17 +30,25 @@ export class ApiError {
 		error: HttpErrorResponse,
 		defaultErrorMessage?: IDefaultErrorMessage
 	): ApiError {
-		console.log("status:", error.status);
+		console.log("status:", error);
 
 		const statusText =
 			error?.statusText ??
 			defaultErrorMessage?.statusText ??
 			"Unknown error type";
-		const message =
-			typeof error?.error === "string"
-				? error.error
-				: (defaultErrorMessage?.message ??
-					"Unknown server error, please try again later");
+
+		let message: string;
+
+		if (typeof error?.error === "string") {
+			message = error.error;
+		} else if (error?.error?.error) {
+			message = error.error.error; // <-- grab the `error` field from the JSON
+		} else {
+			message =
+				defaultErrorMessage?.message ??
+				"Unknown server error, please try again later";
+		}
+
 		const status =
 			error?.status === 0 || error?.status == null
 				? (defaultErrorMessage?.status ?? 500)
@@ -74,6 +82,7 @@ export class ApiErrorInterceptor implements HttpInterceptor {
 	): Observable<HttpEvent<unknown>> {
 		return next.handle(req).pipe(
 			catchError((error: HttpErrorResponse) => {
+				console.log("error: ", error);
 				const apiError = ApiError.fromHttpError(
 					error,
 					this.defaultErrorMessage
@@ -96,6 +105,7 @@ export class ApiErrorInterceptor implements HttpInterceptor {
 	}
 
 	private displayErrorMessageToUser(apiError: ApiError) {
+		console.log("ApiError: ", apiError);
 		this.errorService.showError(
 			apiError.message,
 			`${apiError.status}: ${apiError.statusText}`
