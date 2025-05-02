@@ -22,7 +22,7 @@ import {
 	IParticipantForUpdateDto,
 } from "@app/models";
 import { EventService, EventStateService } from "@app/services";
-import { fromDateTimeISOString } from "@app/utility";
+import { fromDateTimeISOString, getShortTitle } from "@app/utility";
 import { ParticipantService } from "@app/services";
 import { appRoutes, appRoutesPara } from "@app/constants";
 import {
@@ -145,6 +145,10 @@ export class EventDetailItemComponent
 					this.router.navigate([appRoutes.HOME]);
 				},
 			});
+	}
+
+	getShortTitle(title: string): string {
+		return getShortTitle(title);
 	}
 
 	getDateFromStringValue(date: string) {

@@ -9,7 +9,7 @@ import type {
 } from "@app/models";
 import { appRoutes } from "@app/constants";
 import { EventStateService } from "@app/services";
-import { fromDateTimeISOString } from "@app/utility";
+import { fromDateTimeISOString, getShortTitle } from "@app/utility";
 import { ParticipantService } from "@app/services";
 import { AppBaseComponent } from "@app/components/base";
 import {
@@ -90,6 +90,10 @@ export class EventItemComponent extends AppBaseComponent {
 				this.eventDto()!.id,
 			]);
 		}
+	}
+
+	getShortTitle(title: string): string {
+		return getShortTitle(title);
 	}
 
 	getDateFromStringValue(date: string) {

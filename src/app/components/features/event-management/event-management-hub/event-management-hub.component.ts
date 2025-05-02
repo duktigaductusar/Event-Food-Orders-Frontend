@@ -38,7 +38,7 @@ import {
 	UserService,
 } from "@app/services";
 
-import { fromDateTimeISOString } from "@app/utility";
+import { fromDateTimeISOString, getShortTitle } from "@app/utility";
 import { appRoutes, appRoutesPara } from "@app/constants";
 import { AppBaseComponent } from "@app/components/base";
 import { ResponsiveDivComponent } from "@app/components/html";
@@ -151,6 +151,10 @@ export class EventManagementHubComponent
 				wantsMealCount: this.getWithFoodParticipants(),
 			}),
 		];
+	}
+
+	getShortTitle(title: string): string {
+		return getShortTitle(title);
 	}
 
 	getConfirmedParticipants(): number {

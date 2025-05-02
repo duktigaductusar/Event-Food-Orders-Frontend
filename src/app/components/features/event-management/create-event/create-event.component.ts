@@ -65,9 +65,11 @@ export class CreateEventComponent implements OnDestroy, OnInit {
 	submitCreate(eventDto: IEventForCreationDto) {
 		this.eventService
 			.createEvent(eventDto)
-			.pipe(finalize(() => {
-				this.eventFormBaseService.updateIsPending(false);
-			}))
+			.pipe(
+				finalize(() => {
+					this.eventFormBaseService.updateIsPending(false);
+				})
+			)
 			.subscribe({
 				next: event => {
 					this.eventStateService.selectedEventDto.set(null);

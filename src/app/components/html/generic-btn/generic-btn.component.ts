@@ -27,7 +27,7 @@ export class GenericBtnComponent extends AppCSSClassComponent {
 	action = output<MouseEvent>();
 
 	protected override getDefaultClass(): string {
-		return `btn btn-sm w-100 btn-outline-${this.borderColor()}`;
+		return `text-break btn btn-sm w-100 btn-outline-${this.borderColor()}`;
 	}
 
 	onClick(event: MouseEvent) {

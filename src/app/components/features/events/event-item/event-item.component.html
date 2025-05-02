@@ -10,7 +10,7 @@
 		class="card-header py-3 d-flex justify-content-between align-items-center bg-secondary"
 	>
 		<h5 class="m-0 fw-bold text-primary-emphasis text-break">
-			{{ eventDto()?.title }}
+			{{ getShortTitle(eventDto()?.title ?? "") }}
 		</h5>
 		<app-icon-button
 			[title]="getNavigationTitle()"

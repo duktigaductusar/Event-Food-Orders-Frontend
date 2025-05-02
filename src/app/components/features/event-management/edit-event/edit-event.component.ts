@@ -15,6 +15,7 @@ import {
 } from "../event-form-base";
 import { SpinnerFullScreenComponent } from "@app/components/shared";
 import { EventFormBaseService } from "../event-form-base/services/event-form-base.service";
+import { getShortTitle } from "@app/utility";
 
 @Component({
 	selector: "app-edit-event",
@@ -54,6 +55,10 @@ export class EditEventComponent extends AppBaseComponent implements OnInit {
 		});
 	}
 
+	getShortTitle(title: string): string {
+		return getShortTitle(title);
+	}
+
 	toggleEdit() {
 		this.eventStateService.toggleEditEvent();
 	}
@@ -66,7 +71,9 @@ export class EditEventComponent extends AppBaseComponent implements OnInit {
 
 		this.eventService
 			.updateEvent(currentEventId, eventDto)
-			.pipe(finalize(() => this.eventFormBaseService.updateIsPending(false)))
+			.pipe(
+				finalize(() => this.eventFormBaseService.updateIsPending(false))
+			)
 			.subscribe({
 				next: () => {
 					window.location.reload();
