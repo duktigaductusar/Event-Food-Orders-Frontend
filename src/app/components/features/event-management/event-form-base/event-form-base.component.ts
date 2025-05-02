@@ -40,6 +40,7 @@ import { createEventDtoFromEventForm } from "./event-form.utility";
 import { EventFormHeaderContainerComponent } from "./event-form-header-container/event-form-header-container.component";
 import { FormStepsTyp, ICreateEventForm } from "./interfaces";
 import { MultiStepFormHeaderComponent } from "./multistep-form-navigation-header/multistep-form-navigation-header.component";
+import { EventFormBaseService } from "./services/event-form-base.service";
 
 @Component({
 	selector: "app-event-form-base",
@@ -63,7 +64,6 @@ export class EventFormBaseComponent
 	formTitles = formTitles;
 	private destroy = new Subject<void>();
 	readonly formSteps = formSteps;
-	isPending = signal<boolean>(false);
 	currentStep = signal<FormStepsTyp>(this.formSteps.formDetailStep);
 	selectedUsers = signal<IUserDto[]>([]);
 	changedDeadline = signal<NgbDateStruct | null>(null);
@@ -74,6 +74,7 @@ export class EventFormBaseComponent
 	initialUsers = computed<IUserDto[]>(() => this.initialEvent()?.users ?? []);
 	currentEvent: Partial<IEventDto> = {};
 	private initializedSelectedUsers = false;
+	public readonly eventFormBaseService: EventFormBaseService;
 
 	readonly safeForm = computed(() => {
 		const value = this.form();
@@ -83,8 +84,9 @@ export class EventFormBaseComponent
 		return value;
 	});
 
-	constructor() {
+	constructor(eventFormBaseService: EventFormBaseService) {
 		super();
+		this.eventFormBaseService = eventFormBaseService;
 		this.initialUserEffect();
 		this.selectedUsersEffect();
 	}
@@ -196,7 +198,7 @@ export class EventFormBaseComponent
 			return;
 		}
 
-		this.isPending.set(true);
+		this.eventFormBaseService.updateIsPending(true);
 		this.submitEventForm.emit(eventDto);
 	};
 

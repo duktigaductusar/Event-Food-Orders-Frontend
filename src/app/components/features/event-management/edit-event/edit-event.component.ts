@@ -1,4 +1,4 @@
-import { Component, input, signal, OnInit, computed } from "@angular/core";
+import { Component, input, OnInit, computed } from "@angular/core";
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { finalize } from "rxjs";
 
@@ -14,6 +14,7 @@ import {
 	buildCreateEventForm,
 } from "../event-form-base";
 import { SpinnerFullScreenComponent } from "@app/components/shared";
+import { EventFormBaseService } from "../event-form-base/services/event-form-base.service";
 
 @Component({
 	selector: "app-edit-event",
@@ -24,11 +25,11 @@ import { SpinnerFullScreenComponent } from "@app/components/shared";
 	],
 	templateUrl: "./edit-event.component.html",
 	styleUrl: "./edit-event.component.css",
+	providers: [EventFormBaseService],
 })
 export class EditEventComponent extends AppBaseComponent implements OnInit {
 	form!: FormGroup<ICreateEventForm>;
 	computedForm = computed(() => this.form);
-	isPending = signal(false);
 	event = input<Partial<IEventDetailOwnerDto>>();
 	eventId = input<string | null>(null);
 	private autoFormSaver: FormAutoSaver<Partial<IEventForCreationDto>> | null =
@@ -37,7 +38,8 @@ export class EditEventComponent extends AppBaseComponent implements OnInit {
 	constructor(
 		private fb: FormBuilder,
 		private eventService: EventService,
-		private eventStateService: EventStateService
+		private eventStateService: EventStateService,
+		public readonly eventFormBaseService: EventFormBaseService
 	) {
 		super();
 	}
@@ -62,10 +64,9 @@ export class EditEventComponent extends AppBaseComponent implements OnInit {
 			return;
 		}
 
-		this.isPending.set(true);
 		this.eventService
 			.updateEvent(currentEventId, eventDto)
-			.pipe(finalize(() => this.isPending.set(false)))
+			.pipe(finalize(() => this.eventFormBaseService.updateIsPending(false)))
 			.subscribe({
 				next: () => {
 					window.location.reload();

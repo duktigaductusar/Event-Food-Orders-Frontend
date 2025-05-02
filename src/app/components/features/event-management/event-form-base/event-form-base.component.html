@@ -95,7 +95,7 @@
 							[label]="t('event-create.btnOk')"
 							[customClass]="'mt-3'"
 							[type]="'submit'"
-							[disabled]="isPending()"
+							[disabled]="eventFormBaseService.isPending()"
 							(action)="submit()"
 						>
 						</app-generic-btn>

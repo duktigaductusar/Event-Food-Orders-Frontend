@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, signal } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 import { finalize } from "rxjs";
@@ -28,16 +28,17 @@ import {
 	buildCreateEventForm,
 	isEventFormData,
 } from "../event-form-base";
+import { EventFormBaseService } from "../event-form-base/services/event-form-base.service";
 
 @Component({
 	selector: "app-create-event",
 	standalone: true,
 	imports: [EventFormBaseComponent, SpinnerFullScreenComponent],
 	templateUrl: "./create-event.component.html",
+	providers: [EventFormBaseService],
 })
 export class CreateEventComponent implements OnDestroy, OnInit {
 	form!: FormGroup<ICreateEventForm>;
-	isPending = signal(false);
 	private autoFormSaver!: FormAutoSaver<Partial<IEventForCreationDto>>;
 
 	constructor(
@@ -46,7 +47,8 @@ export class CreateEventComponent implements OnDestroy, OnInit {
 		private eventStateService: EventStateService,
 		private storageService: StorageService,
 		private modalService: NgbModal,
-		private readonly router: Router
+		private readonly router: Router,
+		public readonly eventFormBaseService: EventFormBaseService
 	) {}
 
 	ngOnInit(): void {
@@ -61,17 +63,18 @@ export class CreateEventComponent implements OnDestroy, OnInit {
 	}
 
 	submitCreate(eventDto: IEventForCreationDto) {
-		this.isPending.set(true);
 		this.eventService
 			.createEvent(eventDto)
-			.pipe(finalize(() => this.isPending.set(false)))
+			.pipe(finalize(() => {
+				this.eventFormBaseService.updateIsPending(false);
+			}))
 			.subscribe({
 				next: event => {
 					this.eventStateService.selectedEventDto.set(null);
 					this.openSuccessModal(event);
 				},
 				error: (error: ApiError) => {
-					console.error("Error fetching users:", error.message);
+					console.error("Error creating event:", error.message);
 				},
 				complete: () => {
 					this.autoFormSaver.destroy();
